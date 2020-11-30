@@ -18,7 +18,6 @@ class AuthController extends ParentController
             $token = $tokenResult->token;
             $token->save();
             $success['token'] =  $tokenResult->accessToken;
-            $success['user'] = Auth::user();
             return response()->json(['success' => $success], ParentController::$successCode);
         }
         else{
