@@ -17988,7 +17988,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   },
   mutations: {
     refreshUser: function refreshUser(state) {
-      fetch('/api/details', {
+      fetch('/api/whoami', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',

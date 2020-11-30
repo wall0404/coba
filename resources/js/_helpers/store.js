@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     },
     mutations: {
         refreshUser (state) {
-            fetch('/api/details', {
+            fetch('/api/whoami', {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',
