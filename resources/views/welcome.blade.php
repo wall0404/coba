@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
 
         <title>Coba</title>
 
@@ -21,45 +22,6 @@
             #content {
                 height: 100%;
                 width: 100%;
-            }
-            .coba-navbar {
-                background-color: #505050;
-                height: 100px;
-                position: fixed;
-                bottom: 0;
-                display: flex;
-                align-items: center;
-                justify-content: space-evenly;
-                color: white;
-            }
-            .coba-full-width {
-                width: 100%;
-            }
-            .coba-container {
-                padding: 20px;
-            }
-            .coba-flex {
-                display: flex;
-            }
-            .coba-flex-column {
-                display: flex;
-                flex-direction: column;
-            }
-            .coba-page-headline {
-                font-size: 32px;
-            }
-            .coba-header {
-                height: 200px;
-            }
-            .coba-form-danger {
-                background-color: red;
-                color: white;
-            }
-            .coba-button {
-                background-color: yellow;
-            }
-            .coba-text-danger {
-                color:red;
             }
         </style>
     </head>
