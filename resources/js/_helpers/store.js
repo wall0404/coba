@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     },
     mutations: {
         refreshUser (state) {
-            /*fetch('/api/details', {
+            fetch('/api/details', {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',
@@ -20,12 +20,13 @@ export const store = new Vuex.Store({
                 .then(res => res.json())
                 .then(res => {
                     state.data = res.success;
+                    console.log(state.data.user);
                 })
                 .catch(error => {
                     console.log(error);
                     state.data = null;
                     localStorage.removeItem('token')
-                })*/
+                })
 
         },
         clearData (state) {
@@ -40,7 +41,6 @@ export const store = new Vuex.Store({
     },
     getters: {
         data: state => state.data,
-        user: state => state.data.user,
         check: state => state.data!=null
     }
 });

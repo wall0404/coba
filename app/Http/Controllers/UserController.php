@@ -20,6 +20,9 @@ class UserController extends ParentController
     ];
 
     public function getInfo() {
-        return response()->json(['success'=>Auth::user()], ParentController::$successCode);
+        $data = [
+            'user' => Auth::user(),
+        ];
+        return response()->json(['success'=>$data], ParentController::$successCode);
     }
 }

@@ -18,6 +18,10 @@
             body {
                 font-family: 'Nunito';
             }
+            #content {
+                height: 100%;
+                width: 100%;
+            }
             .coba-navbar {
                 background-color: #505050;
                 height: 100px;
@@ -31,12 +35,44 @@
             .coba-full-width {
                 width: 100%;
             }
+            .coba-container {
+                padding: 20px;
+            }
+            .coba-flex {
+                display: flex;
+            }
+            .coba-flex-column {
+                display: flex;
+                flex-direction: column;
+            }
+            .coba-page-headline {
+                font-size: 32px;
+            }
+            .coba-header {
+                height: 200px;
+            }
+            .coba-form-danger {
+                background-color: red;
+                color: white;
+            }
+            .coba-button {
+                background-color: yellow;
+            }
+            .coba-text-danger {
+                color:red;
+            }
         </style>
     </head>
     <body class="antialiased">
+
         <div id="app">
-            <router-view></router-view>
-            <navbar></navbar>
+            <div id="content">
+                <router-view></router-view>
+                <navbar v-if="$store.getters.data.user !== null && $store.getters.data.user !== ''"></navbar>
+            </div>
+            <div v-else style="width: 100%; height: 100vh;">
+                <spinner></spinner>
+            </div>
         </div>
         <script src="{!! asset('js/app.js') !!}"></script>
     </body>

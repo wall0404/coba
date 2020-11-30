@@ -4,7 +4,6 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const error404 = { template: '<div>Diese Seite ist noch nicht eingebaut</div>'}
-const LandingPage = { template: '<div>Landing page. nothing here yet</div>'}
 const Dashboard = { template: '<div>Startseite. Diese Seite ist noch nicht eingebaut. Nachher findet man hier die wichtigsten Informationen auf den ersten Blick</div>'}
 
 
@@ -15,9 +14,14 @@ import Page_Home from "../components/Pages/Page_Home";
 import Page_Calendar from "../components/Pages/Page_Calendar";
 import Page_Profile from "../components/Pages/Page_Profile";
 import Page_Team from "../components/Pages/Page_Team";
+import Page_Login from "../components/Pages/Auth/Page_Login";
+import Page_Logout from "../components/Pages/Auth/Page_Logout";
+import Page_Landing from "../components/Pages/Page_Landing";
 
 const routes = [
-    { path: '/', component: LandingPage },
+    { path: '/', component: Page_Landing },
+    { path: '/login', component: Page_Login },
+    { path: '/logout', component: Page_Logout },
     { path: '/home', component: Page_Home, meta:{auth:true} },
     { path: '/team', component: Page_Team, meta:{auth:true} },
     { path: '/calendar', component: Page_Calendar, meta:{auth:true} },
@@ -34,13 +38,11 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
-        //TODO import check auth
-        next()
-        /*if (localStorage.token == null) {
+        if (localStorage.token == null) {
             next({ path: '/login'})
         } else {
             next()
-        }*/
+        }
     } else {
         next()
     }

@@ -26,4 +26,9 @@ class AuthController extends ParentController
             return response()->json(['error'=>'Unauthorised'], ParentController::$unauthorizedCode);
         }
     }
+
+    public function logout() {
+        Auth::logout();
+        return response()->json(['success' => 'true'], ParentController::$successCode);
+    }
 }
