@@ -9,9 +9,6 @@
         <div class="coba-container" v-if="$store.getters.data.user !== null && $store.getters.data.user !== ''">
             Hello {{$store.getters.data.user.firstName}}
         </div>
-        <div class="coba-container" v-else>
-            <router-link to="/login">Anmelden</router-link>
-        </div>
     </div>
 </template>
 

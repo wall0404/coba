@@ -30,7 +30,7 @@
         <div id="app">
             <div id="content">
                 <router-view></router-view>
-                <navbar v-if="$store.getters.data.user !== null && $store.getters.data.user !== ''"></navbar>
+                <navbar></navbar>
             </div>
             <div v-else style="width: 100%; height: 100vh;">
                 <spinner></spinner>
