@@ -11,6 +11,4 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public $successStatus = 200;
-    public $unauthorizedStatus = 401;
 }
