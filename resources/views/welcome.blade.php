@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Coba</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -18,14 +18,24 @@
             body {
                 font-family: 'Nunito';
             }
+            .coba-navbar {
+                background-color: #505050;
+                height: 100px;
+                position: fixed;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+            }
+            .coba-full-width {
+                width: 100%;
+            }
         </style>
     </head>
     <body class="antialiased">
         <div id="app">
-
-            {{"Welcome Coba!"}}
-            <!--<navbar></navbar>
-            <router-view></router-view>-->
+            <router-view></router-view>
+            <navbar></navbar>
         </div>
         <script src="{!! asset('js/app.js') !!}"></script>
     </body>
