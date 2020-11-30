@@ -26,6 +26,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-evenly;
+                color: white;
             }
             .coba-full-width {
                 width: 100%;
