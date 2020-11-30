@@ -27,6 +27,17 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+/*import NavBar from './components/Navbar'
+import {router} from './_helpers/router';
+import {store} from './_helpers/store';
+import Spinner from './components/Elements/Spinner'*/
+
 const app = new Vue({
+    /*store,
+    router,
+    components: {
+        'navbar': NavBar,
+        'spinner' : Spinner,
+    },*/
     el: '#app',
 });

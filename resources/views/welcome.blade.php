@@ -21,9 +21,12 @@
         </style>
     </head>
     <body class="antialiased">
-        Welcome Coba
-        <navbar></navbar>
-        <router-view></router-view>
+        <div id="app">
+
+            {{"Welcome Coba!"}}
+            <!--<navbar></navbar>
+            <router-view></router-view>-->
+        </div>
         <script src="{!! asset('js/app.js') !!}"></script>
     </body>
 </html>
