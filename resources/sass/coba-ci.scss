@@ -31,11 +31,22 @@
     display: flex;
     flex-direction: column;
 }
-.coba-page-headline {
-    font-size: 32px;
-}
+
 .coba-header {
-    height: 200px;
+    height: 219px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    color: white;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    margin-bottom: 40px;
+
+    .coba-page-headline {
+        font-size: 32px;
+    }
 }
 .coba-form-danger {
     background-color: red;
