@@ -31,18 +31,14 @@ jobs:
     - name: Generate key
       run: php artisan key:generate
 
-    - name: Migrate and Seed
-      run: php artisan migrate:fresh --seed
-
     - name: Npm Install
       run: npm install
 
+    - name: Migrate and Seed
+      run: php artisan migrate:fresh --seed
+
     - name: Passport access Client
       run: php artisan passport:client --personal -n
-
-
-
-
 
 
     - name: 'Deploy to Azure WebApp'
