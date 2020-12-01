@@ -19,6 +19,45 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
+    - script: |
+        sudo update-alternatives --set php /usr/bin/php$(phpVersion)
+        sudo update-alternatives --set phar /usr/bin/phar$(phpVersion)
+        sudo update-alternatives --set phpdbg /usr/bin/phpdbg$(phpVersion)
+        sudo update-alternatives --set php-cgi /usr/bin/php-cgi$(phpVersion)
+        sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
+        php -version
+      displayName: 'Use PHP version $(phpVersion)'
+    
+    
+    - name: Copy .env
+      run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
+    
+    - name: Install Dependencies
+      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    
+    - name: Generate key
+      run: php artisan key:generate
+    
+    
+    - script: |
+        mysql --version
+      displayName: 'MySQL Version'
+    
+    
+    - script: |
+        mariadb --version
+      displayName: 'MariaDB Version'
+    
+    - name: Migrate and Seed
+      run: php artisan migrate:fresh --seed
+      
+    - name: Npm Install
+      run: npm install
+ 
+    
+    
+    
+
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with: 
