@@ -31,12 +31,17 @@ class BookingFactory extends Factory
         $date->modify('-7 days');
         $user_id = 1;
         $workstation_id = 1;
-        try {
-            $date->modify('+' . random_int(0, 21) . ' days');
-            $user_id = random_int(1,User::all()->count());
-            $workstation_id = random_int(1,Workstation::all()->count());
-        } catch (\Exception $e) {
 
+        $found = true;
+        while($found) {
+            try {
+                $date->modify('+' . random_int(0, 21) . ' days');
+                $user_id = random_int(1,(User::all()->count()));
+                $workstation_id = random_int(1,Workstation::all()->count());
+            } catch (\Exception $e) {
+
+            }
+            $found = Booking::where('user_id', $user_id)->where('date', $date)->count() !== 0;
         }
 
         return [
