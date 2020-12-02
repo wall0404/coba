@@ -10952,6 +10952,22 @@ a.text-dark:focus {
   flex-direction: column;
 }
 
+.coba-flex-wrap {
+  flex-wrap: wrap;
+}
+
+.coba-flex-center {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.coba-flex-space-evenly {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+}
+
 /* HEADER */
 
 .coba-header {
@@ -10987,17 +11003,12 @@ a.text-dark:focus {
   font-size: 24px;
 }
 
-.coba-form-danger {
-  background-color: red;
-  color: white;
-}
-
 /* BUTTON Styles */
 
 .coba-button {
   background-color: #EBEBEB;
   color: #2C2C2C;
-  border-radius: 50px;
+  border-radius: 25px;
   border: 1px solid #2C2C2C;
   width: 100%;
   height: 50px;
@@ -11005,10 +11016,48 @@ a.text-dark:focus {
   justify-content: center;
   align-items: center;
   font-size: 24px;
+  margin: 10px 0;
 }
 
 .coba-button.coba-button-accent {
   background-color: #FFC931;
+}
+
+.coba-button.coba-button-no-border {
+  border: none;
+}
+
+.coba-button.coba-button-big {
+  height: 75px;
+}
+
+.coba-button.coba-button-very-big {
+  height: 100px;
+}
+
+.coba-button.coba-button-round {
+  height: 50px;
+  width: 50px;
+  border-radius: 25px;
+}
+
+.coba-button.coba-button-round.coba-button-big {
+  height: 75px;
+  width: 75px;
+  border-radius: 75px;
+}
+
+.coba-button.coba-button-round.coba-button-very-big {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+}
+
+/* FORM Styles */
+
+.coba-form-danger {
+  background-color: red;
+  color: white;
 }
 
 /* Text Styles */

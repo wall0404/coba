@@ -17,6 +17,9 @@ import Page_Team from "../components/Pages/Page_Team";
 import Page_Login from "../components/Pages/Auth/Page_Login";
 import Page_Logout from "../components/Pages/Auth/Page_Logout";
 import Page_Landing from "../components/Pages/Page_Landing";
+import Page_Booking from "../components/Pages/Book/Page_Booking";
+import Page_LocationSelection from "../components/Pages/Book/Page_LocationSelection";
+import Page_WorkstationSelection from "../components/Pages/Book/Page_WorkstationSelection";
 
 const routes = [
     { path: '/', component: Page_Landing },
@@ -26,6 +29,9 @@ const routes = [
     { path: '/team', component: Page_Team, meta:{auth:true} },
     { path: '/calendar', component: Page_Calendar, meta:{auth:true} },
     { path: '/profile', component: Page_Profile, meta:{auth:true} },
+    { path: '/booking/:id', component: Page_Booking, meta:{auth:true} },
+    { path: '/booking/new/location', component: Page_LocationSelection, meta:{auth:true} },
+    { path: '/booking/new/workstation', name: 'WorkstationSelection', component: Page_WorkstationSelection, props: true, meta:{auth:true} },
     { path: '*', component: error404}
 ]
 
