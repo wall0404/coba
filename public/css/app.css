@@ -10921,12 +10921,26 @@ a.text-dark:focus {
   text-decoration: none;
 }
 
+.coba-page {
+  padding-bottom: 100px;
+  height: 100%;
+  /*    display: flex;
+      flex-direction: row;*/
+}
+
 .coba-full-width {
   width: 100%;
 }
 
 .coba-container {
   padding: 20px;
+}
+
+.coba-footer-container {
+  background-color: #EBEBEB;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  overflow: scroll;
 }
 
 .coba-flex {
@@ -10938,13 +10952,15 @@ a.text-dark:focus {
   flex-direction: column;
 }
 
+/* HEADER */
+
 .coba-header {
   height: 219px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: gray;
+  background-color: #EBEBEB;
   color: white;
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
@@ -10953,6 +10969,22 @@ a.text-dark:focus {
 
 .coba-header .coba-page-headline {
   font-size: 32px;
+  color: #2C2C2C;
+}
+
+/* CUSTOM HEADER for HOMESCREEN */
+
+.coba-homescreen .coba-header {
+  height: 100px;
+  background: none;
+  text-align: left;
+  display: block;
+  padding-top: 25px;
+  margin-bottom: 0;
+}
+
+.coba-homescreen .coba-header .coba-page-headline {
+  font-size: 24px;
 }
 
 .coba-form-danger {
@@ -10960,11 +10992,90 @@ a.text-dark:focus {
   color: white;
 }
 
+/* BUTTON Styles */
+
 .coba-button {
-  background-color: yellow;
+  background-color: #EBEBEB;
+  color: #2C2C2C;
+  border-radius: 50px;
+  border: 1px solid #2C2C2C;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.coba-button.coba-button-accent {
+  background-color: #FFC931;
+}
+
+/* Text Styles */
+
+.coba-text {
+  font-size: 14px;
+  color: #2C2C2C;
+}
+
+.coba-text-strong {
+  font-weight: bold;
+}
+
+.coba-text-normal {
+  font-weight: normal;
+}
+
+.coba-text-small {
+  font-size: 10px;
+}
+
+.coba-text-big {
+  font-size: 18px;
+}
+
+.coba-text-very-big {
+  font-size: 24px;
+}
+
+.coba-text-underlined {
+  text-decoration: underline;
+}
+
+.coba-text-center {
+  text-align: center;
 }
 
 .coba-text-danger {
   color: red;
+}
+
+/* LIST */
+
+.coba-list {
+  font-size: 14px;
+  color: #2C2C2C;
+  padding-left: 20px;
+  list-style: none;
+  /* Remove default bullets */
+}
+
+.coba-list li::before {
+  content: "\2022";
+  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: #FFC931;
+  /* Change the color */
+  font-weight: bold;
+  /* If you want it to be bold */
+  display: inline-block;
+  /* Needed to add space between the bullet and the text */
+  width: 1em;
+  /* Also needed for space (tweak if needed) */
+  margin-left: -1em;
+  /* Also needed for space (tweak if needed) */
+}
+
+.coba-list li {
+  padding: 10px 0;
 }
 
