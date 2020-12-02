@@ -1201,7 +1201,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "coba-button",
+            staticClass: "coba-button coba-button-accent",
             attrs: { type: "button" },
             on: { click: _vm.submit }
           },
