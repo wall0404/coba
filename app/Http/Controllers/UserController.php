@@ -43,9 +43,9 @@ class UserController extends ParentController
         //filter
         if(isset($input['filter']['date'])) {
             if(!empty($input['filter']['date']['min']))
-                $list = $list->where('date', '>', $input['filter']['date']['min']);
+                $list = $list->where('date', '>=', $input['filter']['date']['min']);
             if(!empty($input['filter']['date']['max']))
-                $list = $list->where('date', '<', $input['filter']['date']['max']);
+                $list = $list->where('date', '<=', $input['filter']['date']['max']);
         }
 
         //order
