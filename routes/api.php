@@ -18,3 +18,11 @@ Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('register', 'App\Http\Controllers\AuthController@register');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
+
+/* Booking */
+Route::get('booking', 'App\Http\Controllers\BookingController@getList');
+
+/* User */
+Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
+
+

@@ -13,4 +13,11 @@ class ParentController extends Controller
     public static $unauthorizedCode = 401;
     public static $unauthorizedText = 'Unauthorised';
     public static $inputValidationErrorCode = 400;
+
+    protected $default_limit = 15;
+    protected $pagination = true;
+
+    protected $filter = [];
+    protected $model_name = null;
+
 }
