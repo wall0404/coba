@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Booking;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +28,32 @@ class UserController extends ParentController
             'user' => Auth::user(),
         ];
         return response()->json(['success'=>$data], ParentController::$successCode);
+    }
+
+    public function getList(Request $request) {
+        //Get input
+        $input = $request->input();
+
+        //load default limit and order values if not set in input parameters
+        if (empty($input['limit'])) $input['limit'] = $this->default_limit;
+        if (empty($input['order_by'])) $input['order_by'] = 'user_id';
+        if (empty($input['order_desc'])) $input['order_desc'] = 0;
+
+        $list = User::whereNotNull('user_id');
+
+        //filter
+
+        //order
+        $list = $list->orderBy($input['order_by'], $input['order_desc']?'desc':'asc');
+
+        //paginate list if wanted
+        if($this->pagination)
+            $list = $list->paginate($input['limit']);
+        else
+            $list = $list->get();
+
+
+        return response()->json(['success'=>$list], ParentController::$successCode);
     }
 
     public function getBookingList(Request $request, $id){

@@ -23,6 +23,13 @@ Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 Route::get('booking', 'App\Http\Controllers\BookingController@getList');
 
 /* User */
+Route::get('user', 'App\Http\Controllers\UserController@getList');
 Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
+
+/* Workstation */
+Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
+
+/* Location */
+Route::get('location', 'App\Http\Controllers\LocationController@getList');
 
 
