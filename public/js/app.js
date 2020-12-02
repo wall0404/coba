@@ -381,8 +381,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Page_Home"
+  name: "Page_Home",
+  data: function data() {
+    return {
+      bookings: [{
+        name: "Buchung 1"
+      }, {
+        name: "Buchung 2"
+      }]
+    };
+  },
+  mounted: function mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.load = true;
+      fetch('/api/user/' + this.$store.getters.data.user.user_id + '/bookings', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        if (res.success) {
+          _this.bookings = res.success;
+          console.log(_this.bookings);
+        } else {
+          _this.error = true;
+          _this.load = false;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this.load = false;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -1274,6 +1316,24 @@ var render = function() {
       { staticClass: "coba-container" },
       [_c("router-link", { attrs: { to: "/logout" } }, [_vm._v("Abmelden")])],
       1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "coba-container" },
+      _vm._l(_vm.bookings, function(booking) {
+        return _c("div", [
+          _vm._v(
+            "Benutzer: " +
+              _vm._s(booking.user_id) +
+              " Datum: " +
+              _vm._s(booking.date) +
+              " Arbeitsplatz: " +
+              _vm._s(booking.workstation_id)
+          )
+        ])
+      }),
+      0
     )
   ])
 }
@@ -17998,7 +18058,6 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
         return res.json();
       }).then(function (res) {
         state.data = res.success;
-        console.log(state.data.user);
       })["catch"](function (error) {
         console.log(error);
         state.data = null;

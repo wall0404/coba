@@ -47,9 +47,6 @@ class UserController extends ParentController
             if(!empty($input['filter']['date']['max']))
                 $list = $list->where('date', '<', $input['filter']['date']['max']);
         }
-        else {
-            echo "false".json_encode($input);
-        }
 
         //order
         $list = $list->orderBy($input['order_by'], $input['order_desc']?'desc':'asc');

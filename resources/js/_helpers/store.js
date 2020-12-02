@@ -20,7 +20,6 @@ export const store = new Vuex.Store({
                 .then(res => res.json())
                 .then(res => {
                     state.data = res.success;
-                    console.log(state.data.user);
                 })
                 .catch(error => {
                     console.log(error);
