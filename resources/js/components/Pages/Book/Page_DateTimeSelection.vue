@@ -1,11 +1,13 @@
 <template>
     <div class="coba-page">
         <div class="coba-container coba-flex coba-header">
-            <span class="coba-page-headline">Booking {{$route.params.id}}</span>
+            <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container">
-            <button v-if="!load" class="coba-button coba-button-danger" @click='deleteBooking'>Löschen</button>
-            <spinner v-else></spinner>
+            <div class="coba-text coba-text-strong">{{ $route.params.workstation_id }}</div>
+        </div>
+        <div class="coba-container">
+            <div class="coba-button">Buchen</div>
         </div>
     </div>
 </template>
@@ -14,20 +16,22 @@
 import Spinner from "../../Global/Spinner";
 
 export default {
-    name: "Page_Booking",
+    name: "Page_DateTimeSelection",
     components: {Spinner},
     data() {
         return {
             load: false,
             error: false,
-            booking: []
         }
     },
+    mounted() {
+        this.fetchData();
+    },
     methods: {
-        deleteBooking() {
-            this.load = true;
-            fetch('/api/booking/'+this.$route.params.id, {
-                method: 'DELETE',
+        fetchData() {
+            /*this.load = true;
+            fetch('/api/workstation?filter[location_id]='+this.location_id, {
+                method: 'GET',
                 headers: {
                     'content-type': 'application/json',
                     'Authorization' : 'Bearer '+localStorage.token
@@ -36,8 +40,8 @@ export default {
                 .then(res => res.json())
                 .then(res => {
                     if(res.success) {
+                        this.workstations = res.success;
                         this.load = false;
-                        this.$router.go(-1);
                     }
                     else {
                         this.error = true;
@@ -47,7 +51,7 @@ export default {
                 .catch(error => {
                     console.log(error);
                     this.load = false;
-                })
+                })*/
         },
     }
 }

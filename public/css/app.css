@@ -11023,6 +11023,11 @@ a.text-dark:focus {
   background-color: #FFC931;
 }
 
+.coba-button.coba-button-danger {
+  background-color: #861F08;
+  color: #EBEBEB;
+}
+
 .coba-button.coba-button-no-border {
   border: none;
 }

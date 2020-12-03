@@ -357,9 +357,118 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Page_Booking"
+  name: "Page_Booking",
+  components: {
+    Spinner: _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      load: false,
+      error: false,
+      booking: []
+    };
+  },
+  methods: {
+    deleteBooking: function deleteBooking() {
+      var _this = this;
+
+      this.load = true;
+      fetch('/api/booking/' + this.$route.params.id, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        if (res.success) {
+          _this.load = false;
+
+          _this.$router.go(-1);
+        } else {
+          _this.error = true;
+          _this.load = false;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this.load = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Page_DateTimeSelection",
+  components: {
+    Spinner: _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      load: false,
+      error: false
+    };
+  },
+  mounted: function mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      /*this.load = true;
+      fetch('/api/workstation?filter[location_id]='+this.location_id, {
+          method: 'GET',
+          headers: {
+              'content-type': 'application/json',
+              'Authorization' : 'Bearer '+localStorage.token
+          }
+      })
+          .then(res => res.json())
+          .then(res => {
+              if(res.success) {
+                  this.workstations = res.success;
+                  this.load = false;
+              }
+              else {
+                  this.error = true;
+                  this.load = false;
+              }
+          })
+          .catch(error => {
+              console.log(error);
+              this.load = false;
+          })*/
+    }
+  }
 });
 
 /***/ }),
@@ -404,11 +513,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       load: false,
       error: false,
-      locations: []
+      locations: this.$store.getters.locations
     };
   },
-  mounted: function mounted() {
-    this.fetchData();
+  created: function created() {
+    console.log(this.locations); //this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
@@ -465,10 +574,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_WorkstationSelection",
-  props: ['location_id'],
   components: {
     Spinner: _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -476,39 +585,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       load: false,
       error: false,
-      workstations: []
+      location_id: this.$route.params.location_id,
+      workstations: null
     };
   },
   mounted: function mounted() {
-    this.fetchData();
+    this.workstations = this.$store.getters.data.locations[this.location_id - 1].workstations;
   },
-  methods: {
-    fetchData: function fetchData() {
-      var _this = this;
-
-      this.load = true;
-      fetch('/api/workstation?filter[location_id]=' + this.location_id, {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.token
-        }
-      }).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        if (res.success) {
-          _this.workstations = res.success;
-          _this.load = false;
-        } else {
-          _this.error = true;
-          _this.load = false;
-        }
-      })["catch"](function (error) {
-        console.log(error);
-        _this.load = false;
-      });
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -544,6 +628,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
+//
 //
 //
 //
@@ -1477,12 +1562,77 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "coba-container" }, [
-      _vm._v("\n        Nothing here yet\n    ")
-    ])
+    _c(
+      "div",
+      { staticClass: "coba-container" },
+      [
+        !_vm.load
+          ? _c(
+              "button",
+              {
+                staticClass: "coba-button coba-button-danger",
+                on: { click: _vm.deleteBooking }
+              },
+              [_vm._v("Löschen")]
+            )
+          : _c("spinner")
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "coba-page" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "coba-container" }, [
+      _c("div", { staticClass: "coba-text coba-text-strong" }, [
+        _vm._v(_vm._s(_vm.$route.params.workstation_id))
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
+      _c("span", { staticClass: "coba-page-headline" }, [_vm._v("Buchung")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "coba-container" }, [
+      _c("div", { staticClass: "coba-button" }, [_vm._v("Buchen")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -1518,14 +1668,10 @@ var render = function() {
                 return _c(
                   "router-link",
                   {
+                    key: location.id,
                     staticClass:
                       "coba-button coba-button-accent coba-button-big coba-button-no-border",
-                    attrs: {
-                      to: {
-                        name: "WorkstationSelection",
-                        params: { location_id: location.id }
-                      }
-                    }
+                    attrs: { to: "/booking/new/workstation/" + location.id }
                   },
                   [_vm._v(_vm._s(location.name))]
                 )
@@ -1602,15 +1748,17 @@ var render = function() {
               },
               _vm._l(_vm.workstations, function(workstation) {
                 return _c(
-                  "div",
+                  "router-link",
                   {
+                    key: workstation.id,
                     staticClass:
-                      "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border"
+                      "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
+                    attrs: { to: "/booking/new/booking/" + workstation.id }
                   },
                   [_vm._v(_vm._s(workstation.name))]
                 )
               }),
-              0
+              1
             )
           : _c("spinner")
       ],
@@ -1675,25 +1823,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "coba-page coba-homescreen" }, [
-    _c("div", { staticClass: "coba-container coba-header" }, [
-      _c("h1", { staticClass: "coba-page-headline" }, [
-        _vm._v("Willkommen zurück,"),
-        _c("br"),
-        _vm._v(_vm._s(_vm.$store.getters.data.user.firstName))
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "coba-container coba-text-strong" },
-      [
-        _c("div", { staticClass: "coba-text-big" }, [
-          _vm._v("Heute bist du in")
-        ]),
-        _vm._v(" "),
-        !_vm.load
-          ? _c(
+  return _c(
+    "div",
+    { staticClass: "coba-page coba-homescreen" },
+    [
+      _c("div", { staticClass: "coba-container coba-header" }, [
+        _c("h1", { staticClass: "coba-page-headline" }, [
+          _vm._v("Willkommen zurück,"),
+          _c("br"),
+          _vm._v(_vm._s(_vm.$store.getters.data.user.firstName))
+        ])
+      ]),
+      _vm._v(" "),
+      !_vm.load
+        ? _c("div", { staticClass: "coba-container coba-text-strong" }, [
+            _vm.bookings.find(function(element) {
+              return element.date === _vm.today_date
+            })
+              ? _c("div", { staticClass: "coba-text-big" }, [
+                  _vm._v("Heute bist du in")
+                ])
+              : _c("div", { staticClass: "coba-text-big" }, [
+                  _vm._v("Keine Buchungen für heute")
+                ]),
+            _vm._v(" "),
+            _c(
               "ul",
               { staticClass: "coba-list" },
               _vm._l(_vm.bookings, function(today_booking) {
@@ -1713,69 +1867,70 @@ var render = function() {
               }),
               0
             )
-          : _c("spinner")
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "coba-container coba-text-center" },
-      [
-        _c(
-          "router-link",
-          {
-            staticClass: "coba-text-very-big",
-            attrs: { to: "/booking/new/location" }
-          },
-          [_vm._v("Platz reservieren")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "coba-container coba-full-width coba-footer-container" },
-      [
-        !_vm.load
-          ? _c(
-              "ul",
-              { staticClass: "coba-list" },
-              _vm._l(_vm.bookings, function(booking) {
-                return _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      { attrs: { to: "/booking/" + booking.id } },
-                      [
-                        _vm._v(_vm._s(booking.date) + ", "),
-                        _c("br"),
-                        _vm._v(
-                          _vm._s(booking.workstation.location.name) +
-                            ", " +
-                            _vm._s(booking.workstation.name) +
-                            ", " +
-                            _vm._s(booking.from) +
-                            " - " +
-                            _vm._s(booking.to)
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              }),
-              0
-            )
-          : _c("spinner")
-      ],
-      1
-    )
-  ])
+          ])
+        : _c("spinner"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "coba-container coba-text-center" },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "coba-text-very-big",
+              attrs: { to: "/booking/new/location" }
+            },
+            [_vm._v("Platz reservieren")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "coba-container coba-full-width coba-footer-container" },
+        [
+          !_vm.load
+            ? _c(
+                "ul",
+                { staticClass: "coba-list" },
+                _vm._l(_vm.bookings, function(booking) {
+                  return _c(
+                    "li",
+                    { key: booking.id },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/booking/" + booking.id } },
+                        [
+                          _vm._v(_vm._s(booking.date) + ", "),
+                          _c("br"),
+                          _vm._v(
+                            _vm._s(booking.workstation.location.name) +
+                              ", " +
+                              _vm._s(booking.workstation.name) +
+                              ", " +
+                              _vm._s(booking.from) +
+                              " - " +
+                              _vm._s(booking.to)
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            : _c("spinner")
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -18390,6 +18545,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Pages_Book_Page_Booking__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Pages/Book/Page_Booking */ "./resources/js/components/Pages/Book/Page_Booking.vue");
 /* harmony import */ var _components_Pages_Book_Page_LocationSelection__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Pages/Book/Page_LocationSelection */ "./resources/js/components/Pages/Book/Page_LocationSelection.vue");
 /* harmony import */ var _components_Pages_Book_Page_WorkstationSelection__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../components/Pages/Book/Page_WorkstationSelection */ "./resources/js/components/Pages/Book/Page_WorkstationSelection.vue");
+/* harmony import */ var _components_Pages_Book_Page_DateTimeSelection__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../components/Pages/Book/Page_DateTimeSelection */ "./resources/js/components/Pages/Book/Page_DateTimeSelection.vue");
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -18402,6 +18558,7 @@ var Dashboard = {
 /*import Help from '.././components/Other/Help'
 import LoginPage from '.././components/Auth/Login'
 import LogoutPage from '.././components/Auth/Logout'*/
+
 
 
 
@@ -18459,10 +18616,14 @@ var routes = [{
     auth: true
   }
 }, {
-  path: '/booking/new/workstation',
-  name: 'WorkstationSelection',
+  path: '/booking/new/workstation/:location_id',
   component: _components_Pages_Book_Page_WorkstationSelection__WEBPACK_IMPORTED_MODULE_11__["default"],
-  props: true,
+  meta: {
+    auth: true
+  }
+}, {
+  path: '/booking/new/booking/:workstation_id',
+  component: _components_Pages_Book_Page_DateTimeSelection__WEBPACK_IMPORTED_MODULE_12__["default"],
   meta: {
     auth: true
   }
@@ -18512,10 +18673,12 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
-    data: null
+    data: {},
+    ready: 1
   },
   mutations: {
     refreshUser: function refreshUser(state) {
+      state.ready++;
       fetch('/api/whoami', {
         method: 'GET',
         headers: {
@@ -18525,20 +18688,38 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        state.data = res.success;
+        state.data.user = res.success.user;
+        state.ready--;
       })["catch"](function (error) {
         console.log(error);
-        state.data = null;
+        state.data.user = null;
+        localStorage.removeItem('token');
+      });
+    },
+    getData: function getData(state) {
+      fetch('/api/location', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        state.data.locations = res.success;
+        state.ready--;
+      })["catch"](function (error) {
+        console.log(error);
+        state.data.locations = null;
         localStorage.removeItem('token');
       });
     },
     clearData: function clearData(state) {
-      state.data = null;
+      state.data = {};
       localStorage.removeItem('token');
     },
     clearUser: function clearUser(state) {
       state.data.user = null;
-      state.data.sidebar = null;
       localStorage.removeItem('token');
     }
   },
@@ -18546,8 +18727,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     data: function data(state) {
       return state.data;
     },
-    check: function check(state) {
-      return state.data != null;
+    locations: function locations(state) {
+      return state.data.locations;
+    },
+    ready: function ready(state) {
+      return state.ready === 0;
     }
   }
 });
@@ -18575,6 +18759,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  //Load user data
 
 _helpers_store__WEBPACK_IMPORTED_MODULE_2__["store"].commit('refreshUser');
+_helpers_store__WEBPACK_IMPORTED_MODULE_2__["store"].commit('getData');
 var app = new Vue({
   store: _helpers_store__WEBPACK_IMPORTED_MODULE_2__["store"],
   router: _helpers_router__WEBPACK_IMPORTED_MODULE_1__["router"],
@@ -18996,6 +19181,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Page_Booking_vue_vue_type_template_id_1960c06e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Page_Booking_vue_vue_type_template_id_1960c06e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Pages/Book/Page_DateTimeSelection.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Pages/Book/Page_DateTimeSelection.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Page_DateTimeSelection_vue_vue_type_template_id_05ca44be_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true& */ "./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true&");
+/* harmony import */ var _Page_DateTimeSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Page_DateTimeSelection.vue?vue&type=script&lang=js& */ "./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Page_DateTimeSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Page_DateTimeSelection_vue_vue_type_template_id_05ca44be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Page_DateTimeSelection_vue_vue_type_template_id_05ca44be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "05ca44be",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Pages/Book/Page_DateTimeSelection.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Page_DateTimeSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Page_DateTimeSelection.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Page_DateTimeSelection_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true& ***!
+  \******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Page_DateTimeSelection_vue_vue_type_template_id_05ca44be_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pages/Book/Page_DateTimeSelection.vue?vue&type=template&id=05ca44be&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Page_DateTimeSelection_vue_vue_type_template_id_05ca44be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Page_DateTimeSelection_vue_vue_type_template_id_05ca44be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

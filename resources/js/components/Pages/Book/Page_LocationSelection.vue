@@ -5,8 +5,8 @@
         </div>
         <div class="coba-container">
             <div v-if="!load">
-                <router-link v-for="location in locations" class="coba-button coba-button-accent coba-button-big coba-button-no-border"
-                    :to="{name: 'WorkstationSelection',params: {location_id : location.id}}">{{location.name}}</router-link>
+                <router-link v-for="location in locations" :key="location.id" class="coba-button coba-button-accent coba-button-big coba-button-no-border"
+                    :to="'/booking/new/workstation/'+location.id">{{location.name}}</router-link>
             </div>
             <spinner v-else></spinner>
 
@@ -28,11 +28,12 @@ export default {
         return {
             load: false,
             error: false,
-            locations: []
+            locations: this.$store.getters.locations
         }
     },
-    mounted() {
-        this.fetchData();
+    created() {
+        console.log(this.locations)
+        //this.fetchData();
     },
     methods: {
         fetchData() {

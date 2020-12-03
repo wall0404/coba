@@ -24,7 +24,7 @@
     <body class="antialiased">
 
         <div id="app">
-            <div id="content" v-if="$store.getters.check">
+            <div id="content" v-if="$store.getters.ready">
                 <router-view></router-view>
                 <navbar></navbar>
             </div>

@@ -11,7 +11,7 @@ class LocationController extends ParentController
 
     public function getList(Request $request) {
 
-        $list = Location::all();
+        $list = Location::with('workstations')->get();
 
         return response()->json(['success'=>$list], ParentController::$successCode);
     }
