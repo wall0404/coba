@@ -516,9 +516,7 @@ __webpack_require__.r(__webpack_exports__);
       locations: this.$store.getters.locations
     };
   },
-  created: function created() {
-    console.log(this.locations); //this.fetchData();
-  },
+  created: function created() {},
   methods: {
     fetchData: function fetchData() {
       var _this = this;
@@ -674,7 +672,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    console.log('created!!!');
     this.fetchData();
   },
   methods: {

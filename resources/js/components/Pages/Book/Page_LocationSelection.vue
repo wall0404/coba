@@ -32,8 +32,7 @@ export default {
         }
     },
     created() {
-        console.log(this.locations)
-        //this.fetchData();
+        
     },
     methods: {
         fetchData() {
