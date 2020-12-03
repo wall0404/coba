@@ -6,10 +6,12 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        data: null,
+        data: {},
+        ready: 1,
     },
     mutations: {
         refreshUser (state) {
+            state.ready++;
             fetch('/api/whoami', {
                 method: 'GET',
                 headers: {
@@ -19,27 +21,48 @@ export const store = new Vuex.Store({
             })
                 .then(res => res.json())
                 .then(res => {
-                    state.data = res.success;
+                    state.data.user = res.success.user;
+                    state.ready--;
                 })
                 .catch(error => {
                     console.log(error);
-                    state.data = null;
+                    state.data.user = null;
+                    localStorage.removeItem('token')
+                })
+
+        },
+        getData (state) {
+            fetch('/api/location', {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization' : 'Bearer '+localStorage.token
+                }
+            })
+                .then(res => res.json())
+                .then(res => {
+                    state.data.locations = res.success;
+                    state.ready--;
+                })
+                .catch(error => {
+                    console.log(error);
+                    state.data.locations = null;
                     localStorage.removeItem('token')
                 })
 
         },
         clearData (state) {
-            state.data = null;
+            state.data = {};
             localStorage.removeItem('token')
         },
         clearUser (state) {
             state.data.user = null;
-            state.data.sidebar = null;
             localStorage.removeItem('token')
         }
     },
     getters: {
         data: state => state.data,
-        check: state => state.data!=null
+        locations: state => state.data.locations,
+        ready: state => state.ready === 0
     }
 });

@@ -1,19 +1,13 @@
 <template>
     <div class="coba-page">
         <div class="coba-container coba-flex coba-header">
-            <span class="coba-page-headline">Standortauswahl</span>
+            <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container">
-            <div v-if="!load">
-                <router-link v-for="location in locations" :key="location.id" class="coba-button coba-button-accent coba-button-big coba-button-no-border"
-                    :to="'/booking/new/workstation/'+location.id">{{location.name}}</router-link>
-            </div>
-            <spinner v-else></spinner>
-
-            <div class="coba-flex-space-evenly">
-                <button class="coba-button-round coba-button">Old</button>
-                <button class="coba-button-round coba-button">Fav</button>
-            </div>
+            <div class="coba-text coba-text-strong">{{ $route.params.workstation_id }}</div>
+        </div>
+        <div class="coba-container">
+            <div class="coba-button">Buchen</div>
         </div>
     </div>
 </template>
@@ -22,23 +16,21 @@
 import Spinner from "../../Global/Spinner";
 
 export default {
-    name: "Page_LocationSelection",
+    name: "Page_DateTimeSelection",
     components: {Spinner},
     data() {
         return {
             load: false,
             error: false,
-            locations: this.$store.getters.locations
         }
     },
-    created() {
-        console.log(this.locations)
-        //this.fetchData();
+    mounted() {
+        this.fetchData();
     },
     methods: {
         fetchData() {
-            this.load = true;
-            fetch('/api/location', {
+            /*this.load = true;
+            fetch('/api/workstation?filter[location_id]='+this.location_id, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',
@@ -48,7 +40,7 @@ export default {
                 .then(res => res.json())
                 .then(res => {
                     if(res.success) {
-                        this.locations = res.success;
+                        this.workstations = res.success;
                         this.load = false;
                     }
                     else {
@@ -59,7 +51,7 @@ export default {
                 .catch(error => {
                     console.log(error);
                     this.load = false;
-                })
+                })*/
         },
     }
 }

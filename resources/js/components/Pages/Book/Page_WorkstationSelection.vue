@@ -5,7 +5,8 @@
         </div>
         <div class="coba-container">
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
-                <div v-for="workstation in workstations" class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border">{{workstation.name}}</div>
+                <router-link v-for="workstation in workstations" :key="workstation.id" class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border"
+                             :to="'/booking/new/booking/'+workstation.id">{{workstation.name}}</router-link>
             </div>
             <spinner v-else></spinner>
         </div>
@@ -17,44 +18,19 @@ import Spinner from "../../Global/Spinner";
 
 export default {
     name: "Page_WorkstationSelection",
-    props: ['location_id'],
     components: {Spinner},
     data() {
         return {
             load: false,
             error: false,
-            workstations: []
+            location_id: this.$route.params.location_id,
+            workstations: null
         }
     },
     mounted() {
-        this.fetchData();
+        this.workstations = this.$store.getters.data.locations[this.location_id].workstations;
     },
     methods: {
-        fetchData() {
-            this.load = true;
-            fetch('/api/workstation?filter[location_id]='+this.location_id, {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization' : 'Bearer '+localStorage.token
-                }
-            })
-                .then(res => res.json())
-                .then(res => {
-                    if(res.success) {
-                        this.workstations = res.success;
-                        this.load = false;
-                    }
-                    else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-        },
     }
 }
 </script>

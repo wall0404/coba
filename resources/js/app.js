@@ -11,6 +11,7 @@ import Spinner from './components/Global/Spinner'
 
 //Load user data
 store.commit('refreshUser');
+store.commit('getData');
 
 const app = new Vue({
     store,
