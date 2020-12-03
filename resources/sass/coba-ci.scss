@@ -128,6 +128,10 @@ $navbar-height: 100px;
     &.coba-button-accent{
         background-color: $coba-yellow;
     }
+    &.coba-button-danger{
+        background-color: $coba-danger-red;
+        color: $coba-gray;
+    }
     &.coba-button-no-border {
         border: none;
     }

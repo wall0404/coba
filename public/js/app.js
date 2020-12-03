@@ -357,9 +357,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Page_Booking"
+  name: "Page_Booking",
+  components: {
+    Spinner: _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      load: false,
+      error: false,
+      booking: []
+    };
+  },
+  methods: {
+    deleteBooking: function deleteBooking() {
+      var _this = this;
+
+      this.load = true;
+      fetch('/api/booking/' + this.$route.params.id, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        if (res.success) {
+          _this.load = false;
+
+          _this.$router.go(-1);
+        } else {
+          _this.error = true;
+          _this.load = false;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this.load = false;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -1478,9 +1517,23 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "coba-container" }, [
-      _vm._v("\n        Nothing here yet\n    ")
-    ])
+    _c(
+      "div",
+      { staticClass: "coba-container" },
+      [
+        !_vm.load
+          ? _c(
+              "button",
+              {
+                staticClass: "coba-button coba-button-danger",
+                on: { click: _vm.deleteBooking }
+              },
+              [_vm._v("Löschen")]
+            )
+          : _c("spinner")
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
