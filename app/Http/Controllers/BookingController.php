@@ -4,10 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use PHPUnit\Util\Exception;
+use function PHPUnit\Framework\throwException;
 
 class BookingController extends ParentController
 {
     protected $pagination = false;
+    protected $model_name = 'App\Models\Booking';
+
+    protected $validator_create = [
+        'user_id' => 'required',
+        'workstation_id' => 'required',
+        'date' => 'date'
+    ];
+    protected $validator_update = [
+        'user_id' => 'required',
+        'workstation_id' => 'required',
+        'date' => 'date'
+    ];
 
     public function getList(Request $request){
         //Get input
@@ -53,4 +67,27 @@ class BookingController extends ParentController
 
         return response()->json(['success'=>$list], ParentController::$successCode);
     }
+
+
+    protected function doBeforeCreated($input){
+        if(empty($input['from']))
+            $input['from'] = '09:00';
+        if(empty($input['to']))
+            $input['to'] = '17:00';
+
+        if($input['from'] >= $input['to'])
+            throw new Exception('Startzeit darf nicht nach der Endzeit liegen');
+
+        //Check if workplace is already taken by someone else
+        $bookings = Booking::where('date', $input['date'])->where('workstation_id', $input['workstation_id'])->get();
+        foreach ($bookings as $booking) {
+            if($booking->from <= $input['to'] && $booking->to >= $input['from'])
+                throw new Exception('Platz ist zu dem Zeitpunkt schon vergeben');
+        }
+
+        return $input;
+    }
+
+
+
 }

@@ -3,13 +3,14 @@
         <div class="coba-container coba-header">
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
-        <div class="coba-container coba-text-strong">
-            <div class="coba-text-big">Heute bist du in</div>
-            <ul v-if="!load" class="coba-list">
+        <div  v-if="!load" class="coba-container coba-text-strong">
+            <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
+            <div v-else  class="coba-text-big">Keine Buchungen für heute</div>
+            <ul class="coba-list">
                 <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">{{ today_booking.workstation.location.name }}, {{today_booking.workstation.name}}, {{today_booking.from}} - {{today_booking.to}}</li>
             </ul>
-            <spinner v-else></spinner>
         </div>
+        <spinner v-else></spinner>
         <div class="coba-container coba-text-center">
             <router-link to="/booking/new/location" class="coba-text-very-big">Platz reservieren</router-link>
         </div>
@@ -18,7 +19,7 @@
         </div>
         <div class="coba-container coba-full-width coba-footer-container">
             <ul class="coba-list" v-if="!load">
-                <li v-for="booking in bookings">
+                <li v-for="booking in bookings" :key="booking.id">
                     <router-link v-bind:to="'/booking/'+booking.id">{{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}</router-link>
                 </li>
             </ul>

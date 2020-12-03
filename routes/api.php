@@ -21,6 +21,9 @@ Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 
 /* Booking */
 Route::get('booking', 'App\Http\Controllers\BookingController@getList');
+Route::get('booking/{id}', 'App\Http\Controllers\BookingController@get');
+Route::post('booking', 'App\Http\Controllers\BookingController@create');
+Route::delete('booking/{id}', 'App\Http\Controllers\BookingController@delete');
 
 /* User */
 Route::get('user', 'App\Http\Controllers\UserController@getList');

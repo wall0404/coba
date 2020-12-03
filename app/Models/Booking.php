@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
-class Booking extends Model
+class Booking extends ParentModel
 {
     use HasFactory;
 
@@ -13,4 +13,15 @@ class Booking extends Model
     {
         return $this->belongsTo('App\Models\Workstation');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+
+    public function checkGetRight()
+    {
+        return "all";
+    }
+
 }
