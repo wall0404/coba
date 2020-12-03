@@ -10990,6 +10990,12 @@ a.text-dark:focus {
 
 /* CUSTOM HEADER for HOMESCREEN */
 
+.coba-homescreen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .coba-homescreen .coba-header {
   height: 100px;
   background: none;
@@ -11001,6 +11007,14 @@ a.text-dark:focus {
 
 .coba-homescreen .coba-header .coba-page-headline {
   font-size: 24px;
+}
+
+.coba-homescreen .coba-container {
+  flex-grow: 1;
+}
+
+.coba-homescreen .coba-footer-container {
+  flex-grow: 10;
 }
 
 /* BUTTON Styles */
