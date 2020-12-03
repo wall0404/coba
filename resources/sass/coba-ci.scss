@@ -285,11 +285,23 @@ $navbar-height: 100px;
 }
 
 /* Little Indicator Circles */
+.coba-utilization-indicator-container {
+    display: flex;
+    justify-content: space-evenly;
+}
 .coba-utilization-indicator {
     background-color: black;
     width: 30px;
     height: 30px;
     border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+
+    &.coba-utilization-indicator-selected {
+        border: 1px solid $coba-dark-gray;
+    }
 
     &.coba-utilization-indicator-small {
         width: 20px;
