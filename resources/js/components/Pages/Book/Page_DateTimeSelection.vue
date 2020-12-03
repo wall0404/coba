@@ -7,6 +7,9 @@
             <div class="coba-text coba-text-strong">{{ $route.params.workstation_id }}</div>
         </div>
         <div class="coba-container">
+            <DayPicker></DayPicker>
+        </div>
+        <div class="coba-container">
             <div class="coba-button">Buchen</div>
         </div>
     </div>
@@ -14,10 +17,11 @@
 
 <script>
 import Spinner from "../../Global/Spinner";
+import DayPicker from "../../Elements/DayPicker";
 
 export default {
     name: "Page_DateTimeSelection",
-    components: {Spinner},
+    components: {DayPicker, Spinner},
     data() {
         return {
             load: false,

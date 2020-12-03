@@ -11187,7 +11187,7 @@ a.text-dark:focus {
 .coba-modal {
   margin-top: 100px;
   background-color: #EBEBEB;
-  width: 75%;
+  width: 80%;
   min-height: 200px;
   padding: 20px;
 }
@@ -11199,5 +11199,50 @@ a.text-dark:focus {
 
 .coba-modal .coba-modal-body {
   padding: 20px 0;
+}
+
+/* Little Indicator Circles */
+
+.coba-utilization-indicator-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.coba-utilization-indicator {
+  background-color: black;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid transparent;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-selected {
+  border: 1px solid #2C2C2C;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-small {
+  width: 20px;
+  height: 20px;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-green {
+  background-color: #4ABE5D;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-red {
+  background-color: #FF6666;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-orange {
+  background-color: #FFAD33;
+}
+
+/* TABLE Styles */
+
+.coba-table {
+  width: 100%;
 }
 

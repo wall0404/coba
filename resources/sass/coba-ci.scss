@@ -268,7 +268,7 @@ $navbar-height: 100px;
 .coba-modal {
     margin-top: 100px;
     background-color: $coba-gray;
-    width: 75%;
+    width: 80%;
     min-height: 200px;
     padding: 20px;
 
@@ -282,4 +282,43 @@ $navbar-height: 100px;
     .coba-modal-footer {
 
     }
+}
+
+/* Little Indicator Circles */
+.coba-utilization-indicator-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+.coba-utilization-indicator {
+    background-color: black;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+
+    &.coba-utilization-indicator-selected {
+        border: 1px solid $coba-dark-gray;
+    }
+
+    &.coba-utilization-indicator-small {
+        width: 20px;
+        height: 20px;
+    }
+    &.coba-utilization-indicator-green {
+        background-color: #4ABE5D;
+    }
+    &.coba-utilization-indicator-red {
+        background-color: #FF6666;
+    }
+    &.coba-utilization-indicator-orange {
+        background-color: #FFAD33;
+    }
+}
+
+/* TABLE Styles */
+.coba-table {
+    width: 100%;
 }
