@@ -585,6 +585,24 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
+/* harmony import */ var _Elements_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Elements/Modal */ "./resources/js/components/Elements/Modal.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -604,9 +622,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_WorkstationSelection",
   components: {
+    Modal: _Elements_Modal__WEBPACK_IMPORTED_MODULE_1__["default"],
     Spinner: _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
@@ -617,7 +637,12 @@ __webpack_require__.r(__webpack_exports__);
       workstations: null,
       bookings: null,
       today_date: "",
-      date_in_7_days: ""
+      date_in_7_days: "",
+      modal: {
+        open: false,
+        header: "",
+        body: {}
+      }
     };
   },
   mounted: function mounted() {
@@ -663,34 +688,32 @@ __webpack_require__.r(__webpack_exports__);
     colorIndicators: function colorIndicators() {
       //For every Workstation
       for (var i = 0; i < this.workstations.length; i++) {
-        var workstation_bookings = []; //For every Booking
+        this.workstations[i].workstation_bookings = []; //For every Booking
 
         for (var k = 0; k < this.bookings.length; k++) {
           if (this.bookings[k].workstation_id === this.workstations[i].id) {
             try {
-              workstation_bookings[this.bookings[k].date].push(this.bookings[k]);
+              this.workstations[i].workstation_bookings[this.bookings[k].date].push(this.bookings[k]);
             } catch (e) {
-              workstation_bookings[this.bookings[k].date] = [];
-              workstation_bookings[this.bookings[k].date].push(this.bookings[k]);
+              this.workstations[i].workstation_bookings[this.bookings[k].date] = [];
+              this.workstations[i].workstation_bookings[this.bookings[k].date].push(this.bookings[k]);
             }
           }
         }
 
         var full_days = 0;
 
-        for (var date in workstation_bookings) {
-          console.log("test");
-          var bookedHours = this.calcHours(workstation_bookings[date]);
+        for (var date in this.workstations[i].workstation_bookings) {
+          var bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date]);
 
           if (bookedHours > 6) {
             full_days++;
           }
         }
 
-        console.log(full_days);
-        if (full_days >= 5) this.workstations[i].indicator = '#FF6666'; //mark red
-        else if (full_days === 0) this.workstations[i].indicator = "#4ABE5D"; //mark green
-          else this.workstations[i].indicator = "#FFAD33"; //mark orange
+        if (full_days >= 5) this.workstations[i].indicator = 'coba-utilization-indicator-red'; //mark red
+        else if (full_days === 0) this.workstations[i].indicator = "coba-utilization-indicator-green"; //mark green
+          else this.workstations[i].indicator = "coba-utilization-indicator-orange"; //mark orange
       }
     },
     //calculate and sum all hours in the given array of bookings
@@ -702,6 +725,71 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return hours;
+    },
+    calcModal: function calcModal(bookings) {
+      var color = "";
+      var hours = 0;
+      var startHour = 24;
+      var startBooking = null;
+      var endHour = 0;
+      var endBooking = null;
+
+      for (var i = 0; i < bookings.length; i++) {
+        hours += Number(bookings[i].to.substring(0, 2)) - Number(bookings[i].from.substring(0, 2));
+
+        if (Number(bookings[i].to.substring(0, 2)) > endHour) {
+          endHour = Number(bookings[i].to.substring(0, 2));
+          endBooking = bookings[i];
+        }
+
+        if (Number(bookings[i].from.substring(0, 2)) < startHour) {
+          startHour = Number(bookings[i].from.substring(0, 2));
+          startBooking = bookings[i];
+        }
+      }
+
+      if (hours >= 4) color = 'red'; //mark red
+      else if (hours === 0) color = "green"; //mark green
+        else color = "orange"; //mark orange
+
+      return {
+        color: color,
+        start: startBooking.from,
+        end: endBooking.to
+      };
+    },
+    openModal: function openModal(workstation) {
+      //TODO
+      this.modal.body = [];
+      this.modal.header = workstation.name + " - Übersicht";
+      var date = new Date();
+      var date_as_string = "";
+
+      for (var i = 0; i < 8; i++) {
+        date_as_string = date.toISOString().slice(0, 10); //Get info about this date
+
+        var dayInfo = void 0;
+
+        if (workstation.workstation_bookings[date_as_string]) {
+          dayInfo = this.calcModal(workstation.workstation_bookings[date_as_string]);
+        } else {
+          dayInfo = {
+            color: 'green',
+            start: "Verfügbar",
+            end: ""
+          };
+        }
+
+        dayInfo.date = date_as_string;
+        this.modal.body.push(dayInfo); //Add one day to date
+
+        date.setDate(date.getDate() + 1);
+      }
+
+      this.modal.open = true;
+    },
+    closeModal: function closeModal() {
+      this.modal.open = false;
     }
   }
 });
@@ -901,7 +989,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n}\n.round-indicator[data-v-c78be8ee] {\n    background-color: black;\n    width: 30px;\n    height: 30px;\n    border-radius: 30px;\n}\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n}\n", ""]);
 
 // exports
 
@@ -2633,30 +2721,98 @@ var render = function() {
               {
                 staticClass: "coba-flex coba-flex-wrap coba-flex-space-evenly"
               },
-              _vm._l(_vm.workstations, function(workstation) {
-                return _c(
-                  "div",
-                  { key: workstation.id, staticClass: "seat-container" },
-                  [
-                    _c("div", { staticClass: "coba-text-strong coba-text" }, [
-                      _vm._v(_vm._s(workstation.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("router-link", {
-                      staticClass:
-                        "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
-                      attrs: { to: "/booking/new/booking/" + workstation.id }
-                    }),
-                    _vm._v(" "),
-                    _c("div", {
-                      staticClass: "round-indicator",
-                      style: "background: " + workstation.indicator
-                    })
-                  ],
-                  1
-                )
-              }),
-              0
+              [
+                _vm._l(_vm.workstations, function(workstation) {
+                  return _c(
+                    "div",
+                    { key: workstation.id, staticClass: "seat-container" },
+                    [
+                      _c("div", { staticClass: "coba-text-strong coba-text" }, [
+                        _vm._v(_vm._s(workstation.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("router-link", {
+                        staticClass:
+                          "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
+                        attrs: { to: "/booking/new/booking/" + workstation.id }
+                      }),
+                      _vm._v(" "),
+                      _c("div", {
+                        class:
+                          "coba-utilization-indicator " + workstation.indicator,
+                        on: {
+                          click: function($event) {
+                            return _vm.openModal(workstation)
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _c("modal", {
+                  attrs: { "show-modal": _vm.modal.open },
+                  on: { "modal-close-event": _vm.closeModal },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "header",
+                        fn: function() {
+                          return [
+                            _c("div", { staticClass: "coba-modal-header" }, [
+                              _vm._v(_vm._s(_vm.modal.header))
+                            ])
+                          ]
+                        },
+                        proxy: true
+                      },
+                      {
+                        key: "body",
+                        fn: function() {
+                          return [
+                            _c("div", { staticClass: "coba-modal-body" }, [
+                              _c(
+                                "table",
+                                { staticClass: "coba-table" },
+                                _vm._l(_vm.modal.body, function(day) {
+                                  return _c("tr", [
+                                    _c("th", [_vm._v(_vm._s(day.date))]),
+                                    _vm._v(" "),
+                                    day.end
+                                      ? _c("th", [
+                                          _vm._v(
+                                            _vm._s(day.start.substring(0, 5)) +
+                                              " - " +
+                                              _vm._s(day.end.substring(0, 5))
+                                          )
+                                        ])
+                                      : _c("th", [_vm._v(_vm._s(day.start))]),
+                                    _vm._v(" "),
+                                    _c("th", [
+                                      _c("div", {
+                                        class:
+                                          "coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-" +
+                                          day.color
+                                      })
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        },
+                        proxy: true
+                      }
+                    ],
+                    null,
+                    false,
+                    102194743
+                  )
+                })
+              ],
+              2
             )
           : _c("spinner")
       ],

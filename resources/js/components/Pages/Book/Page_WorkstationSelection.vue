@@ -8,8 +8,25 @@
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
                     <div class="coba-text-strong coba-text">{{workstation.name}}</div>
                     <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="'/booking/new/booking/'+workstation.id"></router-link>
-                    <div class="round-indicator" :style="'background: '+workstation.indicator"></div>
+                    <div :class="'coba-utilization-indicator '+workstation.indicator" @click="openModal(workstation)"></div>
                 </div>
+                <modal :show-modal="modal.open" @modal-close-event="closeModal">
+                    <template v-slot:header>
+                        <div class="coba-modal-header">{{modal.header}}</div>
+                    </template>
+                    <template v-slot:body>
+                        <div class="coba-modal-body">
+                            <table class="coba-table">
+                                <tr v-for="day in modal.body">
+                                    <th>{{day.date}}</th>
+                                    <th v-if="day.end">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
+                                    <th v-else>{{day.start}}</th>
+                                    <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th>
+                                </tr>
+                            </table>
+                        </div>
+                    </template>
+                </modal>
             </div>
             <spinner v-else></spinner>
         </div>
@@ -18,10 +35,11 @@
 
 <script>
 import Spinner from "../../Global/Spinner";
+import Modal from "../../Elements/Modal";
 
 export default {
     name: "Page_WorkstationSelection",
-    components: {Spinner},
+    components: {Modal, Spinner},
     data() {
         return {
             load: false,
@@ -31,6 +49,11 @@ export default {
             bookings: null,
             today_date: "",
             date_in_7_days: "",
+            modal: {
+                open: false,
+                header: "",
+                body: {}
+            }
         }
     },
     mounted() {
@@ -75,37 +98,35 @@ export default {
         colorIndicators() {
             //For every Workstation
             for (let i = 0; i<this.workstations.length; i++) {
-                let workstation_bookings = [];
+                this.workstations[i].workstation_bookings = [];
 
                 //For every Booking
                 for (let k = 0; k<this.bookings.length; k++) {
                     if(this.bookings[k].workstation_id === this.workstations[i].id) {
                         try {
-                            workstation_bookings[this.bookings[k].date].push(this.bookings[k])
+                            this.workstations[i].workstation_bookings[this.bookings[k].date].push(this.bookings[k])
                         }
                         catch (e) {
-                            workstation_bookings[this.bookings[k].date] = []
-                            workstation_bookings[this.bookings[k].date].push(this.bookings[k])
+                            this.workstations[i].workstation_bookings[this.bookings[k].date] = []
+                            this.workstations[i].workstation_bookings[this.bookings[k].date].push(this.bookings[k])
                         }
                     }
                 }
 
                 let full_days = 0;
-                for(let date in workstation_bookings) {
-                    console.log("test");
-                    let bookedHours = this.calcHours(workstation_bookings[date])
+                for(let date in this.workstations[i].workstation_bookings) {
+                    let bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date])
                     if(bookedHours > 6) {
                         full_days++;
                     }
                 }
-                console.log(full_days)
 
                 if(full_days >= 5)
-                    this.workstations[i].indicator = '#FF6666'; //mark red
+                    this.workstations[i].indicator = 'coba-utilization-indicator-red'; //mark red
                 else if(full_days === 0)
-                    this.workstations[i].indicator = "#4ABE5D"; //mark green
+                    this.workstations[i].indicator = "coba-utilization-indicator-green"; //mark green
                 else
-                    this.workstations[i].indicator = "#FFAD33"; //mark orange
+                    this.workstations[i].indicator = "coba-utilization-indicator-orange"; //mark orange
 
             }
         },
@@ -115,7 +136,61 @@ export default {
             for(let i = 0; i < bookings.length; i++) {
                 hours += Number(bookings[i].to.substring(0,2)) - Number(bookings[i].from.substring(0,2))
             }
+
             return hours;
+        },
+        calcModal(bookings) {
+            let color = "";
+            let hours = 0;
+            let startHour = 24;
+            let startBooking = null;
+            let endHour = 0;
+            let endBooking = null;
+            for(let i = 0; i < bookings.length; i++) {
+                hours += Number(bookings[i].to.substring(0,2)) - Number(bookings[i].from.substring(0,2));
+                if(Number(bookings[i].to.substring(0,2))  > endHour) {
+                    endHour = Number(bookings[i].to.substring(0, 2));
+                    endBooking = bookings[i];
+                }
+                if(Number(bookings[i].from.substring(0,2))  < startHour) {
+                    startHour = Number(bookings[i].from.substring(0, 2));
+                    startBooking = bookings[i];
+                }
+            }
+            if(hours >= 4)
+                color = 'red'; //mark red
+            else if(hours === 0)
+                color = "green"; //mark green
+            else
+                color = "orange"; //mark orange
+            return {color:color, start: startBooking.from, end: endBooking.to};
+        },
+        openModal(workstation) {
+            //TODO
+            this.modal.body = [];
+            this.modal.header = workstation.name + " - Übersicht";
+
+            let date = new Date();
+            let date_as_string = "";
+            for(let i = 0; i < 8; i++) {
+                date_as_string = date.toISOString().slice(0, 10);
+                //Get info about this date
+                let dayInfo;
+                if(workstation.workstation_bookings[date_as_string]) {
+                    dayInfo = this.calcModal(workstation.workstation_bookings[date_as_string])
+                }
+                else {
+                    dayInfo = {color:'green', start: "Verfügbar", end: ""}
+                }
+                dayInfo.date = date_as_string;
+                this.modal.body.push(dayInfo);
+                //Add one day to date
+                date.setDate(date.getDate() + 1);
+            }
+            this.modal.open = true;
+        },
+        closeModal() {
+            this.modal.open = false;
         }
     }
 }
@@ -126,11 +201,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.round-indicator {
-    background-color: black;
-    width: 30px;
-    height: 30px;
-    border-radius: 30px;
+    margin-bottom: 30px;
 }
 </style>
