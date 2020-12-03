@@ -92,6 +92,10 @@ $navbar-height: 100px;
 }
 /* CUSTOM HEADER for HOMESCREEN */
 .coba-homescreen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
     .coba-header {
         height: 100px;
         background: none;
@@ -103,6 +107,12 @@ $navbar-height: 100px;
         .coba-page-headline {
             font-size: 24px;
         }
+    }
+    .coba-container {
+        flex-grow: 1;
+    }
+    .coba-footer-container {
+        flex-grow: 10;
     }
 }
 
