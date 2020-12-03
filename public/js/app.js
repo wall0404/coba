@@ -574,6 +574,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_Home",
@@ -1675,25 +1676,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "coba-page coba-homescreen" }, [
-    _c("div", { staticClass: "coba-container coba-header" }, [
-      _c("h1", { staticClass: "coba-page-headline" }, [
-        _vm._v("Willkommen zurück,"),
-        _c("br"),
-        _vm._v(_vm._s(_vm.$store.getters.data.user.firstName))
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "coba-container coba-text-strong" },
-      [
-        _c("div", { staticClass: "coba-text-big" }, [
-          _vm._v("Heute bist du in")
-        ]),
-        _vm._v(" "),
-        !_vm.load
-          ? _c(
+  return _c(
+    "div",
+    { staticClass: "coba-page coba-homescreen" },
+    [
+      _c("div", { staticClass: "coba-container coba-header" }, [
+        _c("h1", { staticClass: "coba-page-headline" }, [
+          _vm._v("Willkommen zurück,"),
+          _c("br"),
+          _vm._v(_vm._s(_vm.$store.getters.data.user.firstName))
+        ])
+      ]),
+      _vm._v(" "),
+      !_vm.load
+        ? _c("div", { staticClass: "coba-container coba-text-strong" }, [
+            _vm.bookings.find(function(element) {
+              return element.date === _vm.today_date
+            })
+              ? _c("div", { staticClass: "coba-text-big" }, [
+                  _vm._v("Heute bist du in")
+                ])
+              : _c("div", { staticClass: "coba-text-big" }, [
+                  _vm._v("Keine Buchungen für heute")
+                ]),
+            _vm._v(" "),
+            _c(
               "ul",
               { staticClass: "coba-list" },
               _vm._l(_vm.bookings, function(today_booking) {
@@ -1713,69 +1720,70 @@ var render = function() {
               }),
               0
             )
-          : _c("spinner")
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "coba-container coba-text-center" },
-      [
-        _c(
-          "router-link",
-          {
-            staticClass: "coba-text-very-big",
-            attrs: { to: "/booking/new/location" }
-          },
-          [_vm._v("Platz reservieren")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "coba-container coba-full-width coba-footer-container" },
-      [
-        !_vm.load
-          ? _c(
-              "ul",
-              { staticClass: "coba-list" },
-              _vm._l(_vm.bookings, function(booking) {
-                return _c(
-                  "li",
-                  [
-                    _c(
-                      "router-link",
-                      { attrs: { to: "/booking/" + booking.id } },
-                      [
-                        _vm._v(_vm._s(booking.date) + ", "),
-                        _c("br"),
-                        _vm._v(
-                          _vm._s(booking.workstation.location.name) +
-                            ", " +
-                            _vm._s(booking.workstation.name) +
-                            ", " +
-                            _vm._s(booking.from) +
-                            " - " +
-                            _vm._s(booking.to)
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                )
-              }),
-              0
-            )
-          : _c("spinner")
-      ],
-      1
-    )
-  ])
+          ])
+        : _c("spinner"),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "coba-container coba-text-center" },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "coba-text-very-big",
+              attrs: { to: "/booking/new/location" }
+            },
+            [_vm._v("Platz reservieren")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "coba-container coba-full-width coba-footer-container" },
+        [
+          !_vm.load
+            ? _c(
+                "ul",
+                { staticClass: "coba-list" },
+                _vm._l(_vm.bookings, function(booking) {
+                  return _c(
+                    "li",
+                    { key: booking.id },
+                    [
+                      _c(
+                        "router-link",
+                        { attrs: { to: "/booking/" + booking.id } },
+                        [
+                          _vm._v(_vm._s(booking.date) + ", "),
+                          _c("br"),
+                          _vm._v(
+                            _vm._s(booking.workstation.location.name) +
+                              ", " +
+                              _vm._s(booking.workstation.name) +
+                              ", " +
+                              _vm._s(booking.from) +
+                              " - " +
+                              _vm._s(booking.to)
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                }),
+                0
+              )
+            : _c("spinner")
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
