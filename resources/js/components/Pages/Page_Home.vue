@@ -43,7 +43,6 @@ export default {
         }
     },
     created() {
-        console.log('created!!!')
         this.fetchData();
     },
     methods: {
