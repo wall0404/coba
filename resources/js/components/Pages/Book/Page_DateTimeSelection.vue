@@ -1,14 +1,13 @@
 <template>
     <div class="coba-page">
         <div class="coba-container coba-flex coba-header">
-            <span class="coba-page-headline">Arbeitsplatzauswahl</span>
+            <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container">
-            <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
-                <router-link v-for="workstation in workstations" class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border"
-                             :to="'/booking/new/booking/'+workstation.id">{{workstation.name}}</router-link>
-            </div>
-            <spinner v-else></spinner>
+            <div class="coba-text coba-text-strong">{{ $route.params.workstation_id }}</div>
+        </div>
+        <div class="coba-container">
+            <div class="coba-button">Buchen</div>
         </div>
     </div>
 </template>
@@ -17,14 +16,12 @@
 import Spinner from "../../Global/Spinner";
 
 export default {
-    name: "Page_WorkstationSelection",
+    name: "Page_DateTimeSelection",
     components: {Spinner},
     data() {
         return {
             load: false,
             error: false,
-            location_id: this.$route.params.location_id,
-            workstations: []
         }
     },
     mounted() {
@@ -32,7 +29,7 @@ export default {
     },
     methods: {
         fetchData() {
-            this.load = true;
+            /*this.load = true;
             fetch('/api/workstation?filter[location_id]='+this.location_id, {
                 method: 'GET',
                 headers: {
@@ -54,7 +51,7 @@ export default {
                 .catch(error => {
                     console.log(error);
                     this.load = false;
-                })
+                })*/
         },
     }
 }
