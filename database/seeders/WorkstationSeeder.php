@@ -16,47 +16,55 @@ class WorkstationSeeder extends Seeder
     {
         DB::table('workstations')->insert([
             'location_id' => '1',
-            'name' => '1',
+            'name' => 'Platz 1',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '1',
-            'name' => '2',
+            'name' => 'Platz 2',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '1',
-            'name' => '3',
+            'name' => 'Platz 3',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '1',
+            'name' => 'Platz 1',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '2',
+            'name' => 'Platz 2',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '3',
+            'name' => 'Platz 3',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '4',
+            'name' => 'Platz 4',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '5',
+            'name' => 'Platz 5',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '6',
+            'name' => 'Platz 6',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '7',
+            'name' => 'Platz 7',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => '8',
+            'name' => 'Platz 8',
+        ]);
+        DB::table('workstations')->insert([
+            'location_id' => '2',
+            'name' => 'Platz 9',
+        ]);
+        DB::table('workstations')->insert([
+            'location_id' => '2',
+            'name' => 'Platz 10',
         ]);
     }
 }

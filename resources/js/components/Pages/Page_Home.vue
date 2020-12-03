@@ -11,7 +11,7 @@
             <spinner v-else></spinner>
         </div>
         <div class="coba-container coba-text-center">
-            <router-link to="new_booking" class="coba-text-very-big">Platz reservieren</router-link>
+            <router-link to="/booking/new/location" class="coba-text-very-big">Platz reservieren</router-link>
         </div>
         <div class="coba-container">
             <span class="coba-text-big">Kommende Buchungen:</span>
@@ -41,7 +41,8 @@ export default {
             today_date: new Date().toISOString().slice(0, 10)
         }
     },
-    mounted() {
+    created() {
+        console.log('created!!!')
         this.fetchData();
     },
     methods: {

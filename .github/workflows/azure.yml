@@ -26,26 +26,5 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-    - name: MySQL Version
-      run: mysql --version
-
-    - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
-
-    - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    - name: Generate key
-      run: php artisan key:generate
-
-    - name: Npm Install
-      run: npm install
-
-    - name: Migrate and Seed
-      run: php artisan migrate:fresh --seed
-
-    - name: Passport access Client
-      run: php artisan passport:client --personal -n
-
 
 

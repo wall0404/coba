@@ -22,7 +22,7 @@
                     <span >E-Mail oder Passwort stimmt nicht</span>
                 </div>
 
-                <button class="coba-button" type="button" @click="submit">Anmelden</button>
+                <button class="coba-button coba-button-accent" type="button" @click="submit">Anmelden</button>
 
             </form>
         </div>
