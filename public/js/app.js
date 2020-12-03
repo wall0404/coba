@@ -513,11 +513,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       load: false,
       error: false,
-      locations: []
+      locations: this.$store.getters.locations
     };
   },
-  mounted: function mounted() {
-    this.fetchData();
+  created: function created() {
+    console.log(this.locations); //this.fetchData();
   },
   methods: {
     fetchData: function fetchData() {
@@ -586,39 +586,13 @@ __webpack_require__.r(__webpack_exports__);
       load: false,
       error: false,
       location_id: this.$route.params.location_id,
-      workstations: []
+      workstations: null
     };
   },
   mounted: function mounted() {
-    this.fetchData();
+    this.workstations = this.$store.getters.data.locations[this.location_id].workstations;
   },
-  methods: {
-    fetchData: function fetchData() {
-      var _this = this;
-
-      this.load = true;
-      fetch('/api/workstation?filter[location_id]=' + this.location_id, {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.token
-        }
-      }).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        if (res.success) {
-          _this.workstations = res.success;
-          _this.load = false;
-        } else {
-          _this.error = true;
-          _this.load = false;
-        }
-      })["catch"](function (error) {
-        console.log(error);
-        _this.load = false;
-      });
-    }
-  }
+  methods: {}
 });
 
 /***/ }),
@@ -1694,6 +1668,7 @@ var render = function() {
                 return _c(
                   "router-link",
                   {
+                    key: location.id,
                     staticClass:
                       "coba-button coba-button-accent coba-button-big coba-button-no-border",
                     attrs: { to: "/booking/new/workstation/" + location.id }
@@ -1775,6 +1750,7 @@ var render = function() {
                 return _c(
                   "router-link",
                   {
+                    key: workstation.id,
                     staticClass:
                       "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
                     attrs: { to: "/booking/new/booking/" + workstation.id }
@@ -18697,10 +18673,12 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
   state: {
-    data: null
+    data: {},
+    ready: 1
   },
   mutations: {
     refreshUser: function refreshUser(state) {
+      state.ready++;
       fetch('/api/whoami', {
         method: 'GET',
         headers: {
@@ -18710,20 +18688,38 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        state.data = res.success;
+        state.data.user = res.success.user;
+        state.ready--;
       })["catch"](function (error) {
         console.log(error);
-        state.data = null;
+        state.data.user = null;
+        localStorage.removeItem('token');
+      });
+    },
+    getData: function getData(state) {
+      fetch('/api/location', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        state.data.locations = res.success;
+        state.ready--;
+      })["catch"](function (error) {
+        console.log(error);
+        state.data.locations = null;
         localStorage.removeItem('token');
       });
     },
     clearData: function clearData(state) {
-      state.data = null;
+      state.data = {};
       localStorage.removeItem('token');
     },
     clearUser: function clearUser(state) {
       state.data.user = null;
-      state.data.sidebar = null;
       localStorage.removeItem('token');
     }
   },
@@ -18731,8 +18727,11 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
     data: function data(state) {
       return state.data;
     },
-    check: function check(state) {
-      return state.data != null;
+    locations: function locations(state) {
+      return state.data.locations;
+    },
+    ready: function ready(state) {
+      return state.ready === 0;
     }
   }
 });
@@ -18760,6 +18759,7 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  //Load user data
 
 _helpers_store__WEBPACK_IMPORTED_MODULE_2__["store"].commit('refreshUser');
+_helpers_store__WEBPACK_IMPORTED_MODULE_2__["store"].commit('getData');
 var app = new Vue({
   store: _helpers_store__WEBPACK_IMPORTED_MODULE_2__["store"],
   router: _helpers_router__WEBPACK_IMPORTED_MODULE_1__["router"],
