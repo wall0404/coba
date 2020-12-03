@@ -28,7 +28,7 @@ export default {
         }
     },
     mounted() {
-        this.workstations = this.$store.getters.data.locations[this.location_id].workstations;
+        this.workstations = this.$store.getters.data.locations[this.location_id-1].workstations;
     },
     methods: {
     }
