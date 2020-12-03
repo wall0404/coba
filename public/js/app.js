@@ -590,7 +590,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.workstations = this.$store.getters.data.locations[this.location_id].workstations;
+    this.workstations = this.$store.getters.data.locations[this.location_id - 1].workstations;
   },
   methods: {}
 });
