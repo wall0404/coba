@@ -14,7 +14,7 @@
 
                 <div class="coba-margin-top">
                     <div class="coba-width-1-1">
-                        <input v-model="password" class="coba-input" type="password" id="password" placeholder="Passwort" v-bind:disabled="load"  v-bind:class="[error?'coba-form-danger':'']" v-on:focus="focusHandler">
+                        <input v-model="password" class="coba-input" type="password" id="password" placeholder="Passwort" v-bind:disabled="load"  v-bind:class="[error?'coba-form-danger':'']" v-on:focus="focusHandler" @keyup.enter="submit">
                     </div>
                 </div>
 

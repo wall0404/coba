@@ -11072,6 +11072,28 @@ a.text-dark:focus {
   border-radius: 100%;
 }
 
+.coba-button:focus {
+  outline: none;
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+}
+
+.coba-button-container {
+  /*In a Button container all buttons will be listed next to each other */
+  display: flex;
+}
+
+.coba-button-container .coba-button {
+  margin: 0 10px;
+}
+
+.coba-button-container .coba-button:first-child {
+  margin-left: 0;
+}
+
+.coba-button-container .coba-button:last-child {
+  margin-right: 0;
+}
+
 /* FORM Styles */
 
 .coba-form-danger {
@@ -11145,5 +11167,37 @@ a.text-dark:focus {
 
 .coba-list li {
   padding: 10px 0;
+}
+
+/* MODAL Style */
+
+.coba-modal-mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.coba-modal {
+  margin-top: 100px;
+  background-color: #EBEBEB;
+  width: 75%;
+  min-height: 200px;
+  padding: 20px;
+}
+
+.coba-modal .coba-modal-header {
+  font-size: 24px;
+  border-bottom: 1px solid #2C2C2C;
+}
+
+.coba-modal .coba-modal-body {
+  padding: 20px 0;
 }
 
