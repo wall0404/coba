@@ -32,34 +32,10 @@ export default {
         }
     },
     created() {
-        
+
     },
     methods: {
-        fetchData() {
-            this.load = true;
-            fetch('/api/location', {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization' : 'Bearer '+localStorage.token
-                }
-            })
-                .then(res => res.json())
-                .then(res => {
-                    if(res.success) {
-                        this.locations = res.success;
-                        this.load = false;
-                    }
-                    else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-        },
+
     }
 }
 </script>
