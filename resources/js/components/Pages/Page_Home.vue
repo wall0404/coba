@@ -41,7 +41,8 @@ export default {
             today_date: new Date().toISOString().slice(0, 10)
         }
     },
-    mounted() {
+    created() {
+        console.log('created!!!')
         this.fetchData();
     },
     methods: {

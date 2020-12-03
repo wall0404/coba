@@ -588,7 +588,8 @@ __webpack_require__.r(__webpack_exports__);
       today_date: new Date().toISOString().slice(0, 10)
     };
   },
-  mounted: function mounted() {
+  created: function created() {
+    console.log('created!!!');
     this.fetchData();
   },
   methods: {
