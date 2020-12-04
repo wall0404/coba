@@ -22,7 +22,15 @@ class BookingController extends ParentController
         'workstation_id' => 'required',
         'date' => 'date'
     ];
-
+    protected $filter = [
+        'date' => 'gol',
+        'from' => 'gol',
+        'to' => 'gol',
+        'user_id' => 'equals',
+        'workstation' => 'equals',
+        'location_id' => 'custom',
+    ];
+/*
     public function getList(Request $request){
         //Get input
         $input = $request->input();
@@ -41,7 +49,7 @@ class BookingController extends ParentController
             if(!empty($input['filter']['workstation_id']))
                 $list = $list->where('workstation_id', $input['filter']['workstation_id']);
             if(!empty($input['filter']['location_id']))
-                $list = $list->where('location_id', $input['filter']['location_id']);
+                $list = $list->join('workstation', 'booking.workstation_id', '=', 'workstation.id')->where('workstation.location_id');
             if(!empty($input['filter']['date']['min']))
                 $list = $list->where('date', '>=', $input['filter']['date']['min']);
             if(!empty($input['filter']['date']['max']))
@@ -67,7 +75,7 @@ class BookingController extends ParentController
 
         return response()->json(['success'=>$list], ParentController::$successCode);
     }
-
+*/
 
     protected function doBeforeCreated($input){
         if(empty($input['from']))
@@ -88,6 +96,9 @@ class BookingController extends ParentController
         return $input;
     }
 
-
+    protected function location_id_filter($list, $value) {
+        $list = $list->join('workstations', 'bookings.workstation_id', '=', 'workstations.id')->where('workstations.location_id', '=', $value);
+        return $list;
+    }
 
 }

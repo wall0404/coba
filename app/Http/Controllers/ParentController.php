@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use PHPUnit\Exception;
 
@@ -27,6 +28,80 @@ class ParentController extends Controller
 
     protected $validator_create = [];
     protected $validator_update = [];
+
+
+    protected function search(Request $request)
+    {
+        //Get input
+        $input = $request->input();
+
+        //load default limit and order values if not set in input parameters
+        if (empty($input['limit'])) $input['limit'] = $this->default_limit;
+        if (empty($input['order_by'])) $input['order_by'] = 'id';
+        if (empty($input['order_desc'])) $input['order_desc'] = 0;
+
+        //Create object of this model to get the name of the database
+        $model = new $this->model_name;
+        $table_name = $model->getTable();
+
+
+        //get columns that are allowed to see based on the roles of logged in user and the chosen filters
+        //$columns = $this->getAuthorizedColumns($input, $table_name);
+        $columns = "all";
+
+        //Get list items that are allowed to see
+        $list = DB::table($table_name);
+
+        //select only the allowed columns
+        if ($columns != "all")
+            $list = $list->select($columns);
+        else {
+            $list = $list->select($table_name . '.*');
+        }
+
+        //filter list
+        if (isset($input['filter'])) {
+            foreach ($input['filter'] as $key => $value) {
+                if (isset($this->filter[$key])) {
+                    switch ($this->filter[$key]) {
+                        case 'equals':
+                            $list = $list->where($key, $value);
+                            break;
+                        case 'like':
+                            $list = $list->where($key, 'LIKE', '%' . $value . '%');
+                            break;
+                        case 'gol':
+                            if (isset($value['min']))
+                                $list = $list->where($key, '>=', $value);
+                            if (isset($value['max']))
+                                $list = $list->where($key, '<=', $value);
+                            break;
+                        case 'custom':
+                            $function_name = $key . '_filter';
+                            //$list = $this->$function_name($list, $value);
+                            break;
+                    }
+                } else
+                    $list = $list->where($key, $value);
+            }
+        } else {
+            //return Unauthorized if no columns are allowed
+            if (!is_scalar($columns) && count($columns) < 1) {
+                return response()->json(['error' => "you have no right to see all $table_name"], ParentController::$unauthorizedCode);
+            }
+        }
+
+        $list = $list->orderBy($input['order_by'], $input['order_desc'] ? 'desc' : 'asc');
+
+        //paginate list if wanted
+        if ($this->pagination)
+            $list = $list->paginate($input['limit']);
+        else
+            $list = $list->get();
+
+
+        return response()->json(['success' => $list], ParentController::$successCode);
+    }
 
     /**
      * @param Request $request

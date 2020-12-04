@@ -5,6 +5,7 @@ $coba-black: #000;
 $coba-white: #fff;
 $coba-gray: #EBEBEB;
 $coba-dark-gray: #2C2C2C;
+$coba-disabled-gray: #757575;
 
 $coba-green: #4ABE5D;
 $coba-red: #FF6666;
@@ -83,7 +84,7 @@ $navbar-height: 100px;
     color: white;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 
     .coba-page-headline {
         font-size: 32px;
@@ -166,6 +167,27 @@ $navbar-height: 100px;
             border-radius: 100%;
         }
     }
+    &:focus {
+        outline: none;
+        box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    }
+    &.coba-button-disabled {
+        border: 1px solid $coba-disabled-gray;
+        color: $coba-disabled-gray;
+    }
+}
+.coba-button-container { /*In a Button container all buttons will be listed next to each other */
+    display: flex;
+
+    .coba-button {
+        margin: 0 10px;
+        &:first-child {
+            margin-left: 0;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+    }
 }
 
 
@@ -230,5 +252,108 @@ $navbar-height: 100px;
 
     &.coba-big-list {
 
+    }
+}
+
+
+
+/* MODAL Style */
+.coba-modal-mask {
+    background-color: rgba(0,0,0,0.5);
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: flex-start;
+}
+.coba-modal {
+    margin-top: 100px;
+    background-color: $coba-gray;
+    width: 80%;
+    min-height: 200px;
+    padding: 20px;
+
+    .coba-modal-header {
+        font-size: 24px;
+        border-bottom: 1px solid $coba-dark-gray;
+        text-align: center;
+    }
+    .coba-modal-body {
+        padding: 20px 0;
+    }
+    .coba-modal-footer {
+
+    }
+}
+
+/* Little Indicator Circles */
+.coba-utilization-indicator-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+.coba-utilization-indicator {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid transparent;
+    background-color: $coba-gray;
+
+    &.coba-utilization-indicator-selected {
+        border: 1px solid $coba-dark-gray;
+    }
+
+    &.coba-utilization-indicator-big {
+        width: 40px;
+        height: 40px;
+    }
+    &.coba-utilization-indicator-small {
+        width: 20px;
+        height: 20px;
+    }
+    &.coba-utilization-indicator-disabled {
+        color: $coba-disabled-gray;
+    }
+    &.coba-utilization-indicator-gray {
+        background-color: $coba-gray;
+    }
+    &.coba-utilization-indicator-green {
+        background-color: #4ABE5D;
+    }
+    &.coba-utilization-indicator-red {
+        background-color: #FF6666;
+    }
+    &.coba-utilization-indicator-orange {
+        background-color: #FFAD33;
+    }
+    &.coba-utilization-indicator-arrow-next {
+        content: '\27A4';
+        background-color: transparent;
+    }
+    &.coba-utilization-indicator-arrow-prev {
+        content: '\27A4';
+        background-color: transparent;
+        transform: rotate(180deg);
+    }
+}
+
+/* TABLE Styles */
+.coba-table {
+    width: 100%;
+
+    th {
+        font-weight: normal;
+    }
+    tr {
+        padding: 0 20px;
+    }
+    .coba-table-align-right {
+        text-align: right;
     }
 }
