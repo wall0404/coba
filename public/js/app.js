@@ -101,21 +101,91 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DayPicker",
-  //props: ['days'],
+  props: ['workstation', 'bookings'],
   data: function data() {
     return {
-      days: [{
-        day: "Montag",
-        color: "green",
-        selected: false
-      }, {
-        day: "Dienstag",
-        color: "orange",
-        selected: true
-      }]
+      todayDate: new Date(),
+      weekStart: null,
+      weekEnd: null,
+      page: 0,
+      days: [],
+      pages: []
     };
+  },
+  computed: {
+    weekStartStr: function weekStartStr() {
+      try {
+        return this.weekStart.toISOString().slice(0, 10);
+      } catch (e) {}
+    },
+    weekEndStr: function weekEndStr() {
+      try {
+        return this.weekEnd.toISOString().slice(0, 10);
+      } catch (e) {}
+    }
+  },
+  created: function created() {
+    this.initiateDates();
+  },
+  methods: {
+    initiateDates: function initiateDates() {
+      if (this.page < 0) this.page = 0;
+      this.weekStart = new Date();
+      this.weekEnd = new Date();
+      this.weekStart.setDate(new Date().getDate() - this.weekStart.getUTCDay() + 1 + this.page * 7);
+      var date = new Date(this.weekStart.getTime());
+
+      if (typeof this.pages[this.page] == "undefined") {
+        this.pages[this.page] = [];
+
+        for (var i = 0; i < 5; i++) {
+          var disabled = false;
+          this.pages[this.page].push({
+            day: this.dateToDayOfMonth(date),
+            color: 'gray',
+            selected: false,
+            date: new Date(date.getTime()),
+            disabled: disabled
+          });
+          date.setDate(date.getDate() + 1);
+        }
+      } else {
+        for (var _i = 0; _i < 5; _i++) {
+          date.setDate(date.getDate() + 1);
+        }
+      }
+
+      this.weekEnd.setDate(date.getDate() - 1);
+      this.days = this.pages[this.page];
+    },
+    dateToDayOfMonth: function dateToDayOfMonth(date) {
+      var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+      return days[date.getUTCDay()];
+    },
+    selectDate: function selectDate(day) {
+      if (!day.disabled) {
+        day.selected = !day.selected;
+        this.$emit('callback-picker-event', day);
+      }
+    },
+    nextPage: function nextPage() {
+      this.page++;
+      this.initiateDates();
+    },
+    prevPage: function prevPage() {
+      this.page--;
+      this.initiateDates();
+    }
   }
 });
 
@@ -143,6 +213,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Modal",
   props: ['showModal']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Elements/TimePicker.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Elements/TimePicker.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "TimePicker",
+  props: ['bookings', 'day']
 });
 
 /***/ }),
@@ -502,6 +592,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
 /* harmony import */ var _Elements_DayPicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Elements/DayPicker */ "./resources/js/components/Elements/DayPicker.vue");
+/* harmony import */ var _Elements_TimePicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Elements/TimePicker */ "./resources/js/components/Elements/TimePicker.vue");
 //
 //
 //
@@ -519,21 +610,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_DateTimeSelection",
   components: {
+    TimePicker: _Elements_TimePicker__WEBPACK_IMPORTED_MODULE_2__["default"],
     DayPicker: _Elements_DayPicker__WEBPACK_IMPORTED_MODULE_1__["default"],
     Spinner: _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
+      workstation: {},
       load: false,
-      error: false
+      error: false,
+      days: []
     };
   },
   mounted: function mounted() {
+    this.fetchWorkstation();
     this.fetchData();
   },
   methods: {
@@ -561,6 +657,28 @@ __webpack_require__.r(__webpack_exports__);
               console.log(error);
               this.load = false;
           })*/
+    },
+    fetchWorkstation: function fetchWorkstation() {
+      var locations = this.$store.getters.locations;
+
+      for (var location in locations) {
+        for (var workstation in locations[location].workstations) {
+          if (locations[location].workstations[workstation].id == this.$route.params.workstation_id) {
+            this.workstation = locations[location].workstations[workstation];
+            break;
+          }
+        }
+      }
+    },
+    callbackPicker: function callbackPicker(day) {
+      if (day.selected) this.days.push(day);else {
+        for (var day_index in this.days) {
+          if (this.days[day_index].date === day.date) {
+            this.days.splice(day_index, 1);
+            break;
+          }
+        }
+      }
     }
   }
 });
@@ -807,22 +925,25 @@ __webpack_require__.r(__webpack_exports__);
       var date_as_string = "";
 
       for (var i = 0; i < 8; i++) {
-        date_as_string = date.toISOString().slice(0, 10); //Get info about this date
+        date_as_string = date.toISOString().slice(0, 10); //pass on weekend
 
-        var dayInfo = void 0;
+        if (date.getUTCDay() !== 0 && date.getUTCDay() !== 6) {
+          //Get info about this date
+          var dayInfo = void 0;
 
-        if (workstation.workstation_bookings[date_as_string]) {
-          dayInfo = this.calcModal(workstation.workstation_bookings[date_as_string]);
-        } else {
-          dayInfo = {
-            color: 'green',
-            start: "Verfügbar",
-            end: ""
-          };
+          if (workstation.workstation_bookings[date_as_string]) {
+            dayInfo = this.calcModal(workstation.workstation_bookings[date_as_string]);
+          } else {
+            dayInfo = {
+              color: 'green',
+              start: "Verfügbar",
+              end: ""
+            };
+          }
+
+          dayInfo.date = this.dateToDayOfMonth(date);
+          this.modal.body.push(dayInfo); //Add one day to date
         }
-
-        dayInfo.date = date_as_string;
-        this.modal.body.push(dayInfo); //Add one day to date
 
         date.setDate(date.getDate() + 1);
       }
@@ -831,6 +952,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     closeModal: function closeModal() {
       this.modal.open = false;
+    },
+    dateToDayOfMonth: function dateToDayOfMonth(date) {
+      var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
+      return days[date.getUTCDay()];
     }
   }
 });
@@ -1030,7 +1155,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n}\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\n    height: 40px;\n}\n", ""]);
 
 // exports
 
@@ -2146,24 +2271,77 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "coba-utilization-indicator-container" },
-    _vm._l(_vm.days, function(day) {
-      return _c(
-        "div",
-        {
-          class:
-            "coba-utilization-indicator coba-utilization-indicator-" +
-            day.color +
-            " " +
-            (day.selected ? "coba-utilization-indicator-selected" : "")
-        },
-        [_vm._v(_vm._s(day.day.substring(0, 1)))]
-      )
-    }),
-    0
-  )
+  return _c("div", [
+    _vm.workstation
+      ? _c(
+          "div",
+          {
+            staticClass:
+              "coba-text coba-text-big coba-text-strong coba-text-center"
+          },
+          [
+            _vm._v(
+              _vm._s(
+                _vm.workstation.location ? _vm.workstation.location.name : ""
+              ) +
+                " - " +
+                _vm._s(_vm.workstation.name)
+            )
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "coba-text-strong coba-text coba-text-center" }, [
+      _vm._v(_vm._s(_vm.weekStartStr) + " - " + _vm._s(_vm.weekEndStr))
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "coba-utilization-indicator-container" },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "coba-utilization-indicator coba-utilization-indicator-arrow-prev coba-utilization-indicator-big",
+            on: { click: _vm.prevPage }
+          },
+          [_vm._v("➤")]
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.days, function(day) {
+          return _c(
+            "div",
+            {
+              class:
+                "coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-" +
+                day.color +
+                " " +
+                (day.selected ? "coba-utilization-indicator-selected" : "") +
+                (day.disabled ? "coba-utilization-indicator-disabled" : ""),
+              on: {
+                click: function($event) {
+                  return _vm.selectDate(day)
+                }
+              }
+            },
+            [_vm._v(_vm._s(day.day.substring(0, 1)))]
+          )
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big",
+            on: { click: _vm.nextPage }
+          },
+          [_vm._v("➤")]
+        )
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -2217,6 +2395,30 @@ var render = function() {
         ]
       )
     : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Elements/TimePicker.vue?vue&type=template&id=07d2e258&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Elements/TimePicker.vue?vue&type=template&id=07d2e258&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v(_vm._s(_vm.day.date))])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -2663,15 +2865,39 @@ var render = function() {
   return _c("div", { staticClass: "coba-page" }, [
     _vm._m(0),
     _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "coba-container" },
+      [
+        _c("DayPicker", {
+          attrs: { workstation: _vm.workstation, bookings: null },
+          on: { "callback-picker-event": _vm.callbackPicker }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "coba-container" },
+      _vm._l(_vm.days, function(day, index) {
+        return _c("TimePicker", { key: index, attrs: { day: day } })
+      }),
+      1
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
-      _c("div", { staticClass: "coba-text coba-text-strong" }, [
-        _vm._v(_vm._s(_vm.$route.params.workstation_id))
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "coba-container" }, [_c("DayPicker")], 1),
-    _vm._v(" "),
-    _vm._m(1)
+      _c(
+        "div",
+        {
+          class: {
+            "coba-button": true,
+            "coba-button-disabled": _vm.days.length === 0
+          }
+        },
+        [_vm._v("Buchen")]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -2681,14 +2907,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
       _c("span", { staticClass: "coba-page-headline" }, [_vm._v("Buchung")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container" }, [
-      _c("div", { staticClass: "coba-button" }, [_vm._v("Buchen")])
     ])
   }
 ]
@@ -2863,23 +3081,39 @@ var render = function() {
                                   return _c("tr", [
                                     _c("th", [_vm._v(_vm._s(day.date))]),
                                     _vm._v(" "),
-                                    day.end
-                                      ? _c("th", [
-                                          _vm._v(
-                                            _vm._s(day.start.substring(0, 5)) +
-                                              " - " +
-                                              _vm._s(day.end.substring(0, 5))
-                                          )
-                                        ])
-                                      : _c("th", [_vm._v(_vm._s(day.start))]),
-                                    _vm._v(" "),
                                     _c("th", [
                                       _c("div", {
                                         class:
                                           "coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-" +
                                           day.color
                                       })
-                                    ])
+                                    ]),
+                                    _vm._v(" "),
+                                    day.end
+                                      ? _c(
+                                          "th",
+                                          {
+                                            staticClass:
+                                              "coba-table-align-right"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                day.start.substring(0, 5)
+                                              ) +
+                                                " - " +
+                                                _vm._s(day.end.substring(0, 5))
+                                            )
+                                          ]
+                                        )
+                                      : _c(
+                                          "th",
+                                          {
+                                            staticClass:
+                                              "coba-table-align-right"
+                                          },
+                                          [_vm._v(_vm._s(day.start))]
+                                        )
                                   ])
                                 }),
                                 0
@@ -2892,7 +3126,7 @@ var render = function() {
                     ],
                     null,
                     false,
-                    102194743
+                    716732119
                   )
                 })
               ],
@@ -20043,6 +20277,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Modal_vue_vue_type_template_id_71c737c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Modal_vue_vue_type_template_id_71c737c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Elements/TimePicker.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/Elements/TimePicker.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TimePicker_vue_vue_type_template_id_07d2e258_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TimePicker.vue?vue&type=template&id=07d2e258&scoped=true& */ "./resources/js/components/Elements/TimePicker.vue?vue&type=template&id=07d2e258&scoped=true&");
+/* harmony import */ var _TimePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TimePicker.vue?vue&type=script&lang=js& */ "./resources/js/components/Elements/TimePicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TimePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TimePicker_vue_vue_type_template_id_07d2e258_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TimePicker_vue_vue_type_template_id_07d2e258_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "07d2e258",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Elements/TimePicker.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Elements/TimePicker.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/Elements/TimePicker.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TimePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./TimePicker.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Elements/TimePicker.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TimePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Elements/TimePicker.vue?vue&type=template&id=07d2e258&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/Elements/TimePicker.vue?vue&type=template&id=07d2e258&scoped=true& ***!
+  \****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TimePicker_vue_vue_type_template_id_07d2e258_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./TimePicker.vue?vue&type=template&id=07d2e258&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Elements/TimePicker.vue?vue&type=template&id=07d2e258&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TimePicker_vue_vue_type_template_id_07d2e258_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TimePicker_vue_vue_type_template_id_07d2e258_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

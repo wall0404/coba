@@ -19,9 +19,9 @@
                             <table class="coba-table">
                                 <tr v-for="day in modal.body">
                                     <th>{{day.date}}</th>
-                                    <th v-if="day.end">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
-                                    <th v-else>{{day.start}}</th>
                                     <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th>
+                                    <th v-if="day.end" class="coba-table-align-right">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
+                                    <th v-else class="coba-table-align-right">{{day.start}}</th>
                                 </tr>
                             </table>
                         </div>
@@ -174,23 +174,30 @@ export default {
             let date_as_string = "";
             for(let i = 0; i < 8; i++) {
                 date_as_string = date.toISOString().slice(0, 10);
-                //Get info about this date
-                let dayInfo;
-                if(workstation.workstation_bookings[date_as_string]) {
-                    dayInfo = this.calcModal(workstation.workstation_bookings[date_as_string])
+
+                //pass on weekend
+                if(date.getUTCDay() !== 0 && date.getUTCDay() !== 6) {
+                    //Get info about this date
+                    let dayInfo;
+                    if (workstation.workstation_bookings[date_as_string]) {
+                        dayInfo = this.calcModal(workstation.workstation_bookings[date_as_string])
+                    } else {
+                        dayInfo = {color: 'green', start: "Verfügbar", end: ""}
+                    }
+                    dayInfo.date = this.dateToDayOfMonth(date);
+                    this.modal.body.push(dayInfo);
+                    //Add one day to date
                 }
-                else {
-                    dayInfo = {color:'green', start: "Verfügbar", end: ""}
-                }
-                dayInfo.date = date_as_string;
-                this.modal.body.push(dayInfo);
-                //Add one day to date
                 date.setDate(date.getDate() + 1);
             }
             this.modal.open = true;
         },
         closeModal() {
             this.modal.open = false;
+        },
+        dateToDayOfMonth(date) {
+            let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+            return days[date.getUTCDay()];
         }
     }
 }
@@ -202,5 +209,8 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
+}
+.coba-table th {
+    height: 40px;
 }
 </style>

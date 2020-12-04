@@ -5,6 +5,7 @@ $coba-black: #000;
 $coba-white: #fff;
 $coba-gray: #EBEBEB;
 $coba-dark-gray: #2C2C2C;
+$coba-disabled-gray: #757575;
 
 $coba-green: #4ABE5D;
 $coba-red: #FF6666;
@@ -83,7 +84,7 @@ $navbar-height: 100px;
     color: white;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 
     .coba-page-headline {
         font-size: 32px;
@@ -169,6 +170,10 @@ $navbar-height: 100px;
     &:focus {
         outline: none;
         box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    }
+    &.coba-button-disabled {
+        border: 1px solid $coba-disabled-gray;
+        color: $coba-disabled-gray;
     }
 }
 .coba-button-container { /*In a Button container all buttons will be listed next to each other */
@@ -275,6 +280,7 @@ $navbar-height: 100px;
     .coba-modal-header {
         font-size: 24px;
         border-bottom: 1px solid $coba-dark-gray;
+        text-align: center;
     }
     .coba-modal-body {
         padding: 20px 0;
@@ -290,7 +296,6 @@ $navbar-height: 100px;
     justify-content: space-evenly;
 }
 .coba-utilization-indicator {
-    background-color: black;
     width: 30px;
     height: 30px;
     border-radius: 30px;
@@ -298,14 +303,25 @@ $navbar-height: 100px;
     justify-content: center;
     align-items: center;
     border: 1px solid transparent;
+    background-color: $coba-gray;
 
     &.coba-utilization-indicator-selected {
         border: 1px solid $coba-dark-gray;
     }
 
+    &.coba-utilization-indicator-big {
+        width: 40px;
+        height: 40px;
+    }
     &.coba-utilization-indicator-small {
         width: 20px;
         height: 20px;
+    }
+    &.coba-utilization-indicator-disabled {
+        color: $coba-disabled-gray;
+    }
+    &.coba-utilization-indicator-gray {
+        background-color: $coba-gray;
     }
     &.coba-utilization-indicator-green {
         background-color: #4ABE5D;
@@ -316,9 +332,28 @@ $navbar-height: 100px;
     &.coba-utilization-indicator-orange {
         background-color: #FFAD33;
     }
+    &.coba-utilization-indicator-arrow-next {
+        content: '\27A4';
+        background-color: transparent;
+    }
+    &.coba-utilization-indicator-arrow-prev {
+        content: '\27A4';
+        background-color: transparent;
+        transform: rotate(180deg);
+    }
 }
 
 /* TABLE Styles */
 .coba-table {
     width: 100%;
+
+    th {
+        font-weight: normal;
+    }
+    tr {
+        padding: 0 20px;
+    }
+    .coba-table-align-right {
+        text-align: right;
+    }
 }
