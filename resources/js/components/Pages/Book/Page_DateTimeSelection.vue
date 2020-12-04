@@ -4,13 +4,13 @@
             <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container">
-            <div class="coba-text coba-text-strong">{{ $route.params.workstation_id }}</div>
+            <DayPicker :workstation="workstation" :bookings="null" @callback-picker-event="callbackPicker"></DayPicker>
         </div>
         <div class="coba-container">
-            <DayPicker></DayPicker>
+            <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
         </div>
         <div class="coba-container">
-            <div class="coba-button">Buchen</div>
+            <div :class="{'coba-button':true, 'coba-button-disabled':days.length===0}">Buchen</div>
         </div>
     </div>
 </template>
@@ -18,17 +18,21 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import DayPicker from "../../Elements/DayPicker";
+import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
-    components: {DayPicker, Spinner},
+    components: {TimePicker, DayPicker, Spinner},
     data() {
         return {
+            workstation: {},
             load: false,
             error: false,
+            days: [],
         }
     },
     mounted() {
+        this.fetchWorkstation();
         this.fetchData();
     },
     methods: {
@@ -57,6 +61,29 @@ export default {
                     this.load = false;
                 })*/
         },
+        fetchWorkstation() {
+            let locations = this.$store.getters.locations;
+            for(let location in locations) {
+                for (let workstation in locations[location].workstations) {
+                    if(locations[location].workstations[workstation].id == this.$route.params.workstation_id) {
+                        this.workstation = locations[location].workstations[workstation];
+                        break;
+                    }
+                }
+            }
+        },
+        callbackPicker(day) {
+            if(day.selected)
+                this.days.push(day);
+            else {
+                for (let day_index in this.days) {
+                    if(this.days[day_index].date === day.date){
+                        this.days.splice(day_index, 1);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
 </script>
