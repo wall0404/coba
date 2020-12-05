@@ -3,7 +3,7 @@
         <div v-if="workstation" class="coba-text coba-text-big coba-text-strong coba-text-center">{{workstation.location?workstation.location.name:''}} - {{workstation.name}}</div>
         <div class="coba-text-strong coba-text coba-text-center">{{weekStartStr}} - {{weekEndStr}}</div>
         <div class="coba-utilization-indicator-container">
-            <div class="coba-utilization-indicator coba-utilization-indicator-arrow-prev coba-utilization-indicator-big" @click="prevPage">➤</div>
+            <div :class="{'coba-utilization-indicator':true, 'coba-utilization-indicator-arrow-prev':true, 'coba-utilization-indicator-big':true, 'coba-utilization-indicator-disabled':page===0}" @click="prevPage">➤</div>
             <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected':'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
                 @click="selectDate(day)">{{day.day.substring(0,1)}}</div>
             <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" @click="nextPage">➤</div>
@@ -29,13 +29,13 @@ export default {
     computed: {
         weekStartStr: function() {
             try {
-                return this.weekStart.toISOString().slice(0, 10);
+                return this.weekStart.toLocaleDateString('de-DE', this.$date_options_short);
             }
             catch (e) {}
         },
         weekEndStr: function () {
             try {
-                return this.weekEnd.toISOString().slice(0, 10);
+                return this.weekEnd.toLocaleDateString('de-DE', this.$date_options_short);
             }
             catch (e) {}
         },
@@ -45,23 +45,32 @@ export default {
     },
     methods: {
         initiateDates() {
+            //Dont allow scrolling into past
             if(this.page < 0)
                 this.page = 0;
 
             this.weekStart = new Date();
             this.weekEnd = new Date();
 
-            this.weekStart.setDate(new Date().getDate() - this.weekStart.getUTCDay() + 1 + (this.page * 7));
+            //set start of the week
+            let dayOfWeek = this.weekStart.getUTCDay();
+            dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
+            this.weekStart.setDate(new Date().getDate() - dayOfWeek + 1 + (this.page * 7));
+
+
             let date = new Date(this.weekStart.getTime())
             if(typeof this.pages[this.page] == "undefined") {
+                //This page wasn't rendered before
                 this.pages[this.page] = [];
+                //Crate badge for every day in this week
                 for(let i = 0; i < 5; i++) {
-                    let disabled = false;
-                    this.pages[this.page].push({day: this.dateToDayOfMonth(date), color: 'gray', selected: false, date: new Date(date.getTime()), disabled: disabled});
+                    let disabled = this.todayDate > date;
+                    this.pages[this.page].push({day: this.dateToDayOfMonth(date), color: 'gray', selected: false, date: new Date(date.getTime()), time: [9,17], disabled: disabled});
                     date.setDate(date.getDate() + 1);
                 }
             }
             else {
+                //If the dates were already calculated, only calculate the end of the week
                 for(let i = 0; i < 5; i++)
                     date.setDate(date.getDate() + 1);
             }
@@ -75,6 +84,7 @@ export default {
         selectDate(day) {
             if(!day.disabled) {
                 day.selected = !day.selected;
+                day.workstation = this.workstation;
                 this.$emit('callback-picker-event', day);
             }
         },

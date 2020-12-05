@@ -4,11 +4,11 @@
             <span class="coba-page-headline">Arbeitsplatzauswahl</span>
         </div>
         <div class="coba-container">
-            <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
+            <div class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
                     <div class="coba-text-strong coba-text">{{workstation.name}}</div>
-                    <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="'/booking/new/booking/'+workstation.id"></router-link>
-                    <div :class="'coba-utilization-indicator '+workstation.indicator" @click="openModal(workstation)"></div>
+                    <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="'/booking/new/date/'+workstation.id"></router-link>
+                    <div :class="'coba-utilization-indicator '+(load?'coba-utilization-indicator-gray':workstation.indicator)" @click="openModal(workstation)"></div>
                 </div>
                 <modal :show-modal="modal.open" @modal-close-event="closeModal">
                     <template v-slot:header>
@@ -28,7 +28,6 @@
                     </template>
                 </modal>
             </div>
-            <spinner v-else></spinner>
         </div>
     </div>
 </template>
