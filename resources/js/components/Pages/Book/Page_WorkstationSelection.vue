@@ -7,7 +7,7 @@
             <div class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
                     <div class="coba-text-strong coba-text">{{workstation.name}}</div>
-                    <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="'/booking/new/booking/'+workstation.id"></router-link>
+                    <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="'/booking/new/date/'+workstation.id"></router-link>
                     <div :class="'coba-utilization-indicator '+(load?'coba-utilization-indicator-gray':workstation.indicator)" @click="openModal(workstation)"></div>
                 </div>
                 <modal :show-modal="modal.open" @modal-close-event="closeModal">

@@ -84,6 +84,7 @@ export default {
         selectDate(day) {
             if(!day.disabled) {
                 day.selected = !day.selected;
+                day.workstation = this.workstation;
                 this.$emit('callback-picker-event', day);
             }
         },

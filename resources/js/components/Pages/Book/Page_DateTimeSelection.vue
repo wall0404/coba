@@ -10,7 +10,7 @@
             <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
         </div>
         <div class="coba-container">
-            <div :class="{'coba-button':true, 'coba-button-disabled':days.length===0}" @click="submit">Buchen</div>
+            <button class="coba-button" @click="submit" :disabled="days.length===0">Buchen</button>
         </div>
     </div>
 </template>
@@ -86,7 +86,13 @@ export default {
         },
         submit() {
             //go to confirmation
-            console.log(this.days);
+            let days = this.days;
+            this.$router.push({
+                name: 'BookingConfirmation',
+                params: {
+                    bookings: this.days
+                }
+            })
         }
     }
 }

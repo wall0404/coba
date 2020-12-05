@@ -21,6 +21,8 @@ import Page_Booking from "../components/Pages/Book/Page_Booking";
 import Page_LocationSelection from "../components/Pages/Book/Page_LocationSelection";
 import Page_WorkstationSelection from "../components/Pages/Book/Page_WorkstationSelection";
 import Page_DateTimeSelection from "../components/Pages/Book/Page_DateTimeSelection";
+import Page_BookingConfirmation from "../components/Pages/Book/Page_BookingConfirmation";
+import Page_BookingCheckout from "../components/Pages/Book/Page_BookingCheckout";
 
 const routes = [
     { path: '/', component: Page_Landing },
@@ -33,7 +35,9 @@ const routes = [
     { path: '/booking/:id', component: Page_Booking, meta:{auth:true} },
     { path: '/booking/new/location', component: Page_LocationSelection, meta:{auth:true} },
     { path: '/booking/new/workstation/:location_id', component: Page_WorkstationSelection, meta:{auth:true} },
-    { path: '/booking/new/booking/:workstation_id', component: Page_DateTimeSelection, meta:{auth:true} },
+    { path: '/booking/new/date/:workstation_id', component: Page_DateTimeSelection, meta:{auth:true} },
+    { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
+    { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
     { path: '*', component: error404}
 ]
 
