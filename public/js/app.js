@@ -643,6 +643,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -656,7 +661,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       session_expired: false,
       load: false,
-      error: [],
+      error: false,
+      validation_error: [],
       success: []
     };
   },
@@ -697,12 +703,12 @@ __webpack_require__.r(__webpack_exports__);
         return res.json();
       }).then(function (res) {
         _this.load = false;
-        _this.error = res.error;
+        _this.validation_error = res.error;
+        _this.error = false;
         _this.success = res.success;
-        console.log(_this.error);
-        console.log(_this.error.length);
       })["catch"](function (error) {
         console.log(error);
+        _this.error = "Ein Fehler ist aufgetreten";
         _this.load = false;
       });
     }
@@ -3240,33 +3246,49 @@ var render = function() {
             _vm.load
               ? _c("spinner")
               : _c("div", [
-                  _vm.error.length === 0
+                  _vm.error === false
                     ? _c("div", [
+                        _vm.validation_error.length === 0
+                          ? _c("div", [
+                              _c(
+                                "span",
+                                { staticClass: "coba-text coba-text-very-big" },
+                                [_vm._v("Ihre Buchung wurde eingetragen")]
+                              )
+                            ])
+                          : _c(
+                              "div",
+                              [
+                                _vm._l(_vm.success, function(booking, index) {
+                                  return _c("booking", {
+                                    key: "s" + index,
+                                    attrs: { booking: booking, color: "true" }
+                                  })
+                                }),
+                                _vm._v(" "),
+                                _vm._l(_vm.validation_error, function(
+                                  booking,
+                                  index
+                                ) {
+                                  return _c("booking", {
+                                    key: "e" + index,
+                                    attrs: { booking: booking, color: "true" }
+                                  })
+                                })
+                              ],
+                              2
+                            )
+                      ])
+                    : _c("div", [
                         _c(
                           "span",
-                          { staticClass: "coba-text coba-text-very-big" },
-                          [_vm._v("Ihre Buchung wurde eingetragen")]
+                          {
+                            staticClass:
+                              "coba-text coba-text-very-big coba-text-danger"
+                          },
+                          [_vm._v(_vm._s(_vm.error))]
                         )
                       ])
-                    : _c(
-                        "div",
-                        [
-                          _vm._l(_vm.success, function(booking, index) {
-                            return _c("booking", {
-                              key: index,
-                              attrs: { booking: booking, color: "true" }
-                            })
-                          }),
-                          _vm._v(" "),
-                          _vm._l(_vm.error, function(booking, index) {
-                            return _c("booking", {
-                              key: index,
-                              attrs: { booking: booking, color: "true" }
-                            })
-                          })
-                        ],
-                        2
-                      )
                 ])
           ],
           1
