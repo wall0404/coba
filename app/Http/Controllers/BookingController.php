@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use PHPUnit\Util\Exception;
 use function PHPUnit\Framework\throwException;
 
@@ -15,7 +16,12 @@ class BookingController extends ParentController
     protected $validator_create = [
         'user_id' => 'required',
         'workstation_id' => 'required',
-        'date' => 'date'
+        'date' => 'date_format:Y-m-d|required'
+    ];
+    protected $validator_create_array = [
+        '*.user_id' => 'required',
+        '*.workstation_id' => 'required',
+        '*.date' => 'date_format:Y-m-d|required'
     ];
     protected $validator_update = [
         'user_id' => 'required',
@@ -30,52 +36,6 @@ class BookingController extends ParentController
         'workstation' => 'equals',
         'location_id' => 'custom',
     ];
-/*
-    public function getList(Request $request){
-        //Get input
-        $input = $request->input();
-
-        //load default limit and order values if not set in input parameters
-        if (empty($input['limit'])) $input['limit'] = $this->default_limit;
-        if (empty($input['order_by'])) $input['order_by'] = 'id';
-        if (empty($input['order_desc'])) $input['order_desc'] = 0;
-
-        $list = Booking::with(['workstation'])->whereNotNull('user_id');
-
-        //filter
-        if(isset($input['filter']['date'])) {
-            if(!empty($input['filter']['user_id']))
-                $list = $list->where('user_id', $input['filter']['user_id']);
-            if(!empty($input['filter']['workstation_id']))
-                $list = $list->where('workstation_id', $input['filter']['workstation_id']);
-            if(!empty($input['filter']['location_id']))
-                $list = $list->join('workstation', 'booking.workstation_id', '=', 'workstation.id')->where('workstation.location_id');
-            if(!empty($input['filter']['date']['min']))
-                $list = $list->where('date', '>=', $input['filter']['date']['min']);
-            if(!empty($input['filter']['date']['max']))
-                $list = $list->where('date', '<=', $input['filter']['date']['max']);
-            if(!empty($input['filter']['time_from']['min']))
-                $list = $list->where('from', '>=', $input['filter']['time_from']['min']);
-            if(!empty($input['filter']['time_from']['max']))
-                $list = $list->where('from', '<=', $input['filter']['time_from']['max']);
-            if(!empty($input['filter']['time_to']['min']))
-                $list = $list->where('to', '>=', $input['filter']['time_to']['min']);
-            if(!empty($input['filter']['time_to']['max']))
-                $list = $list->where('to', '<=', $input['filter']['time_to']['max']);
-        }
-
-        //order
-        $list = $list->orderBy($input['order_by'], $input['order_desc']?'desc':'asc');
-
-        //paginate list if wanted
-        if($this->pagination)
-            $list = $list->paginate($input['limit']);
-        else
-            $list = $list->get();
-
-        return response()->json(['success'=>$list], ParentController::$successCode);
-    }
-*/
 
     protected function doBeforeCreated($input){
         if(empty($input['from']))
@@ -96,9 +56,100 @@ class BookingController extends ParentController
         return $input;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function create(Request $request) {
+        //track models with validation error to ignore when inserting in db
+        $validation_error = array();
+        $returnObj = [
+            "error" => [],
+            "success" => []
+        ];
+        $data = array ();
+
+        if($request->has('date') || $request->has('user_id') || $request->has('workstation_id')) {
+            //only one booking given
+            $data[0] = $request->input();
+            //validate
+            $validator = Validator::make($request->all(), $this->validator_create);
+            if ($validator->fails()) {
+                $validation_error = $validator->errors()->toArray();
+            }
+        }
+        else {
+            //array given
+            $data = $request->json()->all();
+            //validate
+            $validator = Validator::make($request->all(), $this->validator_create_array);
+            if ($validator->fails()) {
+                $validation_error = $validator->errors()->toArray();
+            }
+        }
+
+        //format validation errors
+        foreach ($validation_error as $key => $error) {
+            $index = $this->getNumberFromString($key);
+            //$ignore_list[$index] = true;
+
+            if(empty($returnObj['error'][$index])) {
+                $data[$index]['error'] = array();
+                $returnObj['error'][$index] = $data[$index];
+            }
+
+            $returnObj['error'][$index]['error'][] = $error[0];
+        }
+
+        foreach ($data as $key => $booking) {
+            //check if it had validation errors and should get ignored
+
+            if(!isset($returnObj['error'][$key])) {
+                try {
+                    $booking = $this->doBeforeCreated($booking);
+                } catch (\PHPUnit\Exception $e) {
+                    $booking['error'][] = $e->getMessage();
+                    $returnObj['error'][$key] = $booking;
+                    continue;
+                    //return response()->json(['error'=>$e->getMessage()], ParentController::$badRequestCode);
+                }
+
+                $model = new $this->model_name();
+                foreach ($booking as $prop => $value) {
+                    $model->$prop = $value;
+                }
+
+                if ($model->checkCreateRight()) {
+                    $model->save();
+                    $this->doAfterCreated($model);
+                    $returnObj['success'][] = $model;
+                } else {
+                    $booking['error'][] = "Keine Berechtigung";
+                    $returnObj['error'][$key] = $booking;
+                    //return response()->json(['error'=>ParentController::$unauthorizedText], ParentController::$unauthorizedCode);
+                }
+            }
+        }
+        return response()->json($returnObj, ParentController::$successCode);
+    }
+
     protected function location_id_filter($list, $value) {
         $list = $list->join('workstations', 'bookings.workstation_id', '=', 'workstations.id')->where('workstations.location_id', '=', $value);
         return $list;
+    }
+
+
+
+    private function getNumberFromString($str) {
+        $array = str_split($str);
+        $numberStr = "";
+        foreach ($array as $char) {
+            if(is_numeric($char))
+                $numberStr .= ($char);
+            else
+                break;
+        }
+        return (int)$numberStr;
     }
 
 }
