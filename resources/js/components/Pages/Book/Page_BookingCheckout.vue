@@ -7,12 +7,17 @@
         <div v-else>
             <spinner v-if="load"></spinner>
             <div v-else>
-                <div v-if="error.length === 0">
-                    <span class="coba-text coba-text-very-big">Ihre Buchung wurde eingetragen</span>
+                <div v-if="error===false">
+                    <div v-if="validation_error.length === 0">
+                        <span class="coba-text coba-text-very-big">Ihre Buchung wurde eingetragen</span>
+                    </div>
+                    <div v-else>
+                        <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
+                        <booking v-for="(booking, index) in validation_error"  :booking="booking" color="true" :key="'e'+index"></booking>
+                    </div>
                 </div>
                 <div v-else>
-                    <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="index"></booking>
-                    <booking v-for="(booking, index) in error"  :booking="booking" color="true" :key="index"></booking>
+                    <span class="coba-text coba-text-very-big coba-text-danger">{{error}}</span>
                 </div>
             </div>
         </div>
@@ -30,7 +35,8 @@ export default {
         return {
             session_expired: false,
             load: false,
-            error: [],
+            error: false,
+            validation_error: [],
             success: [],
         }
     },
@@ -70,13 +76,13 @@ export default {
                 .then(res => res.json())
                 .then(res => {
                     this.load = false;
-                    this.error = res.error;
+                    this.validation_error = res.error;
+                    this.error = false;
                     this.success = res.success;
-                    console.log(this.error)
-                    console.log(this.error.length);
                 })
                 .catch(error => {
                     console.log(error);
+                    this.error = "Ein Fehler ist aufgetreten";
                     this.load = false;
                 })
         }
