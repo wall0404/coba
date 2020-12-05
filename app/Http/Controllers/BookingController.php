@@ -62,32 +62,21 @@ class BookingController extends ParentController
      */
     protected function create(Request $request) {
         //track models with validation error to ignore when inserting in db
-        $ignore_list = array();
-        $validation_error = null;
+        $validation_error = array();
         $returnObj = [
-            "error" => []
+            "error" => [],
+            "success" => []
         ];
         $data = array ();
 
-        if($request->has('date')) {
+        if($request->has('date') || $request->has('user_id') || $request->has('workstation_id')) {
             //only one booking given
             $data[0] = $request->input();
             //validate
             $validator = Validator::make($request->all(), $this->validator_create);
             if ($validator->fails()) {
-                $ignore_list[0] = true;
                 $validation_error = $validator->errors()->toArray();
-
-                $data[0]['error'] = array();
-
-                foreach ($validation_error as $key => $error) {
-                    $data[0]['error'][] = $error;
-                }
-
-                $returnObj['error']["0"] = $data[0];
             }
-
-
         }
         else {
             //array given
@@ -96,48 +85,52 @@ class BookingController extends ParentController
             $validator = Validator::make($request->all(), $this->validator_create_array);
             if ($validator->fails()) {
                 $validation_error = $validator->errors()->toArray();
-                foreach ($validation_error as $key => $error) {
-                    $index = $this->getNumberFromString($key);
-                    $ignore_list[$index] = true;
+            }
+        }
 
-                    if(empty($returnObj['error'][$index])) {
-                        $data[$index]['error'] = array();
-                        $returnObj['error'][$index] = $data[$index];
-                    }
+        //format validation errors
+        foreach ($validation_error as $key => $error) {
+            $index = $this->getNumberFromString($key);
+            //$ignore_list[$index] = true;
 
-                    $returnObj['error'][$index]['error'][] = $error;
+            if(empty($returnObj['error'][$index])) {
+                $data[$index]['error'] = array();
+                $returnObj['error'][$index] = $data[$index];
+            }
+
+            $returnObj['error'][$index]['error'][] = $error[0];
+        }
+
+        foreach ($data as $key => $booking) {
+            //check if it had validation errors and should get ignored
+
+            if(!isset($returnObj['error'][$key])) {
+                try {
+                    $booking = $this->doBeforeCreated($booking);
+                } catch (\PHPUnit\Exception $e) {
+                    $booking['error'][] = $e->getMessage();
+                    $returnObj['error'][$key] = $booking;
+                    continue;
+                    //return response()->json(['error'=>$e->getMessage()], ParentController::$badRequestCode);
+                }
+
+                $model = new $this->model_name();
+                foreach ($booking as $prop => $value) {
+                    $model->$prop = $value;
+                }
+
+                if ($model->checkCreateRight()) {
+                    $model->save();
+                    $this->doAfterCreated($model);
+                    $returnObj['success'][] = $model;
+                } else {
+                    $booking['error'][] = "Keine Berechtigung";
+                    $returnObj['error'][$key] = $booking;
+                    //return response()->json(['error'=>ParentController::$unauthorizedText], ParentController::$unauthorizedCode);
                 }
             }
         }
-        return json_encode($returnObj);
-        foreach ($data as $key => $booking) {
-            try {
-                $input = $this->doBeforeCreated($booking);
-            }
-            catch (\PHPUnit\Exception $e) {
-                return response()->json(['error'=>$e->getMessage()], ParentController::$badRequestCode);
-            }
-
-            $model = new $this->model_name();
-            foreach ($input as $key => $value) {
-                $model->$key = $value;
-            }
-
-            if($model->checkCreateRight()) {
-                $model->save();
-                $this->doAfterCreated($model);
-                return response()->json(['success' => $model], ParentController::$successCode);
-            }
-            else
-                return response()->json(['error'=>ParentController::$unauthorizedText], ParentController::$unauthorizedCode);
-        }
-        exit($data);
-
-
-
-
-
-
+        return response()->json($returnObj, ParentController::$successCode);
     }
 
     protected function location_id_filter($list, $value) {
@@ -156,7 +149,7 @@ class BookingController extends ParentController
             else
                 break;
         }
-        return number_format($numberStr);
+        return (int)$numberStr;
     }
 
 }
