@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use PHPUnit\Util\Exception;
-use function PHPUnit\Framework\throwException;
 
 class BookingController extends ParentController
 {
@@ -44,13 +42,13 @@ class BookingController extends ParentController
             $input['to'] = '17:00';
 
         if($input['from'] >= $input['to'])
-            throw new Exception('Startzeit darf nicht nach der Endzeit liegen');
+            throw new \Exception('Startzeit darf nicht nach der Endzeit liegen');
 
         //Check if workplace is already taken by someone else
         $bookings = Booking::where('date', $input['date'])->where('workstation_id', $input['workstation_id'])->get();
         foreach ($bookings as $booking) {
             if($booking->from <= $input['to'] && $booking->to >= $input['from'])
-                throw new Exception('Platz ist zu dem Zeitpunkt schon vergeben');
+                throw new \Exception('Platz ist zu dem Zeitpunkt schon vergeben');
         }
 
         return $input;
@@ -107,7 +105,7 @@ class BookingController extends ParentController
             if(!isset($returnObj['error'][$key])) {
                 try {
                     $booking = $this->doBeforeCreated($booking);
-                } catch (\PHPUnit\Exception $e) {
+                } catch (\Exception $e) {
                     $booking['error'][] = $e->getMessage();
                     $returnObj['error'][$key] = $booking;
                     continue;
