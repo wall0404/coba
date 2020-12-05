@@ -10929,6 +10929,14 @@ a.text-dark:focus {
       flex-direction: row;*/
 }
 
+.coba-page.coba-page-no-header {
+  padding-top: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
 .coba-full-width {
   width: 100%;
 }
@@ -10988,14 +10996,6 @@ a.text-dark:focus {
 .coba-header .coba-page-headline {
   font-size: 35px;
   color: #2C2C2C;
-}
-
-.coba-header.coba-page-no-header {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
 }
 
 /* CUSTOM HEADER for HOMESCREEN */
@@ -11119,7 +11119,7 @@ a.text-dark:focus {
 /* FORM Styles */
 
 .coba-form-danger {
-  background-color: red;
+  background-color: #861F08;
   color: white;
 }
 
@@ -11159,7 +11159,11 @@ a.text-dark:focus {
 }
 
 .coba-text-danger {
-  color: red;
+  color: #861F08;
+}
+
+.coba-text-success {
+  color: #09431e;
 }
 
 /* LIST */

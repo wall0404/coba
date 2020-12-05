@@ -8,13 +8,7 @@
                 <div class="coba-headline">Buchungsübersicht</div>
             </div>
             <div class="coba-container">
-                <div v-for="booking in bookings" class="coba-text-strong mb-4">
-                    <div class="coba-flex coba-flex-space-between">
-                        <div>{{booking.date.toLocaleDateString('de-DE', $date_options_short)}}</div>
-                        <div>{{booking.from}} - {{booking.to}}</div>
-                    </div>
-                    <div>{{booking.workstation.location.name}} - {{booking.workstation.name}}</div>
-                </div>
+                <booking v-for="(booking, index) in bookings" :booking="booking" :key="index"></booking>
             </div>
             <div class="coba-container">
                 <button class="coba-button coba-button-accent" @click="submit">Bestätigen</button>
@@ -27,7 +21,9 @@
 </template>
 
 <script>
+import Booking from "../../ListItems/Booking";
 export default {
+    components: {Booking},
     props: ['bookings'],
     name: "Page_BookingConfirmation",
     data() {
@@ -50,13 +46,18 @@ export default {
             localStorage.setItem("confirmation_bookings", JSON.stringify(this.bookings));
 
         for(let booking in this.bookings) {
-            this.bookings[booking].from = Math.round(this.bookings[booking].time[0]-0.1)+":"+(this.bookings[booking].time[0]%1===0?'00':'30');
-            this.bookings[booking].to = Math.round(this.bookings[booking].time[1]-0.1)+":"+(this.bookings[booking].time[1]%1===0?'00':'30');
+            this.bookings[booking].from = (this.bookings[booking].time[0]<10?"0":"")+Math.round(this.bookings[booking].time[0]-0.1)+":"+(this.bookings[booking].time[0]%1===0?'00':'30');
+            this.bookings[booking].to = (this.bookings[booking].time[1]<10?"0":"")+Math.round(this.bookings[booking].time[1]-0.1)+":"+(this.bookings[booking].time[1]%1===0?'00':'30');
         }
     },
     methods: {
         submit() {
-            console.log(this.bookings);
+            this.$router.push({
+                name: 'BookingCheckout',
+                params: {
+                    bookings: this.bookings
+                }
+            })
         }
     }
 }
