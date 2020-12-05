@@ -10,7 +10,7 @@
             <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
         </div>
         <div class="coba-container">
-            <div :class="{'coba-button':true, 'coba-button-disabled':days.length===0}">Buchen</div>
+            <div :class="{'coba-button':true, 'coba-button-disabled':days.length===0}" @click="submit">Buchen</div>
         </div>
     </div>
 </template>
@@ -73,7 +73,7 @@ export default {
             }
         },
         callbackPicker(day) {
-            if(day.selected)
+            if (day.selected)
                 this.days.push(day);
             else {
                 for (let day_index in this.days) {
@@ -83,6 +83,10 @@ export default {
                     }
                 }
             }
+        },
+        submit() {
+            //go to confirmation
+            console.log(this.days);
         }
     }
 }

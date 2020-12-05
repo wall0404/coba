@@ -11,19 +11,21 @@ $coba-green: #4ABE5D;
 $coba-red: #FF6666;
 $coba-orange: #FFAD33;
 
-$navbar-height: 100px;
+$navbar-height: 52px;
 
 
 /* NAVBAR */
 .coba-navbar {
     background-color: #505050;
-    height: 100px;
+    height: $navbar-height;
     position: fixed;
     bottom: 0;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     color: white;
+    z-index: 5;
+
 
     .router-link-active {
         color: yellow;
@@ -292,6 +294,7 @@ $navbar-height: 100px;
 
 /* Little Indicator Circles */
 .coba-utilization-indicator-container {
+    margin-top: 20px;
     display: flex;
     justify-content: space-evenly;
 }
@@ -317,9 +320,6 @@ $navbar-height: 100px;
         width: 20px;
         height: 20px;
     }
-    &.coba-utilization-indicator-disabled {
-        color: $coba-disabled-gray;
-    }
     &.coba-utilization-indicator-gray {
         background-color: $coba-gray;
     }
@@ -332,14 +332,22 @@ $navbar-height: 100px;
     &.coba-utilization-indicator-orange {
         background-color: #FFAD33;
     }
-    &.coba-utilization-indicator-arrow-next {
-        content: '\27A4';
-        background-color: transparent;
+    &.coba-utilization-indicator-disabled {
+        color: $coba-disabled-gray;
+        background-color: $coba-gray;
     }
-    &.coba-utilization-indicator-arrow-prev {
+
+    &[class*="coba-utilization-indicator-arrow"] {
         content: '\27A4';
         background-color: transparent;
-        transform: rotate(180deg);
+
+        &.coba-utilization-indicator-arrow-next {
+            margin-right: -30px;
+        }
+        &.coba-utilization-indicator-arrow-prev {
+            transform: rotate(180deg);
+            margin-left: -30px;
+        }
     }
 }
 
