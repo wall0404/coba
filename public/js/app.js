@@ -1002,6 +1002,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1085,10 +1087,12 @@ __webpack_require__.r(__webpack_exports__);
         var full_days = 0;
 
         for (var date in this.workstations[i].workstation_bookings) {
-          var bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date]);
+          if (new Date(date).getUTCDay() !== 0 && new Date(date).getUTCDay() !== 6) {
+            var bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date]);
 
-          if (bookedHours > 6) {
-            full_days++;
+            if (bookedHours > 6) {
+              full_days++;
+            }
           }
         }
 
@@ -48315,7 +48319,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\n    height: 40px;\n}\n", ""]);
 
 // exports
 
@@ -53742,11 +53746,18 @@ var render = function() {
                   _vm._v(_vm._s(workstation.name))
                 ]),
                 _vm._v(" "),
-                _c("router-link", {
-                  staticClass:
-                    "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
-                  attrs: { to: "/booking/new/date/" + workstation.id }
-                }),
+                _c(
+                  "router-link",
+                  {
+                    staticClass:
+                      "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
+                    attrs: { to: "/booking/new/date/" + workstation.id }
+                  },
+                  [
+                    _c("b-icon", { attrs: { icon: "plus", "font-scale": "2" } })
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _c("div", {
                   class:
@@ -73667,8 +73678,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
