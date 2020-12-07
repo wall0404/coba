@@ -10,3 +10,11 @@
 
 // Import Coba CSS Framework
 @import "coba-ci";
+
+
+.vue-range-slider.slider-component .slider .slider-process {
+    background-color: $coba-yellow !important;
+}
+.slider-tooltip::before {
+    display: none;
+}

@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "vue-range-component": "^1.0.3",
         "vue-router": "^3.4.9",
         "vue-store": "^0.3.1-moved",
         "vuex": "^3.6.0"
