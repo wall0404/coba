@@ -1411,7 +1411,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\n    height: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
 
 // exports
 
@@ -3109,7 +3109,7 @@ var render = function() {
     [
       _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
         _c("span", { staticClass: "coba-page-headline" }, [
-          _vm._v("Booking " + _vm._s(_vm.$route.params.id))
+          _vm._v("Buchung " + _vm._s(_vm.$route.params.id))
         ])
       ]),
       _vm._v(" "),

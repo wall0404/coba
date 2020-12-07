@@ -1,7 +1,7 @@
 <template>
     <div class="coba-page">
         <div class="coba-container coba-flex coba-header">
-            <span class="coba-page-headline">Booking {{$route.params.id}}</span>
+            <span class="coba-page-headline">Buchung {{$route.params.id}}</span>
         </div>
         <div class="coba-container">
             <button v-if="!load" class="coba-button coba-button-danger" @click='openModal'>Löschen</button>
