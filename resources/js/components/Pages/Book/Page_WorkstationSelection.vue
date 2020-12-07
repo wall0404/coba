@@ -124,7 +124,7 @@ export default {
                     }
 
                 }
-
+                //calculate the color to show the availability of the workstation
                 if(full_days >= 5)
                     this.workstations[i].indicator = 'coba-utilization-indicator-red'; //mark red
                 else if(full_days === 0)
