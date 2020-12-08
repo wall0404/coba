@@ -53759,7 +53759,10 @@ var render = function() {
                     attrs: {
                       to: {
                         name: "DateTimeSelection",
-                        params: workstation.workstation_bookings
+                        params: {
+                          workstation_id: workstation.id,
+                          bookings: workstation.workstation_bookings
+                        }
                       }
                     }
                   },
@@ -73690,8 +73693,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
