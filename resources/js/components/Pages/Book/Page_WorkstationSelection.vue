@@ -4,7 +4,7 @@
             <span class="coba-page-headline">Arbeitsplatzauswahl</span>
         </div>
         <div class="coba-container">
-            <div class="coba-flex coba-flex-wrap coba-flex-space-evenly">
+            <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
                     <div class="coba-text-strong coba-text">{{workstation.name}}</div>
                     <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
@@ -30,6 +30,7 @@
                     </template>
                 </modal>
             </div>
+            <spinner v-else></spinner>
         </div>
     </div>
 </template>

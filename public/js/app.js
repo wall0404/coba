@@ -1014,6 +1014,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53744,125 +53745,149 @@ var render = function() {
   return _c("div", { staticClass: "coba-page" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "coba-container" }, [
-      _c(
-        "div",
-        { staticClass: "coba-flex coba-flex-wrap coba-flex-space-evenly" },
-        [
-          _vm._l(_vm.workstations, function(workstation) {
-            return _c(
+    _c(
+      "div",
+      { staticClass: "coba-container" },
+      [
+        !_vm.load
+          ? _c(
               "div",
-              { key: workstation.id, staticClass: "seat-container" },
+              {
+                staticClass: "coba-flex coba-flex-wrap coba-flex-space-evenly"
+              },
               [
-                _c("div", { staticClass: "coba-text-strong coba-text" }, [
-                  _vm._v(_vm._s(workstation.name))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "router-link",
-                  {
-                    staticClass:
-                      "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
-                    attrs: {
-                      to: {
-                        name: "DateTimeSelection",
-                        params: {
-                          workstation_id: workstation.id,
-                          bookings: workstation.workstation_bookings
+                _vm._l(_vm.workstations, function(workstation) {
+                  return _c(
+                    "div",
+                    { key: workstation.id, staticClass: "seat-container" },
+                    [
+                      _c("div", { staticClass: "coba-text-strong coba-text" }, [
+                        _vm._v(_vm._s(workstation.name))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass:
+                            "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
+                          attrs: {
+                            to: {
+                              name: "DateTimeSelection",
+                              params: {
+                                workstation_id: workstation.id,
+                                bookings: workstation.workstation_bookings
+                              }
+                            }
+                          }
+                        },
+                        [
+                          _c("b-icon", {
+                            attrs: { icon: "plus", "font-scale": "2" }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", {
+                        class:
+                          "coba-utilization-indicator " +
+                          (_vm.load
+                            ? "coba-utilization-indicator-gray"
+                            : workstation.indicator),
+                        on: {
+                          click: function($event) {
+                            return _vm.openModal(workstation)
+                          }
                         }
-                      }
-                    }
-                  },
-                  [
-                    _c("b-icon", { attrs: { icon: "plus", "font-scale": "2" } })
-                  ],
-                  1
-                ),
+                      })
+                    ],
+                    1
+                  )
+                }),
                 _vm._v(" "),
-                _c("div", {
-                  class:
-                    "coba-utilization-indicator " +
-                    (_vm.load
-                      ? "coba-utilization-indicator-gray"
-                      : workstation.indicator),
-                  on: {
-                    click: function($event) {
-                      return _vm.openModal(workstation)
-                    }
-                  }
+                _c("modal", {
+                  attrs: { "show-modal": _vm.modal.open },
+                  on: { "modal-close-event": _vm.closeModal },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "header",
+                        fn: function() {
+                          return [
+                            _c("div", { staticClass: "coba-modal-header" }, [
+                              _vm._v(_vm._s(_vm.modal.header))
+                            ])
+                          ]
+                        },
+                        proxy: true
+                      },
+                      {
+                        key: "body",
+                        fn: function() {
+                          return [
+                            _c("div", { staticClass: "coba-modal-body" }, [
+                              _c(
+                                "table",
+                                { staticClass: "coba-table" },
+                                _vm._l(_vm.modal.body, function(day) {
+                                  return _c("tr", [
+                                    _c("th", [_vm._v(_vm._s(day.date))]),
+                                    _vm._v(" "),
+                                    _c("th", [
+                                      _c("div", {
+                                        class:
+                                          "coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-" +
+                                          day.color
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    day.end
+                                      ? _c(
+                                          "th",
+                                          {
+                                            staticClass:
+                                              "coba-table-align-right"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                day.start.substring(0, 5)
+                                              ) +
+                                                " - " +
+                                                _vm._s(day.end.substring(0, 5))
+                                            )
+                                          ]
+                                        )
+                                      : _c(
+                                          "th",
+                                          {
+                                            staticClass:
+                                              "coba-table-align-right"
+                                          },
+                                          [_vm._v(_vm._s(day.start))]
+                                        )
+                                  ])
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        },
+                        proxy: true
+                      }
+                    ],
+                    null,
+                    false,
+                    716732119
+                  )
                 })
               ],
-              1
+              2
             )
-          }),
-          _vm._v(" "),
-          _c("modal", {
-            attrs: { "show-modal": _vm.modal.open },
-            on: { "modal-close-event": _vm.closeModal },
-            scopedSlots: _vm._u([
-              {
-                key: "header",
-                fn: function() {
-                  return [
-                    _c("div", { staticClass: "coba-modal-header" }, [
-                      _vm._v(_vm._s(_vm.modal.header))
-                    ])
-                  ]
-                },
-                proxy: true
-              },
-              {
-                key: "body",
-                fn: function() {
-                  return [
-                    _c("div", { staticClass: "coba-modal-body" }, [
-                      _c(
-                        "table",
-                        { staticClass: "coba-table" },
-                        _vm._l(_vm.modal.body, function(day) {
-                          return _c("tr", [
-                            _c("th", [_vm._v(_vm._s(day.date))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c("div", {
-                                class:
-                                  "coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-" +
-                                  day.color
-                              })
-                            ]),
-                            _vm._v(" "),
-                            day.end
-                              ? _c(
-                                  "th",
-                                  { staticClass: "coba-table-align-right" },
-                                  [
-                                    _vm._v(
-                                      _vm._s(day.start.substring(0, 5)) +
-                                        " - " +
-                                        _vm._s(day.end.substring(0, 5))
-                                    )
-                                  ]
-                                )
-                              : _c(
-                                  "th",
-                                  { staticClass: "coba-table-align-right" },
-                                  [_vm._v(_vm._s(day.start))]
-                                )
-                          ])
-                        }),
-                        0
-                      )
-                    ])
-                  ]
-                },
-                proxy: true
-              }
-            ])
-          })
-        ],
-        2
-      )
-    ])
+          : _c("spinner")
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -73700,8 +73725,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
