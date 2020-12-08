@@ -843,6 +843,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
+    if (typeof this.bookings === 'undefined') {
+      this.bookings = JSON.parse(localStorage.getItem("bookings_" + this.$route.params.workstation_id));
+
+      if (this.bookings == null) {
+        console.error("Keine Buchungen wurden übergeben.");
+        this.$router.push("/home");
+      }
+    } else localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
+
     console.log(this.bookings);
     this.fetchWorkstation();
     this.fetchData();
@@ -73693,8 +73702,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

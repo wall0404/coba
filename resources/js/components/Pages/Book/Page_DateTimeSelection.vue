@@ -33,6 +33,17 @@ export default {
         }
     },
     created() {
+        if(typeof this.bookings === 'undefined') {
+            this.bookings = JSON.parse(localStorage.getItem("bookings_"+this.$route.params.workstation_id))
+            if(this.bookings == null){
+                console.error("Keine Buchungen wurden übergeben.")
+                this.$router.push("/home")
+            }
+        }
+        else
+            localStorage.setItem("bookings_"+this.$route.params.workstation_id, JSON.stringify(this.bookings));
+
+
         console.log(this.bookings);
         this.fetchWorkstation();
         this.fetchData();
