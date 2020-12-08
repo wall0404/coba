@@ -828,6 +828,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_DateTimeSelection",
+  props: ["bookings"],
   components: {
     TimePicker: _Elements_TimePicker__WEBPACK_IMPORTED_MODULE_2__["default"],
     DayPicker: _Elements_DayPicker__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -841,7 +842,8 @@ __webpack_require__.r(__webpack_exports__);
       days: []
     };
   },
-  mounted: function mounted() {
+  created: function created() {
+    console.log(this.bookings);
     this.fetchWorkstation();
     this.fetchData();
   },
@@ -1033,7 +1035,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     var date = new Date();
-    this.today_date = date.toISOString().slice(0, 10);
+    this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
+
     date.setDate(new Date().getDate() + 7);
     this.date_in_7_days = date.toISOString().slice(0, 10);
     console.log(this.today_date);
@@ -1147,7 +1150,8 @@ __webpack_require__.r(__webpack_exports__);
     openModal: function openModal(workstation) {
       //TODO
       this.modal.body = [];
-      this.modal.header = workstation.name + " - Übersicht";
+      this.modal.header = workstation.name + " - Übersicht"; //richtet Name des Pop-ups ein
+
       var date = new Date();
       var date_as_string = "";
 
@@ -53752,7 +53756,12 @@ var render = function() {
                   {
                     staticClass:
                       "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
-                    attrs: { to: "/booking/new/date/" + workstation.id }
+                    attrs: {
+                      to: {
+                        name: "DateTimeSelection",
+                        params: workstation.workstation_bookings
+                      }
+                    }
                   },
                   [
                     _c("b-icon", { attrs: { icon: "plus", "font-scale": "2" } })
@@ -72132,6 +72141,8 @@ var routes = [{
   }
 }, {
   path: '/booking/new/date/:workstation_id',
+  name: "DateTimeSelection",
+  props: true,
   component: _components_Pages_Book_Page_DateTimeSelection__WEBPACK_IMPORTED_MODULE_12__["default"],
   meta: {
     auth: true

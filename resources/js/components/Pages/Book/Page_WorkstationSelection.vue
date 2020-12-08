@@ -7,7 +7,7 @@
             <div class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
                     <div class="coba-text-strong coba-text">{{workstation.name}}</div>
-                    <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="'/booking/new/date/'+workstation.id">
+                    <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="{name:'DateTimeSelection', params: workstation.workstation_bookings}">
                         <b-icon icon="plus" font-scale="2"></b-icon>
                     </router-link>
                     <div :class="'coba-utilization-indicator '+(load?'coba-utilization-indicator-gray':workstation.indicator)" @click="openModal(workstation)"></div>
@@ -20,8 +20,8 @@
                         <div class="coba-modal-body">
                             <table class="coba-table">
                                 <tr v-for="day in modal.body">
-                                    <th>{{day.date}}</th>
-                                    <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th>
+                                    <th>{{day.date}}</th> <!--gibt aktuellen Wochentag an-->
+                                    <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th> <!--gibt aktuelle Farbe an-->
                                     <th v-if="day.end" class="coba-table-align-right">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
                                     <th v-else class="coba-table-align-right">{{day.start}}</th>
                                 </tr>
@@ -62,7 +62,7 @@ export default {
     },
     created() {
         let date = new Date();
-        this.today_date = date.toISOString().slice(0, 10);
+        this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
         date.setDate(new Date().getDate() + 7);
         this.date_in_7_days = date.toISOString().slice(0, 10);
 
@@ -172,7 +172,7 @@ export default {
         openModal(workstation) {
             //TODO
             this.modal.body = [];
-            this.modal.header = workstation.name + " - Übersicht";
+            this.modal.header = workstation.name + " - Übersicht"; //richtet Name des Pop-ups ein
 
             let date = new Date();
             let date_as_string = "";

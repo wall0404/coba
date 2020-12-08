@@ -22,6 +22,7 @@ import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
+    props: ["bookings"],
     components: {TimePicker, DayPicker, Spinner},
     data() {
         return {
@@ -31,7 +32,8 @@ export default {
             days: [],
         }
     },
-    mounted() {
+    created() {
+        console.log(this.bookings);
         this.fetchWorkstation();
         this.fetchData();
     },
