@@ -41,10 +41,9 @@ export default {
             }
         }
         else
-            localStorage.setItem("bookings_"+this.$route.params.workstation_id, JSON.stringify(this.bookings));
+            localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
 
 
-        console.log(this.bookings);
         this.fetchWorkstation();
         this.fetchData();
     },

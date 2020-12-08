@@ -852,7 +852,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     } else localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
 
-    console.log(this.bookings);
     this.fetchWorkstation();
     this.fetchData();
   },
@@ -1048,7 +1047,6 @@ __webpack_require__.r(__webpack_exports__);
 
     date.setDate(new Date().getDate() + 7);
     this.date_in_7_days = date.toISOString().slice(0, 10);
-    console.log(this.today_date);
     this.fetchData();
   },
   methods: {
@@ -1083,7 +1081,7 @@ __webpack_require__.r(__webpack_exports__);
     colorIndicators: function colorIndicators() {
       //For every Workstation
       for (var i = 0; i < this.workstations.length; i++) {
-        this.workstations[i].workstation_bookings = []; //For every Booking
+        this.workstations[i].workstation_bookings = {}; //For every Booking
 
         for (var k = 0; k < this.bookings.length; k++) {
           if (this.bookings[k].workstation_id === this.workstations[i].id) {
@@ -73702,8 +73700,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

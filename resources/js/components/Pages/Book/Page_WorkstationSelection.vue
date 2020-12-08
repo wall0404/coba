@@ -66,7 +66,6 @@ export default {
         date.setDate(new Date().getDate() + 7);
         this.date_in_7_days = date.toISOString().slice(0, 10);
 
-        console.log(this.today_date);
         this.fetchData();
     },
     methods: {
@@ -99,7 +98,7 @@ export default {
         colorIndicators() {
             //For every Workstation
             for (let i = 0; i<this.workstations.length; i++) {
-                this.workstations[i].workstation_bookings = [];
+                this.workstations[i].workstation_bookings = {};
 
                 //For every Booking
                 for (let k = 0; k<this.bookings.length; k++) {
