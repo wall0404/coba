@@ -23,7 +23,7 @@
                                     <th>{{day.date}}</th> <!--gibt aktuellen Wochentag an-->
                                     <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th> <!--gibt aktuelle Farbe an-->
                                     <th v-if="day.end" class="coba-table-align-right">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
-                                    <th v-else class="coba-table-align-right">{{day.start}}</th>
+                                    <th v-else class="coba-table-align-right">{{day.start}}</th> <!--day.start == verfügbar; also falls keine Buchung vorhanden ist, wird verfügbar angezeigt-->
                                 </tr>
                             </table>
                         </div>
@@ -138,7 +138,8 @@ export default {
         calcHours(bookings) {
             let hours = 0;
             for(let i = 0; i < bookings.length; i++) {
-                hours += Number(bookings[i].to.substring(0,2)) - Number(bookings[i].from.substring(0,2))
+                //Endzeit - Startzeit = berechnet gesamte Stundenanzahl pro Tag
+                hours += Number(bookings[i].to.substring(0,2)) - Number(bookings[i].from.substring(0,2)) //Substring, to isolate the hours, 09:00 -> cuts off the last 3 chars
             }
 
             return hours;
