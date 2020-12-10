@@ -26,6 +26,29 @@ class AuthController extends ParentController
         }
     }
 
+    public function signup(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], ParentController::$inputValidationErrorCode);
+        }
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = new User();
+        $user->password = $input['password'];
+        $user->email = $input['email'];
+        $user->firstName = $input['firstName'];
+        $user->lastName = $input['lastName'];
+        $user->save();
+        $success['token'] =  $user->createToken('coba')-> accessToken;
+        return response()->json(['success'=>$success], ParentController::$successCode);
+    }
+
     public function logout() {
         Auth::logout();
         return response()->json(['success' => 'true'], ParentController::$successCode);
