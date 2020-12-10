@@ -852,6 +852,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     } else localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
 
+    console.log(this.bookings);
     this.fetchWorkstation();
     this.fetchData();
   },
