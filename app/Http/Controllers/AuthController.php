@@ -28,6 +28,7 @@ class AuthController extends ParentController
 
     public function signup(Request $request)
     {
+        Auth::logout();
         $validator = Validator::make($request->all(), [
             'firstName' => 'required',
             'lastName' => 'required',
@@ -45,7 +46,11 @@ class AuthController extends ParentController
         $user->firstName = $input['firstName'];
         $user->lastName = $input['lastName'];
         $user->save();
-        $success['token'] =  $user->createToken('coba')-> accessToken;
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
+        $token->save();
+        $success['token'] =  $tokenResult->accessToken;
+        Auth::login($user);
         return response()->json(['success'=>$success], ParentController::$successCode);
     }
 
