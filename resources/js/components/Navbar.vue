@@ -4,8 +4,13 @@
             <div><b-icon :icon="nav_item.icon" font-scale="2"></b-icon></div>
         </router-link>
     </div>
-    <div v-else class="coba-navbar coba-full-width">
-        <router-link v-for="nav_item in nav_login" v-bind:to="nav_item.mainURL" v-bind:key="nav_item.name">
+    <div v-else-if="$route.path.includes('/login')" class="coba-navbar coba-full-width">
+        <router-link v-for="nav_item in nav_signIn" v-bind:to="nav_item.mainURL" v-bind:key="nav_item.name">
+            <div>{{ nav_item.name }}</div>
+        </router-link>
+    </div>
+    <div v-else  class="coba-navbar coba-full-width">
+        <router-link v-for="nav_item in nav_signUp" v-bind:to="nav_item.mainURL" v-bind:key="nav_item.name">
             <div>{{ nav_item.name }}</div>
         </router-link>
     </div>
@@ -22,9 +27,11 @@ export default {
                 {name: 'Cal', mainURL: '/calendar', icon: 'calendar2-week-fill'},
                 {name: 'Profile', mainURL: '/profile', icon: 'person-fill'},
             ],
-            nav_login: [
-                {name: 'Sign In', mainURL: '/login'},
+            nav_signIn: [
                 {name: 'Sign Up', mainURL: '/signup'},
+            ],
+            nav_signUp: [
+                {name: 'Sign In', mainURL: '/login'}
             ],
         }
     },
