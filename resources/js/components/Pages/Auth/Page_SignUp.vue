@@ -6,33 +6,36 @@
         <div class="coba-container">
             <form class="">
 
-                <div class="coba-margin-top">
-                    <div class="coba-width-1-1">
-                        <input v-model="firstName" class="coba-input" type="text" id="firstName" placeholder="Vorname" v-bind:disabled="load"  v-bind:class="[error?'coba-form-danger':'']" v-on:focus="focusHandler" >
-                    </div>
-                </div>
+                <element-input
+                    v-bind:error="error"
+                    classes="coba-margin-top"
+                    type="text"
+                    name="firstName"
+                    v-bind:model="user"
+                    placeholder="Vorname"></element-input>
 
-                <div class="coba-margin-top">
-                    <div class="coba-width-1-1">
-                        <input v-model="lastName" class="coba-input" type="text" id="lastName" placeholder="Nachname" v-bind:disabled="load"  v-bind:class="[error?'coba-form-danger':'']" v-on:focus="focusHandler" >
-                    </div>
-                </div>
+                <element-input
+                    v-bind:error="error"
+                    classes="coba-margin-top"
+                    type="text"
+                    name="lastName"
+                    v-bind:model="user"
+                    placeholder="Nachname"></element-input>
 
-                <div class="coba-margin-top">
-                    <div class="coba-width-1-1">
-                        <input v-model="email" class="coba-input" type="text" id="email" placeholder="E-Mail" v-bind:disabled="load" v-bind:class="[error?'coba-form-danger':'']"  v-on:focus="focusHandler">
-                    </div>
-                </div>
-
-                <div class="coba-margin-top">
-                    <div class="coba-width-1-1">
-                        <input v-model="password" class="coba-input" type="password" id="password" placeholder="Passwort" v-bind:disabled="load"  v-bind:class="[error?'coba-form-danger':'']" v-on:focus="focusHandler" @keyup.enter="submit">
-                    </div>
-                </div>
-
-                <div v-if="error" class="coba-text-danger coba-margin-small-top">
-                    <span >E-Mail wurde einem anderen User schon zugewiesen</span>
-                </div>
+                <element-input
+                    v-bind:error="error"
+                    classes="coba-margin-top"
+                    type="email"
+                    name="email"
+                    v-bind:model="user"
+                    placeholder="E-Mail"></element-input>
+                <element-input
+                    v-bind:error="error"
+                    classes="coba-margin-top"
+                    type="password"
+                    name="password"
+                    v-bind:model="user"
+                    placeholder="Passwort"></element-input>
 
                 <button class="coba-button coba-button-accent" type="button" @click="submit">Registrieren</button>
 
@@ -43,14 +46,18 @@
 </template>
 
 <script>
+import ElementInput from "../../Elements/Input";
 export default {
 name: "Page_SignUp.vue",
+    components: {ElementInput},
     data() {
         return {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
+            user: {
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: ""
+            },
             token: null,
             load: false,
             error: false
@@ -63,12 +70,7 @@ name: "Page_SignUp.vue",
             this.load = true;
             fetch('/api/signup', {
                 method: 'POST',
-                body: JSON.stringify({
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    email: this.email,
-                    password: this.password
-                }),
+                body: JSON.stringify(this.user),
                 headers: {
                     'content-type': 'application/json'
                 }
@@ -81,7 +83,7 @@ name: "Page_SignUp.vue",
                         this.$router.push('/home')
                     }
                     else {
-                        this.error = true;
+                        this.error = res.error;
                         this.load = false;
                     }
                 })
