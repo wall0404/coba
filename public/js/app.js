@@ -53537,7 +53537,7 @@ var render = function() {
         _c(
           "button",
           {
-            staticClass: "coba-button coba-button-accent",
+            staticClass: "coba-button coba-button-accent mt-4",
             attrs: { type: "button" },
             on: { click: _vm.submit }
           },
@@ -53632,66 +53632,68 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
-      _c(
-        "form",
-        {},
-        [
-          _c("element-input", {
-            attrs: {
-              error: _vm.error,
-              classes: "coba-margin-top",
-              type: "text",
-              name: "firstName",
-              model: _vm.user,
-              placeholder: "Vorname"
-            }
-          }),
-          _vm._v(" "),
-          _c("element-input", {
-            attrs: {
-              error: _vm.error,
-              classes: "coba-margin-top",
-              type: "text",
-              name: "lastName",
-              model: _vm.user,
-              placeholder: "Nachname"
-            }
-          }),
-          _vm._v(" "),
-          _c("element-input", {
-            attrs: {
-              error: _vm.error,
-              classes: "coba-margin-top",
-              type: "email",
-              name: "email",
-              model: _vm.user,
-              placeholder: "E-Mail"
-            }
-          }),
-          _vm._v(" "),
-          _c("element-input", {
-            attrs: {
-              error: _vm.error,
-              classes: "coba-margin-top",
-              type: "password",
-              name: "password",
-              model: _vm.user,
-              placeholder: "Passwort"
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "coba-button coba-button-accent",
-              attrs: { type: "button" },
-              on: { click: _vm.submit }
-            },
-            [_vm._v("Registrieren")]
-          )
-        ],
-        1
-      )
+      _c("form", { staticClass: "coba-form" }, [
+        _c(
+          "div",
+          { staticClass: "coba-input-container" },
+          [
+            _c("element-input", {
+              attrs: {
+                error: _vm.error,
+                classes: "coba-margin-top",
+                type: "text",
+                name: "firstName",
+                model: _vm.user,
+                placeholder: "Vorname"
+              }
+            }),
+            _vm._v(" "),
+            _c("element-input", {
+              attrs: {
+                error: _vm.error,
+                classes: "coba-margin-top",
+                type: "text",
+                name: "lastName",
+                model: _vm.user,
+                placeholder: "Nachname"
+              }
+            }),
+            _vm._v(" "),
+            _c("element-input", {
+              attrs: {
+                error: _vm.error,
+                classes: "coba-margin-top",
+                type: "email",
+                name: "email",
+                model: _vm.user,
+                placeholder: "E-Mail"
+              }
+            }),
+            _vm._v(" "),
+            _c("element-input", {
+              attrs: {
+                error: _vm.error,
+                classes: "coba-margin-top",
+                type: "password",
+                name: "password",
+                model: _vm.user,
+                placeholder: "Passwort"
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "coba-button coba-button-accent mt-4",
+            attrs: { type: "button" },
+            on: { click: _vm.submit }
+          },
+          [_vm._v("Registrieren")]
+        )
+      ])
     ])
   ])
 }

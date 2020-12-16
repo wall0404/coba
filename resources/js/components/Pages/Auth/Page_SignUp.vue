@@ -3,41 +3,41 @@
         <div class="coba-container coba-flex coba-header">
             <span class="coba-page-headline">Registrieren</span>
         </div>
-        <div class="coba-container">
-            <form class="">
+        <div class="coba-container" >
+            <form class="coba-form">
+                <div class="coba-input-container">
+                    <element-input
+                        v-bind:error="error"
+                        classes="coba-margin-top"
+                        type="text"
+                        name="firstName"
+                        v-bind:model="user"
+                        placeholder="Vorname"></element-input>
 
-                <element-input
-                    v-bind:error="error"
-                    classes="coba-margin-top"
-                    type="text"
-                    name="firstName"
-                    v-bind:model="user"
-                    placeholder="Vorname"></element-input>
+                    <element-input
+                        v-bind:error="error"
+                        classes="coba-margin-top"
+                        type="text"
+                        name="lastName"
+                        v-bind:model="user"
+                        placeholder="Nachname"></element-input>
 
-                <element-input
-                    v-bind:error="error"
-                    classes="coba-margin-top"
-                    type="text"
-                    name="lastName"
-                    v-bind:model="user"
-                    placeholder="Nachname"></element-input>
-
-                <element-input
-                    v-bind:error="error"
-                    classes="coba-margin-top"
-                    type="email"
-                    name="email"
-                    v-bind:model="user"
-                    placeholder="E-Mail"></element-input>
-                <element-input
-                    v-bind:error="error"
-                    classes="coba-margin-top"
-                    type="password"
-                    name="password"
-                    v-bind:model="user"
-                    placeholder="Passwort"></element-input>
-
-                <button class="coba-button coba-button-accent" type="button" @click="submit">Registrieren</button>
+                    <element-input
+                        v-bind:error="error"
+                        classes="coba-margin-top"
+                        type="email"
+                        name="email"
+                        v-bind:model="user"
+                        placeholder="E-Mail"></element-input>
+                    <element-input
+                        v-bind:error="error"
+                        classes="coba-margin-top"
+                        type="password"
+                        name="password"
+                        v-bind:model="user"
+                        placeholder="Passwort"></element-input>
+                </div>
+                <button class="coba-button coba-button-accent mt-4" type="button" @click="submit">Registrieren</button>
 
             </form>
         </div>
