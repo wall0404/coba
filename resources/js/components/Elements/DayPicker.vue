@@ -64,8 +64,8 @@ export default {
                 this.pages[this.page] = [];
                 //Crate badge for every day in this week
                 for(let i = 0; i < 5; i++) {
-                    let disabled = this.todayDate > date;
-                    this.pages[this.page].push({day: this.dateToDayOfMonth(date), color: 'gray', selected: false, date: new Date(date.getTime()), time: [9,17], disabled: disabled});
+                    let disabled = this.todayDate > date; //Daypicker is disabled, if in the past
+                    this.pages[this.page].push({day: this.dateToDayOfMonth(date), color: this.calcColor(this.bookings), selected: false, date: new Date(date.getTime()), time: [9,17], disabled: disabled});
                     date.setDate(date.getDate() + 1);
                 }
             }
@@ -77,6 +77,44 @@ export default {
             this.weekEnd.setDate(date.getDate()-1);
             this.days = this.pages[this.page];
         },
+
+        //calculate and sum all hours in the given array of bookings
+        calcHours(bookings) {
+            let hours = 0;
+            for(let i = 0; i < bookings.length; i++) {
+                //Endzeit - Startzeit = berechnet gesamte Stundenanzahl pro Tag
+                hours += Number(bookings[i].to.substring(0,2)) - Number(bookings[i].from.substring(0,2)) //Substring, to isolate the hours, 09:00 -> cuts off the last 3 chars
+            }
+
+            return hours;
+        },
+        calcColor(bookings) {
+            let color = "";
+            let hours = 0;
+            let startHour = 24;
+            let startBooking = null;
+            let endHour = 0;
+            let endBooking = null;
+            for(let i = 0; i < bookings.length; i++) {
+                hours += Number(bookings[i].to.substring(0,2)) - Number(bookings[i].from.substring(0,2));
+                if(Number(bookings[i].to.substring(0,2))  > endHour) {
+                    endHour = Number(bookings[i].to.substring(0, 2));
+                    endBooking = bookings[i];
+                }
+                if(Number(bookings[i].from.substring(0,2))  < startHour) {
+                    startHour = Number(bookings[i].from.substring(0, 2));
+                    startBooking = bookings[i];
+                }
+            }
+            if(hours >= 4)
+                color = 'red'; //mark red
+            else if(hours === 0)
+                color = "green"; //mark green
+            else
+                color = "orange"; //mark orange
+            return {color:color, start: startBooking.from, end: endBooking.to};
+        },
+
         dateToDayOfMonth(date) {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
             return days[date.getUTCDay()];
