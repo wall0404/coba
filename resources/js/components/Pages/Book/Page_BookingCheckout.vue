@@ -11,7 +11,6 @@
                     <div v-if="validation_error.length === 0">
                         <button style="background-color: #FFC931 ; border-radius:30px ; margin:20px" class="coba-text coba-text-very-big"><a @click="$router.push('/home')"> Ihre Buchung wurde eingetragen </a> </button>
 
-                        <meta http-equiv="refresh" content="3;url='/home'" />
                     </div>
                     <div v-else>
                         <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
@@ -52,6 +51,7 @@ export default {
             this.makeBooking();
         }
     },
+
     methods: {
         makeBooking() {
             this.load = true;
@@ -90,6 +90,7 @@ export default {
                     this.load = false;
                 })
         }
+
     }
 }
 </script>
