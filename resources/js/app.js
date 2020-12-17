@@ -7,7 +7,9 @@ import {store} from './_helpers/store';
 import NavBar from './components/Navbar'
 import Spinner from './components/Global/Spinner'
 import VueRangeSlider from 'vue-range-component'
+import { BootstrapVueIcons } from 'bootstrap-vue'
 
+Vue.use(BootstrapVueIcons);
 Vue.use(VueRangeSlider);
 
 Vue.prototype.$date_options_long = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };

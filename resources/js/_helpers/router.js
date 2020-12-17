@@ -23,11 +23,14 @@ import Page_WorkstationSelection from "../components/Pages/Book/Page_Workstation
 import Page_DateTimeSelection from "../components/Pages/Book/Page_DateTimeSelection";
 import Page_BookingConfirmation from "../components/Pages/Book/Page_BookingConfirmation";
 import Page_BookingCheckout from "../components/Pages/Book/Page_BookingCheckout";
+import Page_SignUp from "../components/Pages/Auth/Page_SignUp";
 
 const routes = [
-    { path: '/', component: Page_Landing },
     { path: '/login', component: Page_Login },
     { path: '/logout', component: Page_Logout },
+    { path: '/signup', component: Page_SignUp },
+    { path: '/', component: Page_Home, meta:{auth:true} },
+    { path: '/', component: Page_Login, meta:{auth:false} },
     { path: '/home', component: Page_Home, meta:{auth:true} },
     { path: '/team', component: Page_Team, meta:{auth:true} },
     { path: '/calendar', component: Page_Calendar, meta:{auth:true} },
