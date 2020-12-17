@@ -51,13 +51,10 @@
 [class*="coba-flex"] {
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 
     &[class*="wrap"] {
         flex-wrap: wrap;
-    }
-    &[class*="column"] {
-        flex-direction: column;
     }
     &[class*="column"] {
         flex-direction: column;
@@ -377,4 +374,21 @@
     .coba-table-align-right {
         text-align: right;
     }
+}
+
+/* Border Styles */
+.coba-border-yellow {
+    border: 2px solid #FFC931;
+}
+.coba-border-rounded {
+    border-radius: 10px;
+}
+.coba-border-round {
+    border-radius: 50%;
+}
+
+
+/* Shadow Styles */
+.coba-shadow {
+    box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
 }

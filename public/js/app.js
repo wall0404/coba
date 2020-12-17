@@ -1365,7 +1365,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_Profile"
 });
@@ -48384,7 +48383,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.user-container[data-v-6f34980f] {\r\n    border-radius: 5px;\r\n    color: #b3b8cd;\r\n    padding-top: 30px;\r\n    position: relative;\r\n    max-width: 100%;\r\n    text-align: center;\r\n    padding-bottom: 48px;\n}\n.user-container .round[data-v-6f34980f] {\r\n    border: 2px solid #FFC931;\r\n    border-radius: 50%;\r\n    padding: 7px;\r\n    max-width: 50%;\r\n    max-height: 50%;\r\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.75);\n}\n.setting-button[data-v-6f34980f]{\r\n    margin: 5px;\r\n    border-radius: 10px;\r\n    max-width: 70%;\r\n    padding: 8px ;\r\n    border: 2px solid #FFC931 ;\r\n    height: 50px;\n}\n.setting-button .dots[data-v-6f34980f]{\r\n    max-height: 90%;\r\n    max-width: 90%;\r\n    opacity: 0.8;\n}\n.user-data-templ[data-v-6f34980f] {\r\n    max-width: 90%;\r\n    margin-left: 5%;\r\n\r\n    margin-top:30px;\r\n    display: flex;\r\n    border-radius: 8px;\r\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\r\n    padding-bottom: 10px;\n}\n.user-table[data-v-6f34980f] {\r\n    border-collapse: collapse;\r\n    margin: 25px 5px 5px 25px;\r\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\r\n    text-align: left;\r\n    font-weight: bold ;\r\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\r\n    text-align: right;\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.user-container[data-v-6f34980f] {\n    position: relative;\n    max-width: 100%;\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\n    max-width: 50%;\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\n    display: flex;\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\n    border-collapse: collapse;\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\n    text-align: left;\n    font-weight: bold;\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\n    text-align: right;\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -54257,27 +54256,56 @@ var render = function() {
   return _c("div", { staticClass: "coba-page" }, [
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticStyle: { "text-align": "center" } }, [
-      _c("h3", { staticStyle: { "margin-bottom": "0px" } }, [
-        _vm._v(
-          _vm._s(
-            _vm.$store.getters.data.user.firstName +
-              " " +
-              _vm.$store.getters.data.user.lastName
+    _c(
+      "div",
+      { staticClass: "coba-container text-center pb-0" },
+      [
+        _c("h3", { staticClass: "mb-0" }, [
+          _vm._v(
+            _vm._s(
+              _vm.$store.getters.data.user.firstName +
+                " " +
+                _vm.$store.getters.data.user.lastName
+            )
           )
+        ]),
+        _vm._v(" "),
+        _c("p", { staticClass: "mb-1" }, [
+          _vm._v(_vm._s(_vm.$store.getters.data.user.email))
+        ]),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass:
+              "setting-button coba-flex-space-evenly coba-border-yellow p-2 coba-border-rounded",
+            attrs: { to: "/profile/settings" }
+          },
+          [
+            _c("span", [_vm._v("Konto")]),
+            _vm._v(" "),
+            _c("b-icon", { attrs: { icon: "sliders" } })
+          ],
+          1
         )
-      ]),
-      _vm._v(" "),
-      _c("p", { staticStyle: { "margin-bottom": "5px" } }, [
-        _vm._v(_vm._s(_vm.$store.getters.data.user.email))
-      ]),
-      _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _vm._m(2),
-      _vm._v(" "),
-      _vm._m(3)
-    ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "coba-container" },
+      [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          { staticClass: "coba-button mt-4", attrs: { to: "/logout" } },
+          [_vm._v("Logout")]
+        )
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -54285,38 +54313,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "user-container" }, [
-      _c(
-        "button",
-        {
-          staticStyle: { "background-color": "transparent" },
-          attrs: { id: "change-profile-button" }
-        },
-        [
-          _c("img", {
-            staticClass: "round",
-            attrs: {
-              src:
-                "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
-              alt: "user"
-            }
-          })
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "button-container" }, [
-      _c("button", { staticClass: "setting-button" }, [
-        _vm._v("Kontoeinstellungen"),
+    return _c("div", { staticClass: "user-container mb-5 mt-4" }, [
+      _c("div", [
         _c("img", {
-          staticClass: "dots",
+          staticClass: "coba-border-round coba-border-yellow coba-shadow p-1",
           attrs: {
             src:
-              "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjQwOHB4IiBoZWlnaHQ9IjQwOHB4IiB2aWV3Qm94PSIwIDAgNDA4IDQwOCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDA4IDQwODsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGcgaWQ9Im1vcmUtdmVydCI+DQoJCTxwYXRoIGQ9Ik0yMDQsMTAyYzI4LjA1LDAsNTEtMjIuOTUsNTEtNTFTMjMyLjA1LDAsMjA0LDBzLTUxLDIyLjk1LTUxLDUxUzE3NS45NSwxMDIsMjA0LDEwMnogTTIwNCwxNTNjLTI4LjA1LDAtNTEsMjIuOTUtNTEsNTENCgkJCXMyMi45NSw1MSw1MSw1MXM1MS0yMi45NSw1MS01MVMyMzIuMDUsMTUzLDIwNCwxNTN6IE0yMDQsMzA2Yy0yOC4wNSwwLTUxLDIyLjk1LTUxLDUxczIyLjk1LDUxLDUxLDUxczUxLTIyLjk1LDUxLTUxDQoJCQlTMjMyLjA1LDMwNiwyMDQsMzA2eiIvPg0KCTwvZz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K"
+              "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
+            alt: "user"
           }
         })
       ])
@@ -54326,49 +54330,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "user-data-templ" }, [
-      _c("table", { staticClass: "user-table" }, [
-        _c("tr", [
-          _c("td", { staticClass: "user-data-table-head" }, [
-            _vm._v("Favorisierte Plätze:")
+    return _c(
+      "div",
+      { staticClass: "coba-border-rounded p-2 user-data-templ" },
+      [
+        _c("table", { staticClass: "user-table w-100" }, [
+          _c("tr", [
+            _c("td", { staticClass: "user-data-table-head" }, [
+              _vm._v("Favorisierte Plätze:")
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "user-data-table-input" }, [
+              _vm._v("Tower_1 "),
+              _c("br"),
+              _vm._v(" Tower_2 "),
+              _c("br"),
+              _vm._v(" DC_9")
+            ])
           ]),
           _vm._v(" "),
-          _c("td", { staticClass: "user-data-table-input" }, [
-            _vm._v("Tower_1 "),
-            _c("br"),
-            _vm._v(" Tower_2 "),
-            _c("br"),
-            _vm._v(" DC_9")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", { staticClass: "user-data-table-head" }, [
-            _vm._v("Best-buddies:")
-          ]),
-          _vm._v(" "),
-          _c("td", { staticClass: "user-data-table-input" }, [
-            _vm._v("Max Mustermann  "),
-            _c("br"),
-            _vm._v(" Peter Pan  "),
-            _c("br"),
-            _vm._v("Paul Panther")
+          _c("tr", [
+            _c("td", { staticClass: "user-data-table-head" }, [
+              _vm._v("Best-buddies:")
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "user-data-table-input" }, [
+              _vm._v("Max Mustermann  "),
+              _c("br"),
+              _vm._v(" Peter Pan  "),
+              _c("br"),
+              _vm._v("Paul Panther")
+            ])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container" }, [
-      _c(
-        "button",
-        { staticClass: "coba-button", attrs: { id: "logout-button" } },
-        [_vm._v(" Logout")]
-      )
-    ])
+      ]
+    )
   }
 ]
 render._withStripped = true
