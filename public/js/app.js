@@ -626,7 +626,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
 /* harmony import */ var _ListItems_Booking__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ListItems/Booking */ "./resources/js/components/ListItems/Booking.vue");
-/* harmony import */ var _Page_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Page_Home */ "./resources/js/components/Pages/Page_Home.vue");
 //
 //
 //
@@ -654,8 +653,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -48431,7 +48428,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.user-container[data-v-6f34980f] {\n    border-radius: 5px;\n    color: #b3b8cd;\n    padding-top: 30px;\n    position: relative;\n    max-width: 100%;\n    text-align: center;\n    padding-bottom: 48px;\n}\n.user-container .round[data-v-6f34980f] {\n    border: 2px solid #FFC931;\n    border-radius: 50%;\n    padding: 7px;\n    max-width: 50%;\n    max-height: 50%;\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.75);\n}\n.setting-button[data-v-6f34980f]{\n    margin: 5px;\n    border-radius: 10px;\n    max-width: 70%;\n    padding: 8px ;\n    border: 2px solid #FFC931 ;\n    height: 50px;\n}\n.setting-button .dots[data-v-6f34980f]{\n    max-height: 90%;\n    max-width: 90%;\n    opacity: 0.8;\n}\n.user-data-templ[data-v-6f34980f] {\n    max-width: 90%;\n    margin-left: 5%;\n\n    margin-top:30px;\n    display: flex;\n    border-radius: 8px;\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n    padding-bottom: 10px;\n}\n.user-table[data-v-6f34980f] {\n    border-collapse: collapse;\n    margin: 25px 5px 5px 25px;\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\n    text-align: left;\n    font-weight: bold ;\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\n    text-align: right;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n.user-container[data-v-6f34980f] {\r\n    border-radius: 5px;\r\n    color: #b3b8cd;\r\n    padding-top: 30px;\r\n    position: relative;\r\n    max-width: 100%;\r\n    text-align: center;\r\n    padding-bottom: 48px;\n}\n.user-container .round[data-v-6f34980f] {\r\n    border: 2px solid #FFC931;\r\n    border-radius: 50%;\r\n    padding: 7px;\r\n    max-width: 50%;\r\n    max-height: 50%;\r\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.75);\n}\n.setting-button[data-v-6f34980f]{\r\n    margin: 5px;\r\n    border-radius: 10px;\r\n    max-width: 70%;\r\n    padding: 8px ;\r\n    border: 2px solid #FFC931 ;\r\n    height: 50px;\n}\n.setting-button .dots[data-v-6f34980f]{\r\n    max-height: 90%;\r\n    max-width: 90%;\r\n    opacity: 0.8;\n}\n.user-data-templ[data-v-6f34980f] {\r\n    max-width: 90%;\r\n    margin-left: 5%;\r\n\r\n    margin-top:30px;\r\n    display: flex;\r\n    border-radius: 8px;\r\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\r\n    padding-bottom: 10px;\n}\n.user-table[data-v-6f34980f] {\r\n    border-collapse: collapse;\r\n    margin: 25px 5px 5px 25px;\r\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\r\n    text-align: left;\r\n    font-weight: bold ;\r\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\r\n    text-align: right;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -48450,7 +48447,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\n    border: 2px solid #ffad33 ;\n    padding: 5px;\n    max-width: 50%;\n}\n.input-container[data-v-61048e32]{\n    max-width: 90%;\n    text-align: center;\n    position: absolute;\n    margin-top: -90px;\n    margin-bottom: 10px;\n}\n.setting-icon[data-v-61048e32]{\n    width:50px ;\n    height:50px;\n}\n.setting_button[data-v-61048e32]{\n    position: absolute;\n    background-color: Transparent;\n    right: 15px;\n    top: 20px;\n}\n.user-data-templ[data-v-61048e32]{\n    max-width: 90%;\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.75);\n    border-radius: 10px;\n    margin-left: 5%;\n    margin-top: 30px;\n    margin-bottom: 10px;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-table-head[data-v-61048e32]{\n    text-align: right;\n    font-weight: bold ;\n}\n.round[data-v-61048e32] {\n    border: 1px solid #FFC931;\n    border-radius: 50%;\n    padding: 3px;\n    max-width: 90%;\n    max-height: 90%;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\r\n    border: 2px solid #ffad33 ;\r\n    padding: 5px;\r\n    max-width: 50%;\n}\n.input-container[data-v-61048e32]{\r\n    max-width: 90%;\r\n    text-align: center;\r\n    position: absolute;\r\n    margin-top: -90px;\r\n    margin-bottom: 10px;\n}\n.setting-icon[data-v-61048e32]{\r\n    width:50px ;\r\n    height:50px;\n}\n.setting_button[data-v-61048e32]{\r\n    position: absolute;\r\n    background-color: Transparent;\r\n    right: 15px;\r\n    top: 20px;\n}\n.user-data-templ[data-v-61048e32]{\r\n    max-width: 90%;\r\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.75);\r\n    border-radius: 10px;\r\n    margin-left: 5%;\r\n    margin-top: 30px;\r\n    margin-bottom: 10px;\n}\n.user-table[data-v-61048e32] {\r\n    border-collapse: collapse;\r\n    margin: 0 5px 5px 0;\r\n    font-size: 1.05em;\r\n    text-align: center;\n}\n.user-table .user-data-table-head[data-v-61048e32]{\r\n    text-align: right;\r\n    font-weight: bold ;\n}\n.round[data-v-61048e32] {\r\n    border: 1px solid #FFC931;\r\n    border-radius: 50%;\r\n    padding: 3px;\r\n    max-width: 90%;\r\n    max-height: 90%;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -53632,32 +53629,21 @@ var render = function() {
                   _vm.error === false
                     ? _c("div", [
                         _vm.validation_error.length === 0
-                          ? _c("div", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "coba-text coba-text-very-big",
-                                  staticStyle: {
-                                    "background-color": "#FFC931",
-                                    "border-radius": "30px",
-                                    margin: "20px"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$router.push("/home")
-                                        }
-                                      }
-                                    },
-                                    [_vm._v(" Ihre Buchung wurde eingetragen ")]
-                                  )
-                                ]
-                              )
-                            ])
+                          ? _c(
+                              "div",
+                              [
+                                _c(
+                                  "router-link",
+                                  {
+                                    staticClass:
+                                      "coba-button coba-button-accent",
+                                    attrs: { to: "/home" }
+                                  },
+                                  [_vm._v("Ihre Buchung wurde eingetragen ")]
+                                )
+                              ],
+                              1
+                            )
                           : _c(
                               "div",
                               [
@@ -74237,8 +74223,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

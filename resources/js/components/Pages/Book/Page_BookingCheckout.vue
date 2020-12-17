@@ -9,8 +9,7 @@
             <div v-else>
                 <div v-if="error===false">
                     <div v-if="validation_error.length === 0">
-                        <button style="background-color: #FFC931 ; border-radius:30px ; margin:20px" class="coba-text coba-text-very-big"><a @click="$router.push('/home')"> Ihre Buchung wurde eingetragen </a> </button>
-
+                        <router-link to="/home" class="coba-button coba-button-accent">Ihre Buchung wurde eingetragen </router-link>
                     </div>
                     <div v-else>
                         <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
@@ -29,7 +28,6 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import Booking from "../../ListItems/Booking";
-import Page_Home from "../Page_Home";
 export default {
     components: {Booking, Spinner},
     props: ['bookings'],
@@ -51,7 +49,6 @@ export default {
             this.makeBooking();
         }
     },
-
     methods: {
         makeBooking() {
             this.load = true;
@@ -90,7 +87,6 @@ export default {
                     this.load = false;
                 })
         }
-
     }
 }
 </script>
