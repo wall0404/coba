@@ -9,11 +9,12 @@
             <div v-else>
                 <div v-if="error===false">
                     <div v-if="validation_error.length === 0">
-                        <span class="coba-text coba-text-very-big">Ihre Buchung wurde eingetragen</span>
+                        <router-link to="/home" class="coba-button coba-button-accent">Ihre Buchung wurde eingetragen </router-link>
                     </div>
                     <div v-else>
                         <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
                         <booking v-for="(booking, index) in validation_error"  :booking="booking" color="true" :key="'e'+index"></booking>
+                        <button class="coba-button"><a @click="$router.go(-2)"> Zurück</a></button>
                     </div>
                 </div>
                 <div v-else>
