@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', 'App\Http\Controllers\AuthController@login');
-Route::post('register', 'App\Http\Controllers\AuthController@register');
+Route::post('signup', 'App\Http\Controllers\AuthController@signup');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 

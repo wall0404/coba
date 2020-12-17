@@ -11116,7 +11116,37 @@ a.text-dark:focus {
   margin-right: 0;
 }
 
+/* INPUT Styles */
+
+.coba-input-container {
+  width: 80%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.coba-margin-top {
+  margin-top: 3px;
+}
+
+.coba-input {
+  font-size: 16px;
+  height: 30px;
+  width: 100%;
+  margin: 5px 0;
+  padding: 18px;
+  padding-left: 5px;
+  padding-bottom: 16px;
+  background: #f9f8f8;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  border-bottom: 1px solid #2C2C2C;
+}
+
 /* FORM Styles */
+
+.coba-form {
+  text-align: center;
+}
 
 .coba-form-danger {
   background-color: #861F08;
