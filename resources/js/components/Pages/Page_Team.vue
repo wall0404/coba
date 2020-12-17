@@ -1,67 +1,23 @@
 <template>
 
     <div class="coba-page">
-        <div class="coba-header" style="background-color: #FFC931 ">
-            <h2 class="coba-page-headline"  >Kontaktliste</h2>
-            <button class="setting_button" ><img class="setting-icon" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjQwOHB4IiBoZWlnaHQ9IjQwOHB4IiB2aWV3Qm94PSIwIDAgNDA4IDQwOCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDA4IDQwODsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGcgaWQ9Im1vcmUtdmVydCI+DQoJCTxwYXRoIGQ9Ik0yMDQsMTAyYzI4LjA1LDAsNTEtMjIuOTUsNTEtNTFTMjMyLjA1LDAsMjA0LDBzLTUxLDIyLjk1LTUxLDUxUzE3NS45NSwxMDIsMjA0LDEwMnogTTIwNCwxNTNjLTI4LjA1LDAtNTEsMjIuOTUtNTEsNTENCgkJCXMyMi45NSw1MSw1MSw1MXM1MS0yMi45NSw1MS01MVMyMzIuMDUsMTUzLDIwNCwxNTN6IE0yMDQsMzA2Yy0yOC4wNSwwLTUxLDIyLjk1LTUxLDUxczIyLjk1LDUxLDUxLDUxczUxLTIyLjk1LDUxLTUxDQoJCQlTMjMyLjA1LDMwNiwyMDQsMzA2eiIvPg0KCTwvZz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K" />
-            </button>
+        <div class="coba-header coba-header-accent">
+            <h2 class="coba-page-headline">Team</h2>
         </div>
-        <div class="input-container">
+        <div class="filter-container">
             <input id="contact"  type="text"  placeholder="Kontakt suchen..">
-            <button style=" border: 2px solid #ffad33 ; padding:5px">Sortieren nach...</button>
+            <button class="coba-button coba-button-round m-0"><b-icon icon="sort-up"></b-icon></button>
         </div>
         <br>
-        <div class="user-data-templ d-flex">
-            <button id="change-profile-button"  style="background-color: transparent "> <img class="round" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </button>
-            <div style="text-align: center">
+        <div class="user-data-templ" v-for="n in 5">
+            <div class="profile-picture"  style="background-color: transparent "> <img class="round" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
+            <div>
                 <table  class="user-table">
                     <tr>
-                        <td class="user-data-table-head">Max Mustermann</td>
+                        <td class="user-data-name">Max Mustermann</td>
                     </tr>
                     <tr>
-                        <td class="user-data-table-head"> max.mustermann@coba.de</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <!-- Design testing only -->
-        <div class="user-data-templ d-flex">
-            <button id="change-profile-button2"  style="background-color: transparent "> <img class="round" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </button>
-            <div style="text-align: center">
-                <table  class="user-table">
-                    <tr>
-                        <td class="user-data-table-head">Max Mustermann</td>
-                    </tr>
-                    <tr>
-                        <td class="user-data-table-head"> max.mustermann@coba.de</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="user-data-templ d-flex">
-            <button id="change-profile-button3"  style="background-color: transparent "> <img class="round" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </button>
-            <div style="text-align: center">
-                <table  class="user-table">
-                    <tr>
-                        <td class="user-data-table-head">Max Mustermann</td>
-                    </tr>
-                    <tr>
-                        <td class="user-data-table-head"> max.mustermann@coba.de</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <div class="user-data-templ d-flex">
-            <button id="change-profile-button4"  style="background-color: transparent "> <img class="round" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </button>
-            <div style="text-align: center">
-                <table  class="user-table">
-                    <tr>
-                        <td class="user-data-table-head">Max Mustermann</td>
-                    </tr>
-                    <tr>
-                        <td class="user-data-table-head"> max.mustermann@coba.de</td>
+                        <td class="user-data-email">max.mustermann@coba.de</td>
                     </tr>
                 </table>
             </div>
@@ -82,32 +38,28 @@ name: "Teampage",
 #contact{
     border: 2px solid #ffad33 ;
     padding: 5px;
-    max-width: 50%;
+    width: 65%;
 }
-.input-container{
-    max-width: 90%;
+.filter-container{
+    width: 100%;
     text-align: center;
     position: absolute;
     margin-top: -90px;
     margin-bottom: 10px;
-}
-.setting-icon{
-    width:50px ;
-    height:50px;
-}
-.setting_button{
-    position: absolute;
-    background-color: Transparent;
-    right: 15px;
-    top: 20px;
+    display: flex;
+    justify-content: space-evenly;
 }
 .user-data-templ{
     max-width: 90%;
-    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    margin-left: 5%;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    margin: 20px auto;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.profile-picture {
+    width: 30%;
 }
 .user-table {
     border-collapse: collapse;
@@ -115,7 +67,7 @@ name: "Teampage",
     font-size: 1.05em;
     text-align: center;
 }
-.user-table .user-data-table-head{
+.user-table .user-data-name{
     text-align: right;
     font-weight: bold ;
 }

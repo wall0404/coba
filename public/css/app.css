@@ -10998,6 +10998,10 @@ a.text-dark:focus {
   color: #2C2C2C;
 }
 
+.coba-header.coba-header-accent {
+  background-color: #FFC931;
+}
+
 /* CUSTOM HEADER for HOMESCREEN */
 
 .coba-homescreen {
@@ -11075,6 +11079,12 @@ a.text-dark:focus {
   height: 50px;
   width: 50px;
   border-radius: 25px;
+}
+
+.coba-button.coba-button-round.coba-button-small {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
 }
 
 .coba-button.coba-button-round.coba-button-big {

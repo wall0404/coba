@@ -1409,50 +1409,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Teampage"
 });
@@ -48447,7 +48403,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\r\n    border: 2px solid #ffad33 ;\r\n    padding: 5px;\r\n    max-width: 50%;\n}\n.input-container[data-v-61048e32]{\r\n    max-width: 90%;\r\n    text-align: center;\r\n    position: absolute;\r\n    margin-top: -90px;\r\n    margin-bottom: 10px;\n}\n.setting-icon[data-v-61048e32]{\r\n    width:50px ;\r\n    height:50px;\n}\n.setting_button[data-v-61048e32]{\r\n    position: absolute;\r\n    background-color: Transparent;\r\n    right: 15px;\r\n    top: 20px;\n}\n.user-data-templ[data-v-61048e32]{\r\n    max-width: 90%;\r\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.75);\r\n    border-radius: 10px;\r\n    margin-left: 5%;\r\n    margin-top: 30px;\r\n    margin-bottom: 10px;\n}\n.user-table[data-v-61048e32] {\r\n    border-collapse: collapse;\r\n    margin: 0 5px 5px 0;\r\n    font-size: 1.05em;\r\n    text-align: center;\n}\n.user-table .user-data-table-head[data-v-61048e32]{\r\n    text-align: right;\r\n    font-weight: bold ;\n}\n.round[data-v-61048e32] {\r\n    border: 1px solid #FFC931;\r\n    border-radius: 50%;\r\n    padding: 3px;\r\n    max-width: 90%;\r\n    max-height: 90%;\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\n    border: 2px solid #ffad33 ;\n    padding: 5px;\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    width: 100%;\n    text-align: center;\n    position: absolute;\n    margin-top: -90px;\n    margin-bottom: 10px;\n    display: flex;\n    justify-content: space-evenly;\n}\n.user-data-templ[data-v-61048e32]{\n    max-width: 90%;\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.5);\n    border-radius: 10px;\n    margin: 20px auto;\n    padding: 10px;\n    display: flex;\n    justify-content: space-between;\n}\n.profile-picture[data-v-61048e32] {\n    width: 30%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32]{\n    text-align: right;\n    font-weight: bold ;\n}\n.round[data-v-61048e32] {\n    border: 1px solid #FFC931;\n    border-radius: 50%;\n    padding: 3px;\n    max-width: 90%;\n    max-height: 90%;\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -54436,38 +54392,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-page" }, [
-      _c(
-        "div",
-        {
-          staticClass: "coba-header",
-          staticStyle: { "background-color": "#FFC931" }
-        },
-        [
-          _c("h2", { staticClass: "coba-page-headline" }, [
-            _vm._v("Kontaktliste")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "setting_button" }, [
-            _c("img", {
-              staticClass: "setting-icon",
-              attrs: {
-                src:
-                  "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE2LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCINCgkgd2lkdGg9IjQwOHB4IiBoZWlnaHQ9IjQwOHB4IiB2aWV3Qm94PSIwIDAgNDA4IDQwOCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDA4IDQwODsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPGcgaWQ9Im1vcmUtdmVydCI+DQoJCTxwYXRoIGQ9Ik0yMDQsMTAyYzI4LjA1LDAsNTEtMjIuOTUsNTEtNTFTMjMyLjA1LDAsMjA0LDBzLTUxLDIyLjk1LTUxLDUxUzE3NS45NSwxMDIsMjA0LDEwMnogTTIwNCwxNTNjLTI4LjA1LDAtNTEsMjIuOTUtNTEsNTENCgkJCXMyMi45NSw1MSw1MSw1MXM1MS0yMi45NSw1MS01MVMyMzIuMDUsMTUzLDIwNCwxNTN6IE0yMDQsMzA2Yy0yOC4wNSwwLTUxLDIyLjk1LTUxLDUxczIyLjk1LDUxLDUxLDUxczUxLTIyLjk1LDUxLTUxDQoJCQlTMjMyLjA1LDMwNiwyMDQsMzA2eiIvPg0KCTwvZz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K"
-              }
-            })
-          ])
-        ]
-      ),
+  return _c(
+    "div",
+    { staticClass: "coba-page" },
+    [
+      _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "input-container" }, [
+      _c("div", { staticClass: "filter-container" }, [
         _c("input", {
           attrs: {
             id: "contact",
@@ -54478,153 +54409,71 @@ var staticRenderFns = [
         _vm._v(" "),
         _c(
           "button",
-          { staticStyle: { border: "2px solid #ffad33", padding: "5px" } },
-          [_vm._v("Sortieren nach...")]
+          { staticClass: "coba-button coba-button-round m-0" },
+          [_c("b-icon", { attrs: { icon: "sort-up" } })],
+          1
         )
       ]),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("div", { staticClass: "user-data-templ d-flex" }, [
-        _c(
-          "button",
-          {
-            staticStyle: { "background-color": "transparent" },
-            attrs: { id: "change-profile-button" }
-          },
-          [
-            _c("img", {
-              staticClass: "round",
-              attrs: {
-                src:
-                  "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
-                alt: "user"
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticStyle: { "text-align": "center" } }, [
-          _c("table", { staticClass: "user-table" }, [
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v("Max Mustermann")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v(" max.mustermann@coba.de")
-              ])
-            ])
-          ])
+      _vm._l(5, function(n) {
+        return _c("div", { staticClass: "user-data-templ" }, [
+          _vm._m(1, true),
+          _vm._v(" "),
+          _vm._m(2, true)
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "user-data-templ d-flex" }, [
-        _c(
-          "button",
-          {
-            staticStyle: { "background-color": "transparent" },
-            attrs: { id: "change-profile-button2" }
-          },
-          [
-            _c("img", {
-              staticClass: "round",
-              attrs: {
-                src:
-                  "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
-                alt: "user"
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticStyle: { "text-align": "center" } }, [
-          _c("table", { staticClass: "user-table" }, [
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v("Max Mustermann")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v(" max.mustermann@coba.de")
-              ])
-            ])
+      })
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "coba-header coba-header-accent" }, [
+      _c("h2", { staticClass: "coba-page-headline" }, [_vm._v("Team")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "profile-picture",
+        staticStyle: { "background-color": "transparent" }
+      },
+      [
+        _c("img", {
+          staticClass: "round",
+          attrs: {
+            src:
+              "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
+            alt: "user"
+          }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("table", { staticClass: "user-table" }, [
+        _c("tr", [
+          _c("td", { staticClass: "user-data-name" }, [
+            _vm._v("Max Mustermann")
           ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "user-data-templ d-flex" }, [
-        _c(
-          "button",
-          {
-            staticStyle: { "background-color": "transparent" },
-            attrs: { id: "change-profile-button3" }
-          },
-          [
-            _c("img", {
-              staticClass: "round",
-              attrs: {
-                src:
-                  "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
-                alt: "user"
-              }
-            })
-          ]
-        ),
+        ]),
         _vm._v(" "),
-        _c("div", { staticStyle: { "text-align": "center" } }, [
-          _c("table", { staticClass: "user-table" }, [
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v("Max Mustermann")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v(" max.mustermann@coba.de")
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "user-data-templ d-flex" }, [
-        _c(
-          "button",
-          {
-            staticStyle: { "background-color": "transparent" },
-            attrs: { id: "change-profile-button4" }
-          },
-          [
-            _c("img", {
-              staticClass: "round",
-              attrs: {
-                src:
-                  "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
-                alt: "user"
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticStyle: { "text-align": "center" } }, [
-          _c("table", { staticClass: "user-table" }, [
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v("Max Mustermann")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticClass: "user-data-table-head" }, [
-                _vm._v(" max.mustermann@coba.de")
-              ])
-            ])
+        _c("tr", [
+          _c("td", { staticClass: "user-data-email" }, [
+            _vm._v("max.mustermann@coba.de")
           ])
         ])
       ])
