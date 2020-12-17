@@ -154,11 +154,26 @@ __webpack_require__.r(__webpack_exports__);
         this.pages[this.page] = []; //Crate badge for every day in this week
 
         for (var i = 0; i < 5; i++) {
-          var disabled = this.todayDate > date; //Daypicker is disabled, if in the past
+          var disabled = false; //Daypicker is disabled, if in the past
+
+          var color = "gray";
+
+          if (this.todayDate > date) {
+            disabled = true;
+          } else if (typeof this.bookings[date.toISOString().slice(0, 10)] == "undefined") {
+            color = "green";
+          } else {
+            color = this.calcColor(this.bookings[date.toISOString().slice(0, 10)]);
+          }
+
+          if (color === "red") {
+            disabled = true;
+            console.log(disabled);
+          }
 
           this.pages[this.page].push({
             day: this.dateToDayOfMonth(date),
-            color: this.calcColor(this.bookings),
+            color: color,
             selected: false,
             date: new Date(date.getTime()),
             time: [9, 17],
@@ -175,17 +190,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.weekEnd.setDate(date.getDate() - 1);
       this.days = this.pages[this.page];
-    },
-    //calculate and sum all hours in the given array of bookings
-    calcHours: function calcHours(bookings) {
-      var hours = 0;
-
-      for (var i = 0; i < bookings.length; i++) {
-        //Endzeit - Startzeit = berechnet gesamte Stundenanzahl pro Tag
-        hours += Number(bookings[i].to.substring(0, 2)) - Number(bookings[i].from.substring(0, 2)); //Substring, to isolate the hours, 09:00 -> cuts off the last 3 chars
-      }
-
-      return hours;
     },
     calcColor: function calcColor(bookings) {
       var color = "";
@@ -209,15 +213,10 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      if (hours >= 4) color = 'red'; //mark red
-      else if (hours === 0) color = "green"; //mark green
-        else color = "orange"; //mark orange
+      if (hours >= 5) color = "red"; //mark red
+      else color = "orange"; //mark orange
 
-      return {
-        color: color,
-        start: startBooking.from,
-        end: endBooking.to
-      };
+      return color;
     },
     dateToDayOfMonth: function dateToDayOfMonth(date) {
       var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -53649,7 +53648,7 @@ var render = function() {
       { staticClass: "coba-container" },
       [
         _c("DayPicker", {
-          attrs: { workstation: _vm.workstation, bookings: null },
+          attrs: { workstation: _vm.workstation, bookings: _vm.bookings },
           on: { "callback-picker-event": _vm.callbackPicker }
         })
       ],

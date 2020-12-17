@@ -4,7 +4,7 @@
             <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container">
-            <DayPicker :workstation="workstation" :bookings="null" @callback-picker-event="callbackPicker"></DayPicker>
+            <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker"></DayPicker>
         </div>
         <div class="coba-container">
             <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
