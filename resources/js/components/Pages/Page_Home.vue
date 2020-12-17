@@ -1,18 +1,19 @@
 <template>
     <div class="coba-page coba-homescreen">
-        <div class="coba-container coba-header">
+        <div class="coba-container coba-header"> <!-- Überschrift -->
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
-        <div  v-if="!load" class="coba-container coba-text-strong">
+        <div  v-if="!load" class="coba-container coba-text-strong"> <!-- Anzeige der heutigen Buchungen -->
             <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
             <div v-else  class="coba-text-big">Keine Buchungen für heute</div>
-            <ul class="coba-list">
+            <ul class="coba-list"> <!-- Auflistung der heutigen Buchungen -->
                 <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">{{ today_booking.workstation.location.name }}, {{today_booking.workstation.name}}, {{today_booking.from}} - {{today_booking.to}}</li>
             </ul>
         </div>
         <spinner v-else></spinner>
-        <div class="coba-container coba-text-center">
-            <router-link to="/booking/new/location" class="coba-button coba-button-accent coba-button-big coba-button-no-border">Platz buchen</router-link>
+        <div class="coba-container coba-flex-left"> <!-- Button zur Sitzplatzbuchung -->
+            <span class="coba-text-very-big">Platz buchen</span>
+            <button class="coba-button coba-button-round coba-button-big coba-button-accent coba-button-distance-left-10"><router-link to="/booking/new/location">+</router-link></button>
         </div>
         <div class="coba-container">
             <span class="coba-text-big">Kommende Buchungen:</span>

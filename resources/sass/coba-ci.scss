@@ -65,6 +65,9 @@
     &[class*="space-between"] {
         justify-content: space-between;
     }
+    &[class*="left"] {
+        justify-content: flex-start;
+    }
 }
 
 /* HEADER */
@@ -179,6 +182,9 @@
     &.coba-button-disabled {
         border: 1px solid $coba-disabled-gray;
         color: $coba-disabled-gray;
+    }
+    &.coba-button-distance-left-10{
+        margin-left: 10px;
     }
 }
 .coba-button-container { /*In a Button container all buttons will be listed next to each other */

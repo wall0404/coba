@@ -1411,6 +1411,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_Home",
@@ -54548,22 +54549,25 @@ var render = function() {
           ])
         : _c("spinner"),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "coba-container coba-text-center" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass:
-                "coba-button coba-button-accent coba-button-big coba-button-no-border",
-              attrs: { to: "/booking/new/location" }
-            },
-            [_vm._v("Platz buchen")]
-          )
-        ],
-        1
-      ),
+      _c("div", { staticClass: "coba-container coba-flex-left" }, [
+        _c("span", { staticClass: "coba-text-very-big" }, [
+          _vm._v("Platz buchen")
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass:
+              "coba-button coba-button-round coba-button-big coba-button-accent coba-button-distance-left-10"
+          },
+          [
+            _c("router-link", { attrs: { to: "/booking/new/location" } }, [
+              _vm._v("+")
+            ])
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
