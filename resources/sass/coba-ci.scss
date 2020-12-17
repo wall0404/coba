@@ -161,9 +161,9 @@
         width: 50px;
         border-radius: 25px;
         &.coba-button-small {
-            height: 30px;
-            width: 30px;
-            border-radius: 15px;
+            height: 40px;
+            width: 40px;
+            border-radius: 20px;
         }
         &.coba-button-big {
             height: 75px;
@@ -378,8 +378,12 @@
 
 /* Border Styles */
 .coba-border-yellow {
-    border: 2px solid #FFC931;
+    border: 2px solid $coba-yellow;
 }
+.coba-border-orange {
+    border: 2px solid $coba-orange;
+}
+
 .coba-border-rounded {
     border-radius: 10px;
 }

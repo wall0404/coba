@@ -11078,9 +11078,9 @@ a.text-dark:focus {
 }
 
 .coba-button.coba-button-round.coba-button-small {
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
 }
 
 .coba-button.coba-button-round.coba-button-big {
@@ -11324,6 +11324,10 @@ a.text-dark:focus {
 
 .coba-border-yellow {
   border: 2px solid #FFC931;
+}
+
+.coba-border-orange {
+  border: 2px solid #FFAD33;
 }
 
 .coba-border-rounded {

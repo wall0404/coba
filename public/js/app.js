@@ -1408,6 +1408,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Teampage"
 });
@@ -48402,7 +48404,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\n    border: 2px solid #ffad33 ;\n    padding: 5px;\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    width: 100%;\n    text-align: center;\n    position: absolute;\n    margin-top: -90px;\n    margin-bottom: 10px;\n    display: flex;\n    justify-content: space-evenly;\n}\n.user-data-templ[data-v-61048e32]{\n    max-width: 90%;\n    box-shadow: 10px 20px 30px 0px rgba(0, 0, 0, 0.5);\n    border-radius: 10px;\n    margin: 20px auto;\n    padding: 10px;\n    display: flex;\n    justify-content: space-between;\n}\n.profile-picture[data-v-61048e32] {\n    width: 30%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32]{\n    text-align: right;\n    font-weight: bold ;\n}\n.round[data-v-61048e32] {\n    border: 1px solid #FFC931;\n    border-radius: 50%;\n    padding: 3px;\n    max-width: 90%;\n    max-height: 90%;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\n    text-align: right;\n    font-weight: bold;\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -54388,51 +54390,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "coba-page" },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "filter-container" }, [
-        _c("input", {
-          attrs: {
-            id: "contact",
-            type: "text",
-            placeholder: "Kontakt suchen.."
-          }
-        }),
+  return _c("div", { staticClass: "coba-page" }, [
+    _c(
+      "div",
+      { staticClass: "coba-header coba-header-accent position-relative" },
+      [
+        _c("h2", { staticClass: "coba-page-headline" }, [_vm._v("Team")]),
         _vm._v(" "),
         _c(
-          "button",
-          { staticClass: "coba-button coba-button-round m-0" },
-          [_c("b-icon", { attrs: { icon: "sort-up" } })],
-          1
+          "div",
+          {
+            staticClass:
+              "filter-container w-100 position-absolute coba-flex-space-evenly"
+          },
+          [
+            _c("input", {
+              staticClass: "coba-border-rounded coba-border-orange p-2",
+              attrs: {
+                id: "contact",
+                type: "text",
+                placeholder: "Kontakt suchen.."
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass:
+                  "coba-button coba-button-round coba-button-small m-0"
+              },
+              [_c("b-icon", { attrs: { icon: "sort-up" } })],
+              1
+            )
+          ]
         )
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "coba-container" },
       _vm._l(5, function(n) {
-        return _c("div", { staticClass: "user-data-templ" }, [
-          _vm._m(1, true),
-          _vm._v(" "),
-          _vm._m(2, true)
-        ])
-      })
-    ],
-    2
-  )
+        return _c(
+          "div",
+          {
+            staticClass:
+              "coba-shadow coba-border-rounded coba-flex-space-between p-2 mb-5"
+          },
+          [_vm._m(0, true), _vm._v(" "), _vm._m(1, true)]
+        )
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-header coba-header-accent" }, [
-      _c("h2", { staticClass: "coba-page-headline" }, [_vm._v("Team")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -54445,7 +54457,7 @@ var staticRenderFns = [
       },
       [
         _c("img", {
-          staticClass: "round",
+          staticClass: "coba-border-round coba-border-yellow p-1 w-100",
           attrs: {
             src:
               "https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png",
