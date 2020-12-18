@@ -76,10 +76,8 @@ export default {
                         color = this.calcColor(this.bookings[date.toISOString().slice(0, 10)]);
 
                     }
-                    if(color === "red") {
+                    if(color === "red")
                         disabled = true;
-                        console.log(disabled);
-                    }
                     this.pages[this.page].push({day: this.dateToDayOfMonth(date), color: color, selected: false, date: new Date(date.getTime()), time: [9,17], disabled: disabled});
 
 
