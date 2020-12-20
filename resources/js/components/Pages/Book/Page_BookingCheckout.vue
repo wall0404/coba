@@ -28,6 +28,7 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import Booking from "../../ListItems/Booking";
+import {router} from "../../../_helpers/router";
 export default {
     components: {Booking, Spinner},
     props: ['bookings'],
@@ -39,6 +40,8 @@ export default {
             error: false,
             validation_error: [],
             success: [],
+            timeout: null ,
+            countDown: null,
         }
     },
     created() {
@@ -48,8 +51,25 @@ export default {
         else {
             this.makeBooking();
         }
+
+    },
+    mounted() {
+        this.autoRedirect() ;
+    },
+    // stop if redirecting
+    beforeRouteLeave(to, from, next) {
+        clearTimeout(this.timeout);
+        next();
     },
     methods: {
+        autoRedirect(){
+            // timeout variable could be used for display
+            this.timeout = setTimeout(function (){
+                 router.push('/home') ;
+            },5000) ;
+            this.countDown = this.timeout ;
+        },
+
         makeBooking() {
             this.load = true;
             let bookings = [];
@@ -87,7 +107,9 @@ export default {
                     this.load = false;
                 })
         }
+
     }
+
 }
 </script>
 

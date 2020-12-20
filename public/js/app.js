@@ -790,6 +790,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
 /* harmony import */ var _ListItems_Booking__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ListItems/Booking */ "./resources/js/components/ListItems/Booking.vue");
+/* harmony import */ var _helpers_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../_helpers/router */ "./resources/js/_helpers/router.js");
 //
 //
 //
@@ -817,6 +818,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -832,7 +834,9 @@ __webpack_require__.r(__webpack_exports__);
       load: false,
       error: false,
       validation_error: [],
-      success: []
+      success: [],
+      timeout: null,
+      countDown: null
     };
   },
   created: function created() {
@@ -842,7 +846,22 @@ __webpack_require__.r(__webpack_exports__);
       this.makeBooking();
     }
   },
+  mounted: function mounted() {
+    this.autoRedirect();
+  },
+  // stop if redirecting
+  beforeRouteLeave: function beforeRouteLeave(to, from, next) {
+    clearTimeout(this.timeout);
+    next();
+  },
   methods: {
+    autoRedirect: function autoRedirect() {
+      // timeout variable could be used for display
+      this.timeout = setTimeout(function () {
+        _helpers_router__WEBPACK_IMPORTED_MODULE_2__["router"].push('/home');
+      }, 5000);
+      this.countDown = this.timeout;
+    },
     makeBooking: function makeBooking() {
       var _this = this;
 
@@ -48549,7 +48568,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.user-container[data-v-6f34980f] {\n    position: relative;\n    max-width: 100%;\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\n    max-width: 50%;\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\n    display: flex;\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\n    border-collapse: collapse;\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\n    text-align: left;\n    font-weight: bold;\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\n    text-align: right;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n.user-container[data-v-6f34980f] {\r\n    position: relative;\r\n    max-width: 100%;\r\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\r\n    max-width: 50%;\r\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\r\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\r\n    display: flex;\r\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\r\n    border-collapse: collapse;\r\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\r\n    text-align: left;\r\n    font-weight: bold;\r\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\r\n    text-align: right;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -48568,7 +48587,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\n    text-align: right;\n    font-weight: bold;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\r\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\r\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\r\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\r\n    border-collapse: collapse;\r\n    margin: 0 5px 5px 0;\r\n    font-size: 1.05em;\r\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\r\n    text-align: right;\r\n    font-weight: bold;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -74671,8 +74690,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
