@@ -18,7 +18,7 @@
         <div class="coba-container">
             <span class="coba-text-big">Kommende Buchungen:</span>
         </div>
-        <div class="coba-container coba-full-width coba-footer-container">
+        <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
                 <li v-for="booking in bookings" :key="booking.id">
                     <router-link v-bind:to="'/booking/'+booking.id">{{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}</router-link>
