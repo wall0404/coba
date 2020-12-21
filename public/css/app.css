@@ -10978,6 +10978,10 @@ a.text-dark:focus {
   justify-content: flex-start;
 }
 
+[class*=coba-flex][class*=right] {
+  justify-content: right;
+}
+
 /* HEADER */
 
 .coba-header {

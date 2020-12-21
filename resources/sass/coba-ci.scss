@@ -68,6 +68,9 @@
     &[class*="left"] {
         justify-content: flex-start;
     }
+    &[class*="right"]{
+        justify-content: right;
+    }
 }
 
 /* HEADER */

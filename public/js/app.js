@@ -54549,7 +54549,7 @@ var render = function() {
           ])
         : _c("spinner"),
       _vm._v(" "),
-      _c("div", { staticClass: "coba-container coba-flex-left" }, [
+      _c("div", { staticClass: "coba-container coba-flex-right" }, [
         _c("span", { staticClass: "coba-text-very-big" }, [
           _vm._v("Platz buchen")
         ]),
