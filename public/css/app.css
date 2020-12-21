@@ -10978,6 +10978,14 @@ a.text-dark:focus {
   justify-content: space-between;
 }
 
+[class*=coba-flex][class*=left] {
+  justify-content: flex-start;
+}
+
+[class*=coba-flex][class*=right] {
+  justify-content: right;
+}
+
 /* HEADER */
 
 .coba-header {
@@ -11097,6 +11105,10 @@ a.text-dark:focus {
 .coba-button.coba-button-disabled {
   border: 1px solid #757575;
   color: #757575;
+}
+
+.coba-button.coba-button-distance-left-10 {
+  margin-left: 10px;
 }
 
 .coba-button-container {
