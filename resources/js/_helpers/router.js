@@ -30,7 +30,6 @@ const routes = [
     { path: '/logout', component: Page_Logout },
     { path: '/signup', component: Page_SignUp },
     { path: '/', component: Page_Home, meta:{auth:true} },
-    { path: '/', component: Page_Login, meta:{auth:false} },
     { path: '/home', component: Page_Home, meta:{auth:true} },
     { path: '/team', component: Page_Team, meta:{auth:true} },
     { path: '/calendar', component: Page_Calendar, meta:{auth:true} },
@@ -53,12 +52,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
-        if (localStorage.token == null) {
+        if (localStorage.token == null ) {
             next({ path: '/login'})
         } else {
             next()
         }
-    } else {
+     } else {
         next()
     }
 })
