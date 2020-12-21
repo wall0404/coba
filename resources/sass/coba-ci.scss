@@ -143,6 +143,15 @@
         background-color: $coba-danger-red;
         color: $coba-gray;
     }
+    &.coba-button-green {
+        background-color: #4ABE5D;
+    }
+    &.coba-button-red {
+        background-color: #FF6666 !important;
+    }
+    &.coba-button-orange {
+        background-color: #FFAD33;
+    }
     &.coba-button-no-border {
         border: none;
     }

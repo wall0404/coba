@@ -3,15 +3,15 @@
         <div class="coba-container coba-flex coba-header">
             <span class="coba-page-headline">Arbeitsplatzauswahl</span>
         </div>
-        <div class="coba-container">
+        <div class="coba-container px-0">
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
                     <div class="coba-text-strong coba-text">{{workstation.name}}</div>
-                    <router-link class="coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
                         <b-icon icon="plus" font-scale="2"></b-icon>
                     </router-link>
-                    <div :class="'coba-utilization-indicator '+(load?'coba-utilization-indicator-gray':workstation.indicator)" @click="openModal(workstation)"></div>
                 </div>
+                <!--
                 <modal :show-modal="modal.open" @modal-close-event="closeModal">
                     <template v-slot:header>
                         <div class="coba-modal-header">{{modal.header}}</div>
@@ -20,20 +20,22 @@
                         <div class="coba-modal-body">
                             <table class="coba-table">
                                 <tr pav-for="day in modal.body">
-                                    <th>{{day.date}}</th> <!--gibt aktuellen Wochentag an-->
-                                    <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th> <!--gibt aktuelle Farbe an-->
+                                    <th>{{day.date}}</th> gibt aktuellen Wochentag an
+                                    <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th> //gibt aktuelle Farbe an
                                     <th v-if="day.end" class="coba-table-align-right">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
-                                    <th v-else class="coba-table-align-right">{{day.start}}</th> <!--day.start == verfügbar; also falls keine Buchung vorhanden ist, wird verfügbar angezeigt-->
+                                    <th v-else class="coba-table-align-right">{{day.start}}</th> //day.start == verfügbar; also falls keine Buchung vorhanden ist, wird verfügbar angezeigt
                                 </tr>
                             </table>
                         </div>
                     </template>
                 </modal>
+                -->
             </div>
             <spinner v-else></spinner>
         </div>
     </div>
 </template>
+
 
 <script>
 import Spinner from "../../Global/Spinner";
@@ -125,12 +127,12 @@ export default {
 
                 }
                 //calculate the color to show the availability of the workstation
-                if(full_days >= 5)
-                    this.workstations[i].indicator = 'coba-utilization-indicator-red'; //mark red
+                if(full_days >= 8)
+                    this.workstations[i].color = 'red'; //mark red
                 else if(full_days === 0)
-                    this.workstations[i].indicator = "coba-utilization-indicator-green"; //mark green
+                    this.workstations[i].color = "green"; //mark green
                 else
-                    this.workstations[i].indicator = "coba-utilization-indicator-orange"; //mark orange
+                    this.workstations[i].color = "orange"; //mark orange
 
             }
         },
@@ -162,7 +164,7 @@ export default {
                     startBooking = bookings[i];
                 }
             }
-            if(hours >= 4)
+            if(hours >= 8)
                 color = 'red'; //mark red
             else if(hours === 0)
                 color = "green"; //mark green
@@ -214,6 +216,8 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-bottom: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 .coba-table th {
     height: 40px;
