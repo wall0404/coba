@@ -51,13 +51,10 @@
 [class*="coba-flex"] {
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 
     &[class*="wrap"] {
         flex-wrap: wrap;
-    }
-    &[class*="column"] {
-        flex-direction: column;
     }
     &[class*="column"] {
         flex-direction: column;
@@ -86,6 +83,10 @@
     .coba-page-headline {
         font-size: 35px;
         color: $coba-text-color;
+    }
+
+    &.coba-header-accent {
+        background-color: $coba-yellow;
     }
 }
 /* CUSTOM HEADER for HOMESCREEN */
@@ -119,10 +120,6 @@
     border-bottom: 1px solid $coba-dark-gray;
     text-align: center;
 }
-
-
-
-
 
 
 /* BUTTON Styles */
@@ -159,6 +156,11 @@
         height: 50px;
         width: 50px;
         border-radius: 25px;
+        &.coba-button-small {
+            height: 40px;
+            width: 40px;
+            border-radius: 20px;
+        }
         &.coba-button-big {
             height: 75px;
             width: 75px;
@@ -194,7 +196,35 @@
 }
 
 
+/* INPUT Styles */
+.coba-input-container{
+    width: 80%;
+    margin: 0 auto;
+    text-align: left;
+}
+.coba-margin-top{
+    margin-top: 3px;
+}
+// Input Feld welches eine dunklere Linie (unten) hat und einen hellen Hintergrund
+.coba-input {
+    font-size: 16px;
+    height: 30px;
+    width: 100%;
+    margin: 5px 0;
+    padding: 18px;
+    padding-left: 5px;
+    padding-bottom: 16px;
+    background: #f9f8f8;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom: 1px solid $coba-dark-gray;
+}
+
+
 /* FORM Styles */
+.coba-form{
+    text-align: center;
+}
 
 .coba-form-danger {
     background-color: $coba-danger-red;
@@ -368,4 +398,25 @@
     .coba-table-align-right {
         text-align: right;
     }
+}
+
+/* Border Styles */
+.coba-border-yellow {
+    border: 2px solid $coba-yellow;
+}
+.coba-border-orange {
+    border: 2px solid $coba-orange;
+}
+
+.coba-border-rounded {
+    border-radius: 10px;
+}
+.coba-border-round {
+    border-radius: 50%;
+}
+
+
+/* Shadow Styles */
+.coba-shadow {
+    box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
 }

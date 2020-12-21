@@ -19,7 +19,7 @@
                     <template v-slot:body>
                         <div class="coba-modal-body">
                             <table class="coba-table">
-                                <tr v-for="day in modal.body">
+                                <tr pav-for="day in modal.body">
                                     <th>{{day.date}}</th> <!--gibt aktuellen Wochentag an-->
                                     <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th> <!--gibt aktuelle Farbe an-->
                                     <th v-if="day.end" class="coba-table-align-right">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
