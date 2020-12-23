@@ -5,19 +5,39 @@
         </div>
 
         <div class="coba-container">
-            <span class="coba-text-big">Favorite Seat:</span>
-            <select name="select" id="selection">
-                <option value="First Choice">Platz 1</option>
-                <option value="Second Choice">Platz 2</option>
-                <option value="Third Choice">Platz 3</option>
-                <option value="Fourth Choice">Platz 4</option>
-                <option value="Fifth Choice">Platz 5</option>
-                <option value="Sixth Choice">Platz 6</option>
-                <option value="Seventh Choice">Platz 7</option>
-                <option value="Eighth Choice">Platz 8</option>
-                <option value="Ninth Choice">Platz 9</option>
-                <option value="Tenth Choice">Platz 10</option>
-            </select>
+            <div>Favorite Seat:</div>
+            <div id="nav" class="nav">
+                <ul>
+                    <li><a href="#">Tower</a>
+                        <ul>
+                            <li><a href="#">Tower 1</a></li>
+                            <li><a href="#">Tower 2</a></li>
+                            <li><a href="#">Tower 3</a></li>
+                            <li><a href="#">Tower 4</a></li>
+                            <li><a href="#">Tower 5</a></li>
+                            <li><a href="#">Tower 6</a></li>
+                            <li><a href="#">Tower 7</a></li>
+                            <li><a href="#">Tower 8</a></li>
+                            <li><a href="#">Tower 9</a></li>
+                            <li><a href="#">Tower 10</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Campus</a>
+                        <ul>
+                            <li><a href="#">Campus 1</a></li>
+                            <li><a href="#">Campus 2</a></li>
+                            <li><a href="#">Campus 3</a></li>
+                            <li><a href="#">Campus 4</a></li>
+                            <li><a href="#">Campus 5</a></li>
+                            <li><a href="#">Campus 6</a></li>
+                            <li><a href="#">Campus 7</a></li>
+                            <li><a href="#">Campus 8</a></li>
+                            <li><a href="#">Campus 9</a></li>
+                            <li><a href="#">Campus 10</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
 
 
@@ -28,12 +48,64 @@
 
 <script>
 export default {
-    name: "Teampage"
+    name: "Page_Favoriteseat"
 }
 
 </script>
 
 <style scoped>
 
+
+
+ul{
+    list-style:none;
+}
+ul li{
+    outline:none;
+    background:#eee;
+
+    height:25px;
+    line-height:25px;
+    border-bottom:1px
+    solid #CCC;
+    position:relative;
+}
+a{
+    text-decoration:none;
+    color: #000000;
+    display:block;
+    width:100px;
+    height:25px;
+    outline: none;
+}
+
+
+
+ul li ul{
+    outline:none;
+    display:none;
+    position:relative;
+    left:75px;
+    top:0px;
+    width:100px;
+    border:1px
+    solid #CCC;
+}
+
+ul li ul li a:link,ul li ul li a:visited{
+    background-color:#EEEEEE;
+}
+ul li ul li a:hover{
+    background-color: #fae452;
+}
+a:hover{
+    background-color: #666666;
+    color:#FFFFFF;
+}
+
+ul li:hover ul{
+    outline: none;
+    display:block;
+}
 
 </style>
