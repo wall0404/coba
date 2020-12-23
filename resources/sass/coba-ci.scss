@@ -387,6 +387,9 @@
     &.coba-utilization-indicator-disabled {
         color: $coba-disabled-gray;
         background-color: $coba-gray;
+        &.coba-utilization-indicator-red {
+            color: $coba-black;
+        }
     }
 
     &[class*="coba-utilization-indicator-arrow"] {

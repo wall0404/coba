@@ -1,15 +1,16 @@
 <template>
     <div class="coba-page">
-        <div class="coba-container coba-flex coba-header">
-            <span class="coba-page-headline">Arbeitsplatzauswahl</span>
+        <div class="coba-container coba-flex coba-header mb-0">
+            <span class="coba-page-headline">Arbeitsplatzauswahl<br><p align="center"> {{location_name}} </p></span>
         </div>
         <div class="coba-container px-0">
+            <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
-                    <div class="coba-text-strong coba-text">{{workstation.name}}</div>
                     <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
                         <b-icon icon="plus" font-scale="2"></b-icon>
                     </router-link>
+                    <div class="coba-text-strong coba-text">{{workstation.name}}</div>
                 </div>
                 <!--
                 <modal :show-modal="modal.open" @modal-close-event="closeModal">
@@ -57,7 +58,8 @@ export default {
                 open: false,
                 header: "",
                 body: {}
-            }
+            },
+            location_name : "",
         }
     },
     mounted() {
@@ -68,8 +70,11 @@ export default {
         this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
         date.setDate(new Date().getDate() + 7);
         this.date_in_7_days = date.toISOString().slice(0, 10);
-
         this.fetchData();
+        for (var i = 0; i < this.$store.getters.locations.length; i++) {
+            if(this.$store.getters.locations[i].id == this.location_id)
+                this.location_name = this.$store.getters.locations[i].name
+        }
     },
     methods: {
         fetchData() {

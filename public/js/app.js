@@ -1221,6 +1221,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1242,7 +1243,8 @@ __webpack_require__.r(__webpack_exports__);
         open: false,
         header: "",
         body: {}
-      }
+      },
+      location_name: ""
     };
   },
   mounted: function mounted() {
@@ -1255,6 +1257,10 @@ __webpack_require__.r(__webpack_exports__);
     date.setDate(new Date().getDate() + 7);
     this.date_in_7_days = date.toISOString().slice(0, 10);
     this.fetchData();
+
+    for (var i = 0; i < this.$store.getters.locations.length; i++) {
+      if (this.$store.getters.locations[i].id == this.location_id) this.location_name = this.$store.getters.locations[i].name;
+    }
   },
   methods: {
     fetchData: function fetchData() {
@@ -54396,7 +54402,15 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "coba-page" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "coba-container coba-flex coba-header mb-0" }, [
+      _c("span", { staticClass: "coba-page-headline" }, [
+        _vm._v("Arbeitsplatzauswahl"),
+        _c("br"),
+        _c("p", { attrs: { align: "center" } }, [
+          _vm._v(" " + _vm._s(_vm.location_name) + " ")
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -54413,10 +54427,6 @@ var render = function() {
                   "div",
                   { key: workstation.id, staticClass: "seat-container" },
                   [
-                    _c("div", { staticClass: "coba-text-strong coba-text" }, [
-                      _vm._v(_vm._s(workstation.name))
-                    ]),
-                    _vm._v(" "),
                     _c(
                       "router-link",
                       {
@@ -54439,7 +54449,11 @@ var render = function() {
                         })
                       ],
                       1
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "coba-text-strong coba-text" }, [
+                      _vm._v(_vm._s(workstation.name))
+                    ])
                   ],
                   1
                 )
@@ -54452,18 +54466,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
-      _c("span", { staticClass: "coba-page-headline" }, [
-        _vm._v("Arbeitsplatzauswahl")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
