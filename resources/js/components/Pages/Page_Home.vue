@@ -3,6 +3,14 @@
         <div class="coba-container coba-header">
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
+        <div class="coba-container coba-home-icons">
+            <router-link to="Systemeinstellungen">
+                <b-icon icon="gear" font-scale="1.5"></b-icon>
+            </router-link>
+            <router-link to="Inbox">
+                <b-icon icon="inbox-fill" font-scale="1.5"></b-icon>
+            </router-link>
+        </div>
         <div  v-if="!load" class="coba-container coba-text-strong">
             <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
             <div v-else  class="coba-text-big">Keine Buchungen für heute</div>

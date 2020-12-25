@@ -10937,6 +10937,11 @@ a.text-dark:focus {
   align-items: flex-end;
 }
 
+.coba-home-icons {
+  width: 15%;
+  right: 15px;
+}
+
 .coba-full-width {
   width: 100%;
 }
