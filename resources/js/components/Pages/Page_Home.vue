@@ -3,7 +3,7 @@
         <div class="coba-container coba-header">
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
-        <div class="coba-container coba-home-icons">
+        <div class="coba-home-icons">
             <router-link to="Systemeinstellungen">
                 <b-icon icon="gear" font-scale="1.5"></b-icon>
             </router-link>
