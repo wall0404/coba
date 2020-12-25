@@ -54528,7 +54528,7 @@ var render = function() {
           _c(
             "router-link",
             { attrs: { to: "Systemeinstellungen" } },
-            [_c("b-icon", { attrs: { icon: "gear", "font-scale": "1.5" } })],
+            [_c("b-icon", { attrs: { icon: "gear", "font-scale": "1.7" } })],
             1
           ),
           _vm._v(" "),
@@ -54537,7 +54537,7 @@ var render = function() {
             { attrs: { to: "Inbox" } },
             [
               _c("b-icon", {
-                attrs: { icon: "inbox-fill", "font-scale": "1.5" }
+                attrs: { icon: "inbox-fill", "font-scale": "1.7" }
               })
             ],
             1

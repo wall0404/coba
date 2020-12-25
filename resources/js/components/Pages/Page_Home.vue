@@ -5,10 +5,10 @@
         </div>
         <div class="coba-home-icons">
             <router-link to="Systemeinstellungen">
-                <b-icon icon="gear" font-scale="1.5"></b-icon>
+                <b-icon icon="gear" font-scale=1.7></b-icon>
             </router-link>
             <router-link to="Inbox">
-                <b-icon icon="inbox-fill" font-scale="1.5"></b-icon>
+                <b-icon icon="inbox-fill" font-scale="1.7"></b-icon>
             </router-link>
         </div>
         <div  v-if="!load" class="coba-container coba-text-strong">

@@ -36,14 +36,14 @@
 
 .coba-home-icons{
 
-    height: 50px;
+    height: 85px;
+    width: 40px;
     position: fixed;
     top: 20px;
     right: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    z-index: 5;
+    padding: 10px;
+    flex-direction: column;
+    color: $coba-disabled-gray;
 }
 
 .coba-full-width {
