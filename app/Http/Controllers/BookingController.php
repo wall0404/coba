@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class BookingController extends ParentController
@@ -50,6 +52,28 @@ class BookingController extends ParentController
             if($booking->from <= $input['to'] && $booking->to >= $input['from'])
                 throw new \Exception('Platz ist zu dem Zeitpunkt schon vergeben');
         }
+
+        //Check if user already booked a workplace at this time
+        $bookings = Booking::where('date', $input['date'])->where('user_id', Auth::id())->get();
+        foreach ($bookings as $booking) {
+            if($booking->from <= $input['to'] && $booking->to >= $input['from']) {
+                if($booking->workstation_id == $input['workstation_id'])
+                    throw new \Exception('Sie haben dieses Arbeitsplatz zu dieser Uhrzeit schon gebucht');
+                else
+                    throw new \Exception('Zu dieser Zeit haben sie schon einen anderen Arbeitsplatz gebucht.');
+            }
+
+        }
+
+        //Check if date too far in the future
+        // Create a new DateTime object from today
+        $date = new Carbon();
+        // Modify the date it contains
+        $date->modify('next saturday');
+        $date->modify('+14 days');
+        $input_date = new Carbon($input['date']);
+        if($input_date->gt($date))
+            throw new \Exception("Datum liegt zu weit in der Zukunft. Bitte buche nur für die nächsten 2 Wochen");
 
         return $input;
     }

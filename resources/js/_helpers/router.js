@@ -38,7 +38,7 @@ const routes = [
     { path: '/booking/:id', component: Page_Booking, meta:{auth:true} },
     { path: '/booking/new/location', component: Page_LocationSelection, meta:{auth:true} },
     { path: '/booking/new/workstation/:location_id', component: Page_WorkstationSelection, meta:{auth:true} },
-    { path: '/booking/new/date/:workstation_id', component: Page_DateTimeSelection, meta:{auth:true} },
+    { path: '/booking/new/date/:workstation_id', name: "DateTimeSelection", props: true, component: Page_DateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
     { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
     { path: '*', component: error404}

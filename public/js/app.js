@@ -154,10 +154,22 @@ __webpack_require__.r(__webpack_exports__);
         this.pages[this.page] = []; //Crate badge for every day in this week
 
         for (var i = 0; i < 5; i++) {
-          var disabled = this.todayDate > date;
+          var disabled = false; //Daypicker is disabled, if in the past
+
+          var color = "gray";
+
+          if (this.todayDate > date) {
+            disabled = true;
+          } else if (typeof this.bookings[date.toISOString().slice(0, 10)] == "undefined") {
+            color = "green";
+          } else {
+            color = this.calcColor(this.bookings[date.toISOString().slice(0, 10)]);
+          }
+
+          if (color === "red") disabled = true;
           this.pages[this.page].push({
             day: this.dateToDayOfMonth(date),
-            color: 'gray',
+            color: color,
             selected: false,
             date: new Date(date.getTime()),
             time: [9, 17],
@@ -174,6 +186,33 @@ __webpack_require__.r(__webpack_exports__);
 
       this.weekEnd.setDate(date.getDate() - 1);
       this.days = this.pages[this.page];
+    },
+    calcColor: function calcColor(bookings) {
+      var color = "";
+      var hours = 0;
+      var startHour = 24;
+      var startBooking = null;
+      var endHour = 0;
+      var endBooking = null;
+
+      for (var i = 0; i < bookings.length; i++) {
+        hours += Number(bookings[i].to.substring(0, 2)) - Number(bookings[i].from.substring(0, 2));
+
+        if (Number(bookings[i].to.substring(0, 2)) > endHour) {
+          endHour = Number(bookings[i].to.substring(0, 2));
+          endBooking = bookings[i];
+        }
+
+        if (Number(bookings[i].from.substring(0, 2)) < startHour) {
+          startHour = Number(bookings[i].from.substring(0, 2));
+          startBooking = bookings[i];
+        }
+      }
+
+      if (hours >= 5) color = "red"; //mark red
+      else color = "orange"; //mark orange
+
+      return color;
     },
     dateToDayOfMonth: function dateToDayOfMonth(date) {
       var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -1012,6 +1051,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_DateTimeSelection",
+  props: ["bookings"],
   components: {
     TimePicker: _Elements_TimePicker__WEBPACK_IMPORTED_MODULE_2__["default"],
     DayPicker: _Elements_DayPicker__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -1025,7 +1065,16 @@ __webpack_require__.r(__webpack_exports__);
       days: []
     };
   },
-  mounted: function mounted() {
+  created: function created() {
+    if (typeof this.bookings === 'undefined') {
+      this.bookings = JSON.parse(localStorage.getItem("bookings_" + this.$route.params.workstation_id));
+
+      if (this.bookings == null) {
+        console.error("Keine Buchungen wurden übergeben.");
+        this.$router.push("/home");
+      }
+    } else localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
+
     this.fetchWorkstation();
     this.fetchData();
   },
@@ -1186,6 +1235,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1207,7 +1262,8 @@ __webpack_require__.r(__webpack_exports__);
         open: false,
         header: "",
         body: {}
-      }
+      },
+      location_name: ""
     };
   },
   mounted: function mounted() {
@@ -1215,11 +1271,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     var date = new Date();
-    this.today_date = date.toISOString().slice(0, 10);
+    this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
+
     date.setDate(new Date().getDate() + 7);
     this.date_in_7_days = date.toISOString().slice(0, 10);
-    console.log(this.today_date);
     this.fetchData();
+
+    for (var i = 0; i < this.$store.getters.locations.length; i++) {
+      if (this.$store.getters.locations[i].id == this.location_id) this.location_name = this.$store.getters.locations[i].name;
+    }
   },
   methods: {
     fetchData: function fetchData() {
@@ -1253,7 +1313,7 @@ __webpack_require__.r(__webpack_exports__);
     colorIndicators: function colorIndicators() {
       //For every Workstation
       for (var i = 0; i < this.workstations.length; i++) {
-        this.workstations[i].workstation_bookings = []; //For every Booking
+        this.workstations[i].workstation_bookings = {}; //For every Booking
 
         for (var k = 0; k < this.bookings.length; k++) {
           if (this.bookings[k].workstation_id === this.workstations[i].id) {
@@ -1269,16 +1329,19 @@ __webpack_require__.r(__webpack_exports__);
         var full_days = 0;
 
         for (var date in this.workstations[i].workstation_bookings) {
-          var bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date]);
+          if (new Date(date).getUTCDay() !== 0 && new Date(date).getUTCDay() !== 6) {
+            var bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date]);
 
-          if (bookedHours > 6) {
-            full_days++;
+            if (bookedHours > 6) {
+              full_days++;
+            }
           }
-        }
+        } //calculate the color to show the availability of the workstation
 
-        if (full_days >= 5) this.workstations[i].indicator = 'coba-utilization-indicator-red'; //mark red
-        else if (full_days === 0) this.workstations[i].indicator = "coba-utilization-indicator-green"; //mark green
-          else this.workstations[i].indicator = "coba-utilization-indicator-orange"; //mark orange
+
+        if (full_days >= 8) this.workstations[i].color = 'red'; //mark red
+        else if (full_days === 0) this.workstations[i].color = "green"; //mark green
+          else this.workstations[i].color = "orange"; //mark orange
       }
     },
     //calculate and sum all hours in the given array of bookings
@@ -1286,7 +1349,8 @@ __webpack_require__.r(__webpack_exports__);
       var hours = 0;
 
       for (var i = 0; i < bookings.length; i++) {
-        hours += Number(bookings[i].to.substring(0, 2)) - Number(bookings[i].from.substring(0, 2));
+        //Endzeit - Startzeit = berechnet gesamte Stundenanzahl pro Tag
+        hours += Number(bookings[i].to.substring(0, 2)) - Number(bookings[i].from.substring(0, 2)); //Substring, to isolate the hours, 09:00 -> cuts off the last 3 chars
       }
 
       return hours;
@@ -1313,7 +1377,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      if (hours >= 4) color = 'red'; //mark red
+      if (hours >= 8) color = 'red'; //mark red
       else if (hours === 0) color = "green"; //mark green
         else color = "orange"; //mark orange
 
@@ -1326,7 +1390,8 @@ __webpack_require__.r(__webpack_exports__);
     openModal: function openModal(workstation) {
       //TODO
       this.modal.body = [];
-      this.modal.header = workstation.name + " - Übersicht";
+      this.modal.header = workstation.name + " - Übersicht"; //richtet Name des Pop-ups ein
+
       var date = new Date();
       var date_as_string = "";
 
@@ -1399,6 +1464,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
+//
 //
 //
 //
@@ -48549,7 +48615,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\r\n    margin-left: 15px;\r\n    margin-right: 15px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
 
 // exports
 
@@ -54215,7 +54281,7 @@ var render = function() {
       { staticClass: "coba-container" },
       [
         _c("DayPicker", {
-          attrs: { workstation: _vm.workstation, bookings: null },
+          attrs: { workstation: _vm.workstation, bookings: _vm.bookings },
           on: { "callback-picker-event": _vm.callbackPicker }
         })
       ],
@@ -54355,126 +54421,71 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "coba-page" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "coba-container coba-flex coba-header mb-0" }, [
+      _c("span", { staticClass: "coba-page-headline" }, [
+        _vm._v("Arbeitsplatzauswahl"),
+        _c("br"),
+        _c("p", { attrs: { align: "center" } }, [
+          _vm._v(" " + _vm._s(_vm.location_name) + " ")
+        ])
+      ])
+    ]),
     _vm._v(" "),
-    _c("div", { staticClass: "coba-container" }, [
-      _c(
-        "div",
-        { staticClass: "coba-flex coba-flex-wrap coba-flex-space-evenly" },
-        [
-          _vm._l(_vm.workstations, function(workstation) {
-            return _c(
+    _c(
+      "div",
+      { staticClass: "coba-container px-0" },
+      [
+        !_vm.load
+          ? _c(
               "div",
-              { key: workstation.id, staticClass: "seat-container" },
-              [
-                _c("div", { staticClass: "coba-text-strong coba-text" }, [
-                  _vm._v(_vm._s(workstation.name))
-                ]),
-                _vm._v(" "),
-                _c("router-link", {
-                  staticClass:
-                    "coba-button coba-button-accent coba-button-very-big coba-button-round coba-button-no-border",
-                  attrs: { to: "/booking/new/date/" + workstation.id }
-                }),
-                _vm._v(" "),
-                _c("div", {
-                  class:
-                    "coba-utilization-indicator " +
-                    (_vm.load
-                      ? "coba-utilization-indicator-gray"
-                      : workstation.indicator),
-                  on: {
-                    click: function($event) {
-                      return _vm.openModal(workstation)
-                    }
-                  }
-                })
-              ],
-              1
-            )
-          }),
-          _vm._v(" "),
-          _c("modal", {
-            attrs: { "show-modal": _vm.modal.open },
-            on: { "modal-close-event": _vm.closeModal },
-            scopedSlots: _vm._u([
               {
-                key: "header",
-                fn: function() {
-                  return [
-                    _c("div", { staticClass: "coba-modal-header" }, [
-                      _vm._v(_vm._s(_vm.modal.header))
-                    ])
-                  ]
-                },
-                proxy: true
+                staticClass: "coba-flex coba-flex-wrap coba-flex-space-evenly"
               },
-              {
-                key: "body",
-                fn: function() {
-                  return [
-                    _c("div", { staticClass: "coba-modal-body" }, [
-                      _c(
-                        "table",
-                        { staticClass: "coba-table" },
-                        _vm._l(_vm.modal.body, function(day) {
-                          return _c("tr", [
-                            _c("th", [_vm._v(_vm._s(day.date))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c("div", {
-                                class:
-                                  "coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-" +
-                                  day.color
-                              })
-                            ]),
-                            _vm._v(" "),
-                            day.end
-                              ? _c(
-                                  "th",
-                                  { staticClass: "coba-table-align-right" },
-                                  [
-                                    _vm._v(
-                                      _vm._s(day.start.substring(0, 5)) +
-                                        " - " +
-                                        _vm._s(day.end.substring(0, 5))
-                                    )
-                                  ]
-                                )
-                              : _c(
-                                  "th",
-                                  { staticClass: "coba-table-align-right" },
-                                  [_vm._v(_vm._s(day.start))]
-                                )
-                          ])
-                        }),
-                        0
-                      )
+              _vm._l(_vm.workstations, function(workstation) {
+                return _c(
+                  "div",
+                  { key: workstation.id, staticClass: "seat-container" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass:
+                          "coba-button coba-button-big coba-button-round coba-button-no-border",
+                        class: "coba-button-" + workstation.color,
+                        attrs: {
+                          to: {
+                            name: "DateTimeSelection",
+                            params: {
+                              workstation_id: workstation.id,
+                              bookings: workstation.workstation_bookings
+                            }
+                          }
+                        }
+                      },
+                      [
+                        _c("b-icon", {
+                          attrs: { icon: "plus", "font-scale": "2" }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "coba-text-strong coba-text" }, [
+                      _vm._v(_vm._s(workstation.name))
                     ])
-                  ]
-                },
-                proxy: true
-              }
-            ])
-          })
-        ],
-        2
-      )
-    ])
+                  ],
+                  1
+                )
+              }),
+              0
+            )
+          : _c("spinner")
+      ],
+      1
+    )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
-      _c("span", { staticClass: "coba-page-headline" }, [
-        _vm._v("Arbeitsplatzauswahl")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54567,21 +54578,32 @@ var render = function() {
           ])
         : _c("spinner"),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "coba-container coba-text-center" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass: "coba-text-very-big",
-              attrs: { to: "/booking/new/location" }
-            },
-            [_vm._v("Platz reservieren")]
-          )
-        ],
-        1
-      ),
+      _c("div", { staticClass: "coba-container coba-flex-right" }, [
+        _c("span", { staticClass: "coba-text-very-big" }, [
+          _vm._v("Platz buchen")
+        ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass:
+              "coba-button coba-button-round coba-button-big coba-button-accent coba-button-distance-left-10"
+          },
+          [
+            _c(
+              "router-link",
+              { attrs: { to: "/booking/new/location" } },
+              [
+                _c("b-icon", {
+                  attrs: { icon: "arrow-90deg-right", "font-scale": "1" }
+                })
+              ],
+              1
+            )
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
@@ -72969,6 +72991,8 @@ var routes = [{
   }
 }, {
   path: '/booking/new/date/:workstation_id',
+  name: "DateTimeSelection",
+  props: true,
   component: _components_Pages_Book_Page_DateTimeSelection__WEBPACK_IMPORTED_MODULE_12__["default"],
   meta: {
     auth: true

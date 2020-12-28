@@ -10974,6 +10974,14 @@ a.text-dark:focus {
   justify-content: space-between;
 }
 
+[class*=coba-flex][class*=left] {
+  justify-content: flex-start;
+}
+
+[class*=coba-flex][class*=right] {
+  justify-content: right;
+}
+
 /* HEADER */
 
 .coba-header {
@@ -11059,6 +11067,18 @@ a.text-dark:focus {
   color: #EBEBEB;
 }
 
+.coba-button.coba-button-green {
+  background-color: #4ABE5D;
+}
+
+.coba-button.coba-button-red {
+  background-color: #FF6666 !important;
+}
+
+.coba-button.coba-button-orange {
+  background-color: #FFAD33;
+}
+
 .coba-button.coba-button-no-border {
   border: none;
 }
@@ -11103,6 +11123,10 @@ a.text-dark:focus {
 .coba-button.coba-button-disabled {
   border: 1px solid #757575;
   color: #757575;
+}
+
+.coba-button.coba-button-distance-left-10 {
+  margin-left: 10px;
 }
 
 .coba-button-container {
@@ -11276,7 +11300,7 @@ a.text-dark:focus {
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-red {
-  background-color: #FF6666;
+  background-color: #FF6666 !important;
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-orange {
@@ -11286,6 +11310,10 @@ a.text-dark:focus {
 .coba-utilization-indicator.coba-utilization-indicator-disabled {
   color: #757575;
   background-color: #EBEBEB;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-disabled.coba-utilization-indicator-red {
+  color: #000;
 }
 
 .coba-utilization-indicator[class*=coba-utilization-indicator-arrow] {

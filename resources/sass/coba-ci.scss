@@ -65,6 +65,12 @@
     &[class*="space-between"] {
         justify-content: space-between;
     }
+    &[class*="left"] {
+        justify-content: flex-start;
+    }
+    &[class*="right"]{
+        justify-content: right;
+    }
 }
 
 /* HEADER */
@@ -143,6 +149,15 @@
         background-color: $coba-danger-red;
         color: $coba-gray;
     }
+    &.coba-button-green {
+        background-color: #4ABE5D;
+    }
+    &.coba-button-red {
+        background-color: #FF6666 !important;
+    }
+    &.coba-button-orange {
+        background-color: #FFAD33;
+    }
     &.coba-button-no-border {
         border: none;
     }
@@ -179,6 +194,9 @@
     &.coba-button-disabled {
         border: 1px solid $coba-disabled-gray;
         color: $coba-disabled-gray;
+    }
+    &.coba-button-distance-left-10{
+        margin-left: 10px;
     }
 }
 .coba-button-container { /*In a Button container all buttons will be listed next to each other */
@@ -361,7 +379,7 @@
         background-color: #4ABE5D;
     }
     &.coba-utilization-indicator-red {
-        background-color: #FF6666;
+        background-color: #FF6666 !important;
     }
     &.coba-utilization-indicator-orange {
         background-color: #FFAD33;
@@ -369,6 +387,9 @@
     &.coba-utilization-indicator-disabled {
         color: $coba-disabled-gray;
         background-color: $coba-gray;
+        &.coba-utilization-indicator-red {
+            color: $coba-black;
+        }
     }
 
     &[class*="coba-utilization-indicator-arrow"] {
