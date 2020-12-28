@@ -858,6 +858,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -54116,26 +54122,56 @@ var render = function() {
                   _vm.error === false
                     ? _c("div", [
                         _vm.validation_error.length === 0
-                          ? _c(
-                              "div",
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass:
-                                      "coba-button coba-button-accent",
-                                    attrs: { to: "/home" }
-                                  },
-                                  [_vm._v("Ihre Buchung wurde eingetragen ")]
-                                ),
-                                _vm._v(" "),
-                                _c("span", {
-                                  staticClass: "glyphicon glyphicon-thumbs-up",
-                                  attrs: { "aria-hidden": "true" }
-                                })
-                              ],
-                              1
-                            )
+                          ? _c("div", { staticClass: "coba-container" }, [
+                              _c(
+                                "div",
+                                { staticClass: "coba-container" },
+                                [
+                                  _c("span", [
+                                    _vm._v("Ihr Buchung war erfolgreich")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("b-icon", {
+                                    attrs: {
+                                      icon: "hand-thumbs-up",
+                                      "font-scale": "2"
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "coba-container" },
+                                [
+                                  _c(
+                                    "router-link",
+                                    { attrs: { to: "/home" } },
+                                    [
+                                      _c(
+                                        "button",
+                                        { staticClass: "coba-button" },
+                                        [_vm._v("Zur Übersicht")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    { attrs: { to: "/booking/new/location" } },
+                                    [
+                                      _c(
+                                        "button",
+                                        { staticClass: "coba-button" },
+                                        [_vm._v("Weitere Buchung")]
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ])
                           : _c(
                               "div",
                               [

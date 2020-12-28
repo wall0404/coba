@@ -8,9 +8,15 @@
             <spinner v-if="load"></spinner>
             <div v-else>
                 <div v-if="error===false">
-                    <div v-if="validation_error.length === 0">
-                        <router-link to="/home" class="coba-button coba-button-accent">Ihre Buchung wurde eingetragen </router-link>
-                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                    <div class="coba-container" v-if="validation_error.length === 0">
+                        <div class="coba-container">
+                            <span>Ihr Buchung war erfolgreich</span>
+                            <b-icon icon="hand-thumbs-up" font-scale="2"></b-icon>
+                        </div>
+                        <div class="coba-container">
+                            <router-link to="/home"><button class="coba-button">Zur Übersicht</button></router-link>
+                            <router-link to="/booking/new/location"><button class="coba-button">Weitere Buchung</button></router-link>
+                        </div>
                     </div>
                     <div v-else>
                         <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
