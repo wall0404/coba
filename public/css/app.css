@@ -10937,7 +10937,7 @@ a.text-dark:focus {
   align-items: flex-end;
 }
 
-.coba-home-icons {
+.coba-home-icons-container {
   height: 85px;
   width: 40px;
   position: fixed;
@@ -10946,6 +10946,10 @@ a.text-dark:focus {
   padding: 10px;
   flex-direction: column;
   color: #757575;
+}
+
+.coba-home-icons {
+  margin-bottom: 15px;
 }
 
 .coba-full-width {

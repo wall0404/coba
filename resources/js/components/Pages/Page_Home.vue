@@ -3,12 +3,12 @@
         <div class="coba-container coba-header">
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
-        <div class="coba-home-icons">
+        <div class="coba-home-icons-container">
             <router-link to="/settings">
-                <b-icon icon="gear" font-scale=1.7></b-icon>
+                <b-icon class="coba-home-icons" icon="gear" font-scale=1.7></b-icon>
             </router-link>
             <router-link to="/inbox">
-                <b-icon icon="inbox-fill" font-scale="1.7"></b-icon>
+                <b-icon class="coba-home-icons" icon="inbox-fill" font-scale="1.7"></b-icon>
             </router-link>
         </div>
         <div  v-if="!load" class="coba-container coba-text-strong">

@@ -54565,12 +54565,17 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "coba-home-icons" },
+        { staticClass: "coba-home-icons-container" },
         [
           _c(
             "router-link",
             { attrs: { to: "/settings" } },
-            [_c("b-icon", { attrs: { icon: "gear", "font-scale": "1.7" } })],
+            [
+              _c("b-icon", {
+                staticClass: "coba-home-icons",
+                attrs: { icon: "gear", "font-scale": "1.7" }
+              })
+            ],
             1
           ),
           _vm._v(" "),
@@ -54579,6 +54584,7 @@ var render = function() {
             { attrs: { to: "/inbox" } },
             [
               _c("b-icon", {
+                staticClass: "coba-home-icons",
                 attrs: { icon: "inbox-fill", "font-scale": "1.7" }
               })
             ],
