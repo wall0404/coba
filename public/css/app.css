@@ -11342,10 +11342,6 @@ a.text-dark:focus {
   background-color: #EBEBEB;
 }
 
-.coba-utilization-indicator.coba-utilization-indicator-disabled.coba-utilization-indicator-red {
-  color: #000;
-}
-
 .coba-utilization-indicator[class*=coba-utilization-indicator-arrow] {
   content: "\27A4";
   background-color: transparent;
