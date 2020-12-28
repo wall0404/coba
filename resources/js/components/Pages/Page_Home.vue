@@ -4,10 +4,10 @@
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
         <div class="coba-home-icons">
-            <router-link to="Systemeinstellungen">
+            <router-link to="/settings">
                 <b-icon icon="gear" font-scale=1.7></b-icon>
             </router-link>
-            <router-link to="Inbox">
+            <router-link to="/inbox">
                 <b-icon icon="inbox-fill" font-scale="1.7"></b-icon>
             </router-link>
         </div>
