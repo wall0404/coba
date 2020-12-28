@@ -857,6 +857,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -873,9 +874,11 @@ __webpack_require__.r(__webpack_exports__);
       load: false,
       error: false,
       validation_error: [],
-      success: [],
-      timeout: null,
-      countDown: null
+      success: []
+      /* Variablen für automatsiche Rückführung
+      timeout: null ,
+      countDown: null,*/
+
     };
   },
   created: function created() {
@@ -885,22 +888,25 @@ __webpack_require__.r(__webpack_exports__);
       this.makeBooking();
     }
   },
-  mounted: function mounted() {
-    this.autoRedirect();
+
+  /* Automatische Rückführung
+  mounted() {
+      this.autoRedirect() ;
   },
   // stop if redirecting
-  beforeRouteLeave: function beforeRouteLeave(to, from, next) {
-    clearTimeout(this.timeout);
-    next();
-  },
+  beforeRouteLeave(to, from, next) {
+      clearTimeout(this.timeout);
+      next();
+  },*/
   methods: {
-    autoRedirect: function autoRedirect() {
-      // timeout variable could be used for display
-      this.timeout = setTimeout(function () {
-        _helpers_router__WEBPACK_IMPORTED_MODULE_2__["router"].push('/home');
-      }, 5000);
-      this.countDown = this.timeout;
-    },
+    /* Methode für automatische Rückführung
+    autoRedirect(){
+        // timeout variable could be used for display
+        this.timeout = setTimeout(function (){
+             router.push('/home') ;
+        },5000) ;
+        this.countDown = this.timeout ;
+    },*/
     makeBooking: function makeBooking() {
       var _this = this;
 
@@ -54121,7 +54127,12 @@ var render = function() {
                                     attrs: { to: "/home" }
                                   },
                                   [_vm._v("Ihre Buchung wurde eingetragen ")]
-                                )
+                                ),
+                                _vm._v(" "),
+                                _c("span", {
+                                  staticClass: "glyphicon glyphicon-thumbs-up",
+                                  attrs: { "aria-hidden": "true" }
+                                })
                               ],
                               1
                             )
@@ -74714,8 +74725,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

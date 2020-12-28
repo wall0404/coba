@@ -10,6 +10,7 @@
                 <div v-if="error===false">
                     <div v-if="validation_error.length === 0">
                         <router-link to="/home" class="coba-button coba-button-accent">Ihre Buchung wurde eingetragen </router-link>
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                     </div>
                     <div v-else>
                         <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
@@ -40,8 +41,9 @@ export default {
             error: false,
             validation_error: [],
             success: [],
+            /* Variablen für automatsiche Rückführung
             timeout: null ,
-            countDown: null,
+            countDown: null,*/
         }
     },
     created() {
@@ -53,6 +55,7 @@ export default {
         }
 
     },
+    /* Automatische Rückführung
     mounted() {
         this.autoRedirect() ;
     },
@@ -60,15 +63,17 @@ export default {
     beforeRouteLeave(to, from, next) {
         clearTimeout(this.timeout);
         next();
-    },
+    },*/
+
     methods: {
+        /* Methode für automatische Rückführung
         autoRedirect(){
             // timeout variable could be used for display
             this.timeout = setTimeout(function (){
                  router.push('/home') ;
             },5000) ;
             this.countDown = this.timeout ;
-        },
+        },*/
 
         makeBooking() {
             this.load = true;

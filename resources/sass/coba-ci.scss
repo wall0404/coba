@@ -69,7 +69,7 @@
         justify-content: flex-start;
     }
     &[class*="right"]{
-        justify-content: right;
+        justify-content: flex-end;
     }
 }
 
