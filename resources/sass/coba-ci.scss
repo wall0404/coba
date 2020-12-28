@@ -194,11 +194,18 @@
         }
     }
 }
+.coba-button-text{ /* the button will only be shown as a text*/
+    color: $coba-text-color;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
 /* INPUT Styles */
 .coba-input-container{
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
     text-align: left;
 }

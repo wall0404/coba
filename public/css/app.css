@@ -11122,10 +11122,19 @@ a.text-dark:focus {
   margin-right: 0;
 }
 
+.coba-button-text {
+  /* the button will only be shown as a text*/
+  color: #2C2C2C;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* INPUT Styles */
 
 .coba-input-container {
-  width: 80%;
+  width: 95%;
   margin: 0 auto;
   text-align: left;
 }
