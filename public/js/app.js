@@ -154,16 +154,28 @@ __webpack_require__.r(__webpack_exports__);
         this.pages[this.page] = []; //Crate badge for every day in this week
 
         for (var i = 0; i < 5; i++) {
+          var day_info = null;
           var disabled = false; //Daypicker is disabled, if in the past
 
           var color = "gray";
 
           if (this.todayDate > date) {
             disabled = true;
+            day_info = {
+              free_start: "00:00:00",
+              free_end: "24:00:00",
+              time: [9, 17]
+            };
           } else if (typeof this.bookings[date.toISOString().slice(0, 10)] == "undefined") {
             color = "green";
+            day_info = {
+              free_start: "00:00:00",
+              free_end: "24:00:00",
+              time: [9, 17]
+            };
           } else {
-            color = this.calcColor(this.bookings[date.toISOString().slice(0, 10)]);
+            day_info = this.calcInfo(this.bookings[date.toISOString().slice(0, 10)]);
+            color = day_info.color;
           }
 
           if (color === "red") disabled = true;
@@ -172,8 +184,10 @@ __webpack_require__.r(__webpack_exports__);
             color: color,
             selected: false,
             date: new Date(date.getTime()),
-            time: [9, 17],
-            disabled: disabled
+            time: day_info.time,
+            disabled: disabled,
+            booked_start: day_info.free_start,
+            booked_end: day_info.free_end
           });
           date.setDate(date.getDate() + 1);
         }
@@ -187,13 +201,14 @@ __webpack_require__.r(__webpack_exports__);
       this.weekEnd.setDate(date.getDate() - 1);
       this.days = this.pages[this.page];
     },
-    calcColor: function calcColor(bookings) {
+    calcInfo: function calcInfo(bookings) {
       var color = "";
       var hours = 0;
       var startHour = 24;
       var startBooking = null;
       var endHour = 0;
       var endBooking = null;
+      var time = [9, 17];
 
       for (var i = 0; i < bookings.length; i++) {
         hours += Number(bookings[i].to.substring(0, 2)) - Number(bookings[i].from.substring(0, 2));
@@ -209,10 +224,23 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
+      if (Number(endBooking.to.substr(0, 2)) < 14) {
+        time = [Number(endBooking.to.substr(0, 2)) + (endBooking.to.substr(3, 2) === "00" ? 0 : 0.5), 17];
+      } else {
+        time = [9, Number(startBooking.from.substr(0, 2)) + (startBooking.from.substr(3, 2) === "00" ? 0 : 0.5)];
+      }
+
       if (hours >= 5) color = "red"; //mark red
       else color = "orange"; //mark orange
 
-      return color;
+      console.log("Time");
+      console.log(time);
+      return {
+        color: color,
+        free_start: startBooking.from,
+        free_end: endBooking.to,
+        time: time
+      };
     },
     dateToDayOfMonth: function dateToDayOfMonth(date) {
       var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -336,12 +364,30 @@ __webpack_require__.r(__webpack_exports__);
     return {
       min: 6,
       max: 20,
+      booked_start: 0,
+      booked_end: 24,
       formatter: function formatter(v) {
         return "".concat(Math.round(v - 0.1), ".").concat(v % 1 === 0 ? '00' : '30');
       }
     };
   },
-  created: function created() {}
+  created: function created() {
+    this.booked_start = Number(this.day.booked_start.substr(0, 2)) + (this.day.booked_start.substr(3, 2) === "00" ? 0 : 0.5);
+    this.booked_end = Number(this.day.booked_end.substr(0, 2)) + (this.day.booked_end.substr(3, 2) === "00" ? 0 : 0.5);
+  },
+  methods: {
+    slideEnd: function slideEnd(value) {
+      if (value[0] < this.booked_start && value[1] >= this.booked_start) {
+        //Buchung beginnt vor anderer Buchung und ragt rein
+        //value[1] = this.booked_start;
+        this.$refs.slider.setValue([value[0], this.booked_start]);
+      } else if (value[0] <= this.booked_end && value[1] > this.booked_end) {
+        //Buchung beginnt während anderer Buchung
+        //value[0] = this.booked_end;
+        this.$refs.slider.setValue([this.booked_end, value[1]]);
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -48596,7 +48642,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n    margin-left: 15px;\n    margin-right: 15px;\n}\n.coba-table th[data-v-c78be8ee] {\n    height: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\r\n    margin-left: 15px;\r\n    margin-right: 15px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
 
 // exports
 
@@ -48615,7 +48661,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.user-container[data-v-6f34980f] {\n    position: relative;\n    max-width: 100%;\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\n    max-width: 50%;\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\n    display: flex;\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\n    border-collapse: collapse;\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\n    text-align: left;\n    font-weight: bold;\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\n    text-align: right;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n.user-container[data-v-6f34980f] {\r\n    position: relative;\r\n    max-width: 100%;\r\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\r\n    max-width: 50%;\r\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\r\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\r\n    display: flex;\r\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\r\n    border-collapse: collapse;\r\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\r\n    text-align: left;\r\n    font-weight: bold;\r\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\r\n    text-align: right;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -48634,7 +48680,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\n    text-align: right;\n    font-weight: bold;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\r\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\r\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\r\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\r\n    border-collapse: collapse;\r\n    margin: 0 5px 5px 0;\r\n    font-size: 1.05em;\r\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\r\n    text-align: right;\r\n    font-weight: bold;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -53430,6 +53476,7 @@ var render = function() {
     { staticClass: "time_picker" },
     [
       _c("vue-range-slider", {
+        ref: "slider",
         attrs: {
           min: _vm.min,
           max: _vm.max,
@@ -53442,6 +53489,7 @@ var render = function() {
             color: "black"
           }
         },
+        on: { "slide-end": _vm.slideEnd },
         model: {
           value: _vm.day.time,
           callback: function($$v) {
@@ -74695,8 +74743,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
