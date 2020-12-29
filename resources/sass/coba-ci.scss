@@ -136,6 +136,10 @@
     font-size: 24px;
     margin: 10px 0;
 
+    &.coba-button-half-width {
+        width: 50%;
+        margin: 0 auto;
+    }
     &.coba-button-accent{
         background-color: $coba-yellow;
     }

@@ -11050,6 +11050,11 @@ a.text-dark:focus {
   margin: 10px 0;
 }
 
+.coba-button.coba-button-half-width {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .coba-button.coba-button-accent {
   background-color: #FFC931;
 }
