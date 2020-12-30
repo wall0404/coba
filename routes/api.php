@@ -35,4 +35,8 @@ Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
 
-
+/* Avatar */
+Route::prefix('/profile_picture')->group(function () {
+    Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
+    Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
+    Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');});
