@@ -466,15 +466,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar",
   data: function data() {
@@ -495,14 +486,6 @@ __webpack_require__.r(__webpack_exports__);
         name: 'Profile',
         mainURL: '/profile',
         icon: 'person-fill'
-      }],
-      nav_signIn: [{
-        name: 'Sign Up',
-        mainURL: '/signup'
-      }],
-      nav_signUp: [{
-        name: 'Sign In',
-        mainURL: '/login'
       }]
     };
   },
@@ -520,6 +503,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -666,6 +655,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Elements_Input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Elements/Input */ "./resources/js/components/Elements/Input.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -53661,31 +53655,7 @@ var render = function() {
         }),
         1
       )
-    : _vm.$route.path.includes("/login")
-    ? _c(
-        "div",
-        { staticClass: "coba-navbar coba-full-width" },
-        _vm._l(_vm.nav_signIn, function(nav_item) {
-          return _c(
-            "router-link",
-            { key: nav_item.name, attrs: { to: nav_item.mainURL } },
-            [_c("div", [_vm._v(_vm._s(nav_item.name))])]
-          )
-        }),
-        1
-      )
-    : _c(
-        "div",
-        { staticClass: "coba-navbar coba-full-width" },
-        _vm._l(_vm.nav_signUp, function(nav_item) {
-          return _c(
-            "router-link",
-            { key: nav_item.name, attrs: { to: nav_item.mainURL } },
-            [_c("div", [_vm._v(_vm._s(nav_item.name))])]
-          )
-        }),
-        1
-      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -53713,89 +53683,91 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
-      _c("form", {}, [
-        _c("div", { staticClass: "coba-margin-top" }, [
-          _c("div", { staticClass: "coba-width-1-1" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
-                }
-              ],
-              staticClass: "coba-input",
-              class: [_vm.error ? "coba-form-danger" : ""],
-              attrs: {
-                type: "text",
-                id: "email",
-                placeholder: "E-Mail",
-                disabled: _vm.load
-              },
-              domProps: { value: _vm.email },
-              on: {
-                focus: _vm.focusHandler,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+      _c("form", { staticClass: "coba-form" }, [
+        _c("div", { staticClass: "coba-input-container" }, [
+          _c("div", { staticClass: "coba-margin-top" }, [
+            _c("div", { staticClass: "coba-width-1-1" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.email,
+                    expression: "email"
                   }
-                  _vm.email = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "coba-margin-top" }, [
-          _c("div", { staticClass: "coba-width-1-1" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
-                }
-              ],
-              staticClass: "coba-input",
-              class: [_vm.error ? "coba-form-danger" : ""],
-              attrs: {
-                type: "password",
-                id: "password",
-                placeholder: "Passwort",
-                disabled: _vm.load
-              },
-              domProps: { value: _vm.password },
-              on: {
-                focus: _vm.focusHandler,
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.submit($event)
+                ],
+                staticClass: "coba-input",
+                class: [_vm.error ? "coba-form-danger" : ""],
+                attrs: {
+                  type: "text",
+                  id: "email",
+                  placeholder: "E-Mail",
+                  disabled: _vm.load
                 },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                domProps: { value: _vm.email },
+                on: {
+                  focus: _vm.focusHandler,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.email = $event.target.value
                   }
-                  _vm.password = $event.target.value
                 }
-              }
-            })
-          ])
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "coba-margin-top" }, [
+            _c("div", { staticClass: "coba-width-1-1" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.password,
+                    expression: "password"
+                  }
+                ],
+                staticClass: "coba-input",
+                class: [_vm.error ? "coba-form-danger" : ""],
+                attrs: {
+                  type: "password",
+                  id: "password",
+                  placeholder: "Passwort",
+                  disabled: _vm.load
+                },
+                domProps: { value: _vm.password },
+                on: {
+                  focus: _vm.focusHandler,
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.submit($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.password = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.error
+            ? _c(
+                "div",
+                { staticClass: "coba-text-danger coba-margin-small-top" },
+                [_c("span", [_vm._v("E-Mail oder Passwort stimmt nicht")])]
+              )
+            : _vm._e()
         ]),
-        _vm._v(" "),
-        _vm.error
-          ? _c(
-              "div",
-              { staticClass: "coba-text-danger coba-margin-small-top" },
-              [_c("span", [_vm._v("E-Mail oder Passwort stimmt nicht")])]
-            )
-          : _vm._e(),
         _vm._v(" "),
         _c(
           "button",
@@ -53805,6 +53777,24 @@ var render = function() {
             on: { click: _vm.submit }
           },
           [_vm._v("Anmelden")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "coba-container" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "coba-button-text mt-4",
+                attrs: { to: "/signup" }
+              },
+              [_vm._v("Hier Registrieren")]
+            )
+          ],
+          1
         )
       ])
     ])
@@ -53815,8 +53805,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
-      _c("span", { staticClass: "coba-page-headline" }, [_vm._v("Anmelden")])
+    return _c(
+      "div",
+      { staticClass: "coba-container coba-flex coba-header mb-4" },
+      [
+        _c("span", { staticClass: "coba-page-headline" }, [
+          _vm._v("Willkommen zurück")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "coba-button-text mt-4" }, [
+      _vm._v(" Du hast noch kein Konto?"),
+      _c("br")
     ])
   }
 ]
@@ -53955,6 +53960,23 @@ var render = function() {
             on: { click: _vm.submit }
           },
           [_vm._v("Registrieren")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "coba-container" },
+          [
+            _c("span", { staticClass: "coba-button-text mt-4" }, [
+              _vm._v(" Du hast schon ein Konto?")
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "coba-button-text mt-4", attrs: { to: "/login" } },
+              [_vm._v("Hier Anmelden")]
+            )
+          ],
+          1
         )
       ])
     ])
@@ -53965,11 +53987,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
-      _c("span", { staticClass: "coba-page-headline" }, [
-        _vm._v("Registrieren")
-      ])
-    ])
+    return _c(
+      "div",
+      { staticClass: "coba-container coba-flex coba-header mb-4" },
+      [
+        _c("span", { staticClass: "coba-page-headline" }, [
+          _vm._v("Erstelle ein Konto")
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -54811,7 +54837,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "router-link",
-          { staticClass: "coba-button mt-4", attrs: { to: "/logout" } },
+          {
+            staticClass: "coba-button coba-button-half-width mt-5 mb-3",
+            attrs: { to: "/logout" }
+          },
           [_vm._v("Logout")]
         )
       ],
@@ -72971,12 +73000,6 @@ var routes = [{
     auth: true
   }
 }, {
-  path: '/',
-  component: _components_Pages_Auth_Page_Login__WEBPACK_IMPORTED_MODULE_6__["default"],
-  meta: {
-    auth: false
-  }
-}, {
   path: '/home',
   component: _components_Pages_Page_Home__WEBPACK_IMPORTED_MODULE_2__["default"],
   meta: {
@@ -73103,8 +73126,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        state.data.user = res.success.user;
-        state.ready--;
+        if (res.success.user === null) {
+          state.data.user = null;
+          localStorage.removeItem('token');
+          state.ready--;
+        } else {
+          state.data.user = res.success.user;
+          state.ready--;
+        }
       })["catch"](function (error) {
         console.log(error);
         state.data.user = null;
