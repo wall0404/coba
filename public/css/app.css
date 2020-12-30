@@ -10937,6 +10937,10 @@ a.text-dark:focus {
   align-items: flex-end;
 }
 
+.coba-page.coba-page-lower-padding {
+  padding-top: 250px;
+}
+
 .coba-full-width {
   width: 100%;
 }
@@ -11079,8 +11083,16 @@ a.text-dark:focus {
   background-color: #FFAD33;
 }
 
+.coba-button.coba-button-white {
+  background-color: #fff;
+}
+
 .coba-button.coba-button-no-border {
   border: none;
+}
+
+.coba-button.coba-button-yellow-border {
+  border-color: #FFC931;
 }
 
 .coba-button.coba-button-big {
@@ -11208,6 +11220,10 @@ a.text-dark:focus {
 
 .coba-text-big {
   font-size: 18px;
+}
+
+.coba-text-bigger {
+  font-size: 20px;
 }
 
 .coba-text-very-big {
