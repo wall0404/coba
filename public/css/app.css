@@ -11158,6 +11158,10 @@ a.text-dark:focus {
   margin-top: 3px;
 }
 
+.coba-margin-bottom {
+  margin-bottom: 10px;
+}
+
 .coba-input {
   font-size: 16px;
   height: 30px;
@@ -11208,6 +11212,10 @@ a.text-dark:focus {
 
 .coba-text-very-big {
   font-size: 24px;
+}
+
+.coba-text-very-bigger {
+  font-size: 30px;
 }
 
 .coba-text-underlined {
