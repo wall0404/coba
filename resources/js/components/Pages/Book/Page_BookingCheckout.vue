@@ -10,12 +10,12 @@
                 <div v-if="error===false">
                     <div class="coba-container" v-if="validation_error.length === 0"> <!-- Anzeige der erfolgreichen Buchung -->
                         <div class="coba-container coba-flex-column"> <!-- Text -->
-                            <span class="coba-text-strong coba-text-very-bigger coba-text-center coba-margin-bottom">Ihr Buchung war erfolgreich</span>
+                            <span class="coba-text-strong coba-text-very-bigger coba-text-center coba-margin-bottom">Deine Buchung war erfolgreich</span>
                             <b-icon icon="hand-thumbs-up" font-scale="3" style="color:#FFC931"></b-icon>
                         </div>
                         <div class="coba-container"> <!-- Buttons -->
-                            <router-link to="/home"><button class="coba-button coba-button-white coba-button-yellow-border">Zur Übersicht</button></router-link>
-                            <router-link to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent">weiter buchen</button></router-link>
+                            <router-link to="/home"><button class="coba-button coba-button-white coba-button-yellow-border">Zur Startseite</button></router-link>
+                            <router-link to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent">Weitere Buchung</button></router-link>
                         </div>
                     </div>
                     <div v-else> <!-- Anzeige der fehlgeschlagenen Buchung -->

@@ -54139,7 +54139,7 @@ var render = function() {
                                         staticClass:
                                           "coba-text-strong coba-text-very-bigger coba-text-center coba-margin-bottom"
                                       },
-                                      [_vm._v("Ihr Buchung war erfolgreich")]
+                                      [_vm._v("Deine Buchung war erfolgreich")]
                                     ),
                                     _vm._v(" "),
                                     _c("b-icon", {
@@ -54167,7 +54167,7 @@ var render = function() {
                                             staticClass:
                                               "coba-button coba-button-white coba-button-yellow-border"
                                           },
-                                          [_vm._v("Zur Übersicht")]
+                                          [_vm._v("Zur Startseite")]
                                         )
                                       ]
                                     ),
@@ -54184,7 +54184,7 @@ var render = function() {
                                             staticClass:
                                               "coba-button coba-button-no-border coba-button-accent"
                                           },
-                                          [_vm._v("weiter buchen")]
+                                          [_vm._v("Weitere Buchung")]
                                         )
                                       ]
                                     )
