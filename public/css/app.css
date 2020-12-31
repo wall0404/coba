@@ -11102,6 +11102,14 @@ a.text-dark:focus {
   border-radius: 25px;
 }
 
+.coba-button.coba-button-round.coba-button-very-small {
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  margin: 5px 5px;
+}
+
 .coba-button.coba-button-round.coba-button-small {
   height: 40px;
   width: 40px;
@@ -11214,6 +11222,10 @@ a.text-dark:focus {
 
 .coba-text-small {
   font-size: 10px;
+}
+
+.coba-text-medium {
+  font-size: 16px;
 }
 
 .coba-text-big {
