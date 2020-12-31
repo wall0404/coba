@@ -18,11 +18,9 @@
                             <td class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
                         </tr>
                         <template v-for="booking in today_bookings">
-                            <template v-for="works in workstations">
                                 <tr>
-                                    <td v-if="booking.date === today_date && booking.user_id === user.user_id && works.id === booking.workstation_id" class="user-data-name small text-info" > heute im {{works.location.name}}</td>
+                                    <td v-if="booking.date === today_date && booking.user_id === user.user_id " class="user-data-name small text-info" > heute im   --------------- {{booking}}</td>
                                 </tr>
-                            </template>
                         </template>
                     </table>
 
@@ -54,6 +52,7 @@ export default {
                 today_date: new Date().toISOString().slice(0, 10),
                 searchQuery: '',
                 workstations:[],
+                timeout:null ,
             }
         },
         methods: {
@@ -109,22 +108,30 @@ export default {
                         })
             },
             filterUsers(){
-                fetch('/api/user/?order_by=firstName' , {
-                    method: 'GET',
-                    headers: {
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.token
-                    }
-                })
-                .then(res => res.json())
-                .then(res => {
-                    if( this.searchQuery){
-                        this.users = res.success.filter(user =>
-                            (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())) ;
-                    }else{
-                        this.users = res.success ;
-                    }
-                })
+                if ( this.timeout){
+                    clearTimeout( this.timeout) ;
+                    this.timeout = null ;
+                }
+                // timeout for reducing query-requests and avoiding crash
+                this.timeout = setTimeout ( () => {
+                    fetch('/api/user/?order_by=firstName' , {
+                        method: 'GET',
+                        headers: {
+                            'content-type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.token
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(res => {
+                            if( this.searchQuery){
+                                this.users = res.success.filter(user =>
+                                    (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())) ;
+                            }else{
+                                this.users = res.success ;
+                            }
+
+                        })
+                },350) ;
             },
             getWorkstation(){
                 fetch('/api/workstation',{
@@ -145,7 +152,8 @@ export default {
             }
 
         },
-        created() {
+        created(){
+            console.log(this.$store.getters.locations)  ;
             this.getTodayBookings() ;
             this.filterUsers() ;
             this.getWorkstation() ;
