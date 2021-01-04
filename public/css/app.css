@@ -10937,6 +10937,10 @@ a.text-dark:focus {
   align-items: flex-end;
 }
 
+.coba-page.coba-page-lower-padding {
+  padding-top: 250px;
+}
+
 .coba-full-width {
   width: 100%;
 }
@@ -10979,7 +10983,7 @@ a.text-dark:focus {
 }
 
 [class*=coba-flex][class*=right] {
-  justify-content: right;
+  justify-content: flex-end;
 }
 
 /* HEADER */
@@ -11079,8 +11083,16 @@ a.text-dark:focus {
   background-color: #FFAD33;
 }
 
+.coba-button.coba-button-white {
+  background-color: #fff;
+}
+
 .coba-button.coba-button-no-border {
   border: none;
+}
+
+.coba-button.coba-button-yellow-border {
+  border-color: #FFC931;
 }
 
 .coba-button.coba-button-big {
@@ -11158,6 +11170,10 @@ a.text-dark:focus {
   margin-top: 3px;
 }
 
+.coba-margin-bottom {
+  margin-bottom: 10px;
+}
+
 .coba-input {
   font-size: 16px;
   height: 30px;
@@ -11206,8 +11222,16 @@ a.text-dark:focus {
   font-size: 18px;
 }
 
+.coba-text-bigger {
+  font-size: 20px;
+}
+
 .coba-text-very-big {
   font-size: 24px;
+}
+
+.coba-text-very-bigger {
+  font-size: 30px;
 }
 
 .coba-text-underlined {

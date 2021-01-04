@@ -12,12 +12,11 @@ class ProfilePictureController extends Controller
 {
     //  jpg
     protected $path = "public".DIRECTORY_SEPARATOR."avatar".DIRECTORY_SEPARATOR;
-    protected $extension = '.png';
+    protected $extension = '.jpg';
     protected $tmp = 'tmp'.DIRECTORY_SEPARATOR;
 
     public function getPic($id) {
         //Check permissions
-        if(Auth::id() == $id) {
             try {
                 $path = $this->path.$id.$this->extension;
                 $contents = Storage::get($path);
@@ -34,10 +33,7 @@ class ProfilePictureController extends Controller
 
             return $response;
 
-        }
-        else {
-            return response()->json(['error'=>'Unauthorised'], 401);
-        }
+
     }
     public function deletePic($id) {
         if(Auth::id() == $id) {
@@ -55,9 +51,6 @@ class ProfilePictureController extends Controller
         }
     }
     public function uploadPic(Request $request, $id) {
-
-        if(Auth::id() == $id) {
-
 
             $file = $request->file('profile_pic');
             $mime_type =  $file->getClientMimeType();
@@ -92,10 +85,7 @@ class ProfilePictureController extends Controller
             else {
                 return response()->json(['error'=>'wrong_profile_pic_format'], 200);
             }
-        }
-        else {
-            return response()->json(['error'=>'Unauthorised'], 401);
-        }
+
 
     }
 }

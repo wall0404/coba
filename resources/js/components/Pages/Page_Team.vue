@@ -17,16 +17,14 @@
                         <tr>
                             <td class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
                         </tr>
-                        <template v-for="booking in today_bookings">
+                        <template v-for="booking in today_bookings"> <!-- inefficient -->
+                            <template v-for="works in workstations">
                                 <tr>
-                                    <td v-if="booking.date === today_date && booking.user_id === user.user_id " class="user-data-name small text-info" > heute im   --------------- {{booking}}</td>
+                                    <td v-if="booking.date === today_date && booking.user_id === user.user_id && works.id === booking.workstation_id" class="user-data-name small text-info" > heute im {{works.location.name}}</td>
                                 </tr>
+                            </template>
                         </template>
                     </table>
-
-                    <!-- need to handle:
-                                        -what to display if more than one booking for today
-                                        -still display "heute im ..." even when booking-time expired? -->
                 </div>
             </div>
             </router-link>
@@ -36,8 +34,7 @@
 
 <script>
 import Spinner from "../Global/Spinner";
-import {AxiosInstance as axios} from "axios";
-import {router} from "../../_helpers/router";
+import {pad} from "lodash";
 export default {
     name: "Teampage",
     components: {Spinner} ,
@@ -47,46 +44,18 @@ export default {
                 load: false ,
                 error: false ,
                 users: [],
-                filteredUsers:[],
                 today_bookings: [],
-                today_date: new Date().toISOString().slice(0, 10),
+                today_date: new Date().toISOString().slice(0, 10),  // ! UTC+0
+                today_hours: new Date().toISOString().slice(11,19),  // !!!  UTC+0
                 searchQuery: '',
                 workstations:[],
                 timeout:null ,
             }
         },
         methods: {
-            /*
-            loadUsers(){
-                this.load = true ;
-                fetch('/api/user/?order_by=firstName' ,{
-                    method: 'GET' ,
-                    headers: {
-                        'content-type': 'application/json',
-                        'Authorization' : 'Bearer '+localStorage.token
-                    }
-                } ) .then(res=> res.json())
-                    .then(res => {
-                        if(res.success) {
-                            this.users = res.success;
-                            this.filteredUsers = res.success ;
-                            this.load = false;
-                        }
-                        else {
-                            this.error = true;
-                            this.load = false;
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.load = false;
-                    })
-
-            },
-            */
             getTodayBookings(){
                 this.load = true ;
-                    fetch('/api/booking/?filter[date][min]=' +this.today_date , {
+                    fetch('/api/booking/?filter[date][min]=' +this.today_date +'&filter[to][min]=' + this.today_hours , {
                         method: 'GET',
                         headers: {
                             'content-type': 'application/json',
@@ -112,7 +81,7 @@ export default {
                     clearTimeout( this.timeout) ;
                     this.timeout = null ;
                 }
-                // timeout for reducing query-requests and avoiding crash
+                // timeout for reducing query-requests => avoiding crash
                 this.timeout = setTimeout ( () => {
                     fetch('/api/user/?order_by=firstName' , {
                         method: 'GET',
@@ -129,9 +98,8 @@ export default {
                             }else{
                                 this.users = res.success ;
                             }
-
                         })
-                },350) ;
+                },300) ;
             },
             getWorkstation(){
                 fetch('/api/workstation',{
@@ -153,12 +121,10 @@ export default {
 
         },
         created(){
-            console.log(this.$store.getters.locations)  ;
             this.getTodayBookings() ;
             this.filterUsers() ;
             this.getWorkstation() ;
         },
-
 
 
 }

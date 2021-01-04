@@ -1,16 +1,31 @@
 <template>
     <div class="coba-page">
-        <div class="user-container mb-5 mt-4">
+        <div class="user-container mb-5 mt-4" >
             <router-link class="setting-button mr-4 " to="/profile/settings">
                 <b-icon icon="pencil" ></b-icon>
             </router-link>
-            <div><img v-bind:data-src="placeholder" alt="user_pic"
+
+            <!-- -->
+            <div><img v-bind:data-src="this.user.profile_picture_url" alt="user_pic"
                       class="coba-border-round coba-border-yellow user-avatar-shadow p-1"  id="avatar"/>
             </div>
+
+            <!-- -->
+            <div  v-if="!load">
+                <a  @click="selectPic">upload</a>
+                <a  @click="deletePic">delete</a>
+            </div>
+
+
         </div>
         <div class="coba-container text-center pb-0">
             <h3 class="mb-0">{{ $store.getters.data.user.firstName +" " + $store.getters.data.user.lastName }}</h3>
             <p class="mb-1">{{$store.getters.data.user.email}}</p>
+
+            <!-- -->
+            <input type="file" ref="upload" @change="uploadPic">
+
+
         </div>
         <div class="coba-input-container ">
             <!-- Musterdesignidee -->
@@ -43,31 +58,73 @@ import {store} from "../../_helpers/store";
 export default {
     name: "Page_Profile",
     components: {Spinner} ,
-    props:['user'] ,
+  //  props:['user'] ,
     data(){
         return{
-            userImage:'' ,
+            load: false ,
+            user: [],
         }
     },
     methods:{
-        getUserImage(){
-            fetch('/api/profile_picture/' +store.getters.data.user.user_id , {
+        getUser(){
+            fetch('/api/user',{
                 method: 'GET',
-
-            }).then(res => res.json())
-            .then( res => {
-                this.load = false ;
-                if ( res.success){
-                    this.userImage = res.success ;
-                }
-            }).catch(err => {
-                console.log(err) ;
+                    headers: {
+                        'content-type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.token
+                }.then(res => res.json() )
+                .then( res => {
+                    this.user = res.success ;
+                })
             })
+        },
+        uploadPic() {
+            this.load = true;
+            const input = this.$refs.upload;
+            const file = input.files[0];
+            var data = new FormData();
+            data.append('profile_pic', file);
+            // This will upload the file after having read it
+            fetch('/api/profile_picture/'+ this.user.user_id, {
+                method: 'POST',
+                body: data
+            }).then(
+                res => res.json() // if the response is a JSON object
+            ).then(
+                res => {
+                    this.load = false;
+                    if(res.success) {
+                        this.user.profile_picture_url = this.user.profile_picture_url+ "?a";
+                        this.$store.commit('updatePic');
+                    }
+                }
+            ).catch(
+                //Internet connection
+            );
+        },
+        selectPic() {
+            const elem = this.$refs.upload;
+            elem.click();
+        },
+        deletePic() {
+            this.load = true;
+            fetch('/api/profile_picture/'+this.user.user_id, {
+                method: 'delete'
+            })
+                .then(res => res.json())
+                .then(res => {
+                    this.load = false;
+                    if(res.success) {
+                        this.user.profile_picture_url = this.user.profile_picture_url+ "?a";
+                        this.$store.commit('updatePic');
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.load = false;
+                })
         }
     },
-    created() {
-        this.getUserImage() ;
-    }
 
 }
 </script>

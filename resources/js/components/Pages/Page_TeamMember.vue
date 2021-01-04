@@ -1,5 +1,5 @@
 <template>
-    <div class="coba-page">
+    <div class="coba-page coba-homescreen ">
         <div class="user-container mb-5 mt-4">
             <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
         </div>
@@ -8,7 +8,8 @@
                 <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
                 <p   class="mb-1">{{user.email}}</p>
                 <div v-for="booking in bookings">
-                    <p v-if="booking.date === today_date" class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
+                    <p v-if="booking.date === today_date && today_hours < booking.to  " class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
+                  <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p> -->
                 </div>
                 <br>
                 <div class="coba-container text-left">
@@ -16,7 +17,7 @@
                 </div>
             </div>
         </template>
-        <div class="coba-container coba-full-width coba-footer-container">
+        <div class="coba-container coba-full-width coba-footer-container pb-5" style="min-height: 300px">
             <ul class="coba-list" v-if="!load">
                 <li v-for="booking in bookings" :key="booking.id">
                     {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}
@@ -41,6 +42,7 @@ export default {
             id: null ,
             bookings:[],
             today_date: new Date().toISOString().slice(0, 10),
+            today_hours: new Date().toISOString().slice(11,19),  // ! standard: UMT+0
         }
     },
     methods: {
@@ -75,7 +77,7 @@ export default {
 
         getTeamMemberBookings(){
             this.load = true ;
-            fetch('/api/user/' +this.id +'/bookings?order_by=date&filter[date][min]='+this.today_date,{
+            fetch('/api/user/' +this.id +'/bookings?order_by=date&filter[date][min]='+this.today_date ,{
                 method: 'GET' ,
                 headers: {
                     'content-type': 'application/json',
