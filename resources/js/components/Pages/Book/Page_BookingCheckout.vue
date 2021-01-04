@@ -2,7 +2,7 @@
     <div class="coba-page coba-page-no-header coba-page-lower-padding">
         <div v-if="session_expired"> <!-- Anzeige wenn die Sitzung abgelaufen ist -->
             <div class="coba-headline mb-4">Die Sitzung ist abgelaufen</div>
-            <a @click="$router.push('/home')">Zurück zur Startseite</a> <!-- Button um eine Seite zurückzugehen -> Seite zur Bestätigung-->
+            <a @click="$router.push('/home')">Zurück zur Startseite</a> <!-- Button um eine Seite zurückzugehen -->
         </div>
         <div v-else>
             <spinner v-if="load"></spinner>
