@@ -11128,6 +11128,12 @@ a.text-dark:focus {
   border-radius: 20px;
 }
 
+.coba-button.coba-button-round.coba-button-normal {
+  height: 60px;
+  width: 60px;
+  border-radius: 60px;
+}
+
 .coba-button.coba-button-round.coba-button-big {
   height: 75px;
   width: 75px;
