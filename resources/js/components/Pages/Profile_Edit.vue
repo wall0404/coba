@@ -1,44 +1,38 @@
 <template>
     <div class="coba-page">
         <div class="coba-container cobe-flex coba-header">
+            
             <span class="coba-page-headline">Personenprofile</span>
         </div>
 
         <div class="coba-container">
             <span class="coba-page-text">Vorname: {{$store.getters.data.user.firstName}}</span>
-            <div class="edit-button">
-                <button class="small button">bearbeiten
-                </button>
-            </div>
+
         </div>
 
         <div class="coba-container">
             <span class="coba-page-text">Nachname: {{$store.getters.data.user.lastName}}</span>
-            <div class="edit-button">
-                <button class="small button">bearbeiten
-                </button>
-            </div>
+
         </div>
 
 
         <div class="coba-container">
             <span class="coba-page-text">Email: {{$store.getters.data.user.email}}</span>
-            <div class="edit-button">
-                <button class="small button">bearbeiten
-                </button>
-            </div>
+
         </div>
 
         <div class="coba-container">
-            <span class="coba-page-text">Passwort: </span>
-            <div class="edit-button">
-                <button class="small button">bearbeiten
-                </button>
-            </div>
+            <span class="coba-page-text">Passwort:
+            <input id="edit"  class="coba-border-rounded " type="text"  placeholder="edit..">
+            </span>
+
+            <button style="float:right"><b-icon icon="pencil-fill"></b-icon> </button>
+
         </div>
         <div class="coba-container">
             <span class="coba-page-text">Lieblingssitzplätze:</span>
-            <div class="coba-container">
+            <button style="float:right"><b-icon icon="pencil-fill"></b-icon> </button>
+            <div class="selection">
                 <div id="nav" class="nav">
                     <ul>
                         <li><a href="#">Tower</a>
@@ -72,34 +66,39 @@
                     </ul>
                 </div>
             </div>
-            <div class="edit-button">
-                <button class="small button">bearbeiten
-                </button>
-            </div>
+
+
+
+
         </div>
 
         <div class="coba-container">
             <span class="coba-page-text">Lieblingsbuddy:</span>
-            <div class="edit-button">
-                <button class="small button">bearbeiten
-                </button>
-            </div>
+            <button style="float:right"><b-icon icon="pencil-fill"></b-icon> </button>
         </div>
     </div>
 
+
+
+
+
+
+
 </template>
 
+
 <script>
+import Modal from "../Elements/Modal";
+import Spinner from "../Global/Spinner";
+import {router} from "../../_helpers/router";
+
 export default {
-    name: "Profile_Edit"
+    name: "Profile_Edit",
+
 }
 </script>
 
 <style scoped>
-.edit-button {
-    float: right;
-}
-
 ul{
     list-style:none;
 }
@@ -111,7 +110,7 @@ ul li{
     line-height:25px;
     border-bottom:1px
     solid #CCC;
-    position:relative;
+
 }
 a{
     text-decoration:none;
@@ -150,6 +149,5 @@ ul li:hover ul{
     outline: none;
     display:block;
 }
-
 
 </style>
