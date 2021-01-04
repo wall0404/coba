@@ -1425,6 +1425,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Elements_Modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Elements/Modal */ "./resources/js/components/Elements/Modal.vue");
+/* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
+/* harmony import */ var _helpers_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../_helpers/router */ "./resources/js/_helpers/router.js");
 //
 //
 //
@@ -1482,8 +1485,114 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Profile_Edit"
+  name: "Profile_Edit",
+  data: function data() {
+    return {
+      showModal: false,
+      location: [],
+      load: false,
+      showPassword: false
+    };
+  },
+  methods: {
+    clickEvent: function clickEvent() {
+      this.showModal = !this.showModal;
+    },
+    fetchData: function fetchData() {
+      var _this = this;
+
+      this.load = true;
+      fetch('/api/location', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        if (res.success) {
+          _this.location = res.success;
+          _this.load = false;
+        } else {
+          _this.error = true;
+          _this.load = false;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this.load = false;
+      });
+    }
+  },
+  created: function created() {
+    this.fetchData();
+  }
 });
 
 /***/ }),
@@ -48438,7 +48547,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\n    height: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
 
 // exports
 
@@ -48457,7 +48566,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.user-container[data-v-6f34980f] {\n    position: relative;\n    max-width: 100%;\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\n    max-width: 50%;\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\n    display: flex;\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\n    border-collapse: collapse;\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\n    text-align: left;\n    font-weight: bold;\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\n    text-align: right;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n.user-container[data-v-6f34980f] {\r\n    position: relative;\r\n    max-width: 100%;\r\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\r\n    max-width: 50%;\r\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\r\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\r\n    display: flex;\r\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\r\n    border-collapse: collapse;\r\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\r\n    text-align: left;\r\n    font-weight: bold;\r\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\r\n    text-align: right;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -48476,7 +48585,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\n    text-align: right;\n    font-weight: bold;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\r\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\r\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\r\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\r\n    border-collapse: collapse;\r\n    margin: 0 5px 5px 0;\r\n    font-size: 1.05em;\r\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\r\n    text-align: right;\r\n    font-weight: bold;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -48495,7 +48604,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.edit-button[data-v-454d9894] {\n    float: right;\n}\n", ""]);
+exports.push([module.i, "\n.pass_show .[data-v-454d9894] {\n    position: absolute;\n    color: #f36c01;\n    justify-content: center;\n    display: flex;\n}\n.settings-button[data-v-454d9894]{\n    float:right;\n    background-color: transparent;\n}\n.list-container[data-v-454d9894]{\n    display: flex;\n}\nul[data-v-454d9894]{\n    list-style:none;\n}\nul li[data-v-454d9894]{\n    outline:none;\n    background:#eee;\n    height:25px;\n    line-height:25px;\n    border: 1px solid #1b1e21;\n}\na[data-v-454d9894]{\n    text-decoration:none;\n    color: #000000;\n    display:block;\n    width:100px;\n    height:25px;\n    outline: none;\n}\nul li ul[data-v-454d9894]{\n    outline:none;\n    display:none;\n    position:relative;\n    left:75px;\n    top:0px;\n    width:100px;\n    border:1px\n    solid #CCC;\n}\nul li ul li a[data-v-454d9894]:link,ul li ul li a[data-v-454d9894]:visited{\n    background-color:#EEEEEE;\n}\nul li ul li a[data-v-454d9894]:hover{\n    background-color: #fae452;\n}\na[data-v-454d9894]:hover{\n    background-color: #666666;\n    color:#FFFFFF;\n}\nul li:hover ul[data-v-454d9894]{\n    outline: none;\n    display:block;\n}\n\n", ""]);
 
 // exports
 
@@ -54633,35 +54742,223 @@ var render = function() {
   return _c("div", { staticClass: "coba-page" }, [
     _vm._m(0),
     _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
       _c("span", { staticClass: "coba-page-text" }, [
         _vm._v("Vorname: " + _vm._s(_vm.$store.getters.data.user.firstName))
-      ]),
-      _vm._v(" "),
-      _vm._m(1)
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
       _c("span", { staticClass: "coba-page-text" }, [
         _vm._v("Nachname: " + _vm._s(_vm.$store.getters.data.user.lastName))
-      ]),
-      _vm._v(" "),
-      _vm._m(2)
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
       _c("span", { staticClass: "coba-page-text" }, [
         _vm._v("Email: " + _vm._s(_vm.$store.getters.data.user.email))
-      ]),
-      _vm._v(" "),
-      _vm._m(3)
+      ])
     ]),
     _vm._v(" "),
-    _vm._m(4),
+    _c("div", { staticClass: "coba-container" }, [
+      _c("span", { staticClass: "coba-page-text" }, [
+        _vm._v("Passwort ändern:\n        ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "settings-button", on: { click: _vm.clickEvent } },
+        [_c("b-icon", { attrs: { icon: "pencil-fill" } })],
+        1
+      )
+    ]),
     _vm._v(" "),
-    _vm._m(5),
+    _vm.showModal
+      ? _c("div", { attrs: { id: "modal" } }, [
+          _c("div", { staticClass: "modal-overlay" }, [
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "coba-container" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-sm-4" }, [
+                  _c("label", [_vm._v("Aktuelles Password eingeben:")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "form-group pass_show coba-flex-space-evenly"
+                    },
+                    [
+                      _c("input", {
+                        staticClass: "form-control",
+                        staticStyle: { width: "80%" },
+                        attrs: {
+                          type: [_vm.showPassword ? "text" : "password"],
+                          placeholder: "Aktuelles Password eingeben"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("b-icon", {
+                        attrs: { icon: "eye" },
+                        on: {
+                          click: function($event) {
+                            _vm.showPassword = !_vm.showPassword
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("label", [_vm._v("Neues Passwort eingeben:")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "form-group pass_show coba-flex-space-evenly"
+                    },
+                    [
+                      _c("input", {
+                        staticClass: "form-control",
+                        staticStyle: { width: "80%" },
+                        attrs: {
+                          type: [_vm.showPassword ? "text" : "password"],
+                          placeholder: "Neues Passwort eingeben"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("b-icon", {
+                        attrs: { icon: "eye" },
+                        on: {
+                          click: function($event) {
+                            _vm.showPassword = !_vm.showPassword
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("label", [_vm._v("Neues Passwort wiederholen:")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "form-group pass_show coba-flex-space-evenly"
+                    },
+                    [
+                      _c("input", {
+                        staticClass: "form-control",
+                        staticStyle: { width: "80%" },
+                        attrs: {
+                          type: [_vm.showPassword ? "text" : "password"],
+                          placeholder: "Neues Passwort wiederholen"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("b-icon", {
+                        attrs: { icon: "eye" },
+                        on: {
+                          click: function($event) {
+                            _vm.showPassword = !_vm.showPassword
+                          }
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "coba-button small ml-5 mr-5 mt-2 mb-1" },
+                  [_vm._v("Bestätigen")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("hr")
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
-    _vm._m(6)
+    _c("div", { staticClass: "coba-container" }, [
+      _c("span", { staticClass: "coba-page-text" }, [
+        _vm._v("Lieblingssitzplätze:")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "settings-button" },
+        [_c("b-icon", { attrs: { icon: "pencil-fill" } })],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "selection" }, [
+        _c("div", { staticClass: "nav", attrs: { id: "nav" } }, [
+          _c("ul", { staticClass: "list-container" }, [
+            _c(
+              "li",
+              [
+                _c("a", { attrs: { href: "#" } }, [_vm._v("Tower")]),
+                _vm._v(" "),
+                _vm._l(_vm.location[0].workstations, function(works) {
+                  return _c("ul", [
+                    _c(
+                      "li",
+                      [
+                        _c("router-link", { attrs: { to: "overTheRainbow" } }, [
+                          _vm._v("Platz: " + _vm._s(works.name))
+                        ])
+                      ],
+                      1
+                    )
+                  ])
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("a", { attrs: { href: "#" } }, [_vm._v("Campus")]),
+                _vm._v(" "),
+                _vm._l(_vm.location[1].workstations, function(works) {
+                  return _c("ul", [
+                    _c(
+                      "li",
+                      [
+                        _c("router-link", { attrs: { to: "overTheRainbow" } }, [
+                          _vm._v("Platz: " + _vm._s(works.name))
+                        ])
+                      ],
+                      1
+                    )
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "coba-container" }, [
+      _c("span", { staticClass: "coba-page-text" }, [
+        _vm._v("Lieblingsbuddy:")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "settings-button" },
+        [_c("b-icon", { attrs: { icon: "pencil-fill" } })],
+        1
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -54669,7 +54966,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container cobe-flex coba-header" }, [
+    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
       _c("span", { staticClass: "coba-page-headline" }, [
         _vm._v("Personenprofile")
       ])
@@ -54679,75 +54976,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "edit-button" }, [
-      _c("button", { staticClass: "small button" }, [
-        _vm._v("bearbeiten\n            ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "edit-button" }, [
-      _c("button", { staticClass: "small button" }, [
-        _vm._v("bearbeiten\n            ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "edit-button" }, [
-      _c("button", { staticClass: "small button" }, [
-        _vm._v("bearbeiten\n            ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container" }, [
-      _c("span", { staticClass: "coba-page-text" }, [_vm._v("Passwort: ")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "edit-button" }, [
-        _c("button", { staticClass: "small button" }, [
-          _vm._v("bearbeiten\n            ")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container" }, [
-      _c("span", { staticClass: "coba-page-text" }, [
-        _vm._v("Lieblingssitzplätze:")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "edit-button" }, [
-        _c("button", { staticClass: "small button" }, [
-          _vm._v("bearbeiten\n            ")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container" }, [
-      _c("span", { staticClass: "coba-page-text" }, [
-        _vm._v("Lieblingsbuddy:")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "edit-button" }, [
-        _c("button", { staticClass: "small button" }, [
-          _vm._v("bearbeiten\n            ")
-        ])
+    return _c("div", { staticClass: "coba-container m-2" }, [
+      _c("button", { staticClass: "coba-button" }, [
+        _vm._v("Profilbild ändern")
       ])
     ])
   }
@@ -74439,8 +74670,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/tangyaxi/Desktop/coba/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/tangyaxi/Desktop/coba/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\danie\PhpstormProjects\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
