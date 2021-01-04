@@ -2,7 +2,7 @@
     <div class="coba-page coba-page-no-header coba-page-lower-padding">
         <div v-if="session_expired"> <!-- Anzeige wenn die Sitzung abgelaufen ist -->
             <div class="coba-headline mb-4">Die Sitzung ist abgelaufen</div>
-            <a @click="$router.go(-1)">Zurück</a> <!-- Button um eine Seite zurückzugehen -> Seite zur Bestätigung-->
+            <a @click="$router.push('/home')">Zurück zur Startseite</a> <!-- Button um eine Seite zurückzugehen -> Seite zur Bestätigung-->
         </div>
         <div v-else>
             <spinner v-if="load"></spinner>
@@ -15,13 +15,13 @@
                         </div>
                         <div class="coba-container"> <!-- Buttons -->
                             <router-link to="/home"><button class="coba-button coba-button-white coba-button-yellow-border">Zur Startseite</button></router-link>
-                            <router-link to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent">Weitere Buchung</button></router-link>
+                            <router-link to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
                         </div>
                     </div>
                     <div v-else> <!-- Anzeige der fehlgeschlagenen Buchung -->
                         <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
                         <booking v-for="(booking, index) in validation_error"  :booking="booking" color="true" :key="'e'+index"></booking>
-                        <button class="coba-button"><a @click="$router.go(-2)"> Zurück</a></button> <!-- Button um zwei Seiten zurückzugehen -> Seite zur Tagauswahl -->
+                        <button class="coba-button"><a @click="$router.go(-2)">Zurück</a></button> <!-- Button um zwei Seiten zurückzugehen -> Seite zur Tagauswahl -->
                     </div>
                 </div>
                 <div v-else>

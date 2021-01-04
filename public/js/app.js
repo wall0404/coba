@@ -54109,11 +54109,11 @@ var render = function() {
               {
                 on: {
                   click: function($event) {
-                    return _vm.$router.go(-1)
+                    return _vm.$router.push("/home")
                   }
                 }
               },
-              [_vm._v("Zurück")]
+              [_vm._v("Zurück zur Startseite")]
             )
           ])
         : _c(
@@ -54182,7 +54182,7 @@ var render = function() {
                                           "button",
                                           {
                                             staticClass:
-                                              "coba-button coba-button-no-border coba-button-accent"
+                                              "coba-button coba-button-no-border coba-button-accent mt-4"
                                           },
                                           [_vm._v("Weitere Buchung")]
                                         )
@@ -54222,7 +54222,7 @@ var render = function() {
                                           }
                                         }
                                       },
-                                      [_vm._v(" Zurück")]
+                                      [_vm._v("Zurück")]
                                     )
                                   ])
                                 ],
