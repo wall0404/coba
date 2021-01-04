@@ -25,7 +25,7 @@
                     </tr>
                 </table>
             </div>
-            <router-link to="/logout" class="coba-button mt-4">Logout</router-link>
+            <router-link to="/logout" class="coba-button coba-button-half-width mt-5 mb-3">Logout</router-link>
         </div>
     </div>
 </template>

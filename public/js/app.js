@@ -154,16 +154,28 @@ __webpack_require__.r(__webpack_exports__);
         this.pages[this.page] = []; //Crate badge for every day in this week
 
         for (var i = 0; i < 5; i++) {
+          var day_info = null;
           var disabled = false; //Daypicker is disabled, if in the past
 
           var color = "gray";
 
           if (this.todayDate > date) {
             disabled = true;
+            day_info = {
+              free_start: "00:00:00",
+              free_end: "24:00:00",
+              time: [9, 17]
+            };
           } else if (typeof this.bookings[date.toISOString().slice(0, 10)] == "undefined") {
             color = "green";
+            day_info = {
+              free_start: "00:00:00",
+              free_end: "24:00:00",
+              time: [9, 17]
+            };
           } else {
-            color = this.calcColor(this.bookings[date.toISOString().slice(0, 10)]);
+            day_info = this.calcInfo(this.bookings[date.toISOString().slice(0, 10)]);
+            color = day_info.color;
           }
 
           if (color === "red") disabled = true;
@@ -172,8 +184,10 @@ __webpack_require__.r(__webpack_exports__);
             color: color,
             selected: false,
             date: new Date(date.getTime()),
-            time: [9, 17],
-            disabled: disabled
+            time: day_info.time,
+            disabled: disabled,
+            booked_start: day_info.free_start,
+            booked_end: day_info.free_end
           });
           date.setDate(date.getDate() + 1);
         }
@@ -187,13 +201,14 @@ __webpack_require__.r(__webpack_exports__);
       this.weekEnd.setDate(date.getDate() - 1);
       this.days = this.pages[this.page];
     },
-    calcColor: function calcColor(bookings) {
+    calcInfo: function calcInfo(bookings) {
       var color = "";
       var hours = 0;
       var startHour = 24;
       var startBooking = null;
       var endHour = 0;
       var endBooking = null;
+      var time = [9, 17];
 
       for (var i = 0; i < bookings.length; i++) {
         hours += Number(bookings[i].to.substring(0, 2)) - Number(bookings[i].from.substring(0, 2));
@@ -209,10 +224,23 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
+      if (Number(endBooking.to.substr(0, 2)) < 14) {
+        time = [Number(endBooking.to.substr(0, 2)) + (endBooking.to.substr(3, 2) === "00" ? 0 : 0.5), 17];
+      } else {
+        time = [9, Number(startBooking.from.substr(0, 2)) + (startBooking.from.substr(3, 2) === "00" ? 0 : 0.5)];
+      }
+
       if (hours >= 5) color = "red"; //mark red
       else color = "orange"; //mark orange
 
-      return color;
+      console.log("Time");
+      console.log(time);
+      return {
+        color: color,
+        free_start: startBooking.from,
+        free_end: endBooking.to,
+        time: time
+      };
     },
     dateToDayOfMonth: function dateToDayOfMonth(date) {
       var days = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
@@ -336,12 +364,30 @@ __webpack_require__.r(__webpack_exports__);
     return {
       min: 6,
       max: 20,
+      booked_start: 0,
+      booked_end: 24,
       formatter: function formatter(v) {
         return "".concat(Math.round(v - 0.1), ".").concat(v % 1 === 0 ? '00' : '30');
       }
     };
   },
-  created: function created() {}
+  created: function created() {
+    this.booked_start = Number(this.day.booked_start.substr(0, 2)) + (this.day.booked_start.substr(3, 2) === "00" ? 0 : 0.5);
+    this.booked_end = Number(this.day.booked_end.substr(0, 2)) + (this.day.booked_end.substr(3, 2) === "00" ? 0 : 0.5);
+  },
+  methods: {
+    slideEnd: function slideEnd(value) {
+      if (value[0] < this.booked_start && value[1] >= this.booked_start) {
+        //Buchung beginnt vor anderer Buchung und ragt rein
+        //value[1] = this.booked_start;
+        this.$refs.slider.setValue([value[0], this.booked_start]);
+      } else if (value[0] <= this.booked_end && value[1] > this.booked_end) {
+        //Buchung beginnt während anderer Buchung
+        //value[0] = this.booked_end;
+        this.$refs.slider.setValue([this.booked_end, value[1]]);
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -420,15 +466,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar",
   data: function data() {
@@ -449,14 +486,6 @@ __webpack_require__.r(__webpack_exports__);
         name: 'Profile',
         mainURL: '/profile',
         icon: 'person-fill'
-      }],
-      nav_signIn: [{
-        name: 'Sign Up',
-        mainURL: '/signup'
-      }],
-      nav_signUp: [{
-        name: 'Sign In',
-        mainURL: '/login'
       }]
     };
   },
@@ -474,6 +503,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -620,6 +655,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Elements_Input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Elements/Input */ "./resources/js/components/Elements/Input.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1213,6 +1253,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
 /* harmony import */ var _Elements_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Elements/Modal */ "./resources/js/components/Elements/Modal.vue");
+//
 //
 //
 //
@@ -48627,7 +48668,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\r\n    margin-left: 15px;\r\n    margin-right: 15px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n    margin-left: 15px;\n    margin-right: 15px;\n}\n.coba-table th[data-v-c78be8ee] {\n    height: 40px;\n}\n", ""]);
 
 // exports
 
@@ -48646,7 +48687,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.user-container[data-v-6f34980f] {\r\n    position: relative;\r\n    max-width: 100%;\r\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\r\n    max-width: 50%;\r\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\r\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\r\n    display: flex;\r\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\r\n    border-collapse: collapse;\r\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\r\n    text-align: left;\r\n    font-weight: bold;\r\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\r\n    text-align: right;\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.user-container[data-v-6f34980f] {\n    position: relative;\n    max-width: 100%;\n    text-align: center;\n}\n.user-container img[data-v-6f34980f] {\n    max-width: 50%;\n    max-height: 50%;\n}\n.setting-button[data-v-6f34980f]{\n    margin: 10px auto;\n}\n.user-data-templ[data-v-6f34980f] {\n    display: flex;\n    box-shadow: inset 100px 10px 100px -50px #FFC931;\n}\n.user-table[data-v-6f34980f] {\n    border-collapse: collapse;\n    font-size: 1.05em;\n}\n.user-table .user-data-table-head[data-v-6f34980f]{\n    text-align: left;\n    font-weight: bold;\n    vertical-align: top;\n}\n.user-table .user-data-table-input[data-v-6f34980f]{\n    text-align: right;\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -48665,7 +48706,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\r\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\r\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\r\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\r\n    border-collapse: collapse;\r\n    margin: 0 5px 5px 0;\r\n    font-size: 1.05em;\r\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\r\n    text-align: right;\r\n    font-weight: bold;\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\n    text-align: right;\n    font-weight: bold;\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -53461,6 +53502,7 @@ var render = function() {
     { staticClass: "time_picker" },
     [
       _c("vue-range-slider", {
+        ref: "slider",
         attrs: {
           min: _vm.min,
           max: _vm.max,
@@ -53473,6 +53515,7 @@ var render = function() {
             color: "black"
           }
         },
+        on: { "slide-end": _vm.slideEnd },
         model: {
           value: _vm.day.time,
           callback: function($$v) {
@@ -53644,31 +53687,7 @@ var render = function() {
         }),
         1
       )
-    : _vm.$route.path.includes("/login")
-    ? _c(
-        "div",
-        { staticClass: "coba-navbar coba-full-width" },
-        _vm._l(_vm.nav_signIn, function(nav_item) {
-          return _c(
-            "router-link",
-            { key: nav_item.name, attrs: { to: nav_item.mainURL } },
-            [_c("div", [_vm._v(_vm._s(nav_item.name))])]
-          )
-        }),
-        1
-      )
-    : _c(
-        "div",
-        { staticClass: "coba-navbar coba-full-width" },
-        _vm._l(_vm.nav_signUp, function(nav_item) {
-          return _c(
-            "router-link",
-            { key: nav_item.name, attrs: { to: nav_item.mainURL } },
-            [_c("div", [_vm._v(_vm._s(nav_item.name))])]
-          )
-        }),
-        1
-      )
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -53696,89 +53715,91 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
-      _c("form", {}, [
-        _c("div", { staticClass: "coba-margin-top" }, [
-          _c("div", { staticClass: "coba-width-1-1" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.email,
-                  expression: "email"
-                }
-              ],
-              staticClass: "coba-input",
-              class: [_vm.error ? "coba-form-danger" : ""],
-              attrs: {
-                type: "text",
-                id: "email",
-                placeholder: "E-Mail",
-                disabled: _vm.load
-              },
-              domProps: { value: _vm.email },
-              on: {
-                focus: _vm.focusHandler,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+      _c("form", { staticClass: "coba-form" }, [
+        _c("div", { staticClass: "coba-input-container" }, [
+          _c("div", { staticClass: "coba-margin-top" }, [
+            _c("div", { staticClass: "coba-width-1-1" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.email,
+                    expression: "email"
                   }
-                  _vm.email = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "coba-margin-top" }, [
-          _c("div", { staticClass: "coba-width-1-1" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
-                }
-              ],
-              staticClass: "coba-input",
-              class: [_vm.error ? "coba-form-danger" : ""],
-              attrs: {
-                type: "password",
-                id: "password",
-                placeholder: "Passwort",
-                disabled: _vm.load
-              },
-              domProps: { value: _vm.password },
-              on: {
-                focus: _vm.focusHandler,
-                keyup: function($event) {
-                  if (
-                    !$event.type.indexOf("key") &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.submit($event)
+                ],
+                staticClass: "coba-input",
+                class: [_vm.error ? "coba-form-danger" : ""],
+                attrs: {
+                  type: "text",
+                  id: "email",
+                  placeholder: "E-Mail",
+                  disabled: _vm.load
                 },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                domProps: { value: _vm.email },
+                on: {
+                  focus: _vm.focusHandler,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.email = $event.target.value
                   }
-                  _vm.password = $event.target.value
                 }
-              }
-            })
-          ])
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "coba-margin-top" }, [
+            _c("div", { staticClass: "coba-width-1-1" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.password,
+                    expression: "password"
+                  }
+                ],
+                staticClass: "coba-input",
+                class: [_vm.error ? "coba-form-danger" : ""],
+                attrs: {
+                  type: "password",
+                  id: "password",
+                  placeholder: "Passwort",
+                  disabled: _vm.load
+                },
+                domProps: { value: _vm.password },
+                on: {
+                  focus: _vm.focusHandler,
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.submit($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.password = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.error
+            ? _c(
+                "div",
+                { staticClass: "coba-text-danger coba-margin-small-top" },
+                [_c("span", [_vm._v("E-Mail oder Passwort stimmt nicht")])]
+              )
+            : _vm._e()
         ]),
-        _vm._v(" "),
-        _vm.error
-          ? _c(
-              "div",
-              { staticClass: "coba-text-danger coba-margin-small-top" },
-              [_c("span", [_vm._v("E-Mail oder Passwort stimmt nicht")])]
-            )
-          : _vm._e(),
         _vm._v(" "),
         _c(
           "button",
@@ -53788,6 +53809,24 @@ var render = function() {
             on: { click: _vm.submit }
           },
           [_vm._v("Anmelden")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "coba-container" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "coba-button-text mt-4",
+                attrs: { to: "/signup" }
+              },
+              [_vm._v("Hier Registrieren")]
+            )
+          ],
+          1
         )
       ])
     ])
@@ -53798,8 +53837,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
-      _c("span", { staticClass: "coba-page-headline" }, [_vm._v("Anmelden")])
+    return _c(
+      "div",
+      { staticClass: "coba-container coba-flex coba-header mb-4" },
+      [
+        _c("span", { staticClass: "coba-page-headline" }, [
+          _vm._v("Willkommen zurück")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "coba-button-text mt-4" }, [
+      _vm._v(" Du hast noch kein Konto?"),
+      _c("br")
     ])
   }
 ]
@@ -53938,6 +53992,23 @@ var render = function() {
             on: { click: _vm.submit }
           },
           [_vm._v("Registrieren")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "coba-container" },
+          [
+            _c("span", { staticClass: "coba-button-text mt-4" }, [
+              _vm._v(" Du hast schon ein Konto?")
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "coba-button-text mt-4", attrs: { to: "/login" } },
+              [_vm._v("Hier Anmelden")]
+            )
+          ],
+          1
         )
       ])
     ])
@@ -53948,11 +54019,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "coba-container coba-flex coba-header" }, [
-      _c("span", { staticClass: "coba-page-headline" }, [
-        _vm._v("Registrieren")
-      ])
-    ])
+    return _c(
+      "div",
+      { staticClass: "coba-container coba-flex coba-header mb-4" },
+      [
+        _c("span", { staticClass: "coba-page-headline" }, [
+          _vm._v("Erstelle ein Konto")
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -54509,43 +54584,149 @@ var render = function() {
               {
                 staticClass: "coba-flex coba-flex-wrap coba-flex-space-evenly"
               },
-              _vm._l(_vm.workstations, function(workstation) {
-                return _c(
-                  "div",
-                  { key: workstation.id, staticClass: "seat-container" },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass:
-                          "coba-button coba-button-big coba-button-round coba-button-no-border",
-                        class: "coba-button-" + workstation.color,
-                        attrs: {
-                          to: {
-                            name: "DateTimeSelection",
-                            params: {
-                              workstation_id: workstation.id,
-                              bookings: workstation.workstation_bookings
+              [
+                _vm._l(_vm.workstations, function(workstation) {
+                  return _c(
+                    "div",
+                    { key: workstation.id, staticClass: "seat-container" },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass:
+                            "coba-button coba-button-big coba-button-round coba-button-no-border mb-0",
+                          class: "coba-button-" + workstation.color,
+                          attrs: {
+                            to: {
+                              name: "DateTimeSelection",
+                              params: {
+                                workstation_id: workstation.id,
+                                bookings: workstation.workstation_bookings
+                              }
                             }
                           }
-                        }
+                        },
+                        [
+                          _c("b-icon", {
+                            attrs: { icon: "plus", "font-scale": "2" }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "coba-flex-space-evenly m-0 p-2",
+                          on: {
+                            click: function($event) {
+                              return _vm.openModal(workstation)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "coba-text-strong coba-text-medium coba-text"
+                            },
+                            [_vm._v(_vm._s(workstation.name))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "coba-button-very-small coba-button-round coba-button"
+                            },
+                            [_vm._v("i")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _c("modal", {
+                  attrs: { "show-modal": _vm.modal.open },
+                  on: { "modal-close-event": _vm.closeModal },
+                  scopedSlots: _vm._u(
+                    [
+                      {
+                        key: "header",
+                        fn: function() {
+                          return [
+                            _c("div", { staticClass: "coba-modal-header" }, [
+                              _vm._v(_vm._s(_vm.modal.header))
+                            ])
+                          ]
+                        },
+                        proxy: true
                       },
-                      [
-                        _c("b-icon", {
-                          attrs: { icon: "plus", "font-scale": "2" }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "coba-text-strong coba-text" }, [
-                      _vm._v(_vm._s(workstation.name))
-                    ])
-                  ],
-                  1
-                )
-              }),
-              0
+                      {
+                        key: "body",
+                        fn: function() {
+                          return [
+                            _c("div", { staticClass: "coba-modal-body" }, [
+                              _c(
+                                "table",
+                                { staticClass: "coba-table" },
+                                _vm._l(_vm.modal.body, function(day) {
+                                  return _c("tr", [
+                                    _c("th", [_vm._v(_vm._s(day.date))]),
+                                    _vm._v(" "),
+                                    _c("th", [
+                                      _c("div", {
+                                        class:
+                                          "coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-" +
+                                          day.color
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    day.end
+                                      ? _c(
+                                          "th",
+                                          {
+                                            staticClass:
+                                              "coba-table-align-right"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                day.start.substring(0, 5)
+                                              ) +
+                                                " - " +
+                                                _vm._s(day.end.substring(0, 5))
+                                            )
+                                          ]
+                                        )
+                                      : _c(
+                                          "th",
+                                          {
+                                            staticClass:
+                                              "coba-table-align-right"
+                                          },
+                                          [_vm._v(_vm._s(day.start))]
+                                        )
+                                  ])
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        },
+                        proxy: true
+                      }
+                    ],
+                    null,
+                    false,
+                    716732119
+                  )
+                })
+              ],
+              2
             )
           : _c("spinner")
       ],
@@ -54850,7 +55031,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "router-link",
-          { staticClass: "coba-button mt-4", attrs: { to: "/logout" } },
+          {
+            staticClass: "coba-button coba-button-half-width mt-5 mb-3",
+            attrs: { to: "/logout" }
+          },
           [_vm._v("Logout")]
         )
       ],
@@ -73010,12 +73194,6 @@ var routes = [{
     auth: true
   }
 }, {
-  path: '/',
-  component: _components_Pages_Auth_Page_Login__WEBPACK_IMPORTED_MODULE_6__["default"],
-  meta: {
-    auth: false
-  }
-}, {
   path: '/home',
   component: _components_Pages_Page_Home__WEBPACK_IMPORTED_MODULE_2__["default"],
   meta: {
@@ -73142,8 +73320,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        state.data.user = res.success.user;
-        state.ready--;
+        if (res.success.user === null) {
+          state.data.user = null;
+          localStorage.removeItem('token');
+          state.ready--;
+        } else {
+          state.data.user = res.success.user;
+          state.ready--;
+        }
       })["catch"](function (error) {
         console.log(error);
         state.data.user = null;
@@ -74782,8 +74966,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
