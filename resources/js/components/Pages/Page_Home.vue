@@ -4,6 +4,7 @@
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
         <div class="coba-home-icons-container">
+            <!-- this section is the part in home that contains the two icons settings and inbox!-->
             <router-link to="/settings">
                 <b-icon class="coba-home-icons" icon="gear" font-scale=1.7></b-icon>
             </router-link>

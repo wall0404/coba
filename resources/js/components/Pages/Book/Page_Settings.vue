@@ -1,12 +1,12 @@
 <template>
-    <div class="coba-page">
-        Inbox
-    </div>
+<div>
+    Settings
+</div>
 </template>
 
 <script>
 export default {
-    name: "Page_Inbox"
+name: "Page_Settings"
 }
 </script>
 
