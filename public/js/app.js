@@ -1521,32 +1521,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1557,12 +1531,23 @@ __webpack_require__.r(__webpack_exports__);
       showModal: false,
       location: [],
       load: false,
-      showPassword: false
+      showPassword1: false,
+      showPassword2: false,
+      showPassword3: false
     };
   },
   methods: {
     clickEvent: function clickEvent() {
-      this.showModal = !this.showModal;
+      this.showModal = !this.showModal; // autofocus on search-field 1
+
+      if (this.showModal) {
+        this.$nextTick(function () {
+          this.$refs.search1.focus();
+        });
+      }
+    },
+    changePassword: function changePassword() {
+      console.log('hello');
     },
     fetchData: function fetchData() {
       var _this = this;
@@ -48604,7 +48589,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.pass_show .[data-v-454d9894] {\n    position: absolute;\n    color: #f36c01;\n    justify-content: center;\n    display: flex;\n}\n.settings-button[data-v-454d9894]{\n    float:right;\n    background-color: transparent;\n}\n.list-container[data-v-454d9894]{\n    display: flex;\n}\nul[data-v-454d9894]{\n    list-style:none;\n}\nul li[data-v-454d9894]{\n    outline:none;\n    background:#eee;\n    height:25px;\n    line-height:25px;\n    border: 1px solid #1b1e21;\n}\na[data-v-454d9894]{\n    text-decoration:none;\n    color: #000000;\n    display:block;\n    width:100px;\n    height:25px;\n    outline: none;\n}\nul li ul[data-v-454d9894]{\n    outline:none;\n    display:none;\n    position:relative;\n    left:75px;\n    top:0px;\n    width:100px;\n    border:1px\n    solid #CCC;\n}\nul li ul li a[data-v-454d9894]:link,ul li ul li a[data-v-454d9894]:visited{\n    background-color:#EEEEEE;\n}\nul li ul li a[data-v-454d9894]:hover{\n    background-color: #fae452;\n}\na[data-v-454d9894]:hover{\n    background-color: #666666;\n    color:#FFFFFF;\n}\nul li:hover ul[data-v-454d9894]{\n    outline: none;\n    display:block;\n}\n\n", ""]);
+exports.push([module.i, "\n.settings-button[data-v-454d9894]{\n    float:right;\n    background-color: transparent;\n}\n.list-container[data-v-454d9894]{\n    display: flex;\n}\nul[data-v-454d9894]{\n    list-style:none;\n}\nul li[data-v-454d9894]{\n    outline:none;\n    background:#eee;\n    height:25px;\n    line-height:25px;\n    border: 1px solid #1b1e21;\n}\na[data-v-454d9894]{\n    text-decoration:none;\n    color: #000000;\n    display:block;\n    width:100px;\n    height:25px;\n    outline: none;\n}\nul li ul[data-v-454d9894]{\n    outline:none;\n    display:none;\n    position:relative;\n    left:75px;\n    top:0px;\n    width:100px;\n    border:1px\n    solid #CCC;\n}\nul li ul li a[data-v-454d9894]:link,ul li ul li a[data-v-454d9894]:visited{\n    background-color:#EEEEEE;\n}\nul li ul li a[data-v-454d9894]:hover{\n    background-color: #fae452;\n}\na[data-v-454d9894]:hover{\n    background-color: #666666;\n    color:#FFFFFF;\n}\nul li:hover ul[data-v-454d9894]{\n    outline: none;\n    display:block;\n}\n\n", ""]);
 
 // exports
 
@@ -54783,99 +54768,106 @@ var render = function() {
             _c("div", { staticClass: "coba-container" }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-sm-4" }, [
-                  _c("label", [_vm._v("Aktuelles Password eingeben:")]),
-                  _vm._v(" "),
                   _c(
-                    "div",
+                    "form",
                     {
-                      staticClass: "form-group pass_show coba-flex-space-evenly"
+                      attrs: { id: "changePasswordForm" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.changePassword($event)
+                        }
+                      }
                     },
                     [
-                      _c("input", {
-                        staticClass: "form-control",
-                        staticStyle: { width: "80%" },
-                        attrs: {
-                          type: [_vm.showPassword ? "text" : "password"],
-                          placeholder: "Aktuelles Password eingeben"
-                        }
-                      }),
+                      _c("label", [_vm._v("Aktuelles Passwort eingeben:")]),
                       _vm._v(" "),
-                      _c("b-icon", {
-                        attrs: { icon: "eye" },
-                        on: {
-                          click: function($event) {
-                            _vm.showPassword = !_vm.showPassword
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("label", [_vm._v("Neues Passwort eingeben:")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "form-group pass_show coba-flex-space-evenly"
-                    },
-                    [
-                      _c("input", {
-                        staticClass: "form-control",
-                        staticStyle: { width: "80%" },
-                        attrs: {
-                          type: [_vm.showPassword ? "text" : "password"],
-                          placeholder: "Neues Passwort eingeben"
-                        }
-                      }),
+                      _c(
+                        "div",
+                        { staticClass: "form-group  coba-flex-space-evenly" },
+                        [
+                          _c("input", {
+                            ref: "search1",
+                            staticClass: "form-control",
+                            staticStyle: { width: "80%" },
+                            attrs: {
+                              type: [_vm.showPassword1 ? "text" : "password"],
+                              placeholder: "Aktuelles Password eingeben"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("b-icon", {
+                            attrs: { icon: "eye" },
+                            on: {
+                              click: function($event) {
+                                _vm.showPassword1 = !_vm.showPassword1
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
                       _vm._v(" "),
-                      _c("b-icon", {
-                        attrs: { icon: "eye" },
-                        on: {
-                          click: function($event) {
-                            _vm.showPassword = !_vm.showPassword
-                          }
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("label", [_vm._v("Neues Passwort wiederholen:")]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "form-group pass_show coba-flex-space-evenly"
-                    },
-                    [
-                      _c("input", {
-                        staticClass: "form-control",
-                        staticStyle: { width: "80%" },
-                        attrs: {
-                          type: [_vm.showPassword ? "text" : "password"],
-                          placeholder: "Neues Passwort wiederholen"
-                        }
-                      }),
+                      _c("label", [_vm._v("Neues Passwort eingeben:")]),
                       _vm._v(" "),
-                      _c("b-icon", {
-                        attrs: { icon: "eye" },
-                        on: {
-                          click: function($event) {
-                            _vm.showPassword = !_vm.showPassword
-                          }
-                        }
-                      })
-                    ],
-                    1
+                      _c(
+                        "div",
+                        { staticClass: "form-group  coba-flex-space-evenly" },
+                        [
+                          _c("input", {
+                            ref: "search2",
+                            staticClass: "form-control",
+                            staticStyle: { width: "80%" },
+                            attrs: {
+                              type: [_vm.showPassword2 ? "text" : "password"],
+                              placeholder: "Neues Passwort eingeben"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("b-icon", {
+                            attrs: { icon: "eye" },
+                            on: {
+                              click: function($event) {
+                                _vm.showPassword2 = !_vm.showPassword2
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("label", [_vm._v("Neues Passwort wiederholen:")]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "form-group  coba-flex-space-evenly" },
+                        [
+                          _c("input", {
+                            ref: "search3",
+                            staticClass: "form-control",
+                            staticStyle: { width: "80%" },
+                            attrs: {
+                              type: [_vm.showPassword3 ? "text" : "password"],
+                              placeholder: "Neues Passwort wiederholen"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("b-icon", {
+                            attrs: { icon: "eye" },
+                            on: {
+                              click: function($event) {
+                                _vm.showPassword3 = !_vm.showPassword3
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._m(2)
+                    ]
                   )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "coba-button small ml-5 mr-5 mt-2 mb-1" },
-                  [_vm._v("Bestätigen")]
-                )
+                ])
               ])
             ]),
             _vm._v(" "),
@@ -54886,7 +54878,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
       _c("span", { staticClass: "coba-page-text" }, [
-        _vm._v("Lieblingssitzplätze:")
+        _vm._v("Favoritenplätze:")
       ]),
       _vm._v(" "),
       _c(
@@ -54949,7 +54941,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
       _c("span", { staticClass: "coba-page-text" }, [
-        _vm._v("Lieblingsbuddy:")
+        _vm._v("Lieblingsbuddies:")
       ]),
       _vm._v(" "),
       _c(
@@ -54979,6 +54971,16 @@ var staticRenderFns = [
     return _c("div", { staticClass: "coba-container m-2" }, [
       _c("button", { staticClass: "coba-button" }, [
         _vm._v("Profilbild ändern")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mr-5 ml-5 mb-1 mt-2" }, [
+      _c("button", { staticClass: "coba-button ", attrs: { type: "submit" } }, [
+        _vm._v("Bestätigen")
       ])
     ])
   }

@@ -22,31 +22,6 @@
         <div class="coba-container">
             <span class="coba-page-text">Email: {{$store.getters.data.user.email}}</span>
         </div>
-        <!--
-        <v-container class="coba-container">
-            <v-row align="center" justify="center">
-                <v-col cols="12" md="4" sm="8">
-                    <v-card>
-                        <v-toolbar color="yellow">
-                            <v-toolbar-title>Password ändern</v-toolbar-title>
-                            <v-spacer/>
-                        </v-toolbar>
-                        <v-card-text>
-                            <v-form ref="changePasswordForm">
-                                <v-text-field label="Altes Passwort" name="oldPassword" type="password"/>
-
-                                <v-text-field label="Neues Passwort" name="newPassword" type="password"/>
-
-                                <v-text-field label="Neues Passwort bestätigen" name="newPasswordConfirmation" type="password"/>
-
-                            </v-form>
-                        </v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-container>
-
-        -->
 
         <div class="coba-container">
             <span class="coba-page-text">Passwort ändern:
@@ -58,33 +33,36 @@
                 <hr>
                     <div class="coba-container">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label>Aktuelles Password eingeben:</label>
-                                <div class="form-group pass_show coba-flex-space-evenly">
-                                    <input v-bind:type="[showPassword ? 'text' : 'password']" class="form-control" placeholder="Aktuelles Password eingeben" style="width: 80%">
-                                    <b-icon icon="eye" @click="showPassword = !showPassword" ></b-icon>
+                            <div class="col-sm-4" >
+                                <form id="changePasswordForm" @submit.prevent="changePassword">
+                                <label>Aktuelles Passwort eingeben:</label>
+                                <div class="form-group  coba-flex-space-evenly">
+                                    <input ref="search1" v-bind:type="[showPassword1 ? 'text' : 'password']" class="form-control" placeholder="Aktuelles Password eingeben" style="width: 80%">
+                                    <b-icon icon="eye" @click="showPassword1 = !showPassword1" ></b-icon>
                                 </div>
                                 <label>Neues Passwort eingeben:</label>
-                                <div class="form-group pass_show coba-flex-space-evenly">
-                                    <input v-bind:type="[showPassword ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort eingeben" style="width: 80%">
-                                    <b-icon icon="eye" @click="showPassword = !showPassword" ></b-icon>
+                                <div class="form-group  coba-flex-space-evenly">
+                                    <input ref="search2" v-bind:type="[showPassword2 ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort eingeben" style="width: 80%">
+                                    <b-icon icon="eye" @click="showPassword2 = !showPassword2" ></b-icon>
                                 </div>
                                 <label>Neues Passwort wiederholen:</label>
-                                <div class="form-group pass_show coba-flex-space-evenly">
-                                    <input v-bind:type="[showPassword ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort wiederholen" style="width: 80%">
-                                    <b-icon icon="eye" @click="showPassword = !showPassword" ></b-icon>
+                                <div class="form-group  coba-flex-space-evenly">
+                                    <input ref="search3" v-bind:type="[showPassword3 ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort wiederholen" style="width: 80%">
+                                    <b-icon icon="eye" @click="showPassword3 = !showPassword3" ></b-icon>
                                 </div>
+                                    <div class="mr-5 ml-5 mb-1 mt-2">
+                                    <button type="submit" class="coba-button ">Bestätigen</button>
+                                    </div>
+                                </form>
                             </div>
-                            <button class="coba-button small ml-5 mr-5 mt-2 mb-1">Bestätigen</button>
                         </div>
                     </div>
                     <hr>
                 </div>
         </div>
 
-
         <div class="coba-container">
-            <span class="coba-page-text">Lieblingssitzplätze:</span>
+            <span class="coba-page-text">Favoritenplätze:</span>
             <button class="settings-button"><b-icon icon="pencil-fill"></b-icon> </button>
             <div class="selection">
                 <div id="nav" class="nav">
@@ -102,14 +80,10 @@
                     </ul>
                 </div>
             </div>
-
-
-
-
         </div>
 
         <div class="coba-container">
-            <span class="coba-page-text">Lieblingsbuddy:</span>
+            <span class="coba-page-text">Lieblingsbuddies:</span>
             <button class="settings-button"><b-icon icon="pencil-fill"></b-icon> </button>
         </div>
     </div>
@@ -129,12 +103,23 @@ export default {
             showModal: false,
             location:[],
             load:false,
-            showPassword: false,
+            showPassword1: false,
+            showPassword2: false,
+            showPassword3: false,
         }
     },
     methods:{
         clickEvent(){
             this.showModal = !this.showModal ;
+            // autofocus on search-field 1
+            if ( this.showModal) {
+                this.$nextTick(function () {
+                    this.$refs.search1.focus();
+                })
+            }
+        },
+        changePassword(){
+            console.log('hello') ;
         },
         fetchData() {
             this.load = true;
@@ -169,12 +154,7 @@ export default {
 </script>
 
 <style scoped>
-.pass_show . {
-    position: absolute;
-    color: #f36c01;
-    justify-content: center;
-    display: flex;
-}
+
 
 .settings-button{
     float:right;
