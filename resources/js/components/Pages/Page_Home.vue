@@ -20,8 +20,9 @@
             </ul>
         </div>
         <spinner v-else></spinner>
-        <div class="coba-container coba-text-center">
-            <router-link to="/booking/new/location" class="coba-text-very-big">Platz reservieren</router-link>
+        <div class="coba-container coba-flex-right"> <!-- Button zur Sitzplatzbuchung -->
+            <span class="coba-text-very-big">Platz buchen</span>
+            <button class="coba-button coba-button-round coba-button-normal coba-button-accent coba-button-distance-left-10"><router-link to="/booking/new/location"><b-icon icon="arrow-90deg-right" font-scale="1"></b-icon></router-link></button>
         </div>
         <div class="coba-container">
             <span class="coba-text-big">Kommende Buchungen:</span>

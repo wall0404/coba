@@ -64,8 +64,35 @@ export default {
                 this.pages[this.page] = [];
                 //Crate badge for every day in this week
                 for(let i = 0; i < 5; i++) {
-                    let disabled = this.todayDate > date;
-                    this.pages[this.page].push({day: this.dateToDayOfMonth(date), color: 'gray', selected: false, date: new Date(date.getTime()), time: [9,17], disabled: disabled});
+                    let day_info = null;
+                    let disabled = false; //Daypicker is disabled, if in the past
+                    let color = "gray";
+                    if(this.todayDate > date)   {
+                        disabled = true;
+                        day_info = {
+                            free_start: "00:00:00",
+                            free_end: "24:00:00",
+                            time: [9,17]
+                        };
+                    }
+                    else if(typeof this.bookings[date.toISOString().slice(0, 10)] == "undefined"){
+                        color = "green";
+                        day_info = {
+                            free_start: "00:00:00",
+                            free_end: "24:00:00",
+                            time: [9,17]
+                        };
+                    }
+                    else {
+                        day_info = this.calcInfo(this.bookings[date.toISOString().slice(0, 10)])
+                        color = day_info.color;
+                    }
+
+                    if(color === "red")
+                        disabled = true;
+                    this.pages[this.page].push({day: this.dateToDayOfMonth(date), color: color, selected: false, date: new Date(date.getTime()), time: day_info.time, disabled: disabled, booked_start: day_info.free_start, booked_end: day_info.free_end });
+
+
                     date.setDate(date.getDate() + 1);
                 }
             }
@@ -77,6 +104,52 @@ export default {
             this.weekEnd.setDate(date.getDate()-1);
             this.days = this.pages[this.page];
         },
+
+        calcInfo(bookings) {
+            let color = "";
+            let hours = 0;
+            let startHour = 24;
+            let startBooking = null;
+            let endHour = 0;
+            let endBooking = null;
+            let time = [9,17];
+
+            for(let i = 0; i < bookings.length; i++) {
+                hours += Number(bookings[i].to.substring(0,2)) - Number(bookings[i].from.substring(0,2));
+                if(Number(bookings[i].to.substring(0,2))  > endHour) {
+                    endHour = Number(bookings[i].to.substring(0, 2));
+                    endBooking = bookings[i];
+                }
+                if(Number(bookings[i].from.substring(0,2))  < startHour) {
+                    startHour = Number(bookings[i].from.substring(0, 2));
+                    startBooking = bookings[i];
+                }
+            }
+
+            if(Number(endBooking.to.substr(0,2))<14) {
+                time = [
+                    Number(endBooking.to.substr(0,2))+(endBooking.to.substr(3,2)==="00"?0:0.5),
+                    17
+                ]
+            }
+            else {
+                time = [
+                    9,
+                    Number(startBooking.from.substr(0,2))+(startBooking.from.substr(3,2)==="00"?0:0.5)
+                ]
+            }
+
+
+            if(hours >= 5)
+                color = "red";//mark red
+            else
+                color = "orange"; //mark orange
+
+            console.log("Time");
+            console.log(time);
+            return {color:color, free_start: startBooking.from, free_end: endBooking.to, time};
+        },
+
         dateToDayOfMonth(date) {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
             return days[date.getUTCDay()];
