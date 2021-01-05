@@ -52,12 +52,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
-        if (localStorage.token == null ) {
+        if (localStorage.token == null) {
             next({ path: '/login'})
         } else {
             next()
         }
-     } else {
+    } else {
         next()
     }
 })
