@@ -37,7 +37,21 @@
     }
 }
 
+.coba-home-icons-container{
 
+    height: 85px;
+    width: 40px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    flex-direction: column;
+    color: $coba-disabled-gray;
+}
+
+.coba-home-icons{
+    margin-bottom: 15px;
+}
 
 .coba-full-width {
     width: 100%;
@@ -78,6 +92,8 @@
         justify-content: flex-end;
     }
 }
+
+
 
 /* HEADER */
 .coba-header {
