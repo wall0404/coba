@@ -49,14 +49,18 @@ class BookingController extends ParentController
         //Check if workplace is already taken by someone else
         $bookings = Booking::where('date', $input['date'])->where('workstation_id', $input['workstation_id'])->get();
         foreach ($bookings as $booking) {
-            if($booking->from <= $input['to'] && $booking->to >= $input['from'])
+            $booking_start = new Carbon($booking->from);
+            $booking_end = new Carbon($booking->to);
+            if($booking_start->lt(new Carbon($input['to']))  && $booking_end->gt(new Carbon($input['from'])))
                 throw new \Exception('Platz ist zu dem Zeitpunkt schon vergeben');
         }
 
         //Check if user already booked a workplace at this time
         $bookings = Booking::where('date', $input['date'])->where('user_id', Auth::id())->get();
         foreach ($bookings as $booking) {
-            if($booking->from <= $input['to'] && $booking->to >= $input['from']) {
+            $booking_start = new Carbon($booking->from);
+            $booking_end = new Carbon($booking->to);
+            if($booking_start->lt(new Carbon($input['to']))  && $booking_end->gt(new Carbon($input['from']))) {
                 if($booking->workstation_id == $input['workstation_id'])
                     throw new \Exception('Sie haben dieses Arbeitsplatz zu dieser Uhrzeit schon gebucht');
                 else

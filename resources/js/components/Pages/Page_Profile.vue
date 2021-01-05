@@ -45,6 +45,10 @@
                     <li class="listInput">Paul Panther</li>
                 </ol>
             </div>
+<<<<<<< HEAD
+=======
+            <router-link to="/logout" class="coba-button coba-button-half-width mt-5 mb-3">Logout</router-link>
+>>>>>>> 4d4895858a73c318b35775a7cc98be90f1943595
         </div>
             <router-link to="/logout" class="coba-button decent mt-4">Logout</router-link>
     </div>

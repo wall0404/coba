@@ -33,7 +33,7 @@
         align-items: flex-end;
     }
     &.coba-page-lower-padding{
-        padding-top:250px;
+        padding-top: 50%;
     }
 }
 
@@ -44,6 +44,9 @@
 }
 .coba-container {
     padding: 20px;
+}
+.coba-no-top-padding{
+    padding: 0%;
 }
 .coba-footer-container {
     background-color: $coba-gray;
@@ -145,6 +148,10 @@
     font-size: 24px;
     margin: 10px 0;
 
+    &.coba-button-half-width {
+        width: 50%;
+        margin: 0 auto;
+    }
     &.coba-button-accent{
         background-color: $coba-yellow;
     }
@@ -156,7 +163,7 @@
         background-color: #4ABE5D;
     }
     &.coba-button-red {
-        background-color: #FF6666 !important;
+        background-color: #FF6666;
     }
     &.coba-button-orange {
         background-color: #FFAD33;
@@ -180,10 +187,22 @@
         height: 50px;
         width: 50px;
         border-radius: 25px;
+        &.coba-button-very-small {
+            height: 20px;
+            width: 20px;
+            border-radius: 10px;
+            font-size: 15px;
+            margin: 5px 5px;
+        }
         &.coba-button-small {
             height: 40px;
             width: 40px;
             border-radius: 20px;
+        }
+        &.coba-button-normal {
+            height: 60px;
+            width: 60px;
+            border-radius: 60px;
         }
         &.coba-button-big {
             height: 75px;
@@ -221,11 +240,18 @@
         }
     }
 }
+.coba-button-text{ /* the button will only be shown as a text*/
+    color: $coba-text-color;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
 /* INPUT Styles */
 .coba-input-container{
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
     text-align: left;
 }
@@ -276,6 +302,9 @@
 }
 .coba-text-small {
     font-size: 10px;
+}
+.coba-text-medium {
+    font-size: 16px;
 }
 .coba-text-big {
     font-size: 18px;
@@ -405,9 +434,6 @@
     &.coba-utilization-indicator-disabled {
         color: $coba-disabled-gray;
         background-color: $coba-gray;
-        &.coba-utilization-indicator-red {
-            color: $coba-black;
-        }
     }
 
     &[class*="coba-utilization-indicator-arrow"] {

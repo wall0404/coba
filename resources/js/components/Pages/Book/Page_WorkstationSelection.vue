@@ -7,12 +7,14 @@
             <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
-                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
                         <b-icon icon="plus" font-scale="2"></b-icon>
                     </router-link>
-                    <div class="coba-text-strong coba-text">{{workstation.name}}</div>
+                    <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
+                        <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
+                        <button class="coba-button-very-small coba-button-round coba-button">i</button>
+                    </div>
                 </div>
-                <!--
                 <modal :show-modal="modal.open" @modal-close-event="closeModal">
                     <template v-slot:header>
                         <div class="coba-modal-header">{{modal.header}}</div>
@@ -20,17 +22,16 @@
                     <template v-slot:body>
                         <div class="coba-modal-body">
                             <table class="coba-table">
-                                <tr pav-for="day in modal.body">
-                                    <th>{{day.date}}</th> gibt aktuellen Wochentag an
-                                    <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th> //gibt aktuelle Farbe an
+                                <tr v-for="day in modal.body">
+                                    <th>{{day.date}}</th> <!--gibt aktuellen Wochentag an-->
+                                    <th><div :class="'coba-utilization-indicator coba-utilization-indicator-small coba-utilization-indicator-'+day.color"></div></th> <!--gibt aktuelle Farbe an-->
                                     <th v-if="day.end" class="coba-table-align-right">{{day.start.substring(0, 5)}} - {{day.end.substring(0, 5)}}</th>
-                                    <th v-else class="coba-table-align-right">{{day.start}}</th> //day.start == verfügbar; also falls keine Buchung vorhanden ist, wird verfügbar angezeigt
+                                    <th v-else class="coba-table-align-right">{{day.start}}</th> <!--day.start == verfügbar; also falls keine Buchung vorhanden ist, wird verfügbar angezeigt-->
                                 </tr>
                             </table>
                         </div>
                     </template>
                 </modal>
-                -->
             </div>
             <spinner v-else></spinner>
         </div>

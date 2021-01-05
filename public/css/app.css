@@ -10938,7 +10938,7 @@ a.text-dark:focus {
 }
 
 .coba-page.coba-page-lower-padding {
-  padding-top: 250px;
+  padding-top: 50%;
 }
 
 .coba-full-width {
@@ -10947,6 +10947,10 @@ a.text-dark:focus {
 
 .coba-container {
   padding: 20px;
+}
+
+.coba-no-top-padding {
+  padding: 0%;
 }
 
 .coba-footer-container {
@@ -11062,6 +11066,11 @@ a.text-dark:focus {
   margin: 10px 0;
 }
 
+.coba-button.coba-button-half-width {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .coba-button.coba-button-accent {
   background-color: #FFC931;
 }
@@ -11076,7 +11085,7 @@ a.text-dark:focus {
 }
 
 .coba-button.coba-button-red {
-  background-color: #FF6666 !important;
+  background-color: #FF6666;
 }
 
 .coba-button.coba-button-orange {
@@ -11109,10 +11118,24 @@ a.text-dark:focus {
   border-radius: 25px;
 }
 
+.coba-button.coba-button-round.coba-button-very-small {
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  margin: 5px 5px;
+}
+
 .coba-button.coba-button-round.coba-button-small {
   height: 40px;
   width: 40px;
   border-radius: 20px;
+}
+
+.coba-button.coba-button-round.coba-button-normal {
+  height: 60px;
+  width: 60px;
+  border-radius: 60px;
 }
 
 .coba-button.coba-button-round.coba-button-big {
@@ -11158,10 +11181,19 @@ a.text-dark:focus {
   margin-right: 0;
 }
 
+.coba-button-text {
+  /* the button will only be shown as a text*/
+  color: #2C2C2C;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* INPUT Styles */
 
 .coba-input-container {
-  width: 80%;
+  width: 95%;
   margin: 0 auto;
   text-align: left;
 }
@@ -11216,6 +11248,10 @@ a.text-dark:focus {
 
 .coba-text-small {
   font-size: 10px;
+}
+
+.coba-text-medium {
+  font-size: 16px;
 }
 
 .coba-text-big {
@@ -11364,10 +11400,6 @@ a.text-dark:focus {
 .coba-utilization-indicator.coba-utilization-indicator-disabled {
   color: #757575;
   background-color: #EBEBEB;
-}
-
-.coba-utilization-indicator.coba-utilization-indicator-disabled.coba-utilization-indicator-red {
-  color: #000;
 }
 
 .coba-utilization-indicator[class*=coba-utilization-indicator-arrow] {
