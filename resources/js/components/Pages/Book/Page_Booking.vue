@@ -1,9 +1,18 @@
 <template>
     <div class="coba-page">
         <div class="coba-container coba-flex coba-header">
-            <span class="coba-page-headline">Booking {{$route.params.id}}</span>
+            <span class="coba-page-headline">Buchung {{$route.params.id}}</span>
         </div>
         <div class="coba-container">
+            <!--
+            <ul class="coba-list">
+                <li v-for="this_booking in $store.getters.data.bookings" v-if="this_booking === booking">{{ this_booking.workstation.location.name }}, {{this_booking.workstation.name}}, {{this_booking.from}} - {{this_booking.to}}</li>
+            </ul>-->
+            <span class="coba-text"> {{booking}} </span>
+             <!--  <span v-if=""> {{$store.getters.data.bookings.id}} </span>{{booking.date}}, {{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}-->
+        </div>
+        <div class="coba-container">
+            <button v-if="!load" class="coba-button" @click='openModal'>Bearbeiten</button>
             <button v-if="!load" class="coba-button coba-button-danger" @click='openModal'>Löschen</button>
             <spinner v-else></spinner>
         </div>

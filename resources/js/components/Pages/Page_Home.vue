@@ -20,13 +20,17 @@
         <div class="coba-container coba-full-width coba-footer-container">
             <ul class="coba-list" v-if="!load">
                 <li v-for="booking in bookings" :key="booking.id">
-                    <router-link v-bind:to="'/booking/'+booking.id">{{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}</router-link>
+                    <div>{{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}} <!-- the booking information -->
+                        <div class="coba-flex-space-evenly m-0 p-2 pl-2" > <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
+                            <b-icon icon="pencil" font-scale="1"></b-icon> <!-- Pencil Icon inside the trigger box-->
+                        </div>
+                    </div>
                 </li>
             </ul>
             <spinner v-else></spinner>
         </div>
-
     </div>
+    
 </template>
 
 <script>
@@ -71,6 +75,9 @@ export default {
                     this.load = false;
                 })
         },
+        openDropDown(booking){
+
+        }
     }
 }
 </script>
