@@ -21,8 +21,14 @@ export const store = new Vuex.Store({
             })
                 .then(res => res.json())
                 .then(res => {
+                    if(res.success.user===null) {
+                        state.data.user = null;
+                        localStorage.removeItem('token')
+                        state.ready--;
+                    }
+                    else{
                     state.data.user = res.success.user;
-                    state.ready--;
+                    state.ready--;}
                 })
                 .catch(error => {
                     console.log(error);

@@ -32,6 +32,9 @@
         justify-content: center;
         align-items: flex-end;
     }
+    &.coba-page-lower-padding{
+        padding-top: 50%;
+    }
 }
 
 
@@ -41,6 +44,9 @@
 }
 .coba-container {
     padding: 20px;
+}
+.coba-no-top-padding{
+    padding: 0%;
 }
 .coba-footer-container {
     background-color: $coba-gray;
@@ -64,6 +70,12 @@
     }
     &[class*="space-between"] {
         justify-content: space-between;
+    }
+    &[class*="left"] {
+        justify-content: flex-start;
+    }
+    &[class*="right"]{
+        justify-content: flex-end;
     }
 }
 
@@ -136,6 +148,10 @@
     font-size: 24px;
     margin: 10px 0;
 
+    &.coba-button-half-width {
+        width: 50%;
+        margin: 0 auto;
+    }
     &.coba-button-accent{
         background-color: $coba-yellow;
     }
@@ -143,8 +159,23 @@
         background-color: $coba-danger-red;
         color: $coba-gray;
     }
+    &.coba-button-green {
+        background-color: #4ABE5D;
+    }
+    &.coba-button-red {
+        background-color: #FF6666;
+    }
+    &.coba-button-orange {
+        background-color: #FFAD33;
+    }
+    &.coba-button-white{
+        background-color: $coba-white;
+    }
     &.coba-button-no-border {
         border: none;
+    }
+    &.coba-button-yellow-border{
+        border-color: $coba-yellow;
     }
     &.coba-button-big {
         height: 75px;
@@ -156,10 +187,22 @@
         height: 50px;
         width: 50px;
         border-radius: 25px;
+        &.coba-button-very-small {
+            height: 20px;
+            width: 20px;
+            border-radius: 10px;
+            font-size: 15px;
+            margin: 5px 5px;
+        }
         &.coba-button-small {
             height: 40px;
             width: 40px;
             border-radius: 20px;
+        }
+        &.coba-button-normal {
+            height: 60px;
+            width: 60px;
+            border-radius: 60px;
         }
         &.coba-button-big {
             height: 75px;
@@ -180,6 +223,9 @@
         border: 1px solid $coba-disabled-gray;
         color: $coba-disabled-gray;
     }
+    &.coba-button-distance-left-10{
+        margin-left: 10px;
+    }
 }
 .coba-button-container { /*In a Button container all buttons will be listed next to each other */
     display: flex;
@@ -194,16 +240,26 @@
         }
     }
 }
+.coba-button-text{ /* the button will only be shown as a text*/
+    color: $coba-text-color;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
 /* INPUT Styles */
 .coba-input-container{
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
     text-align: left;
 }
 .coba-margin-top{
     margin-top: 3px;
+}
+.coba-margin-bottom{
+    margin-bottom: 10px;
 }
 // Input Feld welches eine dunklere Linie (unten) hat und einen hellen Hintergrund
 .coba-input {
@@ -247,11 +303,20 @@
 .coba-text-small {
     font-size: 10px;
 }
+.coba-text-medium {
+    font-size: 16px;
+}
 .coba-text-big {
     font-size: 18px;
 }
+.coba-text-bigger{
+    font-size: 20px;
+}
 .coba-text-very-big {
     font-size: 24px;
+}
+.coba-text-very-bigger{
+    font-size: 30px;
 }
 .coba-text-underlined {
     text-decoration: underline;
@@ -361,7 +426,7 @@
         background-color: #4ABE5D;
     }
     &.coba-utilization-indicator-red {
-        background-color: #FF6666;
+        background-color: #FF6666 !important;
     }
     &.coba-utilization-indicator-orange {
         background-color: #FFAD33;
