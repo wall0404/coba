@@ -24,7 +24,7 @@ import Page_DateTimeSelection from "../components/Pages/Book/Page_DateTimeSelect
 import Page_BookingConfirmation from "../components/Pages/Book/Page_BookingConfirmation";
 import Page_BookingCheckout from "../components/Pages/Book/Page_BookingCheckout";
 import Page_SignUp from "../components/Pages/Auth/Page_SignUp";
-import Page_Systemeinstellungen from "../components/Pages/Page_Systemeinstellungen";
+import Page_Systemeinstellungen from "../components/Pages/Page_Settings";
 import Page_Inbox from "../components/Pages/Page_Inbox";
 
 const routes = [
@@ -34,7 +34,7 @@ const routes = [
     { path: '/', component: Page_Home, meta:{auth:true} },
     { path: '/', component: Page_Login, meta:{auth:false} },
     { path: '/home', component: Page_Home, meta:{auth:true} },
-    { path:'/settings', component: Page_Systemeinstellungen, meta:{auth:true} },
+    { path:'/settings', component: Page_Settings, meta:{auth:true} },
     { path:'/inbox', component: Page_Inbox, meta:{auth:true} },
     { path: '/team', component: Page_Team, meta:{auth:true} },
     { path: '/calendar', component: Page_Calendar, meta:{auth:true} },
