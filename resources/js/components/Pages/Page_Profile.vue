@@ -5,24 +5,20 @@
                 <b-icon icon="pencil" ></b-icon>
             </router-link>
 
-            <!-- -->
+            <!-- Profile Pic-->
             <div><img v-bind:data-src="'/profile_picture/'+this.user.user_id" alt="user_pic"
                       class="coba-border-round coba-border-yellow user-avatar-shadow p-1"  id="avatar"/>
             </div>
-
             <!-- -->
-            <div  v-if="!load">
-                <a  @click="selectPic">upload</a>
-                <a  @click="deletePic">delete</a>
-            </div>
-
 
         </div>
         <div class="coba-container text-center pb-0">
             <h3 class="mb-0">{{ $store.getters.data.user.firstName +" " + $store.getters.data.user.lastName }}</h3>
             <p class="mb-1">{{$store.getters.data.user.email}}</p>
 
-            <!-- -->
+
+            <!-- Profile Pic Button
+                 soll dann auf die Seite von Rui und Yaxi (Settings) ausgelagert werden-->
             <input type="file" ref="upload" @change="uploadPic">
 
 
@@ -45,14 +41,9 @@
                     <li class="listInput">Paul Panther</li>
                 </ol>
             </div>
-<<<<<<< HEAD
-=======
             <router-link to="/logout" class="coba-button coba-button-half-width mt-5 mb-3">Logout</router-link>
->>>>>>> 4d4895858a73c318b35775a7cc98be90f1943595
         </div>
-            <router-link to="/logout" class="coba-button decent mt-4">Logout</router-link>
     </div>
-
 </template>
 
 <script>
@@ -98,6 +89,7 @@ export default {
                 res => {
                     this.load = false;
                     if(res.success) {
+                        // handling user profile pic
                         this.user.profile_picture_url = this.user.profile_picture_url+ "?a";
                         this.$store.commit('updatePic');
                     }
