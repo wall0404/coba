@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "Page_Inbox"
+    name: "Page_Inobx"
 }
 </script>
 

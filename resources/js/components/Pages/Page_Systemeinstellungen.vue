@@ -1,12 +1,12 @@
 <template>
     <div class="coba-page">
-        Settings
+        Systemeinstellungen
     </div>
 </template>
 
 <script>
 export default {
-name: "Page_Settings"
+name: "Page_Systemeinstellungen"
 }
 </script>
 
