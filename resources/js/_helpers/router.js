@@ -30,7 +30,6 @@ const routes = [
     { path: '/logout', component: Page_Logout },
     { path: '/signup', component: Page_SignUp },
     { path: '/', component: Page_Home, meta:{auth:true} },
-    { path: '/', component: Page_Login, meta:{auth:false} },
     { path: '/home', component: Page_Home, meta:{auth:true} },
     { path: '/team', component: Page_Team, meta:{auth:true} },
     { path: '/calendar', component: Page_Calendar, meta:{auth:true} },

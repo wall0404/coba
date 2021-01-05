@@ -11050,6 +11050,11 @@ a.text-dark:focus {
   margin: 10px 0;
 }
 
+.coba-button.coba-button-half-width {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .coba-button.coba-button-accent {
   background-color: #FFC931;
 }
@@ -11122,10 +11127,19 @@ a.text-dark:focus {
   margin-right: 0;
 }
 
+.coba-button-text {
+  /* the button will only be shown as a text*/
+  color: #2C2C2C;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* INPUT Styles */
 
 .coba-input-container {
-  width: 80%;
+  width: 95%;
   margin: 0 auto;
   text-align: left;
 }
