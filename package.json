@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.20.1",
+        "vue-circular-count-down-timer": "^1.0.4",
         "vue-range-component": "^1.0.3",
         "vue-router": "^3.4.9",
         "vue-store": "^0.3.1-moved",

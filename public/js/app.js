@@ -869,6 +869,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
 /* harmony import */ var _ListItems_Booking__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ListItems/Booking */ "./resources/js/components/ListItems/Booking.vue");
+/* harmony import */ var _helpers_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../_helpers/router */ "./resources/js/_helpers/router.js");
 //
 //
 //
@@ -896,6 +897,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -912,6 +921,10 @@ __webpack_require__.r(__webpack_exports__);
       error: false,
       validation_error: [],
       success: []
+      /* Variablen für automatsiche Rückführung
+      timeout: null ,
+      countDown: null,*/
+
     };
   },
   created: function created() {
@@ -921,7 +934,25 @@ __webpack_require__.r(__webpack_exports__);
       this.makeBooking();
     }
   },
+
+  /* Automatische Rückführung
+  mounted() {
+      this.autoRedirect() ;
+  },
+  // stop if redirecting
+  beforeRouteLeave(to, from, next) {
+      clearTimeout(this.timeout);
+      next();
+  },*/
   methods: {
+    /* Methode für automatische Rückführung
+    autoRedirect(){
+        // timeout variable could be used for display
+        this.timeout = setTimeout(function (){
+             router.push('/home') ;
+        },5000) ;
+        this.countDown = this.timeout ;
+    },*/
     makeBooking: function makeBooking() {
       var _this = this;
 
@@ -48637,7 +48668,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin-bottom: 30px;\n    margin-left: 15px;\n    margin-right: 15px;\n}\n.coba-table th[data-v-c78be8ee] {\n    height: 40px;\n}\n", ""]);
+exports.push([module.i, "\n.seat-container[data-v-c78be8ee] {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    margin-bottom: 30px;\r\n    margin-left: 15px;\r\n    margin-right: 15px;\n}\n.coba-table th[data-v-c78be8ee] {\r\n    height: 40px;\n}\r\n", ""]);
 
 // exports
 
@@ -48675,7 +48706,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#contact[data-v-61048e32]{\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\n    border-collapse: collapse;\n    margin: 0 5px 5px 0;\n    font-size: 1.05em;\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\n    text-align: right;\n    font-weight: bold;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\n#contact[data-v-61048e32]{\r\n    width: 65%;\n}\n.filter-container[data-v-61048e32]{\r\n    bottom: 10px\n}\n.profile-picture[data-v-61048e32] {\r\n    width: 25%;\n}\n.user-table[data-v-61048e32] {\r\n    border-collapse: collapse;\r\n    margin: 0 5px 5px 0;\r\n    font-size: 1.05em;\r\n    text-align: center;\n}\n.user-table .user-data-name[data-v-61048e32] {\r\n    text-align: right;\r\n    font-weight: bold;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -54139,101 +54170,169 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "coba-page coba-page-no-header" }, [
-    _vm.session_expired
-      ? _c("div", [
-          _c("div", { staticClass: "coba-headline mb-4" }, [
-            _vm._v("Die Sitzung ist abgelaufen")
-          ]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              on: {
-                click: function($event) {
-                  return _vm.$router.go(-1)
+  return _c(
+    "div",
+    { staticClass: "coba-page coba-page-no-header coba-page-lower-padding" },
+    [
+      _vm.session_expired
+        ? _c("div", [
+            _c("div", { staticClass: "coba-headline mb-4" }, [
+              _vm._v("Die Sitzung ist abgelaufen")
+            ]),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                on: {
+                  click: function($event) {
+                    return _vm.$router.push("/home")
+                  }
                 }
-              }
-            },
-            [_vm._v("Zurück")]
-          )
-        ])
-      : _c(
-          "div",
-          [
-            _vm.load
-              ? _c("spinner")
-              : _c("div", [
-                  _vm.error === false
-                    ? _c("div", [
-                        _vm.validation_error.length === 0
-                          ? _c(
-                              "div",
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass:
-                                      "coba-button coba-button-accent",
-                                    attrs: { to: "/home" }
-                                  },
-                                  [_vm._v("Ihre Buchung wurde eingetragen ")]
-                                )
-                              ],
-                              1
-                            )
-                          : _c(
-                              "div",
-                              [
-                                _vm._l(_vm.success, function(booking, index) {
-                                  return _c("booking", {
-                                    key: "s" + index,
-                                    attrs: { booking: booking, color: "true" }
-                                  })
-                                }),
-                                _vm._v(" "),
-                                _vm._l(_vm.validation_error, function(
-                                  booking,
-                                  index
-                                ) {
-                                  return _c("booking", {
-                                    key: "e" + index,
-                                    attrs: { booking: booking, color: "true" }
-                                  })
-                                }),
-                                _vm._v(" "),
-                                _c("button", { staticClass: "coba-button" }, [
+              },
+              [_vm._v("Zurück zur Startseite")]
+            )
+          ])
+        : _c(
+            "div",
+            [
+              _vm.load
+                ? _c("spinner")
+                : _c("div", [
+                    _vm.error === false
+                      ? _c("div", [
+                          _vm.validation_error.length === 0
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "coba-container coba-no-top-padding"
+                                },
+                                [
                                   _c(
-                                    "a",
+                                    "div",
                                     {
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.$router.go(-2)
-                                        }
-                                      }
+                                      staticClass:
+                                        "coba-container coba-no-top-padding coba-flex-column"
                                     },
-                                    [_vm._v(" Zurück")]
+                                    [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "coba-text-strong coba-text-very-bigger coba-text-center"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Deine Buchung war erfolgreich"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("b-icon", {
+                                        staticClass: "mt-3 mb-4",
+                                        staticStyle: { color: "#FFC931" },
+                                        attrs: {
+                                          icon: "hand-thumbs-up",
+                                          "font-scale": "3"
+                                        }
+                                      })
+                                    ],
+                                    1
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "coba-container" },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        { attrs: { to: "/home" } },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "coba-button coba-button-white coba-button-yellow-border"
+                                            },
+                                            [_vm._v("Zur Startseite")]
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "router-link",
+                                        {
+                                          attrs: { to: "/booking/new/location" }
+                                        },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "coba-button coba-button-no-border coba-button-accent mt-4"
+                                            },
+                                            [_vm._v("Weitere Buchung")]
+                                          )
+                                        ]
+                                      )
+                                    ],
+                                    1
                                   )
-                                ])
-                              ],
-                              2
-                            )
-                      ])
-                    : _c("div", [
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "coba-text coba-text-very-big coba-text-danger"
-                          },
-                          [_vm._v(_vm._s(_vm.error))]
-                        )
-                      ])
-                ])
-          ],
-          1
-        )
-  ])
+                                ]
+                              )
+                            : _c(
+                                "div",
+                                [
+                                  _vm._l(_vm.success, function(booking, index) {
+                                    return _c("booking", {
+                                      key: "s" + index,
+                                      attrs: { booking: booking, color: "true" }
+                                    })
+                                  }),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.validation_error, function(
+                                    booking,
+                                    index
+                                  ) {
+                                    return _c("booking", {
+                                      key: "e" + index,
+                                      attrs: { booking: booking, color: "true" }
+                                    })
+                                  }),
+                                  _vm._v(" "),
+                                  _c("button", { staticClass: "coba-button" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.$router.go(-2)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Zurück")]
+                                    )
+                                  ])
+                                ],
+                                2
+                              )
+                        ])
+                      : _c("div", [
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "coba-text coba-text-very-big coba-text-danger"
+                            },
+                            [_vm._v(_vm._s(_vm.error))]
+                          )
+                        ])
+                  ])
+            ],
+            1
+          )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54750,7 +54849,7 @@ var render = function() {
           "button",
           {
             staticClass:
-              "coba-button coba-button-round coba-button-big coba-button-accent coba-button-distance-left-10"
+              "coba-button coba-button-round coba-button-normal coba-button-accent coba-button-distance-left-10"
           },
           [
             _c(
@@ -74880,8 +74979,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/Hannah/Documents/GitHub/coba/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\coba\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\coba\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

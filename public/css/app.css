@@ -10937,12 +10937,20 @@ a.text-dark:focus {
   align-items: flex-end;
 }
 
+.coba-page.coba-page-lower-padding {
+  padding-top: 50%;
+}
+
 .coba-full-width {
   width: 100%;
 }
 
 .coba-container {
   padding: 20px;
+}
+
+.coba-no-top-padding {
+  padding: 0%;
 }
 
 .coba-footer-container {
@@ -10979,7 +10987,7 @@ a.text-dark:focus {
 }
 
 [class*=coba-flex][class*=right] {
-  justify-content: right;
+  justify-content: flex-end;
 }
 
 /* HEADER */
@@ -11077,15 +11085,23 @@ a.text-dark:focus {
 }
 
 .coba-button.coba-button-red {
-  background-color: #FF6666 !important;
+  background-color: #FF6666;
 }
 
 .coba-button.coba-button-orange {
   background-color: #FFAD33;
 }
 
+.coba-button.coba-button-white {
+  background-color: #fff;
+}
+
 .coba-button.coba-button-no-border {
   border: none;
+}
+
+.coba-button.coba-button-yellow-border {
+  border-color: #FFC931;
 }
 
 .coba-button.coba-button-big {
@@ -11114,6 +11130,12 @@ a.text-dark:focus {
   height: 40px;
   width: 40px;
   border-radius: 20px;
+}
+
+.coba-button.coba-button-round.coba-button-normal {
+  height: 60px;
+  width: 60px;
+  border-radius: 60px;
 }
 
 .coba-button.coba-button-round.coba-button-big {
@@ -11180,6 +11202,10 @@ a.text-dark:focus {
   margin-top: 3px;
 }
 
+.coba-margin-bottom {
+  margin-bottom: 10px;
+}
+
 .coba-input {
   font-size: 16px;
   height: 30px;
@@ -11232,8 +11258,16 @@ a.text-dark:focus {
   font-size: 18px;
 }
 
+.coba-text-bigger {
+  font-size: 20px;
+}
+
 .coba-text-very-big {
   font-size: 24px;
+}
+
+.coba-text-very-bigger {
+  font-size: 30px;
 }
 
 .coba-text-underlined {

@@ -32,6 +32,9 @@
         justify-content: center;
         align-items: flex-end;
     }
+    &.coba-page-lower-padding{
+        padding-top: 50%;
+    }
 }
 
 
@@ -41,6 +44,9 @@
 }
 .coba-container {
     padding: 20px;
+}
+.coba-no-top-padding{
+    padding: 0%;
 }
 .coba-footer-container {
     background-color: $coba-gray;
@@ -69,7 +75,7 @@
         justify-content: flex-start;
     }
     &[class*="right"]{
-        justify-content: right;
+        justify-content: flex-end;
     }
 }
 
@@ -157,13 +163,19 @@
         background-color: #4ABE5D;
     }
     &.coba-button-red {
-        background-color: #FF6666 !important;
+        background-color: #FF6666;
     }
     &.coba-button-orange {
         background-color: #FFAD33;
     }
+    &.coba-button-white{
+        background-color: $coba-white;
+    }
     &.coba-button-no-border {
         border: none;
+    }
+    &.coba-button-yellow-border{
+        border-color: $coba-yellow;
     }
     &.coba-button-big {
         height: 75px;
@@ -186,6 +198,11 @@
             height: 40px;
             width: 40px;
             border-radius: 20px;
+        }
+        &.coba-button-normal {
+            height: 60px;
+            width: 60px;
+            border-radius: 60px;
         }
         &.coba-button-big {
             height: 75px;
@@ -241,6 +258,9 @@
 .coba-margin-top{
     margin-top: 3px;
 }
+.coba-margin-bottom{
+    margin-bottom: 10px;
+}
 // Input Feld welches eine dunklere Linie (unten) hat und einen hellen Hintergrund
 .coba-input {
     font-size: 16px;
@@ -289,8 +309,14 @@
 .coba-text-big {
     font-size: 18px;
 }
+.coba-text-bigger{
+    font-size: 20px;
+}
 .coba-text-very-big {
     font-size: 24px;
+}
+.coba-text-very-bigger{
+    font-size: 30px;
 }
 .coba-text-underlined {
     text-decoration: underline;
