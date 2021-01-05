@@ -1,5 +1,5 @@
 <template>
-    <div class="booking-list-container">
+    <div class="booking-list-container mt-1">
         <div class="coba-full-width">
             <div class="section-headline p-2 px-3">Campus</div>
             <div class="booking-list px-3">

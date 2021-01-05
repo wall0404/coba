@@ -120,13 +120,60 @@ __webpack_require__.r(__webpack_exports__);
   name: "Calendar",
   data: function data() {
     return {
-      selected: [2, 3]
+      today: new Date(),
+      selectedDate: null,
+      firstDayInMonth: new Date(),
+      startDate: null,
+      initialMonth: 11,
+      initialYear: 2020,
+      calendar_dates: []
     };
   },
+  created: function created() {
+    //month
+    // 0 => Januar, 1 => Februar
+    //day in week
+    // 0 => Sunday, 1 => Monday
+    this.selectedDate = this.today.toISOString().slice(0, 10); //this.initiateCalendar()
+  },
   methods: {
-    selectDate: function selectDate(n, k) {
-      if (k === 6 || k === 7) return;
-      this.selected = [n, k];
+    initiateCalendar: function initiateCalendar() {
+      this.firstDayInMonth.setDate(1);
+      this.firstDayInMonth.setMonth(this.initialMonth); //this.firstDayInMonth.setFullYear(this.initialYear);
+
+      console.log(this.initialMonth);
+      this.startDate = new Date(this.firstDayInMonth); //console.log(this.firstDayInMonth.toISOString().slice(0, 10));
+
+      var dayOfWeek = this.firstDayInMonth.getUTCDay();
+      dayOfWeek = dayOfWeek === 6 ? -1 : dayOfWeek;
+      this.startDate.setDate(this.firstDayInMonth.getDate() - dayOfWeek + 1);
+      console.log(this.startDate.toISOString().slice(0, 10));
+
+      while (true) {
+        if (this.startDate.getMonth() === this.month + 1 || this.month === 11 && this.startDate.getMonth() === 0) break; //we reached the next month
+        //Add a new week
+
+        var week = [];
+
+        for (var i = 0; i < 7; i++) {
+          week.push({
+            day: this.startDate.getDate(),
+            date: this.startDate.toISOString().slice(0, 10),
+            bookings: null
+          });
+          this.startDate.setDate(this.startDate.getDate() + 1);
+        }
+
+        this.calendar_dates.push(week);
+      }
+
+      console.log(this.calendar_dates);
+    },
+    selectDate: function selectDate(date) {
+      var dateObj = new Date(date);
+      var k = dateObj.getUTCDay();
+      if (k === 6 || k === 0) return;
+      this.selectedDate = date;
     }
   }
 });
@@ -1477,6 +1524,11 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     CalendarBookingList: _Elements_CalendarBookingList__WEBPACK_IMPORTED_MODULE_1__["default"],
     Calendar: _Elements_Calendar__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      today: new Date()
+    };
   }
 });
 
@@ -53314,28 +53366,28 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _vm._l(5, function(n) {
+        _vm._l(_vm.calendar_dates, function(week) {
           return _c(
             "div",
             { staticClass: "calendar-week" },
-            _vm._l(7, function(k) {
+            _vm._l(week, function(day, dayOfWeek) {
               return _c(
                 "div",
                 {
                   staticClass: "calendar-day-of-week",
                   class: {
-                    booked: (n + k) % 2,
-                    weekend: k === 6 || k === 7,
-                    today: n === 2 && k === 3,
-                    selected: _vm.selected[0] === n && _vm.selected[1] === k
+                    booked: false,
+                    weekend: dayOfWeek === 5 || dayOfWeek === 6,
+                    today: day.date === _vm.today.toISOString().slice(0, 10),
+                    selected: _vm.selectedDate === day.date
                   },
                   on: {
                     click: function($event) {
-                      return _vm.selectDate(n, k)
+                      return _vm.selectDate(day.date)
                     }
                   }
                 },
-                [_c("span", [_vm._v(_vm._s(k))])]
+                [_c("span", [_vm._v(_vm._s(day.day))])]
               )
             }),
             0
@@ -53403,7 +53455,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "booking-list-container" }, [
+  return _c("div", { staticClass: "booking-list-container mt-1" }, [
     _c("div", { staticClass: "coba-full-width" }, [
       _c("div", { staticClass: "section-headline p-2 px-3" }, [
         _vm._v("Campus")
@@ -54953,9 +55005,21 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "coba-page page" }, [
-    _vm._m(0),
+    _c(
+      "div",
+      { staticClass: "coba-container coba-header coba-header-square mb-0" },
+      [
+        _c("span", { staticClass: "coba-page-headline" }, [
+          _vm._v(
+            _vm._s(
+              _vm.today.toLocaleDateString("de-DE", this.$only_month_and_year)
+            )
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
-    _vm._m(1),
+    _vm._m(0),
     _vm._v(" "),
     _c(
       "div",
@@ -54970,16 +55034,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "coba-container coba-header coba-header-square mb-0" },
-      [_c("span", { staticClass: "coba-page-headline" }, [_vm._v("Calendar")])]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -73627,6 +73681,10 @@ Vue.prototype.$date_options_short = {
   year: 'numeric',
   month: 'short',
   day: 'numeric'
+};
+Vue.prototype.$only_month_and_year = {
+  year: 'numeric',
+  month: 'long'
 }; //Load user data
 
 _helpers_store__WEBPACK_IMPORTED_MODULE_1__["store"].commit('refreshUser');

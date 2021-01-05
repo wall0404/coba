@@ -1,7 +1,7 @@
 <template>
     <div class="coba-page page">
         <div class="coba-container coba-header coba-header-square mb-0">
-            <span class="coba-page-headline">Calendar</span>
+            <span class="coba-page-headline">{{today.toLocaleDateString('de-DE', this.$only_month_and_year)}}</span>
         </div>
         <div class="coba-tab-navigation">
             <div class="coba-tab selected">Campus</div>
@@ -19,8 +19,13 @@
 import Calendar from "../Elements/Calendar";
 import CalendarBookingList from "../Elements/CalendarBookingList";
 export default {
-name: "Page_Calendar",
-    components: {CalendarBookingList, Calendar}
+    name: "Page_Calendar",
+    components: {CalendarBookingList, Calendar},
+    data() {
+        return {
+            today: new Date(),
+        }
+    },
 }
 </script>
 
