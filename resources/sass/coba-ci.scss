@@ -33,7 +33,7 @@
         align-items: flex-end;
     }
     &.coba-page-lower-padding{
-        padding-top:250px;
+        padding-top: 50%;
     }
 }
 
@@ -44,6 +44,9 @@
 }
 .coba-container {
     padding: 20px;
+}
+.coba-no-top-padding{
+    padding: 0%;
 }
 .coba-footer-container {
     background-color: $coba-gray;

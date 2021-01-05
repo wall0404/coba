@@ -8,10 +8,10 @@
             <spinner v-if="load"></spinner>
             <div v-else>
                 <div v-if="error===false">
-                    <div class="coba-container" v-if="validation_error.length === 0"> <!-- Anzeige der erfolgreichen Buchung -->
-                        <div class="coba-container coba-flex-column"> <!-- Text -->
-                            <span class="coba-text-strong coba-text-very-bigger coba-text-center coba-margin-bottom">Deine Buchung war erfolgreich</span>
-                            <b-icon icon="hand-thumbs-up" font-scale="3" style="color:#FFC931"></b-icon>
+                    <div class="coba-container coba-no-top-padding" v-if="validation_error.length === 0"> <!-- Anzeige der erfolgreichen Buchung -->
+                        <div class="coba-container coba-no-top-padding coba-flex-column"> <!-- Text -->
+                            <span class="coba-text-strong coba-text-very-bigger coba-text-center">Deine Buchung war erfolgreich</span>
+                            <b-icon class="mt-3 mb-4" icon="hand-thumbs-up" font-scale="3" style="color:#FFC931"></b-icon>
                         </div>
                         <div class="coba-container"> <!-- Buttons -->
                             <router-link to="/home"><button class="coba-button coba-button-white coba-button-yellow-border">Zur Startseite</button></router-link>

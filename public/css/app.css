@@ -10938,7 +10938,7 @@ a.text-dark:focus {
 }
 
 .coba-page.coba-page-lower-padding {
-  padding-top: 250px;
+  padding-top: 50%;
 }
 
 .coba-full-width {
@@ -10947,6 +10947,10 @@ a.text-dark:focus {
 
 .coba-container {
   padding: 20px;
+}
+
+.coba-no-top-padding {
+  padding: 0%;
 }
 
 .coba-footer-container {
