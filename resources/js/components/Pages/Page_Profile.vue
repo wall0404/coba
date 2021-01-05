@@ -6,7 +6,7 @@
             </router-link>
 
             <!-- -->
-            <div><img v-bind:data-src="this.user.profile_picture_url" alt="user_pic"
+            <div><img v-bind:data-src="'/profile_picture/'+this.user.user_id" alt="user_pic"
                       class="coba-border-round coba-border-yellow user-avatar-shadow p-1"  id="avatar"/>
             </div>
 
