@@ -34,20 +34,23 @@
                     <div class="coba-container">
                         <div class="row">
                             <div class="col-sm-4" >
-                                <form id="changePasswordForm" @submit.prevent="changePassword">
+                                    <p class="p-0 m-0 text-danger" v-if="wrongPassword" >falsches Passwort eingegeben</p>
+                                <form id="changePasswordForm" name="form" @submit.prevent="changePassword">
                                 <label>Aktuelles Passwort eingeben:</label>
                                 <div class="form-group  coba-flex-space-evenly">
-                                    <input ref="search1" v-bind:type="[showPassword1 ? 'text' : 'password']" class="form-control" placeholder="Aktuelles Password eingeben" style="width: 80%">
+                                    <input id="1" ref="search1" v-bind:type="[showPassword1 ? 'text' : 'password']" class="form-control" placeholder="Aktuelles Password eingeben" style="width: 80%">
                                     <b-icon icon="eye" @click="showPassword1 = !showPassword1" ></b-icon>
                                 </div>
+                                    <p class="p-0 m-0 text-danger" v-if="wrongPasswordConfirmation" >Passwörter stimmen nicht überein</p>
+                                    <p class="p-0 m-0 text-danger" v-if="passwordToShort">Passwort muss mindestens 8 Zeichen lang sein</p>
                                 <label>Neues Passwort eingeben:</label>
                                 <div class="form-group  coba-flex-space-evenly">
-                                    <input ref="search2" v-bind:type="[showPassword2 ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort eingeben" style="width: 80%">
+                                    <input id="2" ref="search2" v-bind:type="[showPassword2 ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort eingeben" style="width: 80%">
                                     <b-icon icon="eye" @click="showPassword2 = !showPassword2" ></b-icon>
                                 </div>
                                 <label>Neues Passwort wiederholen:</label>
                                 <div class="form-group  coba-flex-space-evenly">
-                                    <input ref="search3" v-bind:type="[showPassword3 ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort wiederholen" style="width: 80%">
+                                    <input id="3" ref="search3" v-bind:type="[showPassword3 ? 'text' : 'password']" class="form-control" placeholder="Neues Passwort wiederholen" style="width: 80%">
                                     <b-icon icon="eye" @click="showPassword3 = !showPassword3" ></b-icon>
                                 </div>
                                     <div class="mr-5 ml-5 mb-1 mt-2">
@@ -106,6 +109,9 @@ export default {
             showPassword1: false,
             showPassword2: false,
             showPassword3: false,
+            wrongPassword: false ,
+            wrongPasswordConfirmation: false ,
+            passwordToShort: false ,
         }
     },
     methods:{
@@ -119,7 +125,30 @@ export default {
             }
         },
         changePassword(){
-            console.log('hello') ;
+            this.wrongPasswordConfirmation = false ;
+            this.passwordToShort = false ;
+            document.getElementById("2").classList.remove('red') ;
+            document.getElementById("3").classList.remove('red') ;
+
+            let t1 = document.getElementById("1").value ;
+            let t2 = document.getElementById("2").value ;
+            let t3 = document.getElementById("3").value ;
+            // password doubleCheck failed
+            if( t3 !== t2){
+                this.wrongPasswordConfirmation = true ;
+                document.getElementById("3").value = '';
+                document.getElementById("2").classList.toggle('red') ;
+                document.getElementById("3").classList.toggle('red') ;
+                return ;
+            }
+            if( t3.length < 7){
+                this.passwordToShort = true ;
+                document.getElementById("2").value = '';
+                document.getElementById("3").value = '';
+                document.getElementById("2").classList.toggle('red') ;
+                document.getElementById("3").classList.toggle('red') ;
+            }
+
         },
         fetchData() {
             this.load = true;
@@ -155,7 +184,9 @@ export default {
 
 <style scoped>
 
-
+.red {
+    border: 1px solid red;
+}
 .settings-button{
     float:right;
     background-color: transparent;

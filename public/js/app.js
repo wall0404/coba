@@ -1521,6 +1521,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -1533,7 +1536,10 @@ __webpack_require__.r(__webpack_exports__);
       load: false,
       showPassword1: false,
       showPassword2: false,
-      showPassword3: false
+      showPassword3: false,
+      wrongPassword: false,
+      wrongPasswordConfirmation: false,
+      passwordToShort: false
     };
   },
   methods: {
@@ -1547,7 +1553,29 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     changePassword: function changePassword() {
-      console.log('hello');
+      this.wrongPasswordConfirmation = false;
+      this.passwordToShort = false;
+      document.getElementById("2").classList.remove('red');
+      document.getElementById("3").classList.remove('red');
+      var t1 = document.getElementById("1").value;
+      var t2 = document.getElementById("2").value;
+      var t3 = document.getElementById("3").value; // password doubleCheck failed
+
+      if (t3 !== t2) {
+        this.wrongPasswordConfirmation = true;
+        document.getElementById("3").value = '';
+        document.getElementById("2").classList.toggle('red');
+        document.getElementById("3").classList.toggle('red');
+        return;
+      }
+
+      if (t3.length < 7) {
+        this.passwordToShort = true;
+        document.getElementById("2").value = '';
+        document.getElementById("3").value = '';
+        document.getElementById("2").classList.toggle('red');
+        document.getElementById("3").classList.toggle('red');
+      }
     },
     fetchData: function fetchData() {
       var _this = this;
@@ -48589,7 +48617,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.settings-button[data-v-454d9894]{\n    float:right;\n    background-color: transparent;\n}\n.list-container[data-v-454d9894]{\n    display: flex;\n}\nul[data-v-454d9894]{\n    list-style:none;\n}\nul li[data-v-454d9894]{\n    outline:none;\n    background:#eee;\n    height:25px;\n    line-height:25px;\n    border: 1px solid #1b1e21;\n}\na[data-v-454d9894]{\n    text-decoration:none;\n    color: #000000;\n    display:block;\n    width:100px;\n    height:25px;\n    outline: none;\n}\nul li ul[data-v-454d9894]{\n    outline:none;\n    display:none;\n    position:relative;\n    left:75px;\n    top:0px;\n    width:100px;\n    border:1px\n    solid #CCC;\n}\nul li ul li a[data-v-454d9894]:link,ul li ul li a[data-v-454d9894]:visited{\n    background-color:#EEEEEE;\n}\nul li ul li a[data-v-454d9894]:hover{\n    background-color: #fae452;\n}\na[data-v-454d9894]:hover{\n    background-color: #666666;\n    color:#FFFFFF;\n}\nul li:hover ul[data-v-454d9894]{\n    outline: none;\n    display:block;\n}\n\n", ""]);
+exports.push([module.i, "\n.red[data-v-454d9894] {\n    border: 1px solid red;\n}\n.settings-button[data-v-454d9894]{\n    float:right;\n    background-color: transparent;\n}\n.list-container[data-v-454d9894]{\n    display: flex;\n}\nul[data-v-454d9894]{\n    list-style:none;\n}\nul li[data-v-454d9894]{\n    outline:none;\n    background:#eee;\n    height:25px;\n    line-height:25px;\n    border: 1px solid #1b1e21;\n}\na[data-v-454d9894]{\n    text-decoration:none;\n    color: #000000;\n    display:block;\n    width:100px;\n    height:25px;\n    outline: none;\n}\nul li ul[data-v-454d9894]{\n    outline:none;\n    display:none;\n    position:relative;\n    left:75px;\n    top:0px;\n    width:100px;\n    border:1px\n    solid #CCC;\n}\nul li ul li a[data-v-454d9894]:link,ul li ul li a[data-v-454d9894]:visited{\n    background-color:#EEEEEE;\n}\nul li ul li a[data-v-454d9894]:hover{\n    background-color: #fae452;\n}\na[data-v-454d9894]:hover{\n    background-color: #666666;\n    color:#FFFFFF;\n}\nul li:hover ul[data-v-454d9894]{\n    outline: none;\n    display:block;\n}\n\n", ""]);
 
 // exports
 
@@ -54768,10 +54796,16 @@ var render = function() {
             _c("div", { staticClass: "coba-container" }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-sm-4" }, [
+                  _vm.wrongPassword
+                    ? _c("p", { staticClass: "p-0 m-0 text-danger" }, [
+                        _vm._v("falsches Passwort eingegeben")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c(
                     "form",
                     {
-                      attrs: { id: "changePasswordForm" },
+                      attrs: { id: "changePasswordForm", name: "form" },
                       on: {
                         submit: function($event) {
                           $event.preventDefault()
@@ -54791,6 +54825,7 @@ var render = function() {
                             staticClass: "form-control",
                             staticStyle: { width: "80%" },
                             attrs: {
+                              id: "1",
                               type: [_vm.showPassword1 ? "text" : "password"],
                               placeholder: "Aktuelles Password eingeben"
                             }
@@ -54808,6 +54843,20 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
+                      _vm.wrongPasswordConfirmation
+                        ? _c("p", { staticClass: "p-0 m-0 text-danger" }, [
+                            _vm._v("Passwörter stimmen nicht überein")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.passwordToShort
+                        ? _c("p", { staticClass: "p-0 m-0 text-danger" }, [
+                            _vm._v(
+                              "Passwort muss mindestens 8 Zeichen lang sein"
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c("label", [_vm._v("Neues Passwort eingeben:")]),
                       _vm._v(" "),
                       _c(
@@ -54819,6 +54868,7 @@ var render = function() {
                             staticClass: "form-control",
                             staticStyle: { width: "80%" },
                             attrs: {
+                              id: "2",
                               type: [_vm.showPassword2 ? "text" : "password"],
                               placeholder: "Neues Passwort eingeben"
                             }
@@ -54847,6 +54897,7 @@ var render = function() {
                             staticClass: "form-control",
                             staticStyle: { width: "80%" },
                             attrs: {
+                              id: "3",
                               type: [_vm.showPassword3 ? "text" : "password"],
                               placeholder: "Neues Passwort wiederholen"
                             }
