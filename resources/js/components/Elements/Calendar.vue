@@ -1,5 +1,6 @@
 <template>
     <div class="calendar-container">
+        <!--<div @click="nextMonth()">Add</div>-->
         <div class="week-container">
             <div class="calendar-week header">
                 <div class="calendar-day-of-week"><span>M</span></div>
@@ -29,7 +30,7 @@ export default {
             firstDayInMonth: new Date(),
             startDate: null,
             initialMonth: 0,
-            initialYear: 2020,
+            initialYear: 0,
             calendar_dates: [],
             my_bookings: [],
             load: false,
@@ -41,16 +42,22 @@ export default {
         // 0 => Januar, 1 => Februar
         //day in week
         // 0 => Sunday, 1 => Monday
+        this.initialMonth = this.today.getMonth();
+        this.initialYear = this.today.getFullYear();
         this.selectedDate = this.today.toISOString().slice(0, 10);
 
-        this.firstDayInMonth.setDate(1);
-        this.firstDayInMonth.setMonth(this.initialMonth);
 
         this.initiateCalendar()
-        this.fetchMyBookings()
     },
     methods: {
         initiateCalendar() {
+            this.calendar_dates = [];
+
+            this.firstDayInMonth.setDate(1);
+            this.firstDayInMonth.setMonth(this.initialMonth);
+            this.firstDayInMonth.setFullYear(this.initialYear);
+
+            this.fetchMyBookings()
 
             this.startDate = new Date(this.firstDayInMonth);
 
@@ -84,6 +91,7 @@ export default {
             if(k===6 || k===0)
                 return;
             this.selectedDate = date;
+            this.$emit('dateSelected', this.selectedDate);
         },
         fetchMyBookings() {
             this.load = true;
@@ -109,6 +117,14 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
+        },
+        nextMonth() {
+            this.initialMonth++;
+            if(this.initialMonth > 11) {
+                this.initialMonth = 0;
+                this.initialYear++;
+            }
+            this.initiateCalendar();
         }
     }
 }

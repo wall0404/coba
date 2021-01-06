@@ -4,13 +4,13 @@
             <span class="coba-page-headline">{{today.toLocaleDateString('de-DE', this.$only_month_and_year)}}</span>
         </div>
         <div class="coba-tab-navigation">
-            <div v-for="(location, index) in locations" class="coba-tab" :class="location.selected?'selected':''" :key="index" @click="selectLocation(index)">
+            <div v-for="(location, index) in $store.getters.locations" :class="{'selected':selectedLocations.find(id => id === location.id)}" class="coba-tab" :key="index" @click="selectLocation(location.id)">
                 {{ location.name }}
             </div>
         </div>
         <div class="content">
-            <calendar class="calendar"></calendar>
-            <calendar-booking-list class="booking-list"></calendar-booking-list>
+            <calendar class="calendar" @dateSelected="callbackDateSelect"></calendar>
+            <calendar-booking-list ref="list" class="booking-list" :selected-locations="selectedLocations"></calendar-booking-list>
         </div>
 
     </div>
@@ -25,21 +25,31 @@ export default {
     data() {
         return {
             today: new Date(),
-            locations: this.$store.getters.locations,
+            selectedLocations: [],
             selectedDate: null,
         }
     },
     created() {
-        this.locations[0].selected = true;
-        for(let i = 1; i < this.locations.length; i++) {
-            this.locations[i].selected = false;
-        }
+        this.selectedLocations.push(this.$store.getters.locations[0].id)
     },
     methods: {
-        selectLocation(index) {
-            this.locations[index].selected = !this.locations[index].selected;
-            console.log(this.locations[index].selected)
+        selectLocation(location_id) {
+            let index = this.selectedLocations.indexOf(location_id);
+            if(index === -1) {
+                //add to array
+                this.selectedLocations.push(location_id)
+            }
+            else {
+                //remove only if afterwards at least one location is left
+                if(this.selectedLocations.length > 1) {
+                    this.selectedLocations.splice(index, 1)
+                }
+            }
         },
+        callbackDateSelect(date) {
+            this.selectedDate = date;
+            this.$refs.list.fetchBookingsForDate(date);
+        }
     }
 }
 </script>
