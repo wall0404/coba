@@ -2,7 +2,7 @@
     <div class="booking py-3" :class="{'strong':user_id === $store.getters.data.user.user_id}">
         <div class="table-item seat">{{workstation.name}}</div>
         <div class="table-item time">{{ time }}</div>
-        <div class="table-item name">{{ name }}</div>
+        <router-link class="table-item name" :to="'/team/'+user_id">{{ name }}</router-link>
         <div class="table-item icon"><b-icon v-if="false" icon="star-fill" font-scale="0.75"></b-icon></div>
         <router-link class="table-item icon coba-utilization-indicator" v-if="user_id !== $store.getters.data.user.user_id"
                      :class="{'coba-utilization-indicator-red':color==='red',
