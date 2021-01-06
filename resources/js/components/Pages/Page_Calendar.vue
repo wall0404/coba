@@ -4,8 +4,9 @@
             <span class="coba-page-headline">{{today.toLocaleDateString('de-DE', this.$only_month_and_year)}}</span>
         </div>
         <div class="coba-tab-navigation">
-            <div class="coba-tab selected">Campus</div>
-            <div class="coba-tab">Tower</div>
+            <div v-for="(location, index) in locations" class="coba-tab" :class="location.selected?'selected':''" :key="index" @click="selectLocation(index)">
+                {{ location.name }}
+            </div>
         </div>
         <div class="content">
             <calendar class="calendar"></calendar>
@@ -24,8 +25,22 @@ export default {
     data() {
         return {
             today: new Date(),
+            locations: this.$store.getters.locations,
+            selectedDate: null,
         }
     },
+    created() {
+        this.locations[0].selected = true;
+        for(let i = 1; i < this.locations.length; i++) {
+            this.locations[i].selected = false;
+        }
+    },
+    methods: {
+        selectLocation(index) {
+            this.locations[index].selected = !this.locations[index].selected;
+            console.log(this.locations[index].selected)
+        },
+    }
 }
 </script>
 
