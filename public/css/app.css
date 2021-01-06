@@ -10941,6 +10941,21 @@ a.text-dark:focus {
   padding-top: 50%;
 }
 
+.coba-home-icons-container {
+  height: 85px;
+  width: 40px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  flex-direction: column;
+  color: #757575;
+}
+
+.coba-home-icons {
+  margin-bottom: 15px;
+}
+
 .coba-full-width {
   width: 100%;
 }
