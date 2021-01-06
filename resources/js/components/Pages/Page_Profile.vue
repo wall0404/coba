@@ -159,10 +159,6 @@ ol{
     list-style: none;
     padding: 0;
 }
-.decent{
-    background-color: transparent;
-    border: 0px;
-}
 .listInput{
     list-style-type: circle;
     list-style-position: inside;

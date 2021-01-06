@@ -1,7 +1,7 @@
 <template>
     <div class="coba-page coba-homescreen ">
         <div class="user-container mb-5 mt-4">
-            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
+            <div><img class="coba-border-round coba-border-yellow coba-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
         </div>
         <template v-for="user in users">
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
@@ -127,9 +127,6 @@ ol{
     clear: left ;
     list-style: none;
     padding: 0;
-}
-.user-avatar-shadow{
-    box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
 }
 
 

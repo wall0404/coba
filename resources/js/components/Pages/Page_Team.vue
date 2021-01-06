@@ -8,7 +8,8 @@
             <input v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
         </div>
 
-        <div class="coba-container coba-smaller " v-for="user in users" >
+        <spinner v-if="load"></spinner>
+        <div v-else class="coba-container coba-smaller " v-for="user in users" >
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
                 <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 w-100" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
