@@ -3,6 +3,15 @@
         <div class="coba-container coba-header">
             <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
+        <div class="coba-home-icons-container">
+            <!-- this section is the part in home that contains the two icons settings and inbox!-->
+            <router-link to="/settings">
+                <b-icon class="coba-home-icons" icon="gear" font-scale=1.7></b-icon>
+            </router-link>
+            <router-link to="/inbox">
+                <b-icon class="coba-home-icons" icon="inbox-fill" font-scale="1.7"></b-icon>
+            </router-link>
+        </div>
         <div  v-if="!load" class="coba-container coba-text-strong">
             <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
             <div v-else  class="coba-text-big">Keine Buchungen für heute</div>
@@ -11,8 +20,9 @@
             </ul>
         </div>
         <spinner v-else></spinner>
-        <div class="coba-container coba-text-center">
-            <router-link to="/booking/new/location" class="coba-text-very-big">Platz reservieren</router-link>
+        <div class="coba-container coba-flex-right"> <!-- Button zur Sitzplatzbuchung -->
+            <span class="coba-text-very-big">Platz buchen</span>
+            <button class="coba-button coba-button-round coba-button-normal coba-button-accent coba-button-distance-left-10"><router-link to="/booking/new/location"><b-icon icon="arrow-90deg-right" font-scale="1"></b-icon></router-link></button>
         </div>
         <div class="coba-container">
             <span class="coba-text-big">Kommende Buchungen:</span>

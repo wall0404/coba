@@ -1,12 +1,8 @@
 <template>
-    <div class="coba-navbar coba-full-width"  v-if="$store.getters.data.user !== null && $store.getters.data.user !== ''">
+    <!-- the Navbar is only shown when the user is logged in -->
+    <div class="coba-navbar coba-full-width"  v-if="$route.path.includes('/signup')!== true && $route.path.includes('/login')!== true && $route.path.includes('/logout')!== true">
         <router-link v-for="nav_item in nav" v-bind:to="nav_item.mainURL" v-bind:key="nav_item.name">
             <div><b-icon :icon="nav_item.icon" font-scale="2"></b-icon></div>
-        </router-link>
-    </div>
-    <div v-else class="coba-navbar coba-full-width">
-        <router-link v-for="nav_item in nav_login" v-bind:to="nav_item.mainURL" v-bind:key="nav_item.name">
-            <div>{{ nav_item.name }}</div>
         </router-link>
     </div>
 </template>
@@ -21,11 +17,7 @@ export default {
                 {name: 'Team', mainURL: '/team', icon: 'people-fill'},
                 {name: 'Cal', mainURL: '/calendar', icon: 'calendar2-week-fill'},
                 {name: 'Profile', mainURL: '/profile', icon: 'person-fill'},
-            ],
-            nav_login: [
-                {name: 'Sign In', mainURL: '/login'},
-                {name: 'Sign Up', mainURL: '/signup'},
-            ],
+            ]
         }
     },
     created() {

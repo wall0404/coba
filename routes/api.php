@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
 
 
+
     /* Avatar */
     Route::prefix('/profile_picture')->group(function () {
         Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');

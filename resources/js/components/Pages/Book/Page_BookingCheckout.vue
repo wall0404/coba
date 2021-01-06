@@ -1,19 +1,27 @@
 <template>
-    <div class="coba-page coba-page-no-header">
-        <div v-if="session_expired">
+    <div class="coba-page coba-page-no-header coba-page-lower-padding">
+        <div v-if="session_expired"> <!-- Anzeige wenn die Sitzung abgelaufen ist -->
             <div class="coba-headline mb-4">Die Sitzung ist abgelaufen</div>
-            <a @click="$router.go(-1)">Zurück</a>
+            <a @click="$router.push('/home')">Zurück zur Startseite</a> <!-- Button um eine Seite zurückzugehen -->
         </div>
         <div v-else>
             <spinner v-if="load"></spinner>
             <div v-else>
                 <div v-if="error===false">
-                    <div v-if="validation_error.length === 0">
-                        <span class="coba-text coba-text-very-big">Ihre Buchung wurde eingetragen</span>
+                    <div class="coba-container coba-no-top-padding" v-if="validation_error.length === 0"> <!-- Anzeige der erfolgreichen Buchung -->
+                        <div class="coba-container coba-no-top-padding coba-flex-column"> <!-- Text -->
+                            <span class="coba-text-strong coba-text-very-bigger coba-text-center">Deine Buchung war erfolgreich</span>
+                            <b-icon class="mt-3 mb-4" icon="hand-thumbs-up" font-scale="3" style="color:#FFC931"></b-icon>
+                        </div>
+                        <div class="coba-container"> <!-- Buttons -->
+                            <router-link to="/home"><button class="coba-button coba-button-white coba-button-yellow-border">Zur Startseite</button></router-link>
+                            <router-link to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
+                        </div>
                     </div>
-                    <div v-else>
+                    <div v-else> <!-- Anzeige der fehlgeschlagenen Buchung -->
                         <booking v-for="(booking, index) in success"  :booking="booking" color="true" :key="'s'+index"></booking>
                         <booking v-for="(booking, index) in validation_error"  :booking="booking" color="true" :key="'e'+index"></booking>
+                        <button class="coba-button"><a @click="$router.go(-2)">Zurück</a></button> <!-- Button um zwei Seiten zurückzugehen -> Seite zur Tagauswahl -->
                     </div>
                 </div>
                 <div v-else>
@@ -27,6 +35,7 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import Booking from "../../ListItems/Booking";
+import {router} from "../../../_helpers/router";
 export default {
     components: {Booking, Spinner},
     props: ['bookings'],
@@ -38,6 +47,9 @@ export default {
             error: false,
             validation_error: [],
             success: [],
+            /* Variablen für automatsiche Rückführung
+            timeout: null ,
+            countDown: null,*/
         }
     },
     created() {
@@ -47,8 +59,28 @@ export default {
         else {
             this.makeBooking();
         }
+
     },
+    /* Automatische Rückführung
+    mounted() {
+        this.autoRedirect() ;
+    },
+    // stop if redirecting
+    beforeRouteLeave(to, from, next) {
+        clearTimeout(this.timeout);
+        next();
+    },*/
+
     methods: {
+        /* Methode für automatische Rückführung
+        autoRedirect(){
+            // timeout variable could be used for display
+            this.timeout = setTimeout(function (){
+                 router.push('/home') ;
+            },5000) ;
+            this.countDown = this.timeout ;
+        },*/
+
         makeBooking() {
             this.load = true;
             let bookings = [];
@@ -86,7 +118,9 @@ export default {
                     this.load = false;
                 })
         }
+
     }
+
 }
 </script>
 
