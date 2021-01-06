@@ -454,13 +454,15 @@
     }
     &.coba-utilization-indicator-red {
         background-color: #FF6666 !important;
+        pointer-events: none;
     }
     &.coba-utilization-indicator-orange {
         background-color: #FFAD33;
     }
-    &.coba-utilization-indicator-disabled {
+    &.coba-utilization-indicator-disabled, {
         color: $coba-disabled-gray;
         background-color: $coba-gray;
+        pointer-events: none;
     }
 
     &[class*="coba-utilization-indicator-arrow"] {

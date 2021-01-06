@@ -5,7 +5,7 @@
             <div v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)">
                 <div class="section-headline p-2 px-3">{{location.name}}</div>
                 <div class="booking-list px-3">
-                    <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings"></calendar-booking-list-item>
+                    <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date"></calendar-booking-list-item>
                     <!--<div class="booking py-3" v-for="n in 2">
                         <div class="table-item seat">C{{n}}</div>
                         <div class="table-item time">16.00 - 18.00</div>
@@ -48,14 +48,17 @@ export default {
             loadBookings: true,
             loadUsers: false,
             error: null,
+            date: null,
         }
     },
     created() {
-        this.fetchBookingsForDate(new Date().toISOString().slice(0, 10))
+        this.date = new Date().toISOString().slice(0, 10)
+        this.fetchBookingsForDate(this.date)
         this.fetchUsers();
     },
     methods: {
         fetchBookingsForDate(date) {
+            this.date = date;
             this.loadBookings = true;
             fetch('/api/booking?order_by=date&filter[date][min]='+date+'&filter[date][max]='+date, {
                 method: 'GET',

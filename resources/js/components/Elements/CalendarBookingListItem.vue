@@ -4,20 +4,34 @@
         <div class="table-item time">{{ time }}</div>
         <div class="table-item name">{{ name }}</div>
         <div class="table-item icon"><b-icon v-if="false" icon="star-fill" font-scale="0.75"></b-icon></div>
-        <div :class="'table-item icon coba-utilization-indicator coba-utilization-indicator-'+color"><b-icon icon="plus"></b-icon></div>
+        <router-link class="table-item icon coba-utilization-indicator" v-if="user_id !== $store.getters.data.user.user_id"
+                     :class="{'coba-utilization-indicator-red':color==='red',
+                                'coba-utilization-indicator-green':color==='green',
+                                'coba-utilization-indicator-orange':color==='orange',
+                                'coba-utilization-indicator-disabled':this.today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
+                                }"
+                     :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDateStr: date }}">
+            <b-icon icon="plus"></b-icon>
+        </router-link>
+        <router-link class="table-item icon" v-else
+                     v-bind:to="'/booking/'+booking.id">
+            <b-icon icon="pencil"></b-icon>
+        </router-link>
     </div>
 </template>
 
 <script>
 export default {
     name: "CalendarBookingListItem",
-    props: ['workstation', 'bookings', 'users'],
+    props: ['workstation', 'bookings', 'users', 'date'],
     data() {
         return {
             time: "-",
             name: "",
             user_id: null,
+            booking: null,
             color: "green",
+            today: new Date(),
         }
     },
     created() {
@@ -63,6 +77,7 @@ export default {
 
             this.color = color;
             let user = this.users.find(x => x.user_id === bookings[0].user_id);
+            this.booking = bookings[0];
             this.user_id = user.user_id;
             this.name = user.firstName + " " + user.lastName;
             this.time = (startBooking.from.substr(0,5) +" - " + endBooking.to.substr(0,5));
@@ -94,5 +109,8 @@ export default {
 }
 .icon {
     width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>
