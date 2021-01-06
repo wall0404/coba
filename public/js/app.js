@@ -1673,7 +1673,7 @@ __webpack_require__.r(__webpack_exports__);
         if (res.success) {
           _this2.load = false;
 
-          _this2.$router.go(-1);
+          _this2.$router.go();
         } else {
           _this2.error = true;
           _this2.load = false;

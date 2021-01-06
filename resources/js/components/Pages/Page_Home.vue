@@ -140,7 +140,7 @@ export default {
                 .then(res => {
                     if(res.success) {
                         this.load = false;
-                        this.$router.go(-1);
+                        this.$router.go();
                     }
                     else {
                         this.error = true;
