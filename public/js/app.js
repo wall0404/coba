@@ -72201,12 +72201,21 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        state.data.user = res.success.user;
-        state.ready--;
+        if (res.success.user === null) {
+          state.data.user = null;
+          localStorage.removeItem('token');
+          vue__WEBPACK_IMPORTED_MODULE_1___default.a.prototype.$pushToLogin();
+          state.ready--;
+        } else {
+          state.data.user = res.success.user;
+          state.ready--;
+        }
       })["catch"](function (error) {
         console.log(error);
         state.data.user = null;
         localStorage.removeItem('token');
+        vue__WEBPACK_IMPORTED_MODULE_1___default.a.prototype.$pushToLogin();
+        state.ready--;
       });
     },
     getData: function getData(state) {
@@ -72290,6 +72299,11 @@ Vue.prototype.$date_options_short = {
 
 _helpers_store__WEBPACK_IMPORTED_MODULE_1__["store"].commit('refreshUser');
 _helpers_store__WEBPACK_IMPORTED_MODULE_1__["store"].commit('getData');
+
+Vue.prototype.$pushToLogin = function () {
+  _helpers_router__WEBPACK_IMPORTED_MODULE_0__["router"].push("/login");
+};
+
 var app = new Vue({
   store: _helpers_store__WEBPACK_IMPORTED_MODULE_1__["store"],
   router: _helpers_router__WEBPACK_IMPORTED_MODULE_0__["router"],

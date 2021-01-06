@@ -20,6 +20,10 @@ Vue.prototype.$date_options_short = { weekday: 'short', year: 'numeric', month: 
 store.commit('refreshUser');
 store.commit('getData');
 
+Vue.prototype.$pushToLogin = () => {
+    router.push("/login");
+}
+
 const app = new Vue({
     store,
     router,
