@@ -21,6 +21,10 @@ Vue.prototype.$only_month_and_year = { year: 'numeric', month: 'long' };
 store.commit('refreshUser');
 store.commit('getData');
 
+Vue.prototype.$pushToLogin = () => {
+    router.push("/login");
+}
+
 const app = new Vue({
     store,
     router,
