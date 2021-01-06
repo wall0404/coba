@@ -1569,7 +1569,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      if (t3.length < 7) {
+      if (t3.length < 8) {
         this.passwordToShort = true;
         document.getElementById("2").value = '';
         document.getElementById("3").value = '';

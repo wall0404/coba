@@ -141,13 +141,14 @@ export default {
                 document.getElementById("3").classList.toggle('red') ;
                 return ;
             }
-            if( t3.length < 7){
+            if( t3.length < 8){
                 this.passwordToShort = true ;
                 document.getElementById("2").value = '';
                 document.getElementById("3").value = '';
                 document.getElementById("2").classList.toggle('red') ;
                 document.getElementById("3").classList.toggle('red') ;
             }
+
 
         },
         fetchData() {
