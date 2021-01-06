@@ -1,7 +1,11 @@
 <template>
     <div class="coba-page page">
         <div class="coba-container coba-header coba-header-square mb-0">
-            <span class="coba-page-headline">{{today.toLocaleDateString('de-DE', this.$only_month_and_year)}}</span>
+            <div class="headline-button-container">
+                <span @click="prevMonth"><b-icon icon="caret-left-fill" font-scale="1.25"></b-icon></span>
+                <span class="coba-page-headline">{{ monthString[initialMonth] +" "+initialYear}}</span>
+                <span @click="nextMonth"><b-icon icon="caret-right-fill" font-scale="1.25"></b-icon> </span>
+            </div>
         </div>
         <div class="coba-tab-navigation">
             <div v-for="(location, index) in $store.getters.locations" :class="{'selected':selectedLocations.find(id => id === location.id)}" class="coba-tab" :key="index" @click="selectLocation(location.id)">
@@ -9,7 +13,7 @@
             </div>
         </div>
         <div class="content">
-            <calendar class="calendar" @dateSelected="callbackDateSelect"></calendar>
+            <calendar ref="calendar" class="calendar" @dateSelected="callbackDateSelect"></calendar>
             <calendar-booking-list ref="list" class="booking-list" :selected-locations="selectedLocations"></calendar-booking-list>
         </div>
 
@@ -27,10 +31,16 @@ export default {
             today: new Date(),
             selectedLocations: [],
             selectedDate: null,
+            initialMonth: 0,
+            initialYear: 0,
+            monthString: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
         }
     },
     created() {
         this.selectedLocations.push(this.$store.getters.locations[0].id)
+
+        this.initialMonth = this.today.getMonth();
+        this.initialYear = this.today.getFullYear();
     },
     methods: {
         selectLocation(location_id) {
@@ -49,6 +59,22 @@ export default {
         callbackDateSelect(date) {
             this.selectedDate = date;
             this.$refs.list.fetchBookingsForDate(date);
+        },
+        nextMonth() {
+            this.initialMonth++;
+            if(this.initialMonth > 11) {
+                this.initialMonth = 0;
+                this.initialYear++;
+            }
+            this.$refs.calendar.initiateCalendar(this.initialYear, this.initialMonth);
+        },
+        prevMonth() {
+            this.initialMonth--;
+            if(this.initialMonth < 0) {
+                this.initialMonth = 11;
+                this.initialYear--;
+            }
+            this.$refs.calendar.initiateCalendar(this.initialYear, this.initialMonth);
         }
     }
 }
@@ -62,6 +88,16 @@ export default {
     }
     .coba-header {
         flex-grow: 2;
+    }
+    .headline-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .coba-page-headline {
+        padding-left: 20px;
+        flex-grow: 1;
     }
     .coba-tab-navigation {
         flex-grow: 1;

@@ -47,10 +47,12 @@ export default {
         this.selectedDate = this.today.toISOString().slice(0, 10);
 
 
-        this.initiateCalendar()
+        this.initiateCalendar(this.initialYear, this.initialMonth)
     },
     methods: {
-        initiateCalendar() {
+        initiateCalendar(year, month) {
+            this.initialYear = year;
+            this.initialMonth = month;
             this.calendar_dates = [];
 
             this.firstDayInMonth.setDate(1);
@@ -117,14 +119,6 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
-        },
-        nextMonth() {
-            this.initialMonth++;
-            if(this.initialMonth > 11) {
-                this.initialMonth = 0;
-                this.initialYear++;
-            }
-            this.initiateCalendar();
         }
     }
 }
