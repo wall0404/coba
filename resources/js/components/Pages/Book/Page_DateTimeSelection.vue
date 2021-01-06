@@ -4,7 +4,7 @@
             <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container">
-            <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker"></DayPicker>
+            <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-date-str="preSelectedDateStr"></DayPicker>
         </div>
         <div class="coba-container">
             <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
@@ -22,7 +22,7 @@ import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
-    props: ["bookings"],
+    props: ["bookings", 'preSelectedDateStr'],
     components: {TimePicker, DayPicker, Spinner},
     data() {
         return {

@@ -14,6 +14,7 @@ Vue.use(VueRangeSlider);
 
 Vue.prototype.$date_options_long = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 Vue.prototype.$date_options_short = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+Vue.prototype.$only_month_and_year = { year: 'numeric', month: 'long' };
 
 
 //Load user data
