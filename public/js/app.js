@@ -1526,6 +1526,31 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Global/Spinner */ "./resources/js/components/Global/Spinner.vue");
+/* harmony import */ var _Elements_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Elements/Modal */ "./resources/js/components/Elements/Modal.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1563,9 +1588,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Page_Home",
   components: {
+    Modal: _Elements_Modal__WEBPACK_IMPORTED_MODULE_1__["default"],
     Spinner: _Global_Spinner__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
@@ -1573,7 +1600,15 @@ __webpack_require__.r(__webpack_exports__);
       load: false,
       error: false,
       bookings: [],
-      today_date: new Date().toISOString().slice(0, 10)
+      today_date: new Date().toISOString().slice(0, 10),
+      dropDown: {
+        id: "",
+        open: false
+      },
+      modalDel: {
+        header: "",
+        open: false
+      }
     };
   },
   created: function created() {
@@ -1605,7 +1640,49 @@ __webpack_require__.r(__webpack_exports__);
         _this.load = false;
       });
     },
-    openDropDown: function openDropDown(booking) {}
+    openDropDown: function openDropDown(booking) {
+      this.dropDown.open = true;
+      this.dropDown.id = booking.id;
+    },
+    closeDropDown: function closeDropDown(booking) {
+      this.dropDown.open = false;
+      this.dropDown.id = "";
+    },
+    //all methods for the delete-modal
+    openModal: function openModal(booking) {
+      this.modalDel.header = booking.id;
+      this.modalDel.open = true;
+    },
+    closeModal: function closeModal() {
+      this.modalDel.open = false;
+    },
+    deleteBooking: function deleteBooking(id) {
+      var _this2 = this;
+
+      this.showModal = false;
+      this.load = true;
+      fetch('/api/booking/' + id, {
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        if (res.success) {
+          _this2.load = false;
+
+          _this2.$router.go(-1);
+        } else {
+          _this2.error = true;
+          _this2.load = false;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this2.load = false;
+      });
+    }
   }
 });
 
@@ -54906,9 +54983,16 @@ var render = function() {
                 "ul",
                 { staticClass: "coba-list" },
                 _vm._l(_vm.bookings, function(booking) {
-                  return _c("li", { key: booking.id }, [
-                    _c("div", [
-                      _vm._v(_vm._s(booking.date) + ", "),
+                  return _c(
+                    "li",
+                    {
+                      key: booking.id,
+                      staticClass: "coba-container coba-flex-space-evenly"
+                    },
+                    [
+                      _vm._v(
+                        "\n                " + _vm._s(booking.date) + ", "
+                      ),
                       _c("br"),
                       _vm._v(
                         _vm._s(booking.workstation.location.name) +
@@ -54923,23 +55007,135 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "coba-flex-space-evenly m-0 p-2 pl-2" },
+                        {
+                          staticClass: "m-0 p-2",
+                          on: {
+                            click: function($event) {
+                              return _vm.openDropDown(booking)
+                            }
+                          }
+                        },
                         [
                           _c("b-icon", {
                             attrs: { icon: "pencil", "font-scale": "1" }
                           })
                         ],
                         1
-                      )
-                    ])
-                  ])
+                      ),
+                      _vm._v(" "),
+                      _vm.dropDown.open && _vm.dropDown.id === booking.id
+                        ? _c(
+                            "div",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.closeDropDown(booking)
+                                }
+                              }
+                            },
+                            [
+                              _c("ul", [
+                                _c("li", [_vm._v(" Bearbeiten ")]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  !_vm.load
+                                    ? _c(
+                                        "button",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.openModal(booking)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Löschen")]
+                                      )
+                                    : _vm._e()
+                                ])
+                              ])
+                            ]
+                          )
+                        : _vm._e()
+                    ]
+                  )
                 }),
                 0
               )
             : _c("spinner")
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("modal", {
+        attrs: { "show-modal": _vm.modalDel.open },
+        on: {
+          "modal-close-event": _vm.closeModal,
+          "modal-positive-event": _vm.deleteBooking
+        },
+        scopedSlots: _vm._u([
+          {
+            key: "header",
+            fn: function() {
+              return [
+                _c("div", { staticClass: "coba-modal-header" }, [
+                  _vm._v(
+                    "Buchung " + _vm._s(_vm.modalDel.header) + " entfernen"
+                  )
+                ])
+              ]
+            },
+            proxy: true
+          },
+          {
+            key: "body",
+            fn: function() {
+              return [
+                _c("div", { staticClass: "coba-modal-body" }, [
+                  _vm._v(
+                    "\n                Sind sie sich sicher, dass sie diese Buchung entfernen möchten?\n            "
+                  )
+                ])
+              ]
+            },
+            proxy: true
+          },
+          {
+            key: "footer",
+            fn: function() {
+              return [
+                _c(
+                  "div",
+                  { staticClass: "coba-modal-footer coba-button-container" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "coba-button coba-button-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteBooking(_vm.modalDel.header)
+                          }
+                        }
+                      },
+                      [_vm._v("Ja")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "coba-button",
+                        on: { click: _vm.closeModal }
+                      },
+                      [_vm._v("Nein")]
+                    )
+                  ]
+                )
+              ]
+            },
+            proxy: true
+          }
+        ])
+      })
     ],
     1
   )
