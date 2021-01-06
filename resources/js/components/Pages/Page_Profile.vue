@@ -1,15 +1,15 @@
 <template>
     <div class="coba-page">
         <div class="user-container mb-5 mt-4" >
-            <router-link class="setting-button mr-4 " to="/profile/settings">
+            <router-link class="setting-button mr-4 " style="size: auto" to="/profile/settings">
                 <b-icon icon="pencil" ></b-icon>
             </router-link>
-
-            <!-- Profile Pic-->
+            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png"></div>
+            <!-- Profile Pic
             <div><img v-bind:data-src="'/profile_picture/'+this.user.user_id" alt="user_pic"
                       class="coba-border-round coba-border-yellow user-avatar-shadow p-1"  id="avatar"/>
             </div>
-            <!-- -->
+            -->
 
         </div>
         <div class="coba-container text-center pb-0">
@@ -18,9 +18,10 @@
 
 
             <!-- Profile Pic Button
-                 soll dann auf die Seite von Rui und Yaxi (Settings) ausgelagert werden-->
+                 soll dann auf die Seite von Rui und Yaxi (Settings) ausgelagert werden
             <input type="file" ref="upload" @change="uploadPic">
 
+            -->
 
         </div>
         <div class="coba-input-container ">
@@ -41,7 +42,7 @@
                     <li class="listInput">Paul Panther</li>
                 </ol>
             </div>
-            <router-link to="/logout" class="coba-button coba-button-half-width mt-5 mb-3">Logout</router-link>
+            <router-link to="/logout" class="coba-button coba-button-half-width mt-5 mb-3 decent">Logout</router-link>
         </div>
     </div>
 </template>
