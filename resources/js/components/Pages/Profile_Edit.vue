@@ -84,6 +84,11 @@
                 </div>
             </div>
         </div>
+        <!-- alternative DropDown
+        <div class="coba-container">
+            <vue-dropdown :config="config"></vue-dropdown>
+        </div>
+        -->
 
         <div class="coba-container">
             <span class="coba-page-text">Lieblingsbuddies:</span>
@@ -98,7 +103,7 @@
 import Modal from "../Elements/Modal";
 import Spinner from "../Global/Spinner";
 import {router} from "../../_helpers/router";
-
+import VueDropdown from 'vue-dynamic-dropdown'
 export default {
     name: "Profile_Edit",
     data(){
@@ -112,7 +117,18 @@ export default {
             wrongPassword: false ,
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
+            config: {
+                options: [
+                    {value: "Tower"},
+                    {value: "Digitaler Campus"},
+                ],
+                backgroundColor: '#FFC931',
+                placeholder: 'Standort auswählen'
+            }
         }
+    },
+    components: {
+        VueDropdown
     },
     methods:{
         clickEvent(){
