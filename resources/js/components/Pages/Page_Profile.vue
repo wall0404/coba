@@ -4,12 +4,10 @@
             <router-link class="setting-button mr-4 " style="size: auto" to="/profile/settings">
                 <b-icon icon="pencil" ></b-icon>
             </router-link>
-            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png"></div>
-            <!-- Profile Pic
-            <div><img v-bind:data-src="'/profile_picture/'+this.user.user_id" alt="user_pic"
+
+            <div><img :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic"
                       class="coba-border-round coba-border-yellow user-avatar-shadow p-1"  id="avatar"/>
             </div>
-            -->
 
         </div>
         <div class="coba-container text-center pb-0">
@@ -17,11 +15,9 @@
             <p class="mb-1">{{$store.getters.data.user.email}}</p>
 
 
-            <!-- Profile Pic Button
-                 soll dann auf die Seite von Rui und Yaxi (Settings) ausgelagert werden
             <input type="file" ref="upload" @change="uploadPic">
 
-            -->
+
 
         </div>
         <div class="coba-input-container ">
@@ -54,7 +50,7 @@ import {store} from "../../_helpers/store";
 export default {
     name: "Page_Profile",
     components: {Spinner} ,
-  //  props:['user'] ,
+    props:['user'] ,
     data(){
         return{
             load: false ,
