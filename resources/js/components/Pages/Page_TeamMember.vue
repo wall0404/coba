@@ -1,9 +1,10 @@
 <template>
     <div class="coba-page coba-homescreen ">
-        <div class="user-container mb-5 mt-4">
-            <div><img class="coba-border-round coba-border-yellow coba-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
+        <template v-for="user in users ">
+
+        <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
+            <div ><img class="coba-border-round coba-border-yellow coba-shadow p-1" :src="'/api/profile_picture/' +user.user_id" style="width: 180px ; height: 180px" alt="user"/> </div>
         </div>
-        <template v-for="user in users">
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
                 <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
                 <p   class="mb-1">{{user.email}}</p>

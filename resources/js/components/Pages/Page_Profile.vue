@@ -6,7 +6,7 @@
             </router-link>
 
             <div><img :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic"
-                      class="coba-border-round coba-border-yellow user-avatar-shadow p-1"  id="avatar"/>
+                      class="coba-border-round coba-border-yellow user-avatar-shadow p-1" style="width: 180px ; height: 180px"  id="avatar"/>
             </div>
 
         </div>
@@ -55,6 +55,7 @@ export default {
         return{
             load: false ,
             user: [],
+            selectedFile: '',
         }
     },
     methods:{
@@ -70,14 +71,14 @@ export default {
                 })
             })
         },
-        uploadPic() {
+        uploadPic(event) {
             this.load = true;
             const input = this.$refs.upload;
             const file = input.files[0];
             var data = new FormData();
             data.append('profile_pic', file);
             // This will upload the file after having read it
-            fetch('/api/profile_picture/'+ this.user.user_id, {
+            fetch('/api/profile_picture/'+ store.getters.data.user.user_id, {
                 method: 'POST',
                 body: data
             }).then(
@@ -86,9 +87,8 @@ export default {
                 res => {
                     this.load = false;
                     if(res.success) {
-                        // handling user profile pic
-                        this.user.profile_picture_url = this.user.profile_picture_url+ "?a";
-                        this.$store.commit('updatePic');
+                        // refresh
+                        this.$router.go()  ;
                     }
                 }
             ).catch(

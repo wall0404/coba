@@ -12,7 +12,7 @@
         <div v-else class="coba-container coba-smaller " v-for="user in users" >
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
-                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 w-100" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
+                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 w-100 h-100" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
                 <div class="user-data">
                     <table  class="user-table limit">
                         <tr>
