@@ -1,28 +1,34 @@
 <template>
     <div>
-        <div class="coba-container coba-flex coba-header">
-            <span class="coba-page-headline">Anmelden</span>
+        <div class="coba-container coba-flex coba-header mb-4">
+            <span class="coba-page-headline">Willkommen zurück</span>
         </div>
         <div class="coba-container">
-            <form class="">
+            <form class="coba-form">
+                <div class="coba-input-container">
+                    <div class="coba-margin-top">
+                        <div class="coba-width-1-1">
+                            <input v-model="email" class="coba-input" type="text" id="email" placeholder="E-Mail" v-bind:disabled="load" v-bind:class="[error?'coba-form-danger':'']"  v-on:focus="focusHandler">
+                        </div>
+                    </div>
 
-                <div class="coba-margin-top">
-                    <div class="coba-width-1-1">
-                        <input v-model="email" class="coba-input" type="text" id="email" placeholder="E-Mail" v-bind:disabled="load" v-bind:class="[error?'coba-form-danger':'']"  v-on:focus="focusHandler">
+                    <div class="coba-margin-top">
+                        <div class="coba-width-1-1">
+                            <input v-model="password" class="coba-input" type="password" id="password" placeholder="Passwort" v-bind:disabled="load"  v-bind:class="[error?'coba-form-danger':'']" v-on:focus="focusHandler" @keyup.enter="submit">
+                        </div>
+                    </div>
+
+                    <div v-if="error" class="coba-text-danger coba-margin-small-top">
+                        <span >E-Mail oder Passwort stimmt nicht</span>
                     </div>
                 </div>
 
-                <div class="coba-margin-top">
-                    <div class="coba-width-1-1">
-                        <input v-model="password" class="coba-input" type="password" id="password" placeholder="Passwort" v-bind:disabled="load"  v-bind:class="[error?'coba-form-danger':'']" v-on:focus="focusHandler" @keyup.enter="submit">
-                    </div>
-                </div>
+                <button class="coba-button coba-button-accent mt-4" type="button" @click="submit">Anmelden</button>
+                <div class="coba-container">
+                    <span class="coba-button-text mt-4"> Du hast noch kein Konto?<br> </span>
 
-                <div v-if="error" class="coba-text-danger coba-margin-small-top">
-                    <span >E-Mail oder Passwort stimmt nicht</span>
+                    <router-link to="/signup" class="coba-button-text mt-4">Hier Registrieren</router-link>
                 </div>
-
-                <button class="coba-button coba-button-accent" type="button" @click="submit">Anmelden</button>
 
             </form>
         </div>
