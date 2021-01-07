@@ -20,17 +20,23 @@
         </div>
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
-                <li class="coba-container coba-flex-space-evenly" v-for="booking in bookings" :key="booking.id">
+                <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
                     {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}} <!-- the booking information -->
                     <!-- Drop Down list with pencil icon to toggle it -->
-                    <div class="m-0 p-2" @click="openDropDown(booking)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
-                        <b-icon icon="pencil" font-scale="1"></b-icon> <!-- Pencil Icon inside the trigger box-->
-                    </div>
-                    <div v-if="dropDown.open && dropDown.id === booking.id" @click="closeDropDown(booking)">
-                        <ul>
-                            <li> Bearbeiten </li>
-                            <li> <button v-if="!load" @click="openModal(booking)">Löschen</button> </li>
-                        </ul>
+                    <div class="coba-dropdown-container m-0 p-2" @click="toggleDropDown(booking)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
+                        <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
+                        <div style="position: absolute; bottom: 10px; right: 10px" :class="{'white-background':dropDown.open&&dropDown.id === booking.id}">
+                            <b-icon icon="pencil" class="m-2" style="margin-bottom: 30px !important" font-scale="1"></b-icon>
+                        </div>
+                        <!-- Drop Down start -->
+                        <div v-if="dropDown.open && dropDown.id === booking.id" class="coba-dropdown-wrapper">
+                            <div class="coba-dropdown-content">
+                                <ul class="coba-list-nobullets">
+                                    <li> <button style="background-color:rgba(255,255,255,0);">Bearbeiten</button> </li>
+                                    <li.last> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal(booking)">Löschen</button> </li.last>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <!-- drop down end -->
                 </li>
@@ -110,8 +116,13 @@ export default {
                     this.load = false;
                 })
         },
-        openDropDown(booking){
-            this.dropDown.open = true;
+        toggleDropDown(booking){
+            //this.dropDown.open = true;
+            if (this.dropDown.open==true){
+                this.dropDown.open = false;
+            }
+
+            else this.dropDown.open = true;
             this.dropDown.id = booking.id;
         },
         closeDropDown(booking){
@@ -157,5 +168,10 @@ export default {
 </script>
 
 <style scoped>
+.white-background{
+    background-color: white;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
 
 </style>

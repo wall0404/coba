@@ -248,6 +248,28 @@
     align-items: center;
 }
 
+/* DROP DOWN Styles */
+.coba-dropdown-container{
+    text-align: right;
+
+    .coba-dropdown-wrapper{
+        position: absolute;
+        bottom: -30px;
+        right: 0px;
+        padding-right: 10px;
+        width: fit-content;
+        z-index: 1;
+
+        .coba-dropdown-content{
+            background-color: $coba-white;
+            padding: 7px 10px;
+            //padding-left: 10px;
+            text-align: left;
+            border-radius: 10px;
+
+        }
+    }
+}
 
 /* INPUT Styles */
 .coba-input-container{
@@ -353,6 +375,25 @@
 
     &.coba-big-list {
 
+    }
+}
+
+.coba-list-nobullets {
+    font-size: 14px;
+    color: $coba-text-color;
+    padding-left: 0px;
+    list-style: none; /* Remove default bullets */
+
+    li::before {
+        content: none;
+    }
+
+    li.last {
+        border-bottom:none;
+    }
+    li {
+        padding: 2px 0;
+        border-bottom:1px solid $coba-gray;
     }
 }
 

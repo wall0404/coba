@@ -11190,6 +11190,30 @@ a.text-dark:focus {
   align-items: center;
 }
 
+/* DROP DOWN Styles */
+
+.coba-dropdown-container {
+  text-align: right;
+}
+
+.coba-dropdown-container .coba-dropdown-wrapper {
+  position: absolute;
+  bottom: -30px;
+  right: 0px;
+  padding-right: 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  z-index: 1;
+}
+
+.coba-dropdown-container .coba-dropdown-wrapper .coba-dropdown-content {
+  background-color: #fff;
+  padding: 7px 10px;
+  text-align: left;
+  border-radius: 10px;
+}
+
 /* INPUT Styles */
 
 .coba-input-container {
@@ -11313,6 +11337,27 @@ a.text-dark:focus {
 
 .coba-list li {
   padding: 10px 0;
+}
+
+.coba-list-nobullets {
+  font-size: 14px;
+  color: #2C2C2C;
+  padding-left: 0px;
+  list-style: none;
+  /* Remove default bullets */
+}
+
+.coba-list-nobullets li::before {
+  content: none;
+}
+
+.coba-list-nobullets li.last {
+  border-bottom: none;
+}
+
+.coba-list-nobullets li {
+  padding: 2px 0;
+  border-bottom: 1px solid #EBEBEB;
 }
 
 /* MODAL Style */
