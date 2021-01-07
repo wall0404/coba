@@ -177,7 +177,7 @@ export default {
             }
 
 
-            if(hours >= 5)
+            if(hours >= 8)
                 color = "red";//mark red
             else
                 color = "orange"; //mark orange
