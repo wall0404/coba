@@ -65,7 +65,7 @@
                     <hr>
                 </div>
         </div>
-
+<!--
         <div class="coba-container">
             <span class="coba-page-text">Favoritenplätze:</span>
             <button class="settings-button"><b-icon icon="pencil-fill"></b-icon> </button>
@@ -86,16 +86,17 @@
                 </div>
             </div>
         </div>
-        <!-- alternative DropDown
+         alternative DropDown
         <div class="coba-container">
             <vue-dropdown :config="config"></vue-dropdown>
         </div>
-        -->
+
 
         <div class="coba-container">
             <span class="coba-page-text">Lieblingsbuddies:</span>
             <button class="settings-button"><b-icon icon="pencil-fill"></b-icon> </button>
         </div>
+        -->
     </div>
 
 </template>

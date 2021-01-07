@@ -1532,6 +1532,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -55227,7 +55228,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "coba-container" }, [
       _c("span", { staticClass: "coba-page-text" }, [
-        _vm._v("Passwort ändern:\n        ")
+        _vm._v("Passwort ändern:\n            ")
       ]),
       _vm._v(" "),
       _c(
@@ -55381,83 +55382,7 @@ var render = function() {
             _c("hr")
           ])
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "coba-container" }, [
-      _c("span", { staticClass: "coba-page-text" }, [
-        _vm._v("Favoritenplätze:")
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "settings-button" },
-        [_c("b-icon", { attrs: { icon: "pencil-fill" } })],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "selection" }, [
-        _c("div", { staticClass: "nav", attrs: { id: "nav" } }, [
-          _c("ul", { staticClass: "list-container" }, [
-            _c(
-              "li",
-              [
-                _c("a", { attrs: { href: "#" } }, [_vm._v("Tower")]),
-                _vm._v(" "),
-                _vm._l(_vm.location[0].workstations, function(works) {
-                  return _c("ul", [
-                    _c(
-                      "li",
-                      [
-                        _c("router-link", { attrs: { to: "overTheRainbow" } }, [
-                          _vm._v("Platz: " + _vm._s(works.name))
-                        ])
-                      ],
-                      1
-                    )
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              [
-                _c("a", { attrs: { href: "#" } }, [_vm._v("Campus")]),
-                _vm._v(" "),
-                _vm._l(_vm.location[1].workstations, function(works) {
-                  return _c("ul", [
-                    _c(
-                      "li",
-                      [
-                        _c("router-link", { attrs: { to: "overTheRainbow" } }, [
-                          _vm._v("Platz: " + _vm._s(works.name))
-                        ])
-                      ],
-                      1
-                    )
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "coba-container" }, [
-      _c("span", { staticClass: "coba-page-text" }, [
-        _vm._v("Lieblingsbuddies:")
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "settings-button" },
-        [_c("b-icon", { attrs: { icon: "pencil-fill" } })],
-        1
-      )
-    ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
