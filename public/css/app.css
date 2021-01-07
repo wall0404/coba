@@ -10941,6 +10941,21 @@ a.text-dark:focus {
   padding-top: 50%;
 }
 
+.coba-home-icons-container {
+  height: 85px;
+  width: 40px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  flex-direction: column;
+  color: #757575;
+}
+
+.coba-home-icons {
+  margin-bottom: 15px;
+}
+
 .coba-full-width {
   width: 100%;
 }
@@ -10998,7 +11013,7 @@ a.text-dark:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #EBEBEB;
+  background-color: #8C8C8C;
   color: white;
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
@@ -11007,11 +11022,22 @@ a.text-dark:focus {
 
 .coba-header .coba-page-headline {
   font-size: 35px;
-  color: #2C2C2C;
 }
 
 .coba-header.coba-header-accent {
   background-color: #FFC931;
+}
+
+.coba-header.coba-header-square {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 166px;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.coba-header.coba-header-square .coba-page-headline {
+  font-size: 30px;
 }
 
 /* CUSTOM HEADER for HOMESCREEN */
@@ -11033,6 +11059,7 @@ a.text-dark:focus {
 
 .coba-homescreen .coba-header .coba-page-headline {
   font-size: 24px;
+  color: #2C2C2C;
 }
 
 .coba-homescreen .coba-container {
@@ -11046,7 +11073,7 @@ a.text-dark:focus {
 .coba-headline {
   font-size: 23px;
   color: #2C2C2C;
-  border-bottom: 1px solid #2C2C2C;
+  border-bottom: 1px solid #8C8C8C;
   text-align: center;
 }
 
@@ -11056,7 +11083,7 @@ a.text-dark:focus {
   background-color: #EBEBEB;
   color: #2C2C2C;
   border-radius: 25px;
-  border: 1px solid #2C2C2C;
+  border: 1px solid #8C8C8C;
   width: 100%;
   height: 50px;
   display: flex;
@@ -11241,7 +11268,7 @@ a.text-dark:focus {
   background: #f9f8f8;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
-  border-bottom: 1px solid #2C2C2C;
+  border-bottom: 1px solid #8C8C8C;
 }
 
 /* FORM Styles */
@@ -11385,7 +11412,7 @@ a.text-dark:focus {
 
 .coba-modal .coba-modal-header {
   font-size: 24px;
-  border-bottom: 1px solid #2C2C2C;
+  border-bottom: 1px solid #8C8C8C;
   text-align: center;
 }
 
@@ -11413,7 +11440,7 @@ a.text-dark:focus {
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-selected {
-  border: 1px solid #2C2C2C;
+  border: 1px solid #8C8C8C;
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-big {
@@ -11436,6 +11463,7 @@ a.text-dark:focus {
 
 .coba-utilization-indicator.coba-utilization-indicator-red {
   background-color: #FF6666 !important;
+  pointer-events: none;
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-orange {
@@ -11445,6 +11473,7 @@ a.text-dark:focus {
 .coba-utilization-indicator.coba-utilization-indicator-disabled {
   color: #757575;
   background-color: #EBEBEB;
+  pointer-events: none;
 }
 
 .coba-utilization-indicator[class*=coba-utilization-indicator-arrow] {
@@ -11500,7 +11529,37 @@ a.text-dark:focus {
 /* Shadow Styles */
 
 .coba-shadow {
-  box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 20px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* TAB Navigation */
+
+.coba-tab-navigation {
+  height: 40px;
+  width: 100%;
+  display: flex;
+}
+
+.coba-tab-navigation .coba-tab {
+  border-bottom: 1px solid #8C8C8C;
+  border-left: 1px solid #8C8C8C;
+  border-right: 1px solid #8C8C8C;
+  font-size: 20px;
+  color: #757575;
+  background-color: #EBEBEB;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.coba-tab-navigation .coba-tab.selected {
+  border-bottom: 1px solid #EBEBEB;
+  border-left: 1px solid #EBEBEB;
+  border-right: 1px solid #EBEBEB;
+  color: #2C2C2C;
+  background-color: #fff;
+  align-items: center;
 }
 
 .vue-range-slider.slider-component .slider .slider-process {
