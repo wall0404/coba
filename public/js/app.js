@@ -1530,6 +1530,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -1547,6 +1549,7 @@ __webpack_require__.r(__webpack_exports__);
       wrongPassword: false,
       wrongPasswordConfirmation: false,
       passwordToShort: false,
+      passwordChanged: false,
       config: {
         options: [{
           value: "Tower"
@@ -1563,7 +1566,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     clickEvent: function clickEvent() {
-      this.showModal = !this.showModal; // autofocus on search-field 1
+      this.showModal = !this.showModal;
+      this.passwordChanged = false; // autofocus on search-field 1
 
       if (this.showModal) {
         this.$nextTick(function () {
@@ -1572,8 +1576,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     changePassword: function changePassword() {
+      var _this = this;
+
       this.wrongPasswordConfirmation = false;
       this.passwordToShort = false;
+      this.passwordChanged = false;
+      this.wrongPassword = false;
+      this.passwordChanged = false;
+      document.getElementById("1").classList.remove('red');
       document.getElementById("2").classList.remove('red');
       document.getElementById("3").classList.remove('red');
       var t1 = document.getElementById("1").value;
@@ -1594,10 +1604,43 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById("3").value = '';
         document.getElementById("2").classList.toggle('red');
         document.getElementById("3").classList.toggle('red');
+        return;
       }
+
+      fetch('/api/resetPassword', {
+        method: 'POST',
+        body: JSON.stringify({
+          password: t1,
+          new_password: t2
+        }),
+        headers: {
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.token
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        if (res.success) {
+          _this.load = false;
+          _this.passwordChanged = true;
+          _this.showModal = false;
+        } else {
+          _this.wrongPassword = true;
+          document.getElementById("1").value = '';
+          document.getElementById("1").classList.toggle('red');
+
+          _this.$nextTick(function () {
+            this.$refs.search1.focus();
+          });
+        }
+      })["catch"](function (error) {
+        console.log(error);
+        _this.error = "Ein Fehler ist aufgetreten";
+        _this.load = false;
+      });
     },
     fetchData: function fetchData() {
-      var _this = this;
+      var _this2 = this;
 
       this.load = true;
       fetch('/api/location', {
@@ -1610,15 +1653,15 @@ __webpack_require__.r(__webpack_exports__);
         return res.json();
       }).then(function (res) {
         if (res.success) {
-          _this.location = res.success;
-          _this.load = false;
+          _this2.location = res.success;
+          _this2.load = false;
         } else {
-          _this.error = true;
-          _this.load = false;
+          _this2.error = true;
+          _this2.load = false;
         }
       })["catch"](function (error) {
         console.log(error);
-        _this.load = false;
+        _this2.load = false;
       });
     }
   },
@@ -55192,7 +55235,13 @@ var render = function() {
         { staticClass: "settings-button", on: { click: _vm.clickEvent } },
         [_c("b-icon", { attrs: { icon: "pencil-fill" } })],
         1
-      )
+      ),
+      _vm._v(" "),
+      _vm.passwordChanged
+        ? _c("p", { staticClass: "text-success" }, [
+            _vm._v("Passwort wurde erfolgreich geändert")
+          ])
+        : _vm._e()
     ]),
     _vm._v(" "),
     _vm.showModal
@@ -55203,7 +55252,7 @@ var render = function() {
             _c("div", { staticClass: "coba-container" }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-sm-4" }, [
-                  _vm.wrongPassword
+                  this.wrongPassword
                     ? _c("p", { staticClass: "p-0 m-0 text-danger" }, [
                         _vm._v("falsches Passwort eingegeben")
                       ])

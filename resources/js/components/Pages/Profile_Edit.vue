@@ -27,14 +27,16 @@
             <span class="coba-page-text">Passwort ändern:
             </span>
             <button @click="clickEvent" class="settings-button" ><b-icon icon="pencil-fill"></b-icon> </button>
+            <p v-if="passwordChanged" class="text-success">Passwort wurde erfolgreich geändert</p>
         </div>
+
         <div id="modal" v-if="showModal" >
                 <div  class="modal-overlay" >
                 <hr>
                     <div class="coba-container">
                         <div class="row">
                             <div class="col-sm-4" >
-                                    <p class="p-0 m-0 text-danger" v-if="wrongPassword" >falsches Passwort eingegeben</p>
+                                    <p class="p-0 m-0 text-danger" v-if="this.wrongPassword" >falsches Passwort eingegeben</p>
                                 <form id="changePasswordForm" name="form" @submit.prevent="changePassword">
                                 <label>Aktuelles Passwort eingeben:</label>
                                 <div class="form-group  coba-flex-space-evenly">
@@ -117,6 +119,7 @@ export default {
             wrongPassword: false ,
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
+            passwordChanged: false,
             config: {
                 options: [
                     {value: "Tower"},
@@ -133,6 +136,7 @@ export default {
     methods:{
         clickEvent(){
             this.showModal = !this.showModal ;
+            this.passwordChanged = false ;
             // autofocus on search-field 1
             if ( this.showModal) {
                 this.$nextTick(function () {
@@ -143,6 +147,10 @@ export default {
         changePassword(){
             this.wrongPasswordConfirmation = false ;
             this.passwordToShort = false ;
+            this.passwordChanged = false ;
+            this.wrongPassword = false ;
+            this.passwordChanged = false ;
+            document.getElementById("1").classList.remove('red') ;
             document.getElementById("2").classList.remove('red') ;
             document.getElementById("3").classList.remove('red') ;
 
@@ -163,7 +171,41 @@ export default {
                 document.getElementById("3").value = '';
                 document.getElementById("2").classList.toggle('red') ;
                 document.getElementById("3").classList.toggle('red') ;
+                return;
             }
+
+            fetch('/api/resetPassword', {
+                method: 'POST',
+                body: JSON.stringify({
+                    password: t1 ,
+                    new_password: t2 ,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization' : 'Bearer '+localStorage.token
+                }
+            })
+                .then(res => res.json())
+                .then(res => {
+                    if( res.success) {
+                        this.load = false;
+                        this.passwordChanged = true;
+                        this.showModal = false;
+                    }
+                    else{
+                        this.wrongPassword = true ;
+                        document.getElementById("1").value = '';
+                        document.getElementById("1").classList.toggle('red') ;
+                        this.$nextTick(function () {
+                            this.$refs.search1.focus();
+                        })
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.error = "Ein Fehler ist aufgetreten";
+                    this.load = false;
+                })
 
 
         },
