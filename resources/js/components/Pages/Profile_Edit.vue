@@ -10,12 +10,10 @@
 
         <div class="coba-container">
             <span class="coba-page-text">Vorname: {{$store.getters.data.user.firstName}}</span>
-
         </div>
 
         <div class="coba-container">
             <span class="coba-page-text">Nachname: {{$store.getters.data.user.lastName}}</span>
-
         </div>
 
 
@@ -103,10 +101,6 @@
 
 
 <script>
-import Modal from "../Elements/Modal";
-import Spinner from "../Global/Spinner";
-import {router} from "../../_helpers/router";
-import VueDropdown from 'vue-dynamic-dropdown'
 export default {
     name: "Profile_Edit",
     data(){
@@ -121,18 +115,7 @@ export default {
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
             passwordChanged: false,
-            config: {
-                options: [
-                    {value: "Tower"},
-                    {value: "Digitaler Campus"},
-                ],
-                backgroundColor: '#FFC931',
-                placeholder: 'Standort auswählen'
-            }
         }
-    },
-    components: {
-        VueDropdown
     },
     methods:{
         clickEvent(){
@@ -210,35 +193,7 @@ export default {
 
 
         },
-        fetchData() {
-            this.load = true;
-            fetch('/api/location', {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization' : 'Bearer '+localStorage.token
-                }
-            })
-                .then(res => res.json())
-                .then(res => {
-                    if(res.success) {
-                        this.location = res.success;
-                        this.load = false;
-                    }
-                    else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-        },
     },
-    created() {
-        this.fetchData();
-    }
 }
 </script>
 
