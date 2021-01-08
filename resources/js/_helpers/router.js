@@ -47,7 +47,7 @@ const routes = [
     { path: '/booking/new/date/:workstation_id', name: "DateTimeSelection", props: true, component: Page_DateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
     { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
-    { path: '/profile/settings', component: Profile_Edit, meta:{auth:true} },
+    { path: '/profile/settings', component: Profile_Edit, meta:{auth:true} }
     { path: '*', component: error404},
 ]
 
