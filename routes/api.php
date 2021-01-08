@@ -19,31 +19,20 @@ Route::post('signup', 'App\Http\Controllers\AuthController@signup');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 
-Route::middleware('auth')->group(function () {
+/* Booking */
+Route::get('booking', 'App\Http\Controllers\BookingController@search');
+Route::get('booking/{id}', 'App\Http\Controllers\BookingController@get');
+Route::post('booking', 'App\Http\Controllers\BookingController@create');
+Route::delete('booking/{id}', 'App\Http\Controllers\BookingController@delete');
 
-    /* Booking */
-    Route::get('booking', 'App\Http\Controllers\BookingController@search');
-    Route::get('booking/{id}', 'App\Http\Controllers\BookingController@get');
-    Route::post('booking', 'App\Http\Controllers\BookingController@create');
-    Route::delete('booking/{id}', 'App\Http\Controllers\BookingController@delete');
+/* User */
+Route::get('user', 'App\Http\Controllers\UserController@getList');
+Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
 
-    /* User */
-    Route::get('user', 'App\Http\Controllers\UserController@getList');
-    Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
-
-    /* Workstation */
-    Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
-
-
-
-    /* Avatar */
-    Route::prefix('/profile_picture')->group(function () {
-        Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
-        Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
-        Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
-    });
-});
-
+/* Workstation */
+Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
 
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
+
+

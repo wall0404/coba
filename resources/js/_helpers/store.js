@@ -24,20 +24,16 @@ export const store = new Vuex.Store({
                     if(res.success.user===null) {
                         state.data.user = null;
                         localStorage.removeItem('token')
-                        Vue.prototype.$pushToLogin();
                         state.ready--;
                     }
-                    else {
-                        state.data.user = res.success.user;
-                        state.ready--;
-                    }
+                    else{
+                    state.data.user = res.success.user;
+                    state.ready--;}
                 })
                 .catch(error => {
                     console.log(error);
                     state.data.user = null;
                     localStorage.removeItem('token')
-                    Vue.prototype.$pushToLogin();
-                    state.ready--;
                 })
 
         },

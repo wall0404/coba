@@ -15,7 +15,7 @@
 <script>
 export default {
     name: "DayPicker",
-    props: ['workstation','bookings', 'preSelectedDateStr'],
+    props: ['workstation','bookings'],
     data() {
         return {
             todayDate: new Date(),
@@ -41,44 +41,7 @@ export default {
         },
     },
     created() {
-
-        if(this.preSelectedDateStr) {
-            //es wurde ein Datum übergeben
-            let preSelectedDate = new Date(this.preSelectedDateStr);
-            let diffTime = preSelectedDate - this.todayDate
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-            if(diffDays < 0) {
-                console.error("Liegt in der Vergangenheit")
-            }
-            else {
-
-                //set start of the week of the pre selected date
-                let dayOfWeek = preSelectedDate.getUTCDay();
-                let preSelectedDateDayOfWeek = dayOfWeek;
-                dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
-                preSelectedDate.setDate(preSelectedDate.getDate() - dayOfWeek + 1);
-
-                //set start of the week of today
-                let weekStart = new Date()
-                dayOfWeek = this.todayDate.getUTCDay();
-                dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
-                weekStart.setDate(this.todayDate.getDate() - dayOfWeek + 1);
-
-                diffTime = preSelectedDate - weekStart
-                diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-
-                this.page = Math.round(diffDays/7);
-
-                this.initiateDates();
-                this.selectDate(this.pages[this.page][preSelectedDateDayOfWeek-1])
-            }
-        }
-        else {
-            this.initiateDates();
-        }
-
+        this.initiateDates();
     },
     methods: {
         initiateDates() {
@@ -182,6 +145,8 @@ export default {
             else
                 color = "orange"; //mark orange
 
+            console.log("Time");
+            console.log(time);
             return {color:color, free_start: startBooking.from, free_end: endBooking.to, time};
         },
 
