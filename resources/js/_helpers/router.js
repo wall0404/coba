@@ -23,6 +23,7 @@ import Page_WorkstationSelection from "../components/Pages/Book/Page_Workstation
 import Page_DateTimeSelection from "../components/Pages/Book/Page_DateTimeSelection";
 import Page_BookingConfirmation from "../components/Pages/Book/Page_BookingConfirmation";
 import Page_BookingCheckout from "../components/Pages/Book/Page_BookingCheckout";
+import Profile_Edit from "../components/Pages/Profile_Edit";
 import Page_SignUp from "../components/Pages/Auth/Page_SignUp";
 import Page_TeamMember from "../components/Pages/Page_TeamMember";
 import Page_Inbox from "../components/Pages/Page_Inbox";
@@ -46,7 +47,8 @@ const routes = [
     { path: '/booking/new/date/:workstation_id', name: "DateTimeSelection", props: true, component: Page_DateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
     { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
-    { path: '*', component: error404}
+    { path: '/profile/settings', component: Profile_Edit, meta:{auth:true} }
+    { path: '*', component: error404},
 ]
 
 
