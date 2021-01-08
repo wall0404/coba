@@ -17,6 +17,13 @@
         <div v-else class="coba-container">
             <div class="coba-text-danger">{{error}}</div>
         </div>
+
+
+        <div class="back-button">
+            <a @click="$router.go(-1)">
+                <div data-v-1febfe86="" class="coba-utilization-indicator coba-utilization-indicator-arrow-prev coba-utilization-indicator-big coba-utilization-indicator-disabled">➤</div>
+            </a>
+        </div>
     </div>
 </template>
 
@@ -64,5 +71,11 @@ export default {
 </script>
 
 <style scoped>
+.back-button{
 
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    font-size: 35px;
+}
 </style>

@@ -12,6 +12,40 @@
         <div class="coba-container">
             <button class="coba-button" @click="submit" :disabled="days.length===0">Buchen</button>
         </div>
+
+        <div class="back-button">
+            <a v-if="!load"   @click='openModal'>
+                <div data-v-1febfe86="" class="coba-utilization-indicator coba-utilization-indicator-arrow-prev coba-utilization-indicator-big coba-utilization-indicator-disabled">➤</div>
+            </a>
+            <spinner v-else></spinner>
+        </div>
+
+
+        <modal :show-modal="showModal" @modal-close-event="closeModal" >
+            <template v-slot:header>
+                <div class="coba-modal-header">
+                    <b-icon class="theicon" icon="exclamation-triangle-fill" color=#861F08 font-size="50px"></b-icon>
+                </div>
+            </template>
+            <template v-slot:body>
+                <div class="coba-modal-middle">
+                    Bist du dir sicher?
+                </div>
+                <div class="coba-modal-body">
+                    Wenn du jetzt die Seite verlässt, werden deine Buchungen gelöscht.
+                </div>
+            </template>
+            <template v-slot:footer>
+                <div class="coba-modal-footer coba-button-container">
+                    <button class="coba-button coba-button-big" @click="closeModal">Hier Bleiben</button>
+                    <button class="coba-button coba-button-big coba-button-danger" @click="$router.go(-1)">Verlassen</button>
+                </div>
+            </template>
+        </modal>
+
+
+
+
     </div>
 </template>
 
@@ -19,17 +53,18 @@
 import Spinner from "../../Global/Spinner";
 import DayPicker from "../../Elements/DayPicker";
 import TimePicker from "../../Elements/TimePicker";
-
+import Modal from "../../Elements/Modal";
 export default {
     name: "Page_DateTimeSelection",
     props: ["bookings", 'preSelectedDateStr'],
-    components: {TimePicker, DayPicker, Spinner},
+    components: {TimePicker, DayPicker, Modal,Spinner},
     data() {
         return {
             workstation: {},
             load: false,
             error: false,
             days: [],
+            showModal: false,
         }
     },
     created() {
@@ -104,11 +139,31 @@ export default {
                     bookings: this.days
                 }
             })
-        }
+        },
+        openModal() {
+            this.showModal = true;
+        },
+        closeModal() {
+            this.showModal = false;
+        },
     }
 }
 </script>
 
 <style scoped>
+.back-button{
 
+    position: fixed;
+    top: 20px;
+    left: 40px;
+    font-size: 35px;
+}
+.theicon{
+
+    display:inline-block;
+    vertical-align: middle;
+}
+.coba-modal-middle{
+    font-size:30px;
+}
 </style>
