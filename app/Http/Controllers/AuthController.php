@@ -58,6 +58,7 @@ class AuthController extends ParentController
         Auth::logout();
         return response()->json(['success' => 'true'], ParentController::$successCode);
     }
+    
     public function resetPassword(Request $request){
         if(Auth::check() && Auth::attempt(['email' => Auth::user()->email, 'password' => $request->input('password')], true)){
             $input = $request->all();
