@@ -33,7 +33,7 @@
                             <div class="coba-dropdown-content">
                                 <ul class="coba-list-nobullets">
                                     <li> <button style="background-color:rgba(255,255,255,0);">Bearbeiten</button> </li>
-                                    <li.last> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal(booking)">Löschen</button> </li.last>
+                                    <li class="last"> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal(booking)">Löschen</button> </li>
                                 </ul>
                             </div>
                         </div>

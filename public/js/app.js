@@ -804,14 +804,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -54212,22 +54204,14 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "coba-container" }, [
-        _c("span", { staticClass: "coba-text" }, [
-          _vm._v(" " + _vm._s(_vm.booking) + " ")
-        ])
-      ]),
-      _vm._v(" "),
       _c(
         "div",
         { staticClass: "coba-container" },
         [
           !_vm.load
-            ? _c(
-                "button",
-                { staticClass: "coba-button", on: { click: _vm.openModal } },
-                [_vm._v("Bearbeiten")]
-              )
+            ? _c("button", { staticClass: "coba-button" }, [
+                _vm._v("Bearbeiten")
+              ])
             : _vm._e(),
           _vm._v(" "),
           !_vm.load
@@ -55116,7 +55100,7 @@ var render = function() {
                                         [
                                           _vm._m(1, true),
                                           _vm._v(" "),
-                                          _c("li.last", [
+                                          _c("li", { staticClass: "last" }, [
                                             !_vm.load
                                               ? _c(
                                                   "button",
@@ -55137,8 +55121,7 @@ var render = function() {
                                                 )
                                               : _vm._e()
                                           ])
-                                        ],
-                                        1
+                                        ]
                                       )
                                     ]
                                   )
