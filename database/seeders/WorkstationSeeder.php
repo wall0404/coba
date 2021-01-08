@@ -16,55 +16,55 @@ class WorkstationSeeder extends Seeder
     {
         DB::table('workstations')->insert([
             'location_id' => '1',
-            'name' => 'Platz 1',
+            'name' => 'T1',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '1',
-            'name' => 'Platz 2',
+            'name' => 'T2',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '1',
-            'name' => 'Platz 3',
+            'name' => 'T3',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 1',
+            'name' => 'C1',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 2',
+            'name' => 'C2',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 3',
+            'name' => 'C3',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 4',
+            'name' => 'C4',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 5',
+            'name' => 'C5',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 6',
+            'name' => 'C6',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 7',
+            'name' => 'C7',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 8',
+            'name' => 'C8',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 9',
+            'name' => 'C9',
         ]);
         DB::table('workstations')->insert([
             'location_id' => '2',
-            'name' => 'Platz 10',
+            'name' => 'C10',
         ]);
     }
 }

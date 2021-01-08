@@ -4,7 +4,7 @@
             <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container">
-            <DayPicker :workstation="workstation" :bookings="null" @callback-picker-event="callbackPicker"></DayPicker>
+            <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-date-str="preSelectedDateStr"></DayPicker>
         </div>
         <div class="coba-container">
             <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
@@ -22,6 +22,7 @@ import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
+    props: ["bookings", 'preSelectedDateStr'],
     components: {TimePicker, DayPicker, Spinner},
     data() {
         return {
@@ -31,7 +32,17 @@ export default {
             days: [],
         }
     },
-    mounted() {
+    created() {
+        if(typeof this.bookings === 'undefined') {
+            this.bookings = JSON.parse(localStorage.getItem("bookings_"+this.$route.params.workstation_id))
+            if(this.bookings == null){
+                console.error("Keine Buchungen wurden übergeben.")
+                this.$router.push("/home")
+            }
+        }
+        else
+            localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
+
         this.fetchWorkstation();
         this.fetchData();
     },

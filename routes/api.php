@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', 'App\Http\Controllers\AuthController@login');
-Route::post('register', 'App\Http\Controllers\AuthController@register');
+Route::post('signup', 'App\Http\Controllers\AuthController@signup');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 
@@ -35,8 +35,6 @@ Route::middleware('auth')->group(function () {
     /* Workstation */
     Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
 
-
-
     /* Avatar */
     Route::prefix('/profile_picture')->group(function () {
         Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
@@ -45,7 +43,6 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
-
-
