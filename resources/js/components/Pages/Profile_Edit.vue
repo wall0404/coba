@@ -1,21 +1,20 @@
 <template xmlns="http://www.w3.org/1999/html">
     <div class="coba-page" >
         <div class="coba-container coba-flex coba-header">
-
-            <span class="coba-page-headline">Personenprofile</span>
+            <span class="coba-page-headline">Profileinstellungen</span>
         </div>
 
         <!-- User profile pic -->
         <div class="coba-container">
             <hr>
             <p class="coba-text-big">Profilbild ändern:</p>
-            <div style="display: flex">
+            <div class="coba-flex ">
                  <div class="picture-container">
                      <img :key="componentKey" :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic"
-                          class="coba-border-round coba-border-yellow user-avatar-shadow p-1" style="max-width: 100% ; height: auto"  id="avatar"/>
+                          class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img"  id="avatar"/>
                  </div>
                  <div class="ml-3">
-                     <input class="inputFile" type="file" id="file" name="file" ref="upload" @change="uploadPic">
+                     <input class="inputFile" type="file" id="file" name="file" ref="upload" @change="uploadPic"  >
                      <label class="inputFileLabel flex mb-1" for="file"><b-icon class="mr-2 mt-1" icon="image"></b-icon> Wähle ein Profilbild</label>
                      <label class="inputFileLabel mt-1"  @click="deletePic"> Profilbild löschen </label>
                  </div>
@@ -136,9 +135,9 @@ export default {
     methods:{
         uploadPic() {
             this.load = true;
-            const input = this.$refs.upload;
-            const file = input.files[0];
-            var data = new FormData();
+            let input = this.$refs.upload;
+            let file = input.files[0];
+            let data = new FormData();
             data.append('profile_pic', file);
             // This will upload the file after having read it
             fetch('/api/profile_picture/'+ store.getters.data.user.user_id, {
@@ -152,6 +151,8 @@ export default {
                     if(res.success) {
                         // refresh
                         this.componentKey += 1;
+                        // reset value of input-file => otherwise could not upload the same image twice
+                        document.querySelector('#file').value = '' ;
                     }
                 }
             ).catch(
@@ -268,6 +269,13 @@ export default {
     max-width: 40%;
     justify-content: center;
     margin-top: 3px;
+}
+
+/* funktioniert erstaunlich gut */
+.profile-img {
+    width: 6rem ;
+    height: 6rem;
+    object-fit: cover;
 }
 .inputFileLabel{
     padding: 10px;

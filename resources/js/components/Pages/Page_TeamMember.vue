@@ -1,9 +1,9 @@
 <template>
     <div class="coba-page coba-homescreen ">
-        <div class="user-container mb-5 mt-4">
-            <div><img class="coba-border-round coba-border-yellow coba-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
-        </div>
         <template v-for="user in users">
+        <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
+            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user"/> </div>
+        </div>
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
                 <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
                 <p   class="mb-1">{{user.email}}</p>
@@ -117,9 +117,12 @@ export default {
     max-width: 100%;
     text-align: center;
 }
-.user-container img {
-    max-width: 50%;
-    max-height: 50%;
+
+/* funktioniert erstaunlich gut */
+.profile-img {
+    width: 13rem ;
+    height: 13rem;
+    object-fit: cover;
 }
 ol{
     display: table;
@@ -127,6 +130,9 @@ ol{
     clear: left ;
     list-style: none;
     padding: 0;
+}
+.user-avatar-shadow{
+    box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
 }
 
 

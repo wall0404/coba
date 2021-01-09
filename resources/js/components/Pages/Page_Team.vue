@@ -5,14 +5,14 @@
             <h2 class="coba-page-headline">Team</h2>
         </div>
         <div class="filter-container w-100  coba-flex-space-evenly mb-5">
-            <input v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
+            <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
         </div>
 
         <spinner v-if="load"></spinner>
         <div v-else class="coba-container coba-smaller " v-for="user in users" >
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
-                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 w-100" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
+                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
                 <div class="user-data">
                     <table  class="user-table limit">
                         <tr>
@@ -128,6 +128,7 @@ export default {
         },
 
 
+
 }
 </script>
 
@@ -140,6 +141,11 @@ export default {
 }
 .profile-picture {
     width: 25%;
+}
+.profile-img {
+    width: 4.5rem ;
+    height: 4.5rem;
+    object-fit: cover;
 }
 .user-table {
     border-collapse: collapse;

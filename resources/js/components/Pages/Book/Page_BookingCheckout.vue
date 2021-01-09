@@ -61,6 +61,9 @@ export default {
         }
 
     },
+    beforeRouteLeave(to, from, next){
+
+    },
     /* Automatische Rückführung
     mounted() {
         this.autoRedirect() ;

@@ -5,11 +5,9 @@
                 <b-icon icon="pencil" ></b-icon>
             </router-link>
             <!-- Profile Pic -->
-            <span class="picture ">
-            <div class="picture-container ">
-                <img :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic" class="  user-avatar-shadow profile-picture"   id="avatar"/>
+            <div>
+              <img :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic" class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img"  id="avatar"/>
             </div>
-            </span>
 
         </div>
         <div class="coba-container text-center pb-0">
@@ -80,15 +78,18 @@ export default {
     max-width: 100%;
     text-align: center;
 }
-.user-container img {
-    max-width: 50%;
-    max-height: 50%;
+
+/* funktioniert erstaunlich gut */
+.profile-img {
+    width: 13rem ;
+    height: 13rem;
+    object-fit: cover;
 }
 .setting-button{
     text-align:center;
     position: absolute;
     top: 0px;
-    right: 0px;
+    right: 30px;
     opacity: 0.8;
 }
 .user-data-templ {
