@@ -2,7 +2,7 @@
     <div class="coba-page coba-homescreen ">
         <template v-for="user in users">
         <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
-            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user"/> </div>
+            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
         </div>
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
                 <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
