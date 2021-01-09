@@ -1,27 +1,21 @@
 <template>
     <div class="coba-page">
         <div class="user-container mb-5 mt-4" >
-            <router-link class="setting-button mr-4 " style="size: auto" to="/profile/settings">
+            <router-link class="setting-button "  to="/profile/settings">
                 <b-icon icon="pencil" ></b-icon>
             </router-link>
-            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png"></div>
-            <!-- Profile Pic
-            <div><img v-bind:data-src="'/profile_picture/'+this.user.user_id" alt="user_pic"
-                      class="coba-border-round coba-border-yellow user-avatar-shadow p-1"  id="avatar"/>
+            <!-- Profile Pic -->
+            <span class="picture ">
+            <div class="picture-container ">
+                <img :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic" class="  user-avatar-shadow profile-picture"   id="avatar"/>
             </div>
-            -->
+            </span>
 
         </div>
         <div class="coba-container text-center pb-0">
             <h3 class="mb-0">{{ $store.getters.data.user.firstName +" " + $store.getters.data.user.lastName }}</h3>
             <p class="mb-1">{{$store.getters.data.user.email}}</p>
 
-
-            <!-- Profile Pic Button
-                 soll dann auf die Seite von Rui und Yaxi (Settings) ausgelagert werden
-            <input type="file" ref="upload" @change="uploadPic">
-
-            -->
 
         </div>
         <div class="coba-input-container ">
@@ -54,7 +48,6 @@ import {store} from "../../_helpers/store";
 export default {
     name: "Page_Profile",
     components: {Spinner} ,
-  //  props:['user'] ,
     data(){
         return{
             load: false ,
@@ -74,59 +67,13 @@ export default {
                 })
             })
         },
-        uploadPic() {
-            this.load = true;
-            const input = this.$refs.upload;
-            const file = input.files[0];
-            var data = new FormData();
-            data.append('profile_pic', file);
-            // This will upload the file after having read it
-            fetch('/api/profile_picture/'+ this.user.user_id, {
-                method: 'POST',
-                body: data
-            }).then(
-                res => res.json() // if the response is a JSON object
-            ).then(
-                res => {
-                    this.load = false;
-                    if(res.success) {
-                        // handling user profile pic
-                        this.user.profile_picture_url = this.user.profile_picture_url+ "?a";
-                        this.$store.commit('updatePic');
-                    }
-                }
-            ).catch(
-                //Internet connection
-            );
-        },
-        selectPic() {
-            const elem = this.$refs.upload;
-            elem.click();
-        },
-        deletePic() {
-            this.load = true;
-            fetch('/api/profile_picture/'+this.user.user_id, {
-                method: 'delete'
-            })
-                .then(res => res.json())
-                .then(res => {
-                    this.load = false;
-                    if(res.success) {
-                        this.user.profile_picture_url = this.user.profile_picture_url+ "?a";
-                        this.$store.commit('updatePic');
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-        }
     },
 
 }
 </script>
 
 <style scoped>
+
 
 .user-container {
     position: relative;
@@ -172,7 +119,6 @@ ol{
 .user-avatar-shadow{
     box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
 }
-
 
 
 </style>

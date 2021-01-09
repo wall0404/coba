@@ -1,33 +1,46 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
     <div class="coba-page" >
         <div class="coba-container coba-flex coba-header">
 
             <span class="coba-page-headline">Personenprofile</span>
         </div>
-        <div class="coba-container m-2">
-            <button class="coba-button" >Profilbild ändern</button>
+
+        <!-- User profile pic -->
+        <div class="coba-container">
+            <hr>
+            <p class="coba-text-big">Profilbild ändern:</p>
+            <div style="display: flex">
+                 <div class="picture-container">
+                     <img :key="componentKey" :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic"
+                          class="coba-border-round coba-border-yellow user-avatar-shadow p-1" style="max-width: 100% ; height: auto"  id="avatar"/>
+                 </div>
+                 <div class="ml-3">
+                     <input class="inputFile" type="file" id="file" name="file" ref="upload" @change="uploadPic">
+                     <label class="inputFileLabel flex mb-1" for="file"><b-icon class="mr-2 mt-1" icon="image"></b-icon> Wähle ein Profilbild</label>
+                     <label class="inputFileLabel mt-1"  @click="deletePic"> Profilbild löschen </label>
+                 </div>
+            </div>
+
+            <hr>
         </div>
 
         <div class="coba-container">
             <span class="coba-page-text">Vorname: {{$store.getters.data.user.firstName}}</span>
         </div>
-
         <div class="coba-container">
             <span class="coba-page-text">Nachname: {{$store.getters.data.user.lastName}}</span>
         </div>
-
-
         <div class="coba-container">
             <span class="coba-page-text">Email: {{$store.getters.data.user.email}}</span>
         </div>
 
         <div class="coba-container">
-            <span class="coba-page-text">Passwort ändern:
+            <span class="coba-text-big">Passwort ändern:
             </span>
-            <button @click="clickEvent" class="settings-button" ><b-icon icon="pencil-fill"></b-icon> </button>
+            <button @click.prevent="clickEvent" class="settings-button" ><b-icon icon="pencil-fill"></b-icon> </button>
             <p v-if="passwordChanged" class="text-success">Passwort wurde erfolgreich geändert</p>
         </div>
-
+        <!-- Password modal -->
         <div id="modal" v-if="showModal" >
                 <div  class="modal-overlay" >
                 <hr>
@@ -38,7 +51,7 @@
                                 <form id="changePasswordForm" name="form" @submit.prevent="changePassword">
                                 <label>Aktuelles Passwort eingeben:</label>
                                 <div class="form-group  coba-flex-space-evenly">
-                                    <input id="1" ref="search1" v-bind:type="[showPassword1 ? 'text' : 'password']" class="form-control" placeholder="Aktuelles Password eingeben" style="width: 80%">
+                                    <input id="1" ref="search1" v-bind:type="[showPassword1 ? 'text' : 'password']" class="form-control" placeholder="Aktuelles Passwort eingeben" style="width: 80%">
                                     <b-icon icon="eye" @click="showPassword1 = !showPassword1" ></b-icon>
                                 </div>
                                     <p class="p-0 m-0 text-danger" v-if="wrongPasswordConfirmation" >Passwörter stimmen nicht überein</p>
@@ -101,6 +114,8 @@
 
 
 <script>
+import {store} from "../../_helpers/store";
+
 export default {
     name: "Profile_Edit",
     data(){
@@ -115,9 +130,55 @@ export default {
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
             passwordChanged: false,
+            componentKey: 0 ,
         }
     },
     methods:{
+        uploadPic() {
+            this.load = true;
+            const input = this.$refs.upload;
+            const file = input.files[0];
+            var data = new FormData();
+            data.append('profile_pic', file);
+            // This will upload the file after having read it
+            fetch('/api/profile_picture/'+ store.getters.data.user.user_id, {
+                method: 'POST',
+                body: data
+            }).then(
+                res => res.json() // if the response is a JSON object
+            ).then(
+                res => {
+                    this.load = false;
+                    if(res.success) {
+                        // refresh
+                        this.componentKey += 1;
+                    }
+                }
+            ).catch(
+                //Internet connection
+            );
+        },
+        selectPic() {
+            const elem = this.$refs.upload;
+            elem.click();
+        },
+        deletePic() {
+            this.load = true;
+            fetch('/api/profile_picture/'+store.getters.data.user.user_id, {
+                method: 'delete'
+            })
+                .then(res => res.json())
+                .then(res => {
+                    this.load = false;
+                    if(res.success) {
+                        this.componentKey += 1;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.load = false;
+                })
+        },
         clickEvent(){
             this.showModal = !this.showModal ;
             this.passwordChanged = false ;
@@ -199,9 +260,34 @@ export default {
 
 <style scoped>
 
+/* is beeing used! */
 .red {
     border: 1px solid red;
 }
+.picture-container{
+    max-width: 40%;
+    justify-content: center;
+    margin-top: 3px;
+}
+.inputFileLabel{
+    padding: 10px;
+    width: 100%;
+    margin: 2px;
+    background-color: #EBEBEB;
+    border-radius: 5px;
+}
+.inputFile{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+.inputFile:focus{
+    outline: 1px dotted #000;
+}
+
 .settings-button{
     float:right;
     background-color: transparent;
