@@ -81,8 +81,8 @@ export default {
 
 /* funktioniert erstaunlich gut */
 .profile-img {
-    width: 13rem ;
-    height: 13rem;
+    width: 12rem ;
+    height: 12rem;
     object-fit: cover;
 }
 .setting-button{
