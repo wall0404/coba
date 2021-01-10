@@ -37,10 +37,9 @@
             <span class="coba-text-big">Passwort ändern:
             </span>
             <button @click.prevent="clickEvent" class="settings-button" ><b-icon icon="pencil-fill"></b-icon> </button>
-            <p v-if="passwordChanged" class="text-success">Passwort wurde erfolgreich geändert</p>
         </div>
         <!-- Password modal -->
-        <div id="modal" v-if="showModal" >
+        <div id="modal" v-if="showPasswordModal" >
                 <div  class="modal-overlay" >
                 <hr>
                     <div class="coba-container">
@@ -75,6 +74,26 @@
                     <hr>
                 </div>
         </div>
+
+        <modal :show-modal="showConfirmationModal" @modal-close-event="closeConfModal">
+            <template v-slot:header>
+                <div class="coba-container coba-no-top-padding coba-flex-column">
+                    <b-icon class="mt-3 mb-4" icon="hand-thumbs-up" font-scale="3" style="color:#FFC931"></b-icon>
+                </div>
+            </template>
+
+            <template v-slot:body>
+                <div class="coba-modal-body">
+                    Ihr Passwort wurde erfolgreich geändert!
+                </div>
+            </template>
+
+            <template v-slot:footer>
+                <div>
+                    <button class="coba-button" @click="closeConfModal">Bestätigen</button>
+                </div>
+            </template>
+        </modal>
 <!--
         <div class="coba-container">
             <span class="coba-page-text">Favoritenplätze:</span>
@@ -114,12 +133,15 @@
 
 <script>
 import {store} from "../../_helpers/store";
+import Modal from "../Elements/Modal";
+import Spinner from "../Global/Spinner";
 
 export default {
     name: "Profile_Edit",
+    components: {Modal, Spinner},
     data(){
         return{
-            showModal: false,
+            showPasswordModal: false,
             location:[],
             load:false,
             showPassword1: false,
@@ -128,8 +150,8 @@ export default {
             wrongPassword: false ,
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
-            passwordChanged: false,
             componentKey: 0 ,
+            showConfirmationModal: false ,
         }
     },
     methods:{
@@ -181,10 +203,9 @@ export default {
                 })
         },
         clickEvent(){
-            this.showModal = !this.showModal ;
-            this.passwordChanged = false ;
+            this.showPasswordModal = !this.showPasswordModal ;
             // autofocus on search-field 1
-            if ( this.showModal) {
+            if ( this.showPasswordModal) {
                 this.$nextTick(function () {
                     this.$refs.search1.focus();
                 })
@@ -193,9 +214,7 @@ export default {
         changePassword(){
             this.wrongPasswordConfirmation = false ;
             this.passwordToShort = false ;
-            this.passwordChanged = false ;
             this.wrongPassword = false ;
-            this.passwordChanged = false ;
             document.getElementById("1").classList.remove('red') ;
             document.getElementById("2").classList.remove('red') ;
             document.getElementById("3").classList.remove('red') ;
@@ -235,8 +254,8 @@ export default {
                 .then(res => {
                     if( res.success) {
                         this.load = false;
-                        this.passwordChanged = true;
-                        this.showModal = false;
+                        this.showPasswordModal = false;
+                        this.showConfirmationModal = true ;
                     }
                     else{
                         this.wrongPassword = true ;
@@ -255,6 +274,9 @@ export default {
 
 
         },
+        closeConfModal(){
+            this.showConfirmationModal = false ;
+        }
     },
 }
 </script>
