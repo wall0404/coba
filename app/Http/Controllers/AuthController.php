@@ -14,10 +14,7 @@ class AuthController extends ParentController
     public function login(Request $request){
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)){
             $user = Auth::user();
-            $tokenResult = $user->createToken('Personal Access Token');
-            $token = $tokenResult->token;
-            $token->save();
-            $success['token'] =  $tokenResult->accessToken;
+            $success['token'] =  "true";
             return response()->json(['success' => $success], ParentController::$successCode);
         }
         else{
@@ -46,10 +43,7 @@ class AuthController extends ParentController
         $user->firstName = $input['firstName'];
         $user->lastName = $input['lastName'];
         $user->save();
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
-        $token->save();
-        $success['token'] =  $tokenResult->accessToken;
+        $success['token'] =  "true";
         Auth::login($user);
         return response()->json(['success'=>$success], ParentController::$successCode);
     }
@@ -58,7 +52,7 @@ class AuthController extends ParentController
         Auth::logout();
         return response()->json(['success' => 'true'], ParentController::$successCode);
     }
-    
+
     public function resetPassword(Request $request){
         if(Auth::check() && Auth::attempt(['email' => Auth::user()->email, 'password' => $request->input('password')], true)){
             $input = $request->all();
