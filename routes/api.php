@@ -19,20 +19,30 @@ Route::post('signup', 'App\Http\Controllers\AuthController@signup');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 
-/* Booking */
-Route::get('booking', 'App\Http\Controllers\BookingController@search');
-Route::get('booking/{id}', 'App\Http\Controllers\BookingController@get');
-Route::post('booking', 'App\Http\Controllers\BookingController@create');
-Route::delete('booking/{id}', 'App\Http\Controllers\BookingController@delete');
+Route::middleware('auth')->group(function () {
+    Route::post('resetPassword', 'App\Http\Controllers\AuthController@resetPassword');
 
-/* User */
-Route::get('user', 'App\Http\Controllers\UserController@getList');
-Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
+    /* Booking */
+    Route::get('booking', 'App\Http\Controllers\BookingController@search');
+    Route::get('booking/{id}', 'App\Http\Controllers\BookingController@get');
+    Route::post('booking', 'App\Http\Controllers\BookingController@create');
+    Route::delete('booking/{id}', 'App\Http\Controllers\BookingController@delete');
 
-/* Workstation */
-Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
+    /* User */
+    Route::get('user', 'App\Http\Controllers\UserController@getList');
+    Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
+
+    /* Workstation */
+    Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
+
+    /* Avatar */
+    Route::prefix('/profile_picture')->group(function () {
+        Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
+        Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
+        Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
+    });
+});
+
 
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
-
-

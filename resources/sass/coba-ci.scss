@@ -32,15 +32,35 @@
         justify-content: center;
         align-items: flex-end;
     }
+    &.coba-page-lower-padding{
+        padding-top: 50%;
+    }
 }
 
+.coba-home-icons-container{
 
+    height: 85px;
+    width: 40px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px;
+    flex-direction: column;
+    color: $coba-disabled-gray;
+}
+
+.coba-home-icons{
+    margin-bottom: 15px;
+}
 
 .coba-full-width {
     width: 100%;
 }
 .coba-container {
     padding: 20px;
+}
+.coba-no-top-padding{
+    padding: 0%;
 }
 .coba-footer-container {
     background-color: $coba-gray;
@@ -65,7 +85,15 @@
     &[class*="space-between"] {
         justify-content: space-between;
     }
+    &[class*="left"] {
+        justify-content: flex-start;
+    }
+    &[class*="right"]{
+        justify-content: flex-end;
+    }
 }
+
+
 
 /* HEADER */
 .coba-header {
@@ -74,7 +102,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $coba-gray;
+    background-color: $coba-dark-gray;
     color: white;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
@@ -82,11 +110,21 @@
 
     .coba-page-headline {
         font-size: 35px;
-        color: $coba-text-color;
     }
 
     &.coba-header-accent {
         background-color: $coba-yellow;
+    }
+    &.coba-header-square {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        height: 166px;
+        justify-content: flex-start;
+        align-items: flex-end;
+
+        .coba-page-headline {
+            font-size: 30px;
+        }
     }
 }
 /* CUSTOM HEADER for HOMESCREEN */
@@ -105,6 +143,7 @@
 
         .coba-page-headline {
             font-size: 24px;
+            color: $coba-text-color;
         }
     }
     .coba-container {
@@ -136,6 +175,10 @@
     font-size: 24px;
     margin: 10px 0;
 
+    &.coba-button-half-width {
+        width: 50%;
+        margin: 0 auto;
+    }
     &.coba-button-accent{
         background-color: $coba-yellow;
     }
@@ -143,8 +186,23 @@
         background-color: $coba-danger-red;
         color: $coba-gray;
     }
+    &.coba-button-green {
+        background-color: #4ABE5D;
+    }
+    &.coba-button-red {
+        background-color: #FF6666;
+    }
+    &.coba-button-orange {
+        background-color: #FFAD33;
+    }
+    &.coba-button-white{
+        background-color: $coba-white;
+    }
     &.coba-button-no-border {
         border: none;
+    }
+    &.coba-button-yellow-border{
+        border-color: $coba-yellow;
     }
     &.coba-button-big {
         height: 75px;
@@ -156,10 +214,22 @@
         height: 50px;
         width: 50px;
         border-radius: 25px;
+        &.coba-button-very-small {
+            height: 20px;
+            width: 20px;
+            border-radius: 10px;
+            font-size: 15px;
+            margin: 5px 5px;
+        }
         &.coba-button-small {
             height: 40px;
             width: 40px;
             border-radius: 20px;
+        }
+        &.coba-button-normal {
+            height: 60px;
+            width: 60px;
+            border-radius: 60px;
         }
         &.coba-button-big {
             height: 75px;
@@ -180,6 +250,9 @@
         border: 1px solid $coba-disabled-gray;
         color: $coba-disabled-gray;
     }
+    &.coba-button-distance-left-10{
+        margin-left: 10px;
+    }
 }
 .coba-button-container { /*In a Button container all buttons will be listed next to each other */
     display: flex;
@@ -194,16 +267,50 @@
         }
     }
 }
+.coba-button-text{ /* the button will only be shown as a text*/
+    color: $coba-text-color;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* DROP DOWN Styles */
+
+.coba-dropdown-container {
+    text-align: right;
+}
+
+.coba-dropdown-container .coba-dropdown-wrapper {
+    position: absolute;
+    bottom: -30px;
+    right: 0px;
+    padding-right: 10px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    z-index: 1;
+}
+
+.coba-dropdown-container .coba-dropdown-wrapper .coba-dropdown-content {
+    background-color: #fff;
+    padding: 7px 10px;
+    text-align: left;
+    border-radius: 10px;
+}
 
 
 /* INPUT Styles */
 .coba-input-container{
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
     text-align: left;
 }
 .coba-margin-top{
     margin-top: 3px;
+}
+.coba-margin-bottom{
+    margin-bottom: 10px;
 }
 // Input Feld welches eine dunklere Linie (unten) hat und einen hellen Hintergrund
 .coba-input {
@@ -247,11 +354,20 @@
 .coba-text-small {
     font-size: 10px;
 }
+.coba-text-medium {
+    font-size: 16px;
+}
 .coba-text-big {
     font-size: 18px;
 }
+.coba-text-bigger{
+    font-size: 20px;
+}
 .coba-text-very-big {
     font-size: 24px;
+}
+.coba-text-very-bigger{
+    font-size: 30px;
 }
 .coba-text-underlined {
     text-decoration: underline;
@@ -289,6 +405,26 @@
     &.coba-big-list {
 
     }
+}
+.coba-list-nobullets {
+    font-size: 14px;
+    color: #2C2C2C;
+    padding-left: 0px;
+    list-style: none;
+    /* Remove default bullets */
+}
+
+.coba-list-nobullets li::before {
+    content: none;
+}
+
+.coba-list-nobullets li.last {
+    border-bottom: none;
+}
+
+.coba-list-nobullets li {
+    padding: 2px 0;
+    border-bottom: 1px solid #EBEBEB;
 }
 
 
@@ -361,14 +497,16 @@
         background-color: #4ABE5D;
     }
     &.coba-utilization-indicator-red {
-        background-color: #FF6666;
+        background-color: #FF6666 !important;
+        pointer-events: none;
     }
     &.coba-utilization-indicator-orange {
         background-color: #FFAD33;
     }
-    &.coba-utilization-indicator-disabled {
+    &.coba-utilization-indicator-disabled, {
         color: $coba-disabled-gray;
         background-color: $coba-gray;
+        pointer-events: none;
     }
 
     &[class*="coba-utilization-indicator-arrow"] {
@@ -418,5 +556,35 @@
 
 /* Shadow Styles */
 .coba-shadow {
-    box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 10px 20px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+/* TAB Navigation */
+.coba-tab-navigation {
+    height: 40px;
+    width: 100%;
+    display: flex;
+
+    .coba-tab {
+        border-bottom: 1px solid $coba-dark-gray;
+        border-left: 1px solid $coba-dark-gray;
+        border-right: 1px solid $coba-dark-gray;
+        font-size: 20px;
+        color: $coba-disabled-gray;
+        background-color: $coba-gray;
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+
+        &.selected {
+            border-bottom: 1px solid $coba-gray;
+            border-left: 1px solid $coba-gray;
+            border-right: 1px solid $coba-gray;
+            color: $coba-text-color;
+            background-color: $coba-white;
+            align-items: center;
+        }
+    }
 }
