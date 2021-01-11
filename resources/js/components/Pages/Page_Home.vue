@@ -12,6 +12,7 @@
                 <b-icon class="coba-home-icons" icon="inbox-fill" font-scale="1.7"></b-icon>
             </router-link>
         </div>
+        <!-- Todays bookings -->
         <div  v-if="!load" class="coba-container coba-text-strong">
             <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
             <div v-else  class="coba-text-big">Keine Buchungen für heute</div>
@@ -24,13 +25,14 @@
             <span class="coba-text-very-big">Platz buchen</span>
             <button class="coba-button coba-button-round coba-button-normal coba-button-accent coba-button-distance-left-10"><router-link to="/booking/new/location"><b-icon icon="arrow-90deg-right" font-scale="1"></b-icon></router-link></button>
         </div>
+        <!-- all other bookings -->
         <div class="coba-container">
             <span class="coba-text-big">Kommende Buchungen:</span>
         </div>
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
-                    {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}} <!-- the booking information -->
+                    {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
                     <!-- Drop Down list with pencil icon to toggle it -->
                     <div class="coba-dropdown-container m-0 p-2" @click="toggleDropDown(booking)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
                         <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
