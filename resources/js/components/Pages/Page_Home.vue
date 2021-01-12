@@ -60,7 +60,8 @@
             </template>
             <template v-slot:body>
                 <div class="coba-modal-body">
-                    Sind sie sich sicher, dass sie diese Buchung entfernen möchten?
+                    Bist du dir sicher, dass du die Buchung entfernen möchtest?
+                    <!-- Sind sie sich sicher, dass sie diese Buchung entfernen möchten? -->
                 </div>
             </template>
             <template v-slot:footer>
