@@ -1,7 +1,8 @@
 <template>
     <div class="coba-page coba-homescreen">
         <div class="coba-container coba-header">
-            <h1 class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
+            <h1 v-if="this.prevRoute.path.includes('/signup')" class="coba-page-headline">Willkommen,<br>{{$store.getters.data.user.firstName}}</h1>
+            <h1 v-else class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
         <div class="coba-home-icons-container">
             <!-- this section is the part in home that contains the two icons settings and inbox!-->
@@ -79,6 +80,7 @@
 <script>
 import Spinner from "../Global/Spinner";
 import Modal from "../Elements/Modal";
+
 export default {
     name: "Page_Home",
     components: {Modal, Spinner},
@@ -92,6 +94,7 @@ export default {
                 id: "",
                 open: false
             },
+            prevRoute: {path: ""},
             modalDel: {
                 header: "",
                 open: false,
@@ -100,6 +103,11 @@ export default {
     },
     created() {
         this.fetchData();
+    },
+    beforeRouteEnter(to, from, next){
+        next(vm => {
+            vm.prevRoute = from;
+        })
     },
     methods: {
         fetchData() {
