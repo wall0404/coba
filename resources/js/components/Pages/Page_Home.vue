@@ -22,7 +22,7 @@
         <spinner v-else></spinner>
         <div class="coba-container coba-flex-right"> <!-- Button zur Sitzplatzbuchung -->
             <span class="coba-text-very-big">Platz buchen</span>
-            <button class="coba-button coba-button-round coba-button-normal coba-button-accent coba-button-distance-left-10"><router-link to="/booking/new/location"><b-icon icon="arrow-90deg-right" font-scale="1"></b-icon></router-link></button>
+            <button class="coba-button coba-button-round coba-button-normal coba-button-accent coba-button-distance-left-10 coba-button-no-border"><b-icon icon="arrow-90deg-right" font-scale="1"></b-icon><router-link to="/booking/new/location"></router-link></button>
         </div>
         <div class="coba-container">
             <span class="coba-text-big">Kommende Buchungen:</span>

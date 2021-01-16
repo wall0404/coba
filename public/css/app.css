@@ -11177,6 +11177,12 @@ a.text-dark:focus {
   border-radius: 100%;
 }
 
+.coba-button.coba-button-round[class*=coba-button-arrow] {
+  content: "\21B5";
+  color: #000;
+  transform: rotate(180deg);
+}
+
 .coba-button:focus {
   outline: none;
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
@@ -11395,7 +11401,19 @@ a.text-dark:focus {
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-selected {
-  border: 1px solid #8C8C8C;
+  border: 2px solid #8C8C8C;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-selected-green {
+  background-color: #1b9236 !important;
+  font-weight: bold;
+  border: 2px solid #147129;
+}
+
+.coba-utilization-indicator.coba-utilization-indicator-selected-orange {
+  background-color: #ff9900 !important;
+  font-weight: bold;
+  border: 2px solid #e28600;
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-big {
