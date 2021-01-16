@@ -92,16 +92,25 @@
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-if="selectedLocations.length > 0">
                 <div v-for="workstation in workLocations[selectedLocations[0]-1].workstations" :key="workstation.id" class="seat-container">
-                    <div v-if="{{workstation:favorited}}"  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="openWorkstationModal(workstation )">
+
+                    <template v-if="true">
+                    <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="deleteFavoriteSeat(workstation)">
                         <b-icon  icon="star-fill" font-scale="1.5" style="color:#FFC931"></b-icon>
                     </div>
+                    <div class="coba-flex-space-evenly m-0 p-2" >
+                        <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
+                    </div>
+                    </template>
 
-                    <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="openWorkstationModal(workstation )">
+                    <template v-else>
+                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="openWorkstationModal(workstation )">
                         <b-icon  icon="star" font-scale="1.5" style="color:#FFC931"></b-icon>
                     </div>
                     <div class="coba-flex-space-evenly m-0 p-2" >
                         <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
                     </div>
+                    </template>
+
                 </div>
                 </template>
             </div>
@@ -346,16 +355,32 @@ export default {
             this.modal.footer = workstation ;
             this.modal.open = true ;
         },
-
-
+        deleteFavoriteSeat( workstation){
+            fetch('/api/unfavorite/', {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    id: workstation.id,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            })  .then( res => res.json())
+                .then( res => {
+                    if ( res.success){
+                        console.log('success') ;
+                        this.isFavorite = false ;
+                    }
+                }).catch(error =>{
+                this.error = error;
+                console.log(error) ;
+            })
+        },
         addFavoriteSeat( workstation){
-            // ToDo
-            console.log(workstation.id) ;
-
             fetch('/api/favorite/', {
                 method: 'POST',
                 body: JSON.stringify({
-                    password: workstation.id,
+                    id: workstation.id,
                 }),
                 headers: {
                     'content-type': 'application/json',

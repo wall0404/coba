@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
 
     /* FavoriteSeats */
     Route::post('favorite', 'App\Http\Controllers\FavoriteSeatController@favoriteSeat');
-    Route::post('unfavorite', 'App\Http\Controllers\FavoriteSeatController@unFavoriteSeat');
+    Route::delete('unfavorite', 'App\Http\Controllers\FavoriteSeatController@unFavoriteSeat');
 });
 
 

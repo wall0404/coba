@@ -25,7 +25,7 @@ class FavoriteSeatController extends Controller
     /**
      * Unfavorite a Seat
      *
-     * @param  Workstation $work
+     * @param  Request $request
      * @return Response
      */
     public function unFavoriteSeat(Request $request)
