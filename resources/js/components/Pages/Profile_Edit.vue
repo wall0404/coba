@@ -22,7 +22,7 @@
 
             <hr>
         </div>
-
+        <!--
         <div class="coba-container">
             <span class="coba-page-text">Vorname: {{$store.getters.data.user.firstName}}</span>
         </div>
@@ -32,8 +32,8 @@
         <div class="coba-container">
             <span class="coba-page-text">Email: {{$store.getters.data.user.email}}</span>
         </div>
-
-        <div class="coba-container">
+        -->
+        <div class="coba-container ">
             <span class="coba-text-big">Passwort ändern:
             </span>
             <button @click.prevent="clickEvent" class="settings-button" ><b-icon icon="pencil-fill"></b-icon> </button>
@@ -41,7 +41,7 @@
         <!-- Password modal -->
         <div id="modal" v-if="showPasswordModal" >
                 <div  class="modal-overlay" >
-                <hr>
+                <hr class="mb-0 mt-0">
                     <div class="coba-container">
                         <div class="row">
                             <div class="col-sm-4" >
@@ -71,10 +71,44 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
                 </div>
         </div>
 
+
+        <!-- Fav Seat -->
+        <div class="coba-container">
+            <hr>
+            <span class="coba-text-big">Favoritenplätze bearbeiten:</span>
+        </div>
+        <div class="coba-tab-navigation">
+            <div v-for="(location, index) in $store.getters.locations" :class="{'selected':selectedLocations.find(id => id === location.id)}" class="coba-tab coba-tab-adjust" :key="index" @click="selectLocation(location.id)">
+                {{ location.name }}
+            </div>
+        </div>
+        <!-- Seats -->
+        <div class="coba-container px-0">
+            <!--ToDo -->
+            <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
+            <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
+                <template v-if="selectedLocations.length > 0">
+                <div v-for="workstation in workLocations[selectedLocations[0]-1].workstations" :key="workstation.id" class="seat-container">
+                    <div v-if="{{workstation:favorited}}"  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="openWorkstationModal(workstation )">
+                        <b-icon  icon="star-fill" font-scale="1.5" style="color:#FFC931"></b-icon>
+                    </div>
+
+                    <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="openWorkstationModal(workstation )">
+                        <b-icon  icon="star" font-scale="1.5" style="color:#FFC931"></b-icon>
+                    </div>
+                    <div class="coba-flex-space-evenly m-0 p-2" >
+                        <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
+                    </div>
+                </div>
+                </template>
+            </div>
+        </div>
+
+
+        <!-- password confirmation modal -->
         <modal :show-modal="showConfirmationModal" @modal-close-event="closeConfModal">
             <template v-slot:header>
                 <div class="coba-container coba-no-top-padding coba-flex-column">
@@ -94,38 +128,29 @@
                 </div>
             </template>
         </modal>
-<!--
-        <div class="coba-container">
-            <span class="coba-page-text">Favoritenplätze:</span>
-            <button class="settings-button"><b-icon icon="pencil-fill"></b-icon> </button>
-            <div class="selection">
-                <div id="nav" class="nav">
-                    <ul class="list-container">
-                        <li ><a href="#">Tower</a>
-                            <ul v-for="works in location[0].workstations">
-                                <li><router-link to="overTheRainbow">Platz: {{works.name}}</router-link></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Campus</a>
-                            <ul v-for="works in location[1].workstations">
-                                <li><router-link to="overTheRainbow">Platz: {{works.name}}</router-link></li>
-                            </ul>
-                        </li>
-                    </ul>
+
+        <!-- WorkStationModal -->
+        <modal :show-modal="modal.open" @modal-close-event="closeWorkstationModal()">
+            <template v-slot:header>
+                <div class="coba-container coba-no-top-padding coba-flex-column">
+                    <b-icon icon="star-fill" font-scale="3" style="color:#FFC931"></b-icon>
                 </div>
-            </div>
-        </div>
-         alternative DropDown
-        <div class="coba-container">
-            <vue-dropdown :config="config"></vue-dropdown>
-        </div>
+            </template>
 
+            <template v-slot:body>
+                <div class="coba-modal-body">
+                    Möchtest Du Platz {{modal.body}} zu Deinen Favoriten hinzufügen?
+                </div>
+            </template>
 
-        <div class="coba-container">
-            <span class="coba-page-text">Lieblingsbuddies:</span>
-            <button class="settings-button"><b-icon icon="pencil-fill"></b-icon> </button>
-        </div>
-        -->
+            <template v-slot:footer>
+                <div> <!-- ToDo -->
+                    <button value="1" id="btn-conf-work" class="coba-button" @click="addFavoriteSeat(modal.footer)">Ja</button>
+                    <button value="0" id="btn-decl-work" class="coba-button" @click="closeWorkstationModal">Nein</button>
+                </div>
+            </template>
+        </modal>
+
     </div>
 
 </template>
@@ -135,26 +160,61 @@
 import {store} from "../../_helpers/store";
 import Modal from "../Elements/Modal";
 import Spinner from "../Global/Spinner";
+import axios from 'axios';
 
 export default {
     name: "Profile_Edit",
     components: {Modal, Spinner},
+    props:['favorited'],
     data(){
         return{
             showPasswordModal: false,
             location:[],
             load:false,
+
             showPassword1: false,
             showPassword2: false,
             showPassword3: false,
             wrongPassword: false ,
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
+
             componentKey: 0 ,
+
             showConfirmationModal: false ,
+            workStationModal: false ,
+
+            selectedLocations: [],
+            workLocations: [] = this.$store.getters.data.locations ,
+            modal:{
+                open:false ,
+                body:{},
+                footer:[],
+            },
+            isFavorited: '',
         }
+
+    },
+    computed: {
+        isFavorite() {
+            return this.favorited;
+        },
+    },
+    mounted() {
+        this.isFavorited = this.isFavorite ? true : false;
     },
     methods:{
+        selectLocation(location_id) {
+            if ( this.selectedLocations.length === 0) {
+                this.selectedLocations.push(location_id)
+            }
+            else {
+                this.selectedLocations.pop() ;
+                this.selectedLocations.push(location_id) ;
+            }
+
+        },
+
         uploadPic() {
             this.load = true;
             let input = this.$refs.upload;
@@ -208,6 +268,9 @@ export default {
             if ( this.showPasswordModal) {
                 this.$nextTick(function () {
                     this.$refs.search1.focus();
+                        this.showPassword1= false;
+                        this.showPassword2= false;
+                        this.showPassword3= false;
                 })
             }
         },
@@ -276,6 +339,42 @@ export default {
         },
         closeConfModal(){
             this.showConfirmationModal = false ;
+        },
+
+        openWorkstationModal( workstation){
+            this.modal.body = workstation.name ;
+            this.modal.footer = workstation ;
+            this.modal.open = true ;
+        },
+
+
+        addFavoriteSeat( workstation){
+            // ToDo
+            console.log(workstation.id) ;
+
+            fetch('/api/favorite/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    password: workstation.id,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            })  .then( res => res.json())
+                .then( res => {
+                    if ( res.success){
+                        console.log('success') ;
+                        this.isFavorite = true ;
+                        this.modal.open = false ;
+                    }
+                }).catch(error =>{
+                    this.error = error;
+                    console.log(error) ;
+            })
+        },
+        closeWorkstationModal( ){
+                this.modal.open = false ;
         }
     },
 }
@@ -317,14 +416,27 @@ export default {
 .inputFile:focus{
     outline: 1px dotted #000;
 }
-
 .settings-button{
     float:right;
     background-color: transparent;
 }
-.list-container{
-    display: flex;
+.coba-tab-navigation {
+    flex-grow: 1;
 }
+.seat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.coba-tab-adjust{
+    border-top: 1px solid #8C8C8C;;
+}
+
+
+
 ul{
     list-style:none;
 }
@@ -345,7 +457,6 @@ a{
 }
 
 
-
 ul li ul{
     outline:none;
     display:none;
@@ -356,7 +467,6 @@ ul li ul{
     border:1px
     solid #CCC;
 }
-
 ul li ul li a:link,ul li ul li a:visited{
     background-color:#EEEEEE;
 }

@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     /* User */
     Route::get('user', 'App\Http\Controllers\UserController@getList');
     Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
+    Route::get('my_favorites', 'App\Http\Controllers\UserController@myFavorites');
 
     /* Workstation */
     Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
@@ -41,6 +42,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
         Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
     });
+
+    /* FavoriteSeats */
+    Route::post('favorite', 'App\Http\Controllers\FavoriteSeatController@favoriteSeat');
+    Route::post('unfavorite', 'App\Http\Controllers\FavoriteSeatController@unFavoriteSeat');
 });
 
 

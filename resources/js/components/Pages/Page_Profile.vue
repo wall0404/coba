@@ -2,7 +2,7 @@
     <div class="coba-page">
         <div class="user-container mb-5 mt-4" >
             <router-link class="setting-button "  to="/profile/settings">
-                <b-icon icon="pencil" ></b-icon>
+                <b-icon icon="pencil" font-scale="1.3"></b-icon>
             </router-link>
             <!-- Profile Pic -->
             <div>

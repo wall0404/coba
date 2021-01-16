@@ -41,6 +41,7 @@ export default {
             users: [],
             id: null ,
             bookings:[],
+            allBookings:[],
             today_date: new Date().toISOString().slice(0, 10),
             today_hours: new Date().toISOString().slice(11,19),  // ! standard: UMT+0
         }
@@ -98,6 +99,30 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
+        },
+        // will be used for checking seats
+        getAllBookings(){
+            this.load = true ;
+            fetch('/api/booking/?filter[date][min]=' +this.today_date  , {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            }).then(response => response.json())
+                .then(response => {
+                    if (response.success) {
+                        this.allBookings = response.success;
+                        this.load = false;
+                    } else {
+                        this.error = true;
+                        this.load = false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.load = false;
+                })
         }
 
     },
@@ -105,6 +130,7 @@ export default {
         this.loadUsers();
         this.loadID() ;
         this.getTeamMemberBookings() ;
+        this.getAllBookings() ;
     }
 
 }

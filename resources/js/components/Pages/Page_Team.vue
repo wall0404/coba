@@ -1,15 +1,20 @@
 <template>
 
     <div class="coba-page">
-        <div class="coba-header  position-relative">
-            <h2 class="coba-page-headline">Team</h2>
-        </div>
-        <div class="filter-container w-100  coba-flex-space-evenly mb-5">
-            <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
+       <div style="position: fixed ; width: 100%  ">
+          <div class="coba-header  position-relative">
+             <h2 class="coba-page-headline">Team</h2>
+          </div>
+          <div class="filter-container w-100  coba-flex-space-evenly mb-5">
+              <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
+          </div>
+       </div>
+        <div style="height: 300px">
+
         </div>
 
         <spinner v-if="load"></spinner>
-        <div v-else class="coba-container coba-smaller " v-for="user in users" >
+        <div v-else class="coba-container coba-smaller" v-for="user in users" >
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
                 <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
@@ -96,8 +101,11 @@ export default {
                             if( this.searchQuery){
                                 this.users = res.success.filter(user =>
                                     (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())) ;
+                                    // scroll to top -> needs to be checked if it works on app too
+                                    window.scrollTo(0,0);
                             }else{
                                 this.users = res.success ;
+                                window.scrollTo(0,0);
                             }
                         })
                 },300) ;

@@ -12,7 +12,7 @@
 
             <div class="coba-flex-space-evenly">
                 <button class="coba-button-round coba-button">Old</button>
-                <button class="coba-button-round coba-button">Fav</button>
+                <router-link :to="'/booking/new/location/favorite'"><button class="coba-button-round coba-button">Fav</button></router-link>
             </div>
         </div>
     </div>
