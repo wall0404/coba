@@ -167,7 +167,7 @@ export default {
         border-color: orange;
     }
     .calendar-day-of-week.pastDays {
-        background-color: gray;
+        background-color: #757575;
     }
 
     .header .calendar-day-of-week {
