@@ -66,6 +66,7 @@ export default {
                     if(res.success) {
                         localStorage.token = res.success.token;
                         this.$store.commit('refreshUser');
+                        this.$store.commit('getData'); //to get favorite seat info
                         this.$router.push('/home')
                     }
                     else {
