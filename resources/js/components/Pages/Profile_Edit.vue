@@ -91,9 +91,9 @@
             <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-if="selectedLocations.length > 0">
-                <div v-for="workstation in workLocations[selectedLocations[0]-1].workstations" :key="workstation.id" class="seat-container">
+                <div  name="template" ref="template" v-for="workstation in workLocations[selectedLocations[0]-1].workstations" :key="workstation.id" class="seat-container">
 
-                    <template v-if="false">
+                    <template v-if="workstation.isFavorite">
                     <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="deleteFavoriteSeat(workstation)">
                         <b-icon  icon="star-fill" font-scale="1.5" style="color:#FFC931"></b-icon>
                     </div>
@@ -103,7 +103,7 @@
                     </template>
 
                     <template v-else>
-                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="openWorkstationModal(workstation )">
+                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="addFavoriteSeat(workstation )">
                         <b-icon  icon="star" font-scale="1.5" style="color:#FFC931"></b-icon>
                     </div>
                     <div class="coba-flex-space-evenly m-0 p-2" >
@@ -127,7 +127,7 @@
 
             <template v-slot:body>
                 <div class="coba-modal-body">
-                    Ihr Passwort wurde erfolgreich geändert!
+                    Dein Passwort wurde erfolgreich geändert!
                 </div>
             </template>
 
@@ -138,27 +138,6 @@
             </template>
         </modal>
 
-        <!-- WorkStationModal -->
-        <modal :show-modal="modal.open" @modal-close-event="closeWorkstationModal()">
-            <template v-slot:header>
-                <div class="coba-container coba-no-top-padding coba-flex-column">
-                    <b-icon icon="star-fill" font-scale="3" style="color:#FFC931"></b-icon>
-                </div>
-            </template>
-
-            <template v-slot:body>
-                <div class="coba-modal-body">
-                    Möchtest Du Platz {{modal.body}} zu Deinen Favoriten hinzufügen?
-                </div>
-            </template>
-
-            <template v-slot:footer>
-                <div> <!-- ToDo -->
-                    <button value="1" id="btn-conf-work" class="coba-button" @click="addFavoriteSeat(modal.footer)">Ja</button>
-                    <button value="0" id="btn-decl-work" class="coba-button" @click="closeWorkstationModal">Nein</button>
-                </div>
-            </template>
-        </modal>
 
     </div>
 
@@ -169,7 +148,7 @@
 import {store} from "../../_helpers/store";
 import Modal from "../Elements/Modal";
 import Spinner from "../Global/Spinner";
-import axios from 'axios';
+import Vue from 'vue';
 
 export default {
     name: "Profile_Edit",
@@ -191,27 +170,13 @@ export default {
             componentKey: 0 ,
 
             showConfirmationModal: false ,
-            workStationModal: false ,
 
             selectedLocations: [],
             workLocations: [] = this.$store.getters.data.locations ,
-            modal:{
-                open:false ,
-                body:{},
-                footer:[],
-            },
-            isFavorited: '',
         }
 
     },
-    computed: {
-        isFavorite() {
-            return this.favorited;
-        },
-    },
-    mounted() {
-        this.isFavorited = this.isFavorite ? true : false;
-    },
+
     methods:{
         selectLocation(location_id) {
             if ( this.selectedLocations.length === 0) {
@@ -350,34 +315,8 @@ export default {
             this.showConfirmationModal = false ;
         },
 
-        openWorkstationModal( workstation){
-            this.modal.body = workstation.name ;
-            this.modal.footer = workstation ;
-            this.modal.open = true ;
-        },
-        getInfoAboutSeat(workstation){
-            fetch('/api/getInfo' , {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: workstation.id,
-                }),
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.token
-            }}).then( res => res.json()).then( res => {
-                if(res.success) {
-                    console.log(workstation.id)
-                    return true;
-                } else {
-                    console.log( workstation.id  + " failed")
-                    return false
-                }
-                return false ;
-            })
-        },
-
         deleteFavoriteSeat( workstation){
-            fetch('/api/unfavorite/', {
+            fetch('/api/workstation/favorite', {
                 method: 'DELETE',
                 body: JSON.stringify({
                     id: workstation.id,
@@ -389,14 +328,14 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        console.log('success') ;
-                        this.isFavorite = false ;
+                        console.log('delete_success') ;
                     }
                 }).catch(error =>{
                 this.error = error;
                 console.log(error) ;
             })
         },
+
         addFavoriteSeat( workstation){
             fetch('/api/workstation/favorite', {
                 method: 'POST',
@@ -410,18 +349,13 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        console.log('success') ;
-                        this.isFavorite = true ;
-                        this.modal.open = false ;
+                        console.log('add_success') ;
                     }
                 }).catch(error =>{
                     this.error = error;
                     console.log(error) ;
             })
         },
-        closeWorkstationModal( ){
-                this.modal.open = false ;
-        }
     },
 }
 </script>

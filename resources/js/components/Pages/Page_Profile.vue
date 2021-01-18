@@ -21,9 +21,12 @@
             <div class="coba-border-rounded p-2 user-data-templ">
                      <ol>
                          <li class="listHead">Favorisierte Standorte</li>
-                         <li class="listInput">Tower_1 </li>
-                         <li class="listInput">Tower_2 </li>
-                         <li class="listInput">DC_9    </li>
+                         <template v-for="works in workstations">
+                             <li v-if="works.isFavorite" class="listInput">Tower {{ works.name }}</li>
+                         </template>
+                         <template v-for="works in $store.getters.data.locations[1].workstations">
+                             <li v-if="works.isFavorite" class="listInput">Digital Campus {{ works.name }} </li>
+                         </template>
                      </ol>
             </div>
             <div class="coba-border-rounded p-2 user-data-templ">
@@ -50,7 +53,11 @@ export default {
         return{
             load: false ,
             user: [],
+            workstations: [] ,
         }
+    },
+    created() {
+        this.workstations = store.getters.data.locations[0].workstations ;
     },
     methods:{
         getUser(){

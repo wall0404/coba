@@ -34,7 +34,7 @@ class FavoriteSeatController extends Controller
         $id = $request->input() ;
         Auth::user()->favorites()->detach($id);
 
-        return response()->json(['success']) ;
+        return response()->json(['success' => true], ParentController::$successCode);
     }
 
 

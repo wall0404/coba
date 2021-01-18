@@ -6,7 +6,25 @@
         <div class="coba-container px-0">
             <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
-                <div v-for="workstation in workstations" :key="workstation.id" class="seat-container">
+                <!-- :key  wurde entfernt-->
+                <template v-for="workstation in workstations"  >
+                    <div v-if="workstation.isFavorite" class="seat-container">
+                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                        <b-icon icon="star-fill" class="" style="color:#FFC931 " font-scale="2"></b-icon>
+                    </router-link>
+                    <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
+                        <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
+                        <button class="coba-button-very-small coba-button-round coba-button">i</button>
+                    </div>
+                    </div>
+                </template>
+            </div>
+
+            <div v-if="!load" class="coba-container mt-0 pt-0 mb-2 "><hr class="m-0 p-0" style=""></div>
+            <!-- code duplication at it´s worst -->
+            <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
+                <template v-for="workstation in workstations"  >
+                    <div v-if="! workstation.isFavorite" class="seat-container">
                     <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
                         <b-icon icon="plus" font-scale="2"></b-icon>
                     </router-link>
@@ -14,10 +32,16 @@
                         <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
                         <button class="coba-button-very-small coba-button-round coba-button">i</button>
                     </div>
-                </div>
+                    </div>
+                </template>
+            </div>
+            <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
+
                 <modal :show-modal="modal.open" @modal-close-event="closeModal">
                     <template v-slot:header>
-                        <div class="coba-modal-header">{{modal.header}}</div>
+                        <div class="coba-modal-header">
+                            <div class="coba-flex-space-evenly">{{modal.header.text}} <b-icon @click="deleteFavoriteSeat(modal.header.workstation)" v-if="modal.header.isFav" class="mb-1" style="color:#FFC931" font-scale="1.5" :icon="modal.header.isFav ? 'star-fill' : 'star'"></b-icon> <b-icon @click="addFavoriteSeat(modal.header.workstation)" v-else class="mb-1" style="color:#FFC931" font-scale="1.5" :icon="modal.header.isFav ? 'star-fill' : 'star'"></b-icon> </div>
+                        </div>
                     </template>
                     <template v-slot:body>
                         <div class="coba-modal-body">
@@ -42,6 +66,7 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import Modal from "../../Elements/Modal";
+import Vue from "vue";
 
 export default {
     name: "Page_WorkstationSelection",
@@ -57,7 +82,11 @@ export default {
             date_in_7_days: "",
             modal: {
                 open: false,
-                header: "",
+                header: {
+                    text: "" ,
+                    isFav: false ,
+                    workstation:[] ,
+                },
                 body: {}
             },
             location_name : "",
@@ -181,8 +210,15 @@ export default {
         openModal(workstation) {
             //TODO
             this.modal.body = [];
-            this.modal.header = workstation.name + " - Übersicht"; //richtet Name des Pop-ups ein
-
+            this.modal.header.text = workstation.name + " - Übersicht"; //richtet Name des Pop-ups ein
+            if ( workstation.isFavorite){
+                this.modal.header.isFav = true ;
+                this.modal.header.workstation = workstation ;
+            }
+            else{
+                this.modal.header.isFav = false ;
+                this.modal.header.workstation = workstation ;
+            }
             let date = new Date();
             let date_as_string = "";
             for(let i = 0; i < 8; i++) {
@@ -207,11 +243,55 @@ export default {
         },
         closeModal() {
             this.modal.open = false;
+            this.$router.go() ; 
         },
         dateToDayOfMonth(date) {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
             return days[date.getUTCDay()];
-        }
+        },
+        deleteFavoriteSeat( workstation){
+            fetch('/api/workstation/favorite', {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    id: workstation.id,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            })  .then( res => res.json())
+                .then( res => {
+                    if ( res.success){
+                        console.log('delete_success') ;
+                        this.modal.header.isFav = ! this.modal.header.isFav  ;
+                    }
+                }).catch(error =>{
+                this.error = error;
+                console.log(error) ;
+            })
+        },
+
+        addFavoriteSeat( workstation){
+            fetch('/api/workstation/favorite', {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: workstation.id,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            })  .then( res => res.json())
+                .then( res => {
+                    if ( res.success){
+                        console.log('add_success') ;
+                        this.modal.header.isFav = ! this.modal.header.isFav  ;
+                    }
+                }).catch(error =>{
+                this.error = error;
+                console.log(error) ;
+            })
+        },
     }
 }
 </script>
