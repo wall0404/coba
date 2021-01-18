@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FavoriteSeatController extends Controller
 {
@@ -12,14 +13,14 @@ class FavoriteSeatController extends Controller
      * Favorite Seat
      *
      * @param  Request $request
-     * @return Response
+     *
      */
-    public function favoriteSeat(Request $request)
+    public function addFavoriteSeat(Request $request)
     {
         $id = $request->input() ;
         Auth::user()->favorites()->attach($id);
 
-        return response()->json(['success']) ;
+        return response()->json(['success' => true], ParentController::$successCode);
     }
 
     /**
@@ -28,11 +29,13 @@ class FavoriteSeatController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function unFavoriteSeat(Request $request)
+    public function removeFavoriteSeat(Request $request)
     {
         $id = $request->input() ;
         Auth::user()->favorites()->detach($id);
 
         return response()->json(['success']) ;
     }
+
+
 }

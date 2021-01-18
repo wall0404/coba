@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Favorite;
 use App\Models\Workstation;
 use Illuminate\Http\Request;
 
@@ -37,4 +38,6 @@ class WorkstationController extends ParentController
 
         return response()->json(['success'=>$list], ParentController::$successCode);
     }
+
+
 }

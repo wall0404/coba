@@ -36,6 +36,11 @@ Route::middleware('auth')->group(function () {
     /* Workstation */
     Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
 
+    /* FavoriteSeats */
+    Route::post('workstation/favorite', 'App\Http\Controllers\FavoriteSeatController@addFavoriteSeat');
+    Route::delete('workstation/favorite', 'App\Http\Controllers\FavoriteSeatController@removeFavoriteSeat');
+    Route::post('getInfo' , 'App\Http\Controllers\FavoriteSeatController@getInfo') ;
+
     /* Avatar */
     Route::prefix('/profile_picture')->group(function () {
         Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
@@ -43,9 +48,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
     });
 
-    /* FavoriteSeats */
-    Route::post('favorite', 'App\Http\Controllers\FavoriteSeatController@favoriteSeat');
-    Route::delete('unfavorite', 'App\Http\Controllers\FavoriteSeatController@unFavoriteSeat');
 });
 
 

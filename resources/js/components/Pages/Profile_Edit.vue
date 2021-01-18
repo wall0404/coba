@@ -93,7 +93,7 @@
                 <template v-if="selectedLocations.length > 0">
                 <div v-for="workstation in workLocations[selectedLocations[0]-1].workstations" :key="workstation.id" class="seat-container">
 
-                    <template v-if="true">
+                    <template v-if="false">
                     <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="deleteFavoriteSeat(workstation)">
                         <b-icon  icon="star-fill" font-scale="1.5" style="color:#FFC931"></b-icon>
                     </div>
@@ -355,6 +355,27 @@ export default {
             this.modal.footer = workstation ;
             this.modal.open = true ;
         },
+        getInfoAboutSeat(workstation){
+            fetch('/api/getInfo' , {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: workstation.id,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+            }}).then( res => res.json()).then( res => {
+                if(res.success) {
+                    console.log(workstation.id)
+                    return true;
+                } else {
+                    console.log( workstation.id  + " failed")
+                    return false
+                }
+                return false ;
+            })
+        },
+
         deleteFavoriteSeat( workstation){
             fetch('/api/unfavorite/', {
                 method: 'DELETE',
@@ -377,7 +398,7 @@ export default {
             })
         },
         addFavoriteSeat( workstation){
-            fetch('/api/favorite/', {
+            fetch('/api/workstation/favorite', {
                 method: 'POST',
                 body: JSON.stringify({
                     id: workstation.id,
