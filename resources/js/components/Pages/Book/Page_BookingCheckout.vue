@@ -111,6 +111,12 @@ export default {
                     this.validation_error = res.error;
                     this.error = false;
                     this.success = res.success;
+
+                    //clear changes
+                    this.$store.commit('autoSaveInstance', {
+                        workstation_id: this.bookings[0].workstation.id,
+                        days: []
+                    })
                 })
                 .catch(error => {
                     console.log(error);

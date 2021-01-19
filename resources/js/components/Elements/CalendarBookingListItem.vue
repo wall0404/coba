@@ -10,7 +10,7 @@
                                 'coba-utilization-indicator-orange':color==='orange',
                                 'coba-utilization-indicator-disabled':this.today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
-                     :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDateStr: date }}">
+                     :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj] }}">
             <b-icon icon="plus"></b-icon>
         </router-link>
         <router-link class="table-item icon" v-else
@@ -32,6 +32,9 @@ export default {
             booking: null,
             color: "green",
             today: new Date(),
+            dayObj: {
+                date: new Date(this.date)
+            }
         }
     },
     created() {

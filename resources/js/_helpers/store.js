@@ -70,11 +70,11 @@ export const store = new Vuex.Store({
             state.data.user = null;
             localStorage.removeItem('token')
         },
-        autoSaveInstance(state, name, bookings) {
+        autoSaveInstance(state, data) {
             if(typeof state.data.autoSave === 'undefined')
                 state.data.autoSave = {};
 
-            state.data.autoSave['name'] = bookings;
+            state.data.autoSave[data.workstation_id] = data.days;
         },
         markChanges(state) {
             state.changes = true;

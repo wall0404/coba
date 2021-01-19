@@ -38,7 +38,7 @@ export default {
                 "Profile", "TeamMember",
             ],
             checkTwice: [
-                "BookingConfirmation",
+
             ],
             modal_open: false,
         }

@@ -5,7 +5,7 @@
         </div>
         <div v-if="!load">
             <div class="coba-container">
-                <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-date-str="preSelectedDateStr"></DayPicker>
+                <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-days="preSelectedDays"></DayPicker>
             </div>
             <div class="coba-container">
                 <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
@@ -25,7 +25,7 @@ import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
-    props: ["bookings", 'preSelectedDateStr'],
+    props: ["bookings", 'preSelectedDays'],
     components: {TimePicker, DayPicker, Spinner},
     data() {
         return {
@@ -40,8 +40,13 @@ export default {
             //fetch Data
             this.fetchData();
         }
-        else
-            localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
+        if(typeof this.preSelectedDays === "undefined")
+            try {
+                this.preSelectedDays = this.$store.getters.data.autoSave[this.$route.params.workstation_id];
+            }
+            catch (e) {
+                this.preSelectedDays = []
+            }
 
         this.fetchWorkstation();
     },
@@ -115,8 +120,22 @@ export default {
                     }
                 }
             }
+
+            //save changes
+            this.$store.commit('autoSaveInstance', {
+                workstation_id: this.$route.params.workstation_id,
+                days: this.days
+            });
+
         },
         submit() {
+            //save changes
+            this.$store.commit('autoSaveInstance', {
+                workstation_id: this.$route.params.workstation_id,
+                days: this.days
+            });
+
+
             //go to confirmation
             let days = this.days;
             this.$router.push({
