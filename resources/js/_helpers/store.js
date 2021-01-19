@@ -68,6 +68,12 @@ export const store = new Vuex.Store({
         clearUser (state) {
             state.data.user = null;
             localStorage.removeItem('token')
+        },
+        autoSaveInstance(state, name, bookings) {
+            if(typeof state.data.autoSave === 'undefined')
+                state.data.autoSave = {};
+
+            state.data.autoSave['name'] = bookings;
         }
     },
     getters: {
