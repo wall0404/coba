@@ -140,6 +140,7 @@ export default {
         flex-grow: 1;
         display: flex;
         justify-content: space-evenly;
+        font-weight: 650;
     }
     .calendar-day-of-week {
         text-align: center;
@@ -159,6 +160,7 @@ export default {
     }
     .calendar-day-of-week.weekend {
         color: gray;
+        font-weight: 400;
     }
     .calendar-day-of-week.selected {
         background-color: orange;
