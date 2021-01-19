@@ -12,7 +12,7 @@
                 <div class="calendar-day-of-week weekend"><span>S</span></div>
             </div>
             <div class="calendar-week" v-for="week in calendar_dates">
-                <div class="calendar-day-of-week" v-for="(day, dayOfWeek) in week" :class="{'booked':my_bookings.find(x => x.date === day.date), 'weekend':(dayOfWeek===5||dayOfWeek===6), 'pastDays': day.date<today.toISOString().slice(0, 10),'today':day.date===today.toISOString().slice(0, 10), 'selected':selectedDate===day.date}" @click="selectDate(day.date)">
+                <div class="calendar-day-of-week" v-for="(day, dayOfWeek) in week" :class="{'booked':my_bookings.find(x => x.date === day.date), 'weekend':(dayOfWeek===5||dayOfWeek===6) || day.date<today.toISOString().slice(0, 10),'today':day.date===today.toISOString().slice(0, 10), 'selected':selectedDate===day.date}" @click="selectDate(day.date)">
                      <span>{{day.day}}</span>
                 </div>
             </div>
@@ -165,9 +165,6 @@ export default {
     }
     .calendar-day-of-week.today {
         border-color: orange;
-    }
-    .calendar-day-of-week.pastDays {
-        background-color: #757575;
     }
 
     .header .calendar-day-of-week {
