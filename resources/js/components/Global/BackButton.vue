@@ -38,15 +38,17 @@ export default {
                 "Profile", "TeamMember",
             ],
             checkTwice: [
-                "BookingConfirmation", "DateTimeSelection",
+                "BookingConfirmation",
             ],
             modal_open: false,
         }
     },
     methods: {
         triggerBack(force) {
-            if (!force && this.checkTwice.find(name => name === this.$route.name))
+            if (!force && (this.checkTwice.find(name => name === this.$route.name) || this.$store.getters.changes)) {
                 this.modal_open = true;
+                this.$store.commit('clearChanges');
+            }
             else {
                 this.$router.go(-1);
                 this.closeModal();

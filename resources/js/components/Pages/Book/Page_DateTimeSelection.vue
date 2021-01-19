@@ -45,6 +45,9 @@ export default {
 
         this.fetchWorkstation();
     },
+    destroyed() {
+        this.$store.commit('clearChanges');
+    },
     methods: {
         fetchData() {
             this.load = true;
@@ -101,6 +104,7 @@ export default {
             }
         },
         callbackPicker(day) {
+            this.$store.commit('markChanges');
             if (day.selected)
                 this.days.push(day);
             else {

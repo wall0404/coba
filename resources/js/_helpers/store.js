@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
     state: {
         data: {},
         ready: 1,
+        changes: false,
     },
     mutations: {
         refreshUser (state) {
@@ -74,11 +75,18 @@ export const store = new Vuex.Store({
                 state.data.autoSave = {};
 
             state.data.autoSave['name'] = bookings;
+        },
+        markChanges(state) {
+            state.changes = true;
+        },
+        clearChanges(state) {
+            state.changes = false;
         }
     },
     getters: {
         data: state => state.data,
         locations: state => state.data.locations,
-        ready: state => state.ready === 0
+        ready: state => state.ready === 0,
+        changes: state => state.changes,
     }
 });
