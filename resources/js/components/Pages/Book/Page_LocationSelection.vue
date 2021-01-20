@@ -7,7 +7,7 @@
             <div v-if="!load">
                 <router-link v-for="location in locations" :key="location.id" class="coba-button coba-button-accent coba-button-big coba-button-no-border"
                     :to="'/booking/new/workstation/'+location.id">{{location.name}}</router-link>
-                <router-link class="coba-button coba-button-accent coba-button-half-width coba-button-no-border" to=""> Homeoffice</router-link>
+                <router-link class="coba-button coba-button-accent coba-button-half-width coba-button-no-border" :to="'/booking/new/homeoffice"> Homeoffice</router-link>
             </div>
             <spinner v-else></spinner>
 
