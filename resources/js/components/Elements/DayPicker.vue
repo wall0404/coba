@@ -4,9 +4,9 @@
         <div class="coba-text-strong coba-text coba-text-center">{{weekStartStr}} - {{weekEndStr}}</div>
         <div class="coba-utilization-indicator-container">
             <div :class="{'coba-utilization-indicator':true, 'coba-utilization-indicator-arrow-prev':true, 'coba-utilization-indicator-big':true, 'coba-utilization-indicator-disabled':page===0}" @click="prevPage">➤</div>
-            <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected':'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
+            <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected-'+day.color:'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
                 @click="selectDate(day)">{{day.day.substring(0,1)}}</div>
-            <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" @click="nextPage">➤</div>
+            <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" :class="{'coba-utilization-indicator-disabled':page===2}" @click="nextPage">➤</div>
         </div>
     </div>
 
@@ -91,6 +91,9 @@ export default {
             //Dont allow scrolling into past
             if(this.page < 0)
                 this.page = 0;
+            //Dont allow scrolling into future
+            if(this.page > 2)
+                this.page = 2;
 
             this.weekStart = new Date();
             this.weekEnd = new Date();
@@ -183,7 +186,7 @@ export default {
             }
 
 
-            if(hours >= 5)
+            if(hours >= 8)
                 color = "red";//mark red
             else
                 color = "orange"; //mark orange
