@@ -70,7 +70,7 @@ export default {
                     startBooking = bookings[i];
                 }
             }
-            if(hours >= 4)
+            if(hours >= 8)
                 color = 'red'; //mark red
             else if(hours === 0)
                 color = "green"; //mark green
