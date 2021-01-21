@@ -4,7 +4,7 @@
             <span class="coba-page-headline">Buchung</span>
         </div>
         <div class="coba-container"> <!-- workdays are chooseable as buttons, and has a header which says Homeoffice and the dates for monday-friday -->
-            <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-date-str="preSelectedDateStr"></DayPicker>
+            <DayPicker :workstation="workstation" :bookings="[]" @callback-picker-event="callbackPicker" :pre-selected-date-str="preSelectedDateStr"></DayPicker>
         </div>
         <div class="coba-container">
             <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
@@ -28,25 +28,22 @@ export default {
             load: false,
             error: false,
             days: [],
-            location_id: this.$route.params.location_id,
-            workstation: "Homeoffice",
+            bookings: [],
+            workstation: {
+                name: "Homeoffice",
+                id: null,
+                location: {},
+            },
         }
     },
     created() {
-        if(typeof this.bookings === 'undefined') {
-            this.bookings = JSON.parse(localStorage.getItem("bookings_"+ '/api/user/'+this.$store.getters.data.user.user_id)) //bookings from user
-            if(this.bookings == null){
-                console.error("Keine Buchungen wurden übergeben.")
-                this.$router.push("/home")
-            }
-        }
-        else
-            localStorage.setItem("bookings_" + '/api/user/'+this.$store.getters.data.user.user_id, JSON.stringify(this.bookings));
 
         //this.fetchWorkstation();
-        //this.fetchData();
+        this.fetchData();
     },
     methods:{
+        fetchData() {
+        },
         callbackPicker(day) {
             if (day.selected)
                 this.days.push(day);
