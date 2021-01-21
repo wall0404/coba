@@ -30,8 +30,12 @@
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
-                    {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}} <!-- the booking information -->
-                    <!-- Drop Down list with pencil icon to toggle it -->
+                    <div v-if="booking.workstation.id = null">
+                        {{booking.date}}, <br>Homeoffice, {{booking.from}} - {{booking.to}} <!-- the booking information -->
+                    </div>
+                    <div v-else>
+                        {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}} <!-- the booking information -->
+                    </div> <!-- Drop Down list with pencil icon to toggle it -->
                     <div class="coba-dropdown-container m-0 p-2" @click="toggleDropDown(booking)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
                         <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
                         <div style="position: absolute; bottom: 10px; right: 10px" :class="{'white-background':dropDown.open&&dropDown.id === booking.id}">
