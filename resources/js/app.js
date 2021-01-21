@@ -6,6 +6,7 @@ import {router} from './_helpers/router';
 import {store} from './_helpers/store';
 import NavBar from './components/Navbar'
 import Spinner from './components/Global/Spinner'
+import BackButton from "./components/Global/BackButton";
 import VueRangeSlider from 'vue-range-component'
 import { BootstrapVueIcons } from 'bootstrap-vue'
 
@@ -31,6 +32,7 @@ const app = new Vue({
     components: {
         'navbar': NavBar,
         'spinner' : Spinner,
+        'backButton' : BackButton,
     },
     el: '#app',
 });

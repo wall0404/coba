@@ -15,7 +15,7 @@
 <script>
 export default {
     name: "DayPicker",
-    props: ['workstation','bookings', 'preSelectedDateStr'],
+    props: ['workstation','bookings', 'preSelectedDays'],
     data() {
         return {
             todayDate: new Date(),
@@ -42,37 +42,35 @@ export default {
     },
     created() {
 
-        if(this.preSelectedDateStr) {
-            //es wurde ein Datum übergeben
-            let preSelectedDate = new Date(this.preSelectedDateStr);
-            let diffTime = preSelectedDate - this.todayDate
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if(typeof this.preSelectedDays !== 'undefined' && this.preSelectedDays.length > 0) {
+            //es wurden Tage übergeben
 
-            if(diffDays < 0) {
-                console.error("Liegt in der Vergangenheit")
+
+            //Berechne das Datum der ersten Tage jeder Page
+            let page_weeks = {};
+            for(let page = 0; page<4; page++) {
+                page_weeks[page] = new Date();
+                page_weeks[page].setHours(0,0,0,0);
+                page_weeks[page].setDate(page_weeks[page].getDate()+1);
+                let dayOfWeek = page_weeks[page].getUTCDay();
+                dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
+                page_weeks[page].setDate(new Date().getDate() - dayOfWeek + 1 + (page * 7));
+
             }
-            else {
 
-                //set start of the week of the pre selected date
-                let dayOfWeek = preSelectedDate.getUTCDay();
-                let preSelectedDateDayOfWeek = dayOfWeek;
-                dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
-                preSelectedDate.setDate(preSelectedDate.getDate() - dayOfWeek + 1);
+            this.initiateAllDates();
 
-                //set start of the week of today
-                let weekStart = new Date()
-                dayOfWeek = this.todayDate.getUTCDay();
-                dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
-                weekStart.setDate(this.todayDate.getDate() - dayOfWeek + 1);
+            //check for each preselected day on which page it is
+            for(let i = 0; i<this.preSelectedDays.length; i++) {
 
-                diffTime = preSelectedDate - weekStart
-                diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-
-                this.page = Math.round(diffDays/7);
-
-                this.initiateDates();
-                this.selectDate(this.pages[this.page][preSelectedDateDayOfWeek-1])
+                if(this.preSelectedDays[i].date < page_weeks[0]) {}
+                else if(this.preSelectedDays[i].date < page_weeks[1])
+                    this.selectDate(this.pages[0][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                else if(this.preSelectedDays[i].date < page_weeks[2])
+                    this.selectDate(this.pages[1][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                else if(this.preSelectedDays[i].date < page_weeks[3]) {
+                    this.selectDate(this.pages[2][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                }
             }
         }
         else {
@@ -81,6 +79,14 @@ export default {
 
     },
     methods: {
+        initiateAllDates() {
+            this.page = 2;
+            this.initiateDates();
+            this.page = 1;
+            this.initiateDates();
+            this.page = 0;
+            this.initiateDates();
+        },
         initiateDates() {
             //Dont allow scrolling into past
             if(this.page < 0)
@@ -192,8 +198,11 @@ export default {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
             return days[date.getUTCDay()];
         },
-        selectDate(day) {
+        selectDate(day, time) {
             if(!day.disabled) {
+                if(typeof time !== 'undefined')
+                    day.time = time
+
                 day.selected = !day.selected;
                 day.workstation = this.workstation;
                 this.$emit('callback-picker-event', day);

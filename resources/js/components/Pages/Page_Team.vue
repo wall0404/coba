@@ -1,7 +1,7 @@
 <template>
 
     <div class="coba-page">
-        <div class="coba-header  position-relative">
+        <div class="coba-header">
             <h2 class="coba-page-headline">Team</h2>
         </div>
         <div class="filter-container w-100  coba-flex-space-evenly mb-5">
