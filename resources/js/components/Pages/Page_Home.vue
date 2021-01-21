@@ -31,7 +31,7 @@
             <ul class="coba-list" v-if="!load">
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
                     <div v-if="booking.workstation.id = null">
-                        {{booking.date}}, <br>Homeoffice, {{booking.from}} - {{booking.to}} <!-- the booking information -->
+                        {{booking.date}}, <br>Homeoffice, {{booking.from}} - {{booking.to}} <!-- the booking information when you have booked a homeoffice  -->
                     </div>
                     <div v-else>
                         {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}} <!-- the booking information -->

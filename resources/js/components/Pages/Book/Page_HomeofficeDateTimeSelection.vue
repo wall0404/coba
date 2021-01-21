@@ -40,7 +40,13 @@ export default {
         }
     },
     created() {
-
+        if(typeof this.preSelectedDays === "undefined") //wenn ein Tag vorher schon irgendwo angegeben wurde, wurde es in dieser Variable zwischengespeichert
+            try {
+                this.preSelectedDays = this.$store.getters.data.autoSave[this.$route.params.workstation_id];
+            }
+            catch (e) {
+                this.preSelectedDays = []
+            }
         //this.fetchWorkstation();
         this.fetchData();
     },
