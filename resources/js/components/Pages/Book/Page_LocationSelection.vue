@@ -11,9 +11,13 @@
             </div>
             <spinner v-else></spinner>
 
-            <div class="coba-flex-space-evenly mt-4">
-                <button class="coba-button-round coba-button">Old</button>
-                <button class="coba-button-round coba-button">Fav</button>
+            <div class="coba-flex-space-evenly">
+                <button class="coba-button-round coba-button">
+                    <b-icon icon="clock-history" font-scale="2"></b-icon>
+                </button>
+                <button class="coba-button-round coba-button">
+                    <b-icon icon="star-fill" font-scale="2"></b-icon>
+                </button>
             </div>
         </div>
     </div>

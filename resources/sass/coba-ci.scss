@@ -241,6 +241,11 @@
             width: 100px;
             border-radius: 100%;
         }
+        &[class*="coba-button-arrow"] {
+            content: '\21B5';
+            color: $coba-black;
+            transform: rotate(180deg);
+        }
     }
     &:focus {
         outline: none;
@@ -453,6 +458,7 @@
         font-size: 24px;
         border-bottom: 1px solid $coba-dark-gray;
         text-align: center;
+        color: $coba-text-color;
     }
     .coba-modal-body {
         padding: 20px 0;
@@ -479,7 +485,17 @@
     background-color: $coba-gray;
 
     &.coba-utilization-indicator-selected {
-        border: 1px solid $coba-dark-gray;
+        border: 2px solid $coba-dark-gray;
+    }
+    &.coba-utilization-indicator-selected-green {
+        background-color: $coba-selected-green !important;
+        font-weight: bold;
+        border: 2px solid $coba-selected-green-border;
+    }
+    &.coba-utilization-indicator-selected-orange {
+        background-color: $coba-selected-orange !important;
+        font-weight: bold;
+        border: 2px solid $coba-selected-orange-border;
     }
 
     &.coba-utilization-indicator-big {
@@ -501,7 +517,7 @@
         pointer-events: none;
     }
     &.coba-utilization-indicator-orange {
-        background-color: #FFAD33;
+        background-color: #FFAD33; //#ffb950 heller
     }
     &.coba-utilization-indicator-disabled, {
         color: $coba-disabled-gray;
