@@ -1,12 +1,15 @@
 <template>
     <div class="coba-page">
-        <div class="coba-container coba-flex coba-header">
+        <div style="position: fixed ; width: 100% ; z-index: 10 ; background-color: white">
+        <div class="coba-container coba-flex coba-header" >
             <span class="coba-page-headline">Buchung</span>
         </div>
-        <div class="coba-container">
+        <div class="coba-container" style="z-index: 2 ; background-color: white">
             <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-date-str="preSelectedDateStr"></DayPicker>
         </div>
-        <div class="coba-container">
+        </div>
+        <div style="height: 380px ; background-color: white ; z-index: 2"></div>
+        <div class="coba-container" style="z-index: 1">
             <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
         </div>
         <div class="coba-container">

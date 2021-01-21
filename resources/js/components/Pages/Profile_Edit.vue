@@ -22,17 +22,7 @@
 
             <hr>
         </div>
-        <!--
-        <div class="coba-container">
-            <span class="coba-page-text">Vorname: {{$store.getters.data.user.firstName}}</span>
-        </div>
-        <div class="coba-container">
-            <span class="coba-page-text">Nachname: {{$store.getters.data.user.lastName}}</span>
-        </div>
-        <div class="coba-container">
-            <span class="coba-page-text">Email: {{$store.getters.data.user.email}}</span>
-        </div>
-        -->
+
         <div class="coba-container ">
             <span class="coba-text-big">Passwort ändern:
             </span>
@@ -91,10 +81,10 @@
             <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-if="selectedLocations.length > 0">
-                <div  name="template" ref="template" v-for="workstation in workLocations[selectedLocations[0]-1].workstations" :key="workstation.id" class="seat-container">
+                <div ref="template" v-for="workstation in workLocations[selectedLocations[0]-1].workstations"  class="seat-container">
 
                     <template v-if="workstation.isFavorite">
-                    <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="deleteFavoriteSeat(workstation)">
+                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="deleteFavoriteSeat(workstation)">
                         <b-icon  icon="star-fill" font-scale="1.5" style="color:#FFC931"></b-icon>
                     </div>
                     <div class="coba-flex-space-evenly m-0 p-2" >
@@ -329,6 +319,7 @@ export default {
                 .then( res => {
                     if ( res.success){
                         console.log('delete_success') ;
+                        this.$store.commit('getData');
                     }
                 }).catch(error =>{
                 this.error = error;
@@ -350,6 +341,8 @@ export default {
                 .then( res => {
                     if ( res.success){
                         console.log('add_success') ;
+                        this.$store.commit('getData');
+
                     }
                 }).catch(error =>{
                     this.error = error;

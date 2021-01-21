@@ -1,15 +1,15 @@
 <template>
 
     <div class="coba-page">
-       <div style="position: fixed ; width: 100%  ">
-          <div class="coba-header  position-relative">
-             <h2 class="coba-page-headline">Team</h2>
-          </div>
-          <div class="filter-container w-100  coba-flex-space-evenly mb-5">
-              <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
+       <div style="position: fixed ; width: 100%  " >
+          <div class="coba-header adjust-header"  >
+              <div ><h2 class="coba-page-headline">Team</h2></div>
+              <div class="filter-container coba-flex-space-evenly mt-3">
+                  <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
+              </div>
           </div>
        </div>
-        <div style="height: 300px">
+        <div style="height: 250px">
 
         </div>
 
@@ -146,6 +146,11 @@ export default {
 }
 .filter-container{
     bottom: 10px
+}
+.adjust-header{
+    display: block;
+    text-align: center;
+    padding-top: 50px;
 }
 .profile-picture {
     width: 25%;

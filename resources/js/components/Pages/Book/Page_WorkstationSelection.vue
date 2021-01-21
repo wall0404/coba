@@ -3,14 +3,15 @@
         <div class="coba-container coba-flex coba-header mb-0">
             <span class="coba-page-headline">Arbeitsplatzauswahl<br><p align="center"> {{location_name}} </p></span>
         </div>
-        <div class="coba-container px-0">
+        <div class="coba-container px-0" >
             <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <!-- :key  wurde entfernt-->
                 <template v-for="workstation in workstations"  >
                     <div v-if="workstation.isFavorite" class="seat-container">
                     <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
-                        <b-icon icon="star-fill" class="" style="color:#FFC931 " font-scale="2"></b-icon>
+                       <b-icon style="position: absolute " icon="star-fill" font-scale="1.5" ></b-icon>
+                    <!--    <b-icon class="icon-class" icon="star-fill" ></b-icon> -->
                     </router-link>
                     <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
                         <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
@@ -243,7 +244,7 @@ export default {
         },
         closeModal() {
             this.modal.open = false;
-            this.$router.go() ; 
+            this.$store.commit('getData') ;
         },
         dateToDayOfMonth(date) {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
@@ -307,5 +308,10 @@ export default {
 }
 .coba-table th {
     height: 40px;
+}
+.icon-class{
+    position: relative;
+    top: 23px;
+    left: 23px;
 }
 </style>
