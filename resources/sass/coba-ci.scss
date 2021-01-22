@@ -272,13 +272,6 @@
         }
     }
 }
-.coba-button-text{ /* the button will only be shown as a text*/
-    color: $coba-text-color;
-    height: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 /* DROP DOWN Styles */
 
@@ -385,6 +378,17 @@
 }
 .coba-text-success {
     color:$coba-success-green;
+}
+.coba-text-centered{ /* the text will be shown in the center --> good when you have more than one text in your container*/
+    color: $coba-text-color;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.coba-text-centered-button{
+        text-decoration: underline;
+    }
 }
 
 /* LIST */

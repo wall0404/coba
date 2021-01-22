@@ -11255,15 +11255,6 @@ a.text-dark:focus {
   margin-right: 0;
 }
 
-.coba-button-text {
-  /* the button will only be shown as a text*/
-  color: #2C2C2C;
-  height: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 /* DROP DOWN Styles */
 
 .coba-dropdown-container {
@@ -11382,6 +11373,19 @@ a.text-dark:focus {
 
 .coba-text-success {
   color: #09431e;
+}
+
+.coba-text-centered {
+  /* the text will be shown in the center --> good when you have more than one text in your container*/
+  color: #2C2C2C;
+  height: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coba-text-centered.coba-text-centered-button {
+  text-decoration: underline;
 }
 
 /* LIST */
