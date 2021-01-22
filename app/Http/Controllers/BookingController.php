@@ -15,12 +15,12 @@ class BookingController extends ParentController
 
     protected $validator_create = [
         'user_id' => 'required',
-        'workstation_id' => 'required',
+//        'workstation_id' => 'required',
         'date' => 'date_format:Y-m-d|required'
     ];
     protected $validator_create_array = [
         '*.user_id' => 'required',
-        '*.workstation_id' => 'required',
+       // '*.workstation_id' => 'required',
         '*.date' => 'date_format:Y-m-d|required'
     ];
     protected $validator_update = [
@@ -47,12 +47,14 @@ class BookingController extends ParentController
             throw new \Exception('Startzeit darf nicht nach der Endzeit liegen');
 
         //Check if workplace is already taken by someone else
-        $bookings = Booking::where('date', $input['date'])->where('workstation_id', $input['workstation_id'])->get();
-        foreach ($bookings as $booking) {
-            $booking_start = new Carbon($booking->from);
-            $booking_end = new Carbon($booking->to);
-            if($booking_start->lt(new Carbon($input['to']))  && $booking_end->gt(new Carbon($input['from'])))
-                throw new \Exception('Platz ist zu dem Zeitpunkt schon vergeben');
+        if(isset($input['workstation_id'])) {
+            $bookings = Booking::where('date', $input['date'])->where('workstation_id', $input['workstation_id'])->get();
+            foreach ($bookings as $booking) {
+                $booking_start = new Carbon($booking->from);
+                $booking_end = new Carbon($booking->to);
+                if ($booking_start->lt(new Carbon($input['to'])) && $booking_end->gt(new Carbon($input['from'])))
+                    throw new \Exception('Platz ist zu dem Zeitpunkt schon vergeben');
+            }
         }
 
         //Check if user already booked a workplace at this time
@@ -62,7 +64,7 @@ class BookingController extends ParentController
             $booking_end = new Carbon($booking->to);
             if($booking_start->lt(new Carbon($input['to']))  && $booking_end->gt(new Carbon($input['from']))) {
                 if($booking->workstation_id == $input['workstation_id'])
-                    throw new \Exception('Sie haben dieses Arbeitsplatz zu dieser Uhrzeit schon gebucht');
+                    throw new \Exception('Sie haben diesen Arbeitsplatz zu dieser Uhrzeit schon gebucht');
                 else
                     throw new \Exception('Zu dieser Zeit haben sie schon einen anderen Arbeitsplatz gebucht.');
             }
