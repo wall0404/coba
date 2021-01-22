@@ -2,7 +2,8 @@ name: Deploy Develop to Azure Testing Web App
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
 
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
