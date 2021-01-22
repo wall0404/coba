@@ -1,6 +1,6 @@
 <template>
     <div class="booking py-3" :class="{'strong':user_id === $store.getters.data.user.user_id}">
-        <div v-if="typeof booking.workstation == 'object'&& booking.workstation !== null" class="table-item seat"> {{workstation.name}}</div>
+        <div v-if=" booking.workstation !== null" class="table-item seat"> {{workstation.name}}</div>
         <div v-else class="table-item seat">H</div>
         <div class="table-item time">{{ time }}</div>
         <router-link class="table-item name" :to="'/team/'+user_id">{{ name }}</router-link>
