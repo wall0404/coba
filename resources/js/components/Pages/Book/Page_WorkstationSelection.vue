@@ -21,8 +21,8 @@
                 </template>
             </div>
 
-            <div v-if="!load" class="coba-container mt-0 pt-0 mb-2 "><hr class="m-0 p-0" style=""></div>
-            <!-- code duplication at it´s worst -->
+            <div v-if="!load" class="coba-container mt-0 pt-0 mb-2 "><hr class="m-0 p-0"></div>
+
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-for="workstation in workstations"  >
                     <div v-if="! workstation.isFavorite" class="seat-container">
@@ -90,6 +90,7 @@ export default {
                 },
                 body: {}
             },
+            favSeatChanged: false ,
             location_name : "",
         }
     },
@@ -244,7 +245,10 @@ export default {
         },
         closeModal() {
             this.modal.open = false;
-            this.$store.commit('getData') ;
+            if ( this.favSeatChanged){
+                this.$store.commit('getData') ;
+            }
+            this.favSeatChanged = false ;
         },
         dateToDayOfMonth(date) {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
@@ -263,8 +267,8 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        console.log('delete_success') ;
                         this.modal.header.isFav = ! this.modal.header.isFav  ;
+                        this.favSeatChanged = true ;
                     }
                 }).catch(error =>{
                 this.error = error;
@@ -285,8 +289,8 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        console.log('add_success') ;
                         this.modal.header.isFav = ! this.modal.header.isFav  ;
+                        this.favSeatChanged = true ;
                     }
                 }).catch(error =>{
                 this.error = error;

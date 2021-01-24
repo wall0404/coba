@@ -26,7 +26,7 @@
         <div class="coba-container ">
             <span class="coba-text-big">Passwort ändern:
             </span>
-            <button @click.prevent="clickEvent" class="settings-button" ><b-icon icon="pencil-fill"></b-icon> </button>
+            <b-icon @click.prevent="clickEvent" class="settings-button" :icon="showPasswordModal ? 'caret-up-square'  : 'caret-down-square' "></b-icon>
         </div>
         <!-- Password modal -->
         <div id="modal" v-if="showPasswordModal" >
@@ -78,29 +78,16 @@
         <!-- Seats -->
         <div class="coba-container px-0">
             <!--ToDo -->
-            <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-if="selectedLocations.length > 0">
-                <div ref="template" v-for="workstation in workLocations[selectedLocations[0]-1].workstations"  class="seat-container">
+                <div  ref="template" v-for="workstation in workLocations[selectedLocations[0]-1].workstations"  class="seat-container">
 
-                    <template v-if="workstation.isFavorite">
-                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="deleteFavoriteSeat(workstation)">
-                        <b-icon  icon="star-fill" font-scale="1.5" style="color:#FFC931"></b-icon>
+                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="workstation.isFavorite?  deleteFavoriteSeat(workstation) : addFavoriteSeat(workstation )">
+                        <b-icon  :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FFC931" ></b-icon>
                     </div>
                     <div class="coba-flex-space-evenly m-0 p-2" >
                         <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
                     </div>
-                    </template>
-
-                    <template v-else>
-                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="addFavoriteSeat(workstation )">
-                        <b-icon  icon="star" font-scale="1.5" style="color:#FFC931"></b-icon>
-                    </div>
-                    <div class="coba-flex-space-evenly m-0 p-2" >
-                        <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
-                    </div>
-                    </template>
-
                 </div>
                 </template>
             </div>
@@ -143,7 +130,6 @@ import Vue from 'vue';
 export default {
     name: "Profile_Edit",
     components: {Modal, Spinner},
-    props:['favorited'],
     data(){
         return{
             showPasswordModal: false,
@@ -158,7 +144,7 @@ export default {
             passwordToShort: false ,
 
             componentKey: 0 ,
-
+            render:false ,
             showConfirmationModal: false ,
 
             selectedLocations: [],
@@ -176,7 +162,6 @@ export default {
                 this.selectedLocations.pop() ;
                 this.selectedLocations.push(location_id) ;
             }
-
         },
 
         uploadPic() {
@@ -319,7 +304,10 @@ export default {
                 .then( res => {
                     if ( res.success){
                         console.log('delete_success') ;
-                        this.$store.commit('getData');
+                        this.render = false;
+                        this.$nextTick(() => {
+                            this.render = true;
+                        });
                     }
                 }).catch(error =>{
                 this.error = error;
@@ -341,8 +329,10 @@ export default {
                 .then( res => {
                     if ( res.success){
                         console.log('add_success') ;
-                        this.$store.commit('getData');
-
+                        this.render = false;
+                        this.$nextTick(() => {
+                            this.render = true;
+                        });
                     }
                 }).catch(error =>{
                     this.error = error;
@@ -392,7 +382,9 @@ export default {
 .settings-button{
     float:right;
     background-color: transparent;
+    margin-right: 6%;
 }
+
 .coba-tab-navigation {
     flex-grow: 1;
 }

@@ -13,18 +13,15 @@
         <div class="coba-container text-center pb-0">
             <h3 class="mb-0">{{ $store.getters.data.user.firstName +" " + $store.getters.data.user.lastName }}</h3>
             <p class="mb-1">{{$store.getters.data.user.email}}</p>
-
-
         </div>
         <div class="coba-input-container ">
-            <!-- Musterdesignidee -->
             <div class="coba-border-rounded p-2 user-data-templ">
                      <ol>
                          <li class="listHead">Favorisierte Standorte</li>
-                         <template v-for="works in workstations">
-                             <li v-if="works.isFavorite" class="listInput">Tower {{ works.name }}</li>
+                         <template v-for="works in workstations.tower">
+                             <li v-if="works.isFavorite " class="listInput">Tower {{ works.name }}</li>
                          </template>
-                         <template v-for="works in $store.getters.data.locations[1].workstations">
+                         <template v-for="works in workstations.dc">
                              <li v-if="works.isFavorite" class="listInput">Digital Campus {{ works.name }} </li>
                          </template>
                      </ol>
@@ -53,11 +50,15 @@ export default {
         return{
             load: false ,
             user: [],
-            workstations: [] ,
+            workstations:{
+              tower:[] ,
+              dc:[],
+            }  ,
         }
     },
     created() {
-        this.workstations = store.getters.data.locations[0].workstations ;
+        this.workstations.tower = store.getters.data.locations[0].workstations ;
+        this.workstations.dc = store.getters.data.locations[1].workstations ;
     },
     methods:{
         getUser(){
