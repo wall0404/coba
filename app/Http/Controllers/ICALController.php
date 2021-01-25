@@ -51,7 +51,10 @@ class ICALController extends Controller
 
     public function get() {
         $data = Auth::user()->ical;
-        $data->url = route('ical', ['token' => $data->token]);
+        try {
+            $data->url = route('ical', ['token' => $data->token]);
+        }
+        catch (\Exception $e) {}
         return response()->json(['success'=>$data], ParentController::$successCode);
     }
     public function create() {
