@@ -59,11 +59,12 @@
         <!-- modalDel -> A modal which asks if you really want to delete a booking -->
         <modal :show-modal="modalDel.open" @modal-close-event="closeModal" @modal-positive-event="deleteBooking">
             <template v-slot:header>
-                <div class="coba-modal-header">Buchung {{modalDel.header}} entfernen</div> <!-- TODO individueller Buchungsname dahin? -->
+                <div class="coba-modal-header">Buchung entfernen</div>
             </template>
             <template v-slot:body>
                 <div class="coba-modal-body">
-                    Sind sie sich sicher, dass sie diese Buchung entfernen möchten?
+                    Bist du dir sicher, dass du die Buchung entfernen möchtest?
+                    <!-- Sind sie sich sicher, dass sie diese Buchung entfernen möchten? -->
                 </div>
             </template>
             <template v-slot:footer>
