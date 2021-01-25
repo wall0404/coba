@@ -241,6 +241,11 @@
             width: 100px;
             border-radius: 100%;
         }
+        &[class*="coba-button-arrow"] {
+            content: '\21B5';
+            color: $coba-black;
+            transform: rotate(180deg);
+        }
     }
     &:focus {
         outline: none;
@@ -266,13 +271,6 @@
             margin-right: 0;
         }
     }
-}
-.coba-button-text{ /* the button will only be shown as a text*/
-    color: $coba-text-color;
-    height: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /* DROP DOWN Styles */
@@ -381,6 +379,17 @@
 .coba-text-success {
     color:$coba-success-green;
 }
+.coba-text-centered{ /* the text will be shown in the center --> good when you have more than one text in your container*/
+    color: $coba-text-color;
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.coba-text-centered-button{
+        text-decoration: underline;
+    }
+}
 
 /* LIST */
 .coba-list {
@@ -480,7 +489,17 @@
     background-color: $coba-gray;
 
     &.coba-utilization-indicator-selected {
-        border: 1px solid $coba-dark-gray;
+        border: 2px solid $coba-dark-gray;
+    }
+    &.coba-utilization-indicator-selected-green {
+        background-color: $coba-selected-green !important;
+        font-weight: bold;
+        border: 2px solid $coba-selected-green-border;
+    }
+    &.coba-utilization-indicator-selected-orange {
+        background-color: $coba-selected-orange !important;
+        font-weight: bold;
+        border: 2px solid $coba-selected-orange-border;
     }
 
     &.coba-utilization-indicator-big {
@@ -502,7 +521,7 @@
         pointer-events: none;
     }
     &.coba-utilization-indicator-orange {
-        background-color: #FFAD33;
+        background-color: #FFAD33; //#ffb950 heller
     }
     &.coba-utilization-indicator-disabled, {
         color: $coba-disabled-gray;

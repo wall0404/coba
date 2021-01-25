@@ -62,11 +62,6 @@ Alle erforderlichen Tabellen in der Datenbank erstellen und Datenbank mit ersten
 php artisan migrate:fresh --seed
 ```
 
-Wir nutzen das Framework Passport zur Nutzerauthentifizierung. Bei einer neuen Installation muss dafür erstmal ein Access Client erstellt werden. Dafür kann folgender Befehl ausgeführt werden:
-```console
-php artisan passport:client --personal
-```
-Die nachfolgende Eingabe kann einfach mit Enter übersprügen werden.
 
 
 
