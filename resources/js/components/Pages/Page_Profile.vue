@@ -17,7 +17,7 @@
         <div class="coba-input-container ">
             <div class="coba-border-rounded p-2 user-data-templ">
                      <ol>
-                         <li class="listHead">Favorisierte Standorte</li>
+                         <li class="listHead">Favorisierte Sitzplätze</li>
                          <template v-for="works in workstations.tower">
                              <li v-if="works.isFavorite " class="listInput">Tower {{ works.name }}</li>
                          </template>

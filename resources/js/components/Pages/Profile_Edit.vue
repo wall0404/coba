@@ -77,11 +77,10 @@
         </div>
         <!-- Seats -->
         <div class="coba-container px-0">
-            <!--ToDo -->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-if="selectedLocations.length > 0">
-                <div  ref="template" v-for="workstation in workLocations[selectedLocations[0]-1].workstations"  class="seat-container">
-
+                <div v-for="workstation in workstations"  class="seat-container">
+                    <!-- funktioniert nicht  toDO -->
                     <div class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="workstation.isFavorite?  deleteFavoriteSeat(workstation) : addFavoriteSeat(workstation )">
                         <b-icon  :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FFC931" ></b-icon>
                     </div>
@@ -144,11 +143,11 @@ export default {
             passwordToShort: false ,
 
             componentKey: 0 ,
-            render:false ,
             showConfirmationModal: false ,
 
             selectedLocations: [],
             workLocations: [] = this.$store.getters.data.locations ,
+            workstations: [] ,
         }
 
     },
@@ -162,6 +161,8 @@ export default {
                 this.selectedLocations.pop() ;
                 this.selectedLocations.push(location_id) ;
             }
+
+            this.workstations = this.workLocations[this.selectedLocations[0]-1].workstations
         },
 
         uploadPic() {
@@ -189,10 +190,6 @@ export default {
             ).catch(
                 //Internet connection
             );
-        },
-        selectPic() {
-            const elem = this.$refs.upload;
-            elem.click();
         },
         deletePic() {
             this.load = true;
@@ -303,11 +300,7 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        console.log('delete_success') ;
-                        this.render = false;
-                        this.$nextTick(() => {
-                            this.render = true;
-                        });
+
                     }
                 }).catch(error =>{
                 this.error = error;
@@ -328,11 +321,7 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        console.log('add_success') ;
-                        this.render = false;
-                        this.$nextTick(() => {
-                            this.render = true;
-                        });
+                        this.$mount() ;
                     }
                 }).catch(error =>{
                     this.error = error;
