@@ -64,14 +64,20 @@ export default {
             for(let i = 0; i<this.preSelectedDays.length; i++) {
 
                 if(this.preSelectedDays[i].date < page_weeks[0]) {}
-                else if(this.preSelectedDays[i].date < page_weeks[1])
+                else if(this.preSelectedDays[i].date < page_weeks[1]) {
                     this.selectDate(this.pages[0][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
-                else if(this.preSelectedDays[i].date < page_weeks[2])
+                    this.page = 0;
+                }
+                else if(this.preSelectedDays[i].date < page_weeks[2]) {
                     this.selectDate(this.pages[1][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                    this.page = 1;
+                }
                 else if(this.preSelectedDays[i].date < page_weeks[3]) {
                     this.selectDate(this.pages[2][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                    this.page = 2;
                 }
             }
+            this.initiateDates();
         }
         else {
             this.initiateDates();
