@@ -13,7 +13,7 @@
             </div>
             <div class="calendar-week" v-for="week in calendar_dates">
                 <div class="calendar-day-of-week" v-for="(day, dayOfWeek) in week" :class="{'booked':my_bookings.find(x => x.date === day.date), 'weekend':(dayOfWeek===5||dayOfWeek===6), 'today':day.date===today.toISOString().slice(0, 10), 'selected':selectedDate===day.date}" @click="selectDate(day.date)">
-                     <span>{{day.day}}</span>
+                    <span>{{day.day}}</span>
                 </div>
             </div>
         </div>

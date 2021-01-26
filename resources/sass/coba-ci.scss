@@ -182,6 +182,9 @@
     &.coba-button-accent{
         background-color: $coba-yellow;
     }
+    &.coba-button.accent{
+        background-color: $coba-yellow;
+    }
     &.coba-button-danger{
         background-color: $coba-danger-red;
         color: $coba-gray;

@@ -126,20 +126,49 @@ export default {
                 for(let date in this.workstations[i].workstation_bookings) {
                     if(new Date(date).getUTCDay() !== 0 && new Date(date).getUTCDay() !== 6){
                         let bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date])
-                        if(bookedHours > 6) {
+                        if(bookedHours >= 8) {
                             full_days++;
                         }
                     }
 
                 }
                 //calculate the color to show the availability of the workstation
-                if(full_days >= 8)
-                    this.workstations[i].color = 'red'; //mark red
-                else if(full_days === 0)
-                    this.workstations[i].color = "green"; //mark green
-                else
-                    this.workstations[i].color = "orange"; //mark orange
-
+                let today = new Date().getUTCDay();
+                if(today===1){
+                    if(full_days >= 15)
+                        this.workstations[i].color = 'red'; //mark red
+                    else if(full_days >= 11)
+                        this.workstations[i].color = 'orange'; //mark orange
+                    else this.workstations[i].color = 'green'; //mark green
+                }
+                if(today===2){
+                    if(full_days >= 14)
+                        this.workstations[i].color = 'red'; //mark red
+                    else if(full_days >= 10)
+                        this.workstations[i].color = 'orange'; //mark orange
+                    else this.workstations[i].color = 'green'; //mark green
+                }
+                if(today===3){
+                    if(full_days >= 13)
+                        this.workstations[i].color = 'red'; //mark red
+                    else if(full_days >= 9)
+                        this.workstations[i].color = 'orange'; //mark orange
+                    else this.workstations[i].color = 'green'; //mark green
+                }
+                if(today===4){
+                    if(full_days >= 12)
+                        this.workstations[i].color = 'red'; //mark red
+                    else if(full_days >= 8)
+                        this.workstations[i].color = 'orange'; //mark orange
+                    else this.workstations[i].color = 'green'; //mark green
+                }
+                if(today===5){
+                    if(full_days >= 11)
+                        this.workstations[i].color = 'red'; //mark red
+                    else if(full_days >= 7)
+                        this.workstations[i].color = 'orange'; //mark orange
+                    else this.workstations[i].color = 'green'; //mark green
+                }
             }
         },
         //calculate and sum all hours in the given array of bookings

@@ -11,7 +11,7 @@
                 <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
             </div>
             <div class="coba-container">
-                <button class="coba-button" @click="submit" :disabled="days.length===0">Buchen</button>
+                <button class="coba-button" :class="{'accent':days.length>0, '':days.length===0}" @click="submit" :disabled="days.length===0">Buchen</button>
             </div>
         </div>
         <spinner v-else></spinner>
@@ -85,7 +85,6 @@ export default {
         },
         formatBookings(data) {
             this.bookings = {};
-
             //For every Booking
             for (let k = 0; k<data.length; k++) {
                 try {
@@ -129,12 +128,12 @@ export default {
 
         },
         submit() {
+
             //save changes
             this.$store.commit('autoSaveInstance', {
                 workstation_id: this.$route.params.workstation_id,
                 days: this.days
             });
-
 
             //go to confirmation
             let days = this.days;
