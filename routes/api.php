@@ -41,8 +41,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
         Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
     });
+
+    /* ICAL */
+    Route::prefix('ical')->group(function () {
+        Route::get('/', 'App\Http\Controllers\ICALController@get');
+        Route::post('/', 'App\Http\Controllers\ICALController@create');
+        Route::delete('/', 'App\Http\Controllers\ICALController@delete');
+    });
 });
 
 
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
+
+/* iCAL Route */
+Route::get('calendar/{token}', 'App\Http\Controllers\ICALController@getICal')->name('ical');

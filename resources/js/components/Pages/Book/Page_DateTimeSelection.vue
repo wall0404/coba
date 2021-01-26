@@ -25,7 +25,7 @@ import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
-    props: ["bookings", 'preSelectedDays'],
+    props: ["bookings", 'preSelectedDays', 'calenderBool'],
     components: {TimePicker, DayPicker, Spinner},
     data() {
         return {
@@ -140,7 +140,8 @@ export default {
             this.$router.push({
                 name: 'BookingConfirmation',
                 params: {
-                    bookings: this.days
+                    bookings: this.days,
+                    calenderBool: this.calenderBool
                 }
             })
         }
