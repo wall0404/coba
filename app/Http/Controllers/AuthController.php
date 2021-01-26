@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +13,7 @@ class AuthController extends ParentController
     public function login(Request $request){
         if(Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)){
             $user = Auth::user();
-            $success['token'] =  "true";
+            $success['token'] =  $user->createToken('CobaToken')->accessToken;
             return response()->json(['success' => $success], ParentController::$successCode);
         }
         else{
@@ -43,7 +42,7 @@ class AuthController extends ParentController
         $user->firstName = $input['firstName'];
         $user->lastName = $input['lastName'];
         $user->save();
-        $success['token'] =  "true";
+        $success['token'] =  $user->createToken('CobaToken')->accessToken;
         Auth::login($user);
         return response()->json(['success'=>$success], ParentController::$successCode);
     }
