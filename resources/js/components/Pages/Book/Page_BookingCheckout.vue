@@ -70,10 +70,7 @@ export default {
         clearTimeout(this.timeout);
         next();
     },*/
-    beforeRouteLeave(to,from,next){
-        this.$store.commit("getData")
-        next() ;
-    },
+
     methods: {
         /* Methode für automatische Rückführung
         autoRedirect(){

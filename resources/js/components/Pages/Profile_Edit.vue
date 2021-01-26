@@ -300,7 +300,7 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-
+                        this.$store.commit('getData') ;
                     }
                 }).catch(error =>{
                 this.error = error;
@@ -321,7 +321,7 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        this.$mount() ;
+                        this.$store.commit('getData') ;
                     }
                 }).catch(error =>{
                     this.error = error;
