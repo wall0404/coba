@@ -259,7 +259,10 @@
         margin-left: 10px;
     }
 }
-.coba-button-container { /*In a Button container all buttons will be listed next to each other */
+
+/*In a Button container all buttons will be listed next to each other */
+
+.coba-button-container {
     display: flex;
 
     .coba-button {
@@ -272,6 +275,56 @@
         }
     }
 }
+
+/* CALENDER SIDEBAR */
+
+.coba-calander-container {
+
+
+    .coba-calander-wrapper{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 20vw;
+        height: 20vh;
+        background-color: $coba-danger-red;
+
+        .coba-dropdown-content{
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: $coba-gray-sidebar;
+            width: 60%;
+            padding: 10px;
+            border-top-left-radius: 30px;
+            border-bottom-left-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .coba-dropdown-header{
+                border-bottom: 8px solid $coba-white;
+                color: $coba-white;
+                padding: 10px;
+                margin: 10px;
+                width: 80%;
+                display: flex;
+                justify-content: center;
+            }
+            .coba-calendar-small-header{
+                border-bottom: 5px solid $coba-white;
+                color: $coba-white;
+                justify-content: center;
+            }
+            ul{
+                align-self: flex-start;
+                color: $coba-white;
+            }
+
+        }
+    }
+}
+
 
 /* DROP DOWN Styles */
 

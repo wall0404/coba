@@ -14650,8 +14650,9 @@ input[type=color].form-control:disabled {
   margin-left: 10px;
 }
 
+/*In a Button container all buttons will be listed next to each other */
+
 .coba-button-container {
-  /*In a Button container all buttons will be listed next to each other */
   display: flex;
 }
 
@@ -14666,6 +14667,8 @@ input[type=color].form-control:disabled {
 .coba-button-container .coba-button:last-child {
   margin-right: 0;
 }
+
+/* KALENDER SIDEBAR */
 
 /* DROP DOWN Styles */
 

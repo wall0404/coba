@@ -1,6 +1,37 @@
 <template>
     <div class="coba-page page">
+
         <div class="coba-container coba-header coba-header-square mb-0">
+
+            <div class="coba-calendar-sidebar" @click="toggleSidebar()">
+            <b-icon icon="list" font-scale="2"></b-icon>
+            </div>
+
+            <div v-if="open" class="coba-calendar-wrapper" @click="toggleSidebar">
+                <div class="coba-calendar-content">
+                    <div class="coba-calendar-header"> Standorte </div>
+                    <ul>
+                        <li>Digitaler Campus</li>
+                        <li> Tower </li>
+                        <li> Homeoffice </li>
+                    </ul>
+                    <div class="coba-calendar-header"> Filter nach </div>
+                    <div class="coba-calendar-small-header"> Personen </div>
+                        <ul>
+                            <li>Meine Buchungen</li>
+                            <li> Best Buddies</li>
+                            <li> Gesamtes Team</li>
+                        </ul>
+                    <div class="coba-calendar-small-header"> Sitzplätze </div>
+                    <ul>
+                        <li>Favoriten </li>
+                        <li> Verfügbare Plätze </li>
+                        <li> Alle Plätze </li>
+                    </ul>
+                </div>
+            </div>
+
+
             <div class="headline-button-container">
                 <span @click="prevMonth"><b-icon icon="caret-left-fill" font-scale="1.25"></b-icon></span>
                 <span class="coba-page-headline">{{ monthString[initialMonth] +" "+initialYear}}</span>
@@ -33,7 +64,8 @@ export default {
             selectedDate: null,
             initialMonth: 0,
             initialYear: 0,
-            monthString: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+            monthString: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            open: false
         }
     },
     created() {
@@ -75,7 +107,13 @@ export default {
                 this.initialYear--;
             }
             this.$refs.calendar.initiateCalendar(this.initialYear, this.initialMonth);
-        }
+        },
+
+
+        toggleSidebar() {
+                this.open = !this.open;
+            }
+
     }
 }
 </script>
@@ -89,6 +127,7 @@ export default {
     .coba-header {
         flex-grow: 2;
     }
+
     .headline-button-container {
         width: 100%;
         display: flex;
@@ -114,4 +153,16 @@ export default {
     .booking-list {
         flex-grow: 50;
     }
+
+    .coba-calendar-sidebar{
+        width: 20px;
+        height: 20px;
+        position: fixed;
+        top: 30px;
+        right: 30px;
+
+    }
+
+
+
 </style>
