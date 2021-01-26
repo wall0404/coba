@@ -1,10 +1,10 @@
 <template>
     <div class="booking-list-container mt-1">
-        <spinner v-if="loadUsers || loadBookings"></spinner>
+        <spinner v-if="loadUsers || loadBookings"></spinner> <!-- Ladesymbol während Seite Daten aufruft -->
         <div v-else  class="coba-full-width">
-            <div v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)">
+            <div v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)"> <!-- Anzeig der Standorte und deren Buchungen -->
                 <div class="section-headline p-2 px-3">{{location.name}}</div>
-                <div class="booking-list px-3">
+                <div class="booking-list px-3"> <!-- Anzeige der einzelnen Buchungen für jeden Sitzplatz -->
                     <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date"></calendar-booking-list-item>
                     <!--<div class="booking py-3" v-for="n in 2">
                         <div class="table-item seat">C{{n}}</div>

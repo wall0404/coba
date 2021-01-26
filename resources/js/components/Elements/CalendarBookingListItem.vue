@@ -5,6 +5,7 @@
         <router-link v-if="user_id!==null" class="table-item name" :to="'/team/'+user_id">{{ name }}</router-link> <!-- Anzeige der Person, die den Platz gebucht hat -->
         <div v-else class="table-item name"></div> <!-- Platzhalter, wenn der Platz frei ist und der router-link zum Profil deaktiviert ist -->
         <div class="table-item icon"><b-icon v-if="false" icon="star-fill" font-scale="0.75"></b-icon></div>
+        <!-- Anzeige der Buchungsbutton wenn Buchung von einem anderem User ist -->
         <router-link class="table-item icon coba-utilization-indicator" v-if="user_id !== $store.getters.data.user.user_id"
                      :class="{'coba-utilization-indicator-red':color==='red',
                                 'coba-utilization-indicator-green':color==='green',
@@ -14,6 +15,7 @@
                      :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
             <b-icon icon="plus"></b-icon>
         </router-link>
+        <!-- Anzeige des Buchungsbutton wenn Buchung vom angemeldeten User ist -->
         <router-link class="table-item icon" v-else
                      v-bind:to="'/booking/'+booking.id">
             <b-icon icon="pencil"></b-icon>
