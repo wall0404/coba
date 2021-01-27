@@ -1,25 +1,38 @@
 <template>
     <div class="booking py-3" :class="{'strong':user_id === $store.getters.data.user.user_id}">
         <div class="table-item seat">{{workstation.name}}</div>
-        <div class="table-item time">{{ time }}</div>
-        <router-link v-if="user_id!==null" class="table-item name" :to="'/team/'+user_id">{{ name }}</router-link> <!-- Anzeige der Person, die den Platz gebucht hat -->
-        <div v-else class="table-item name"></div> <!-- Platzhalter, wenn der Platz frei ist und der router-link zum Profil deaktiviert ist -->
+        <div class="table-item time">
+            <div v-for="booking in booking">
+                {{booking.from.substring(0, 5)}} - {{booking.to.substring(0,5)}}
+            </div><br>
+        </div>
+        <div class="table-item name"> <!-- Anzeige der Person, die den Platz gebucht hat -->
+            <div v-if="booking.length == 0"></div>
+            <div v-else>
+                <div v-for="booking_user in booking_user">
+                    <router-link :to="'/team/'+booking_user.user_id">{{booking_user.firstName}} {{booking_user.lastName}}</router-link>
+                </div><br>
+            </div>
+        </div>
         <div class="table-item icon"><b-icon v-if="false" icon="star-fill" font-scale="0.75"></b-icon></div>
-        <!-- Anzeige der Buchungsbutton wenn Buchung von einem anderem User ist -->
-        <router-link class="table-item icon coba-utilization-indicator" v-if="user_id !== $store.getters.data.user.user_id"
-                     :class="{'coba-utilization-indicator-red':color==='red',
-                                'coba-utilization-indicator-green':color==='green',
-                                'coba-utilization-indicator-orange':color==='orange',
-                                'coba-utilization-indicator-disabled':this.today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
-                                }"
-                     :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
-            <b-icon icon="plus"></b-icon>
-        </router-link>
-        <!-- Anzeige des Buchungsbutton wenn Buchung vom angemeldeten User ist -->
-        <router-link class="table-item icon" v-else
-                     v-bind:to="'/booking/'+booking.id">
-            <b-icon icon="pencil"></b-icon>
-        </router-link>
+        <div>
+            <div v-for="booking in booking"> <!-- Anzeige der Buchungsbutton wenn Buchung von einem anderem User ist -->
+                <router-link class="table-item icon coba-utilization-indicator" v-if="booking.user_id !== $store.getters.data.user.user_id"
+                             :class="{'coba-utilization-indicator-red':color==='red',
+                                        'coba-utilization-indicator-green':color==='green',
+                                        'coba-utilization-indicator-orange':color==='orange',
+                                        'coba-utilization-indicator-disabled':this.today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
+                                        }"
+                             :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
+                    <b-icon icon="plus"></b-icon>
+                </router-link>
+                <!-- Anzeige des Buchungsbutton wenn Buchung vom angemeldeten User ist -->
+                <router-link class="table-item icon" v-else
+                             v-bind:to="'/booking/'+booking.id">
+                    <b-icon icon="pencil"></b-icon>
+                </router-link>
+            </div><br>
+        </div>
     </div>
 </template>
 
@@ -33,6 +46,7 @@ export default {
             name: "",
             user_id: null,
             booking: null,
+            booking_user: null,
             color: "green",
             today: new Date(),
             dayObj: {
@@ -48,7 +62,17 @@ export default {
             }
         }
 
+        let users_for_this_workstation = [];
+        for(let i = 0; i < bookings_for_this_workstation.length; i++) {
+            for(let j = 0; j < this.users.length; j++){
+                if(bookings_for_this_workstation[i].user_id === this.users[j].user_id){
+                    users_for_this_workstation.push(this.users[j]);
+                }
+            }
+        }
 
+        this.booking_user = users_for_this_workstation;
+        this.booking = bookings_for_this_workstation;
         this.calcInfo(bookings_for_this_workstation)
     },
     methods: {
@@ -82,11 +106,11 @@ export default {
 
 
             this.color = color;
-            let user = this.users.find(x => x.user_id === bookings[0].user_id);
-            this.booking = bookings[0];
-            this.user_id = user.user_id;
-            this.name = user.firstName + " " + user.lastName;
-            this.time = (startBooking.from.substr(0,5) +" - " + endBooking.to.substr(0,5));
+            //let user = this.users.find(x => x.user_id === bookings[0].user_id);
+            //this.booking = bookings[0];
+            //this.user_id = user.user_id;
+            //this.name = user.firstName + " " + user.lastName;
+            //this.time = (startBooking.from.substr(0,5) +" - " + endBooking.to.substr(0,5));
         },
     }
 }
