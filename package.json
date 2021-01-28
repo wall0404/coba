@@ -30,6 +30,6 @@
         "vue-range-component": "github:xwpongithub/vue-range-slider",
         "vue-router": "^3.5.0",
         "vue-store": "^0.3.1-moved",
-        "vuex": "^3.6.0"
+        "vuex": "^3.6.2"
     }
 }
