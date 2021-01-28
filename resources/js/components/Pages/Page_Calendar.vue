@@ -9,11 +9,33 @@
                 <span @click="nextMonth"><b-icon icon="caret-right-fill" font-scale="1.25"></b-icon> </span>
             </div>
         </div>
-        <div class="coba-tab-navigation">
-            <div v-for="(location, index) in $store.getters.locations" :class="{'selected':selectedLocations.find(id => id === location.id)}" class="coba-tab" :key="index" @click="selectLocation(location.id)">
-                {{ location.name }}
-            </div>
+        <div class="coba-calendar-sidebar" @click="toggleSidebar()">
+            <b-icon icon="list" font-scale="2"></b-icon>
         </div>
+
+        <div v-if="open" class="coba-calendar-wrapper" @click="toggleSidebar">
+            <div class="coba-calendar-content">
+                <div class="coba-calendar-header"> Standorte </div>
+                <ul>
+                    <li>Digitaler Campus</li>
+                    <li> Tower </li>
+                    <li> Homeoffice </li>
+                </ul>
+                <div class="coba-calendar-header"> Filter nach </div>
+                <div class="coba-calendar-small-header"> Personen </div>
+                <ul>
+                    <li>Meine Buchungen</li>
+                    <li> Best Buddies</li>
+                    <li> Gesamtes Team</li>
+                </ul>
+                <div class="coba-calendar-small-header"> Sitzplätze </div>
+                <ul>
+                    <li>Favoriten </li>
+                    <li> Verfügbare Plätze </li>
+                    <li> Alle Plätze </li>
+                </ul>
+            </div>
+        </div> 
         <div class="content">
             <calendar ref="calendar" class="calendar" @dateSelected="callbackDateSelect"></calendar>
             <calendar-booking-list ref="list" class="booking-list" :selected-locations="selectedLocations"></calendar-booking-list>
@@ -35,6 +57,7 @@ export default {
             selectedDate: null,
             initialMonth: 0,
             initialYear: 0,
+            open:false,
             monthString: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
 
         }
@@ -78,6 +101,10 @@ export default {
                 this.initialYear--;
             }
             this.$refs.calendar.initiateCalendar(this.initialYear, this.initialMonth);
+        },
+
+        toggleSidebar() {
+            this.open = !this.open;
         }
 
     }
@@ -120,4 +147,12 @@ export default {
         flex-grow: 50;
     }
 
+    .coba-calendar-sidebar{
+        width: 20px;
+        height: 20px;
+        position: fixed;
+        top: 30px;
+        right: 30px;
+
+    }
 </style>

@@ -14668,7 +14668,51 @@ input[type=color].form-control:disabled {
   margin-right: 0;
 }
 
-/* KALENDER SIDEBAR */
+/* CALENDER SIDEBAR */
+
+.coba-calander-container .coba-calander-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20vw;
+  height: 20vh;
+  background-color: #861F08;
+}
+
+.coba-calander-container .coba-calander-wrapper .coba-dropdown-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #333333;
+  width: 60%;
+  padding: 10px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coba-calander-container .coba-calander-wrapper .coba-dropdown-content .coba-dropdown-header {
+  border-bottom: 8px solid #fff;
+  color: #fff;
+  padding: 10px;
+  margin: 10px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+}
+
+.coba-calander-container .coba-calander-wrapper .coba-dropdown-content .coba-calendar-small-header {
+  border-bottom: 5px solid #fff;
+  color: #fff;
+  justify-content: center;
+}
+
+.coba-calander-container .coba-calander-wrapper .coba-dropdown-content ul {
+  align-self: flex-start;
+  color: #fff;
+}
 
 /* DROP DOWN Styles */
 
