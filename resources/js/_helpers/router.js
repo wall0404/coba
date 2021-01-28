@@ -28,6 +28,7 @@ import Page_SignUp from "../components/Pages/Auth/Page_SignUp";
 import Page_TeamMember from "../components/Pages/Page_TeamMember";
 import Page_Inbox from "../components/Pages/Page_Inbox";
 import Page_Settings from "../components/Pages/Book/Page_Settings";
+import Page_FastBookingConfirmation from "../components/Pages/Book/Page_FastBookingConfirmation";
 
 const routes = [
     { path: '/login', name: "Login", component: Page_Login },
@@ -46,6 +47,7 @@ const routes = [
     { path: '/booking/new/workstation/:location_id', component: Page_WorkstationSelection, meta:{auth:true} },
     { path: '/booking/new/date/:workstation_id', name: "DateTimeSelection", props: true, component: Page_DateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
+    { path: '/booking/new/fastbooking/:location_id', name: "FastBookingConfirmation", props: true, component: Page_FastBookingConfirmation, meta:{auth:true}},
     { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
     { path: '/profile/settings', component: Profile_Edit, meta:{auth:true} },
     { path: '*', component: error404},

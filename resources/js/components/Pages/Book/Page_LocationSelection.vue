@@ -8,7 +8,7 @@
                 <li class="position-relative coba-list-nobullets" v-for="location in locations" :key="location.id">
                     <router-link class="coba-button coba-button-accent coba-button-big coba-button-no-border"
                                  :to="'/booking/new/workstation/'+location.id"> {{location.name}}</router-link>
-                    <router-link class="coba-button coba-button-big coba-button-no-border button-on-top" to="">
+                    <router-link class="coba-button coba-button-big coba-button-no-border button-on-top" :to="'/booking/new/fastbooking/'+location.id">
                         <b-icon icon="clock-history" font-scale="2"></b-icon>
                     </router-link>
                 </li>
