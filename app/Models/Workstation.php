@@ -29,7 +29,7 @@ class Workstation extends Model
 
         return $parent;
     }
-    private function isFavorite(){
+    public function isFavorite(){
         foreach ($this->favoriteByUsers as $user) {
             if($user->user_id == Auth::id()) return true;
         }

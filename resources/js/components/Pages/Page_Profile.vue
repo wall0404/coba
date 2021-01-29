@@ -29,9 +29,9 @@
             <div class="coba-border-rounded p-2 user-data-templ">
                 <ol >
                     <li class="listHead">Best Buddies</li>
-                    <li class="listInput">Max Mustermann</li>
-                    <li class="listInput">Gundula Gause</li>
-                    <li class="listInput">Paul Panther</li>
+                    <template v-for=" user in users">
+                         <li v-if="user.isBuddy" class="listInput">{{ user.firstName }} {{user.lastName}} </li>
+                    </template>
                 </ol>
             </div>
             <router-link to="/logout" class="coba-button coba-button-half-width mt-5 mb-3 decent">Logout</router-link>
@@ -49,7 +49,7 @@ export default {
     data(){
         return{
             load: false ,
-            user: [],
+            users: [],
             workstations:{
               tower:[] ,
               dc:[],
@@ -59,6 +59,7 @@ export default {
     created() {
         this.workstations.tower = store.getters.data.locations[0].workstations ;
         this.workstations.dc = store.getters.data.locations[1].workstations ;
+        this.getUser() ;
     },
     methods:{
         getUser(){
@@ -67,10 +68,11 @@ export default {
                     headers: {
                         'content-type': 'application/json',
                         'Authorization': 'Bearer ' + localStorage.token
-                }.then(res => res.json() )
-                .then( res => {
-                    this.user = res.success ;
+                }
                 })
+                .then(res => res.json() )
+                .then( res => {
+                    this.users = res.success ;
             })
         },
     },

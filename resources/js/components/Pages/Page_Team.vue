@@ -16,12 +16,12 @@
         <spinner v-if="load"></spinner>
         <div v-else class="coba-container coba-smaller" v-for="user in users" >
             <router-link v-bind:to="'/team/' + user.user_id" >
-            <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
-                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
+            <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4" :style="user.isBuddy ?  'border: 2px solid #FFC931' : 'border: 0px'"  >
+                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/></div>
                 <div class="user-data">
                     <table  class="user-table limit">
                         <tr>
-                            <td class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
+                            <td  class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
                         </tr>
                         <template v-for="booking in today_bookings"> <!-- inefficient -->
                             <template v-for="works in workstations">
@@ -104,11 +104,20 @@ export default {
                                     // scroll to top -> needs to be checked if it works on app too
                                     window.scrollTo(0,0);
                             }else{
-                                this.users = res.success ;
+                                this.users = res.success.sort( this.compare) ;
                                 window.scrollTo(0,0);
                             }
                         })
                 },300) ;
+            },
+            compare(a,b){
+                if( a.isBuddy === true && b.isBuddy === false ){
+                    return -1 ;
+                }
+                if ( a.isBuddy === false && b.isBuddy === false ){
+                    return 0 ;
+                }
+                else return 1 ;
             },
             getWorkstation(){
                 fetch('/api/workstation',{

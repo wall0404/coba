@@ -50,4 +50,27 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Workstation', 'favorites', 'user_id', 'workstation_id');
     }
+
+    public function buddiesOfThisUser(){
+        return $this->belongsToMany(User::class , 'buddies' , 'buddy_id' , 'user_id' ) ;
+    }
+    public function UserIsBuddyOf(){
+        return $this->belongsToMany(User::class , 'buddies' , 'user_id' , 'buddy_id' ) ;
+    }
+    public function toArray()
+    {
+        $parent =  parent::toArray();
+
+        if ( Auth::check() ){
+            $parent['isBuddy'] = $this->isBuddy();
+        }
+
+        return $parent;
+    }
+    public function isBuddy(){
+        foreach ($this->buddiesOfThisUser as $user) {
+            if($user->user_id == Auth::id()) return true;
+        }
+        return false;
+    }
 }
