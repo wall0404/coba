@@ -1,10 +1,7 @@
 <template>
 
-    <div class="coba-calendar-sidebar" @click="toggleSidebar()">
-        <b-icon icon="list" font-scale="2"></b-icon>
-    </div>
 
-    <div v-if="open" class="coba-calendar-wrapper" @click="toggleSidebar">
+    <div v-if="show_sidebar" class="coba-calendar-wrapper" @click="toggleSidebar">
         <div class="coba-calendar-content">
             <div class="coba-calendar-header"> Standorte </div>
             <ul>
@@ -33,15 +30,15 @@
 
 <script>
 export default {
-name: "CalendarSidebar",
-
+    name: "CalendarSidebar",
+    props: ['show_sidebar'],
+    
     data:{
-        open: false
     },
 
     methods:{
         toggleSidebar() {
-            this.open = !this.open;
+            this.show_sidebar = !this.show_sidebar;
         }
     }
 
@@ -51,13 +48,5 @@ name: "CalendarSidebar",
 
 <style scoped>
 
-.coba-calendar-sidebar{
-    width: 20px;
-    height: 20px;
-    position: fixed;
-    top: 30px;
-    right: 30px;
-
-}
 
 </style>

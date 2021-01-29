@@ -9,33 +9,13 @@
                 <span @click="nextMonth"><b-icon icon="caret-right-fill" font-scale="1.25"></b-icon> </span>
             </div>
         </div>
-        <div class="coba-calendar-sidebar" @click="toggleSidebar()">
-            <b-icon icon="list" font-scale="2"></b-icon>
-        </div>
 
-        <div v-if="open" class="coba-calendar-wrapper" @click="toggleSidebar">
-            <div class="coba-calendar-content">
-                <div class="coba-calendar-header"> Standorte </div>
-                <ul>
-                    <li>Digitaler Campus</li>
-                    <li> Tower </li>
-                    <li> Homeoffice </li>
-                </ul>
-                <div class="coba-calendar-header"> Filter nach </div>
-                <div class="coba-calendar-small-header"> Personen </div>
-                <ul>
-                    <li>Meine Buchungen</li>
-                    <li> Best Buddies</li>
-                    <li> Gesamtes Team</li>
-                </ul>
-                <div class="coba-calendar-small-header"> Sitzplätze </div>
-                <ul>
-                    <li>Favoriten </li>
-                    <li> Verfügbare Plätze </li>
-                    <li> Alle Plätze </li>
-                </ul>
-            </div>
-        </div> 
+        <b-icon icon="list" class="coba-calendar-sidebar-icon" font-scale="2" @click="toggleSidebar()">
+        </b-icon>
+
+        <CalendarSidebar :show_sidebar="open"></CalendarSidebar>
+
+
         <div class="content">
             <calendar ref="calendar" class="calendar" @dateSelected="callbackDateSelect"></calendar>
             <calendar-booking-list ref="list" class="booking-list" :selected-locations="selectedLocations"></calendar-booking-list>
@@ -47,9 +27,10 @@
 <script>
 import Calendar from "../Elements/Calendar";
 import CalendarBookingList from "../Elements/CalendarBookingList";
+import CalendarSidebar from "../CalendarSidebar";
 export default {
     name: "Page_Calendar",
-    components: {CalendarBookingList, Calendar},
+    components: {CalendarSidebar, CalendarBookingList, Calendar},
     data() {
         return {
             today: new Date(),
@@ -147,12 +128,13 @@ export default {
         flex-grow: 50;
     }
 
-    .coba-calendar-sidebar{
+    .coba-calendar-sidebar-icon{
         width: 20px;
         height: 20px;
         position: fixed;
         top: 30px;
         right: 30px;
+        color: white;
 
     }
 </style>
