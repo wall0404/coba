@@ -5,9 +5,9 @@
         </div>
         <div class="coba-container">
             <div v-if="!load">
-                <router-link v-for="location in locations" :key="location.id" class="coba-button coba-button-accent coba-button-big coba-button-no-border"
+                <router-link v-for="location in locations" :key="location.id" class="coba-button coba-button-accent coba-button-big coba-button-no-border mt-3"
                     :to="'/booking/new/workstation/'+location.id">{{location.name}} </router-link>
-                <router-link class="coba-button coba-button-accent coba-button-half-width coba-button-no-border" :to="'/booking/new/homeoffice/'"> Homeoffice</router-link>
+                <router-link class="coba-button coba-button-accent coba-button-big coba-button-no-border mt-3" :to="'/booking/new/homeoffice/'"> Remote Work</router-link>
             </div>
             <spinner v-else></spinner>
 

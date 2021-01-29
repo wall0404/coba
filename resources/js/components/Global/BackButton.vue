@@ -37,7 +37,7 @@ export default {
             whiteBackground: [
                 "Profile", "TeamMember",
             ],
-            checkTwice: [
+            doNotCheckTwice: [
 
             ],
             modal_open: false,
@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         triggerBack(force) {
-            if (!force && (this.checkTwice.find(name => name === this.$route.name) || this.$store.getters.changes)) {
+            if (!force && (this.doNotCheckTwice.find(name => name === this.$route.name) || this.$store.getters.changes)) {
                 this.modal_open = true;
                 this.$store.commit('clearChanges');
             }

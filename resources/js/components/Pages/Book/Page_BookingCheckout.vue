@@ -114,7 +114,7 @@ export default {
 
                     //clear changes
                     this.$store.commit('autoSaveInstance', {
-                        workstation_id: this.bookings[0].workstation.id,
+                        workstation_id: this.bookings[0].workstation_id === null? "homeoffice":this.bookings[0].workstation.id,
                         days: []
                     })
                 })

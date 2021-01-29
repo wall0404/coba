@@ -42,7 +42,7 @@ export default {
     created() {
         if(typeof this.preSelectedDays === "undefined") //wenn ein Tag vorher schon irgendwo angegeben wurde, wurde es in dieser Variable zwischengespeichert
             try {
-                this.preSelectedDays = this.$store.getters.data.autoSave[this.$route.params.workstation_id];
+                this.preSelectedDays = this.$store.getters.data.autoSave["homeoffice"];
             }
             catch (e) {
                 this.preSelectedDays = []
@@ -96,6 +96,7 @@ export default {
             console.log(this.bookings);
         },
         callbackPicker(day) {
+            this.$store.commit('markChanges');
             if (day.selected)
                 this.days.push(day);
             else {
@@ -106,8 +107,21 @@ export default {
                     }
                 }
             }
+            //save changes
+            this.$store.commit('autoSaveInstance', {
+                workstation_id: "homeoffice",
+                days: this.days
+            });
         },
         submit() {
+            //save changes
+            this.$store.commit('autoSaveInstance', {
+                workstation_id: "homeoffice",
+                days: this.days
+            });
+
+            this.$store.commit('clearChanges');
+
             //go to confirmation
             let days = this.days;
             this.$router.push({
