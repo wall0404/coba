@@ -45,7 +45,8 @@ export default {
             fetch('/api/ical', {
                 method: 'GET',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    'Authorization' : 'Bearer '+localStorage.token
                 }
             })
                 .then(res => res.json())
@@ -71,7 +72,8 @@ export default {
                 fetch('/api/ical', {
                     method: 'POST',
                     headers: {
-                        'content-type': 'application/json'
+                        'content-type': 'application/json',
+                        'Authorization' : 'Bearer '+localStorage.token
                     }
                 })
                     .then(res => res.json())
@@ -96,7 +98,8 @@ export default {
                 fetch('/api/ical', {
                     method: 'DELETE',
                     headers: {
-                        'content-type': 'application/json'
+                        'content-type': 'application/json',
+                        'Authorization' : 'Bearer '+localStorage.token
                     }
                 })
                     .then(res => res.json())
