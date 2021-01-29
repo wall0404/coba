@@ -20,7 +20,7 @@
         <div class="coba-container coba-full-width coba-footer-container pb-5" style="min-height: 300px">
             <ul class="coba-list" v-if="!load">
                 <li v-for="booking in bookings" :key="booking.id">
-                    {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}
+                    {{booking.date.slice(8,10)}}.{{booking.date.slice(5,7)}}.{{booking.date.slice(0,4)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}
                 </li>
             </ul>
             <spinner v-else></spinner>
