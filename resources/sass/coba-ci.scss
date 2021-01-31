@@ -278,39 +278,44 @@
 
 /* CALENDER SIDEBAR */
 
+.coba-calander-wrapper{
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $coba-danger-red;}
+
 .coba-calander-container {
 
-    .coba-calander-wrapper{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 20vw;
-        height: 20vh;
-        background-color: $coba-danger-red;
-
-        .coba-dropdown-content{
+        .coba-calendar-sidebar-content{
             position: absolute;
             top: 0;
             right: 0;
-            background-color: $coba-calendar-sidebar;
+            background-color: #333333;
             width: 60%;
-            padding: 10px;
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
+            height: 93%;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: revert;
 
-            .coba-dropdown-header{
-                border-bottom: 8px solid $coba-white;
-                color: $coba-white;
-                padding: 10px;
-                margin: 10px;
+            .coba-calendar-sidebar-header{
+                border-bottom: 3px solid #fff;
+                color: #fff;
+                padding: 3px;
+                margin-bottom: 15px;
+                margin-top: 10px;
                 width: 80%;
                 display: flex;
-                justify-content: center;
+                justify-content: flex-start;
+                font-size: larger;
             }
-            .coba-calendar-small-header{
+            .coba-calendar-sidebar-small-header{
                 border-bottom: 5px solid $coba-white;
                 color: $coba-white;
                 justify-content: center;
@@ -322,7 +327,7 @@
 
         }
     }
-}
+
 
 
 /* DROP DOWN Styles */
@@ -467,6 +472,7 @@
 
     }
 }
+
 .coba-list-nobullets {
     font-size: 14px;
     color: #2C2C2C;
@@ -487,6 +493,26 @@
     padding: 2px 0;
     border-bottom: 1px solid #EBEBEB;
 }
+
+.coba-list-nobul-nobor {
+    font-size: 14px;
+    color: #2C2C2C;
+    padding-left: 0px;
+    list-style: none;
+}
+
+    .coba-list-nobul-nobor li::before {
+        content: none;
+    }
+
+    .coba-list-nobul-nobor li.last {
+        border-bottom: none;
+    }
+
+    .coba-list-nobul-nobor li {
+        padding: 2px 0;
+    }
+
 
 
 

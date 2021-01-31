@@ -1,6 +1,8 @@
 <template>
     <div class="coba-page page">
 
+        <CalendarSidebar :show_sidebar="open"></CalendarSidebar>
+
         <div class="coba-container coba-header coba-header-square mb-0">
 
             <div class="headline-button-container">
@@ -10,16 +12,15 @@
             </div>
         </div>
 
-        <b-icon icon="list" class="coba-calendar-sidebar-icon" font-scale="2" @click="toggleSidebar()">
+        <b-icon icon="list" class="coba-calendar-sidebar-icon" :class="{'transparent-icon': open}" font-scale="2" @click="toggleSidebar()">
         </b-icon>
-
-        <CalendarSidebar :show_sidebar="open"></CalendarSidebar>
-
 
         <div class="content">
             <calendar ref="calendar" class="calendar" @dateSelected="callbackDateSelect"></calendar>
             <calendar-booking-list ref="list" class="booking-list" :selected-locations="selectedLocations"></calendar-booking-list>
         </div>
+
+
 
     </div>
 </template>
@@ -135,6 +136,11 @@ export default {
         top: 30px;
         right: 30px;
         color: white;
+        z-index: 0;
 
+    }
+
+    .transparent-icon{
+        color: transparent;
     }
 </style>

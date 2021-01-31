@@ -14670,46 +14670,51 @@ input[type=color].form-control:disabled {
 
 /* CALENDER SIDEBAR */
 
-.coba-calander-container .coba-calander-wrapper {
+.coba-calander-wrapper {
   position: fixed;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   top: 0;
   left: 0;
-  width: 20vw;
-  height: 20vh;
+  width: 100%;
+  height: 100%;
   background-color: #861F08;
 }
 
-.coba-calander-container .coba-calander-wrapper .coba-dropdown-content {
+.coba-calander-container .coba-calendar-sidebar-content {
   position: absolute;
   top: 0;
   right: 0;
   background-color: #333333;
   width: 60%;
-  padding: 10px;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+  height: 93%;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: revert;
 }
 
-.coba-calander-container .coba-calander-wrapper .coba-dropdown-content .coba-dropdown-header {
-  border-bottom: 8px solid #fff;
+.coba-calander-container .coba-calendar-sidebar-content .coba-calendar-sidebar-header {
+  border-bottom: 3px solid #fff;
   color: #fff;
-  padding: 10px;
-  margin: 10px;
+  padding: 3px;
+  margin-bottom: 15px;
+  margin-top: 10px;
   width: 80%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  font-size: larger;
 }
 
-.coba-calander-container .coba-calander-wrapper .coba-dropdown-content .coba-calendar-small-header {
+.coba-calander-container .coba-calendar-sidebar-content .coba-calendar-sidebar-small-header {
   border-bottom: 5px solid #fff;
   color: #fff;
   justify-content: center;
 }
 
-.coba-calander-container .coba-calander-wrapper .coba-dropdown-content ul {
+.coba-calander-container .coba-calendar-sidebar-content ul {
   align-self: flex-start;
   color: #fff;
 }
@@ -14895,6 +14900,25 @@ input[type=color].form-control:disabled {
 .coba-list-nobullets li {
   padding: 2px 0;
   border-bottom: 1px solid #EBEBEB;
+}
+
+.coba-list-nobul-nobor {
+  font-size: 14px;
+  color: #2C2C2C;
+  padding-left: 0px;
+  list-style: none;
+}
+
+.coba-list-nobul-nobor li::before {
+  content: none;
+}
+
+.coba-list-nobul-nobor li.last {
+  border-bottom: none;
+}
+
+.coba-list-nobul-nobor li {
+  padding: 2px 0;
 }
 
 /* MODAL Style */
