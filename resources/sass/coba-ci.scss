@@ -279,16 +279,16 @@
 /* CALENDER SIDEBAR */
 
 .coba-calander-wrapper{
-    position: fixed;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    top: 0;
+    background-color: rgba(0,0,0,0.5);top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: $coba-danger-red;}
+    z-index: 1;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
 
 .coba-calander-container {
 
@@ -305,20 +305,31 @@
             align-items: revert;
 
             .coba-calendar-sidebar-header{
-                border-bottom: 3px solid #fff;
+                border-bottom: 2.5px solid #fff;
                 color: #fff;
-                padding: 3px;
+                padding: 2px;
                 margin-bottom: 15px;
-                margin-top: 10px;
-                width: 80%;
+                margin-top: 15px;
+                width: 97%;
                 display: flex;
                 justify-content: flex-start;
                 font-size: larger;
             }
+
+            .coba-calendar-sidebar-medium-header{
+                margin-top: 0;
+                margin-bottom: 18px;
+                color: white;
+                border-bottom: 2.5px solid #fff;
+
+            }
             .coba-calendar-sidebar-small-header{
-                border-bottom: 5px solid $coba-white;
-                color: $coba-white;
-                justify-content: center;
+                border-bottom: 1.7px solid #fff;
+                color: #fff;
+                font-size: 15px;
+                margin-top: 10px;
+                margin-bottom: 8px;
+                margin-right: 64%;
             }
             ul{
                 align-self: flex-start;
@@ -510,7 +521,9 @@
     }
 
     .coba-list-nobul-nobor li {
-        padding: 2px 0;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-left: 3px;
     }
 
 

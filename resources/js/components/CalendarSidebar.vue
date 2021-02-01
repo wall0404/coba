@@ -1,7 +1,9 @@
 <template>
 
-<div class="coba-calander-container">
     <div v-if="show_sidebar" class="coba-calendar-wrapper" @click="toggleSidebar">
+
+        <div class="coba-calander-container">
+
         <div class="coba-calendar-sidebar-content">
             <div class="coba-calendar-sidebar-header"> Standorte </div>
             <ul class="coba-list-nobul-nobor">
@@ -9,7 +11,7 @@
                 <li> Tower </li>
                 <li> Homeoffice </li>
             </ul>
-            <div class="coba-calendar-sidebar-header"> Filter nach </div>
+            <div class="coba-calendar-sidebar-medium-header"> Filter nach </div>
             <div class="coba-calendar-sidebar-small-header"> Personen </div>
             <ul class="coba-list-nobul-nobor">
                 <li>Meine Buchungen</li>
@@ -34,9 +36,7 @@ export default {
     name: "CalendarSidebar",
     props: ['show_sidebar'],
 
-
-
-    methods:{
+     methods:{
         toggleSidebar() {
             this.show_sidebar = !this.show_sidebar;
         }
