@@ -1,7 +1,7 @@
 <template>
     <div class="coba-page page">
 
-        <CalendarSidebar :show_sidebar="open"></CalendarSidebar>
+        <CalendarSidebar :show_sidebar="open" @modal-close-event="toggleSidebar()"></CalendarSidebar>
 
         <div class="coba-container coba-header coba-header-square mb-0">
 
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <b-icon icon="list" class="coba-calendar-sidebar-icon" :class="{'transparent-icon': open}" font-scale="2" @click="toggleSidebar()">
+        <b-icon v-if="!open" icon="list" class="coba-calendar-sidebar-icon" font-scale="2" @click="toggleSidebar()">
         </b-icon>
 
         <div class="content">

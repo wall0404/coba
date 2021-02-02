@@ -1,6 +1,7 @@
 <template>
 
-    <div v-if="show_sidebar" class="coba-calendar-wrapper" @click="toggleSidebar">
+
+    <div v-if="show_sidebar" class="coba-calendar-wrapper" @click.self="$emit('modal-close-event')">
 
         <div class="coba-calander-container">
 
@@ -8,6 +9,7 @@
             <div class="coba-calendar-sidebar-header"> Standorte </div>
             <ul class="coba-list-nobul-nobor">
                 <li>Digitaler Campus</li>
+                <li><input type="checkbox" v-model="dc" @change=""> Digitaler Campus </li>
                 <li> Tower </li>
                 <li> Homeoffice </li>
             </ul>
@@ -36,11 +38,7 @@ export default {
     name: "CalendarSidebar",
     props: ['show_sidebar'],
 
-     methods:{
-        toggleSidebar() {
-            this.show_sidebar = !this.show_sidebar;
-        }
-    }
+
 
 
 }
