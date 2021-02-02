@@ -23,11 +23,11 @@
         <div class="table-item icon"><b-icon v-if="false" icon="star-fill" font-scale="0.75"></b-icon></div>
 
         <!-- Anzeige der Buchungsbutton wenn Buchung von einem anderem User ist-->
-        <!--<div class="table-item icon">
+        <div class="table-item icon">
             <div v-for="booking in bookings_workstation">
 
                 <router-link class="coba-utilization-indicator" v-if="bookings_workstation.length==0"
-                             :class="{'coba-utilization-indicator-green':color==='green', 'coba-utilization-indicator-disabled':this.today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
+                             :class="{'coba-utilization-indicator-green':color==='green', 'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
                              :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
                     <b-icon icon="plus"></b-icon>
@@ -37,7 +37,7 @@
                              :class="{'coba-utilization-indicator-red':color==='red',
                                 'coba-utilization-indicator-green':color==='green',
                                 'coba-utilization-indicator-orange':color==='orange',
-                                'coba-utilization-indicator-disabled':this.today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
+                                'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
                              :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
                     <b-icon icon="plus"></b-icon>
@@ -48,11 +48,11 @@
                     <b-icon icon="pencil"></b-icon>
                 </router-link>
             </div>
-        </div>-->
+        </div>
 
 
 
-        <router-link class="table-item icon coba-utilization-indicator" v-if="user_id !== $store.getters.data.user.user_id"
+       <!-- <router-link class="table-item icon coba-utilization-indicator" v-if="user_id !== $store.getters.data.user.user_id"
                      :class="{'coba-utilization-indicator-red':color==='red',
                                 'coba-utilization-indicator-green':color==='green',
                                 'coba-utilization-indicator-orange':color==='orange',
@@ -65,7 +65,7 @@
         <router-link class="table-item icon" v-else
                      v-bind:to="'/booking/'+bookings_workstation.id">
             <b-icon icon="pencil"></b-icon>
-        </router-link>
+        </router-link> -->
     </div>
 </template>
 
