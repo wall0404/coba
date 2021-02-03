@@ -1,6 +1,6 @@
 <template>
     <div class="coba-page">
-        <div style="position: fixed ; width: 100% ; z-index: 10 ; background-color: white">
+        <div>
         <div class="coba-container coba-flex coba-header" >
             <span class="coba-page-headline">Buchung</span>
         </div>
