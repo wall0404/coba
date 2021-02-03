@@ -14683,7 +14683,7 @@ input[type=color].form-control:disabled {
   align-items: flex-start;
 }
 
-.coba-calander-container .coba-calendar-sidebar-content {
+.coba-calendar-container .coba-calendar-sidebar-content {
   position: absolute;
   top: 0;
   right: 0;
@@ -14696,7 +14696,7 @@ input[type=color].form-control:disabled {
   align-items: revert;
 }
 
-.coba-calander-container .coba-calendar-sidebar-content .coba-calendar-sidebar-header {
+.coba-calendar-container .coba-calendar-sidebar-content .coba-calendar-sidebar-header {
   border-bottom: 2.5px solid #fff;
   color: #fff;
   padding: 2px;
@@ -14708,25 +14708,25 @@ input[type=color].form-control:disabled {
   font-size: larger;
 }
 
-.coba-calander-container .coba-calendar-sidebar-content .coba-calendar-sidebar-medium-header {
+.coba-calendar-container .coba-calendar-sidebar-content .coba-calendar-sidebar-small-header {
   margin-top: 0;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
+  padding-bottom: 3px;
   color: white;
-  border-bottom: 2.5px solid #fff;
+  border-bottom: 2px solid #fff;
 }
 
-.coba-calander-container .coba-calendar-sidebar-content .coba-calendar-sidebar-small-header {
-  border-bottom: 1.7px solid #fff;
-  color: #fff;
-  font-size: 15px;
-  margin-top: 10px;
-  margin-bottom: 8px;
-  margin-right: 64%;
-}
-
-.coba-calander-container .coba-calendar-sidebar-content ul {
+.coba-calendar-container ul {
   align-self: flex-start;
   color: #fff;
+}
+
+.coba-check {
+  position: absolute;
+  right: 15px;
+  color: #333333;
+  border-color: #333333;
+  border-radius: 10px;
 }
 
 /* DROP DOWN Styles */
@@ -14928,8 +14928,8 @@ input[type=color].form-control:disabled {
 }
 
 .coba-list-nobul-nobor li {
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 3px;
 }
 

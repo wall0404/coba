@@ -3,29 +3,24 @@
 
     <div v-if="show_sidebar" class="coba-calendar-wrapper" @click.self="$emit('modal-close-event')">
 
-        <div class="coba-calander-container">
+        <div class="coba-calendar-container">
 
         <div class="coba-calendar-sidebar-content">
             <div class="coba-calendar-sidebar-header"> Standorte </div>
             <ul class="coba-list-nobul-nobor">
-                <li>Digitaler Campus</li>
-                <li><input type="checkbox" v-model="dc" @change=""> Digitaler Campus </li>
-                <li> Tower </li>
-                <li> Homeoffice </li>
+                <li><label><input type="checkbox" class="coba-check"> Digitaler Campus </label></li>
+                <li><label><input type="checkbox" class="coba-check"> Tower </label></li>
+                <li><label><input type="checkbox" class="coba-check"> Remote Work </label></li>
             </ul>
-            <div class="coba-calendar-sidebar-medium-header"> Filter nach </div>
-            <div class="coba-calendar-sidebar-small-header"> Personen </div>
+            <div class="coba-calendar-sidebar-small-header"> Filter nach </div>
             <ul class="coba-list-nobul-nobor">
-                <li>Meine Buchungen</li>
-                <li> Best Buddies</li>
-                <li> Gesamtes Team</li>
+                <li><label><input type="checkbox" class="coba-check"> Meine Buchungen </label></li>
+                <li><label><input type="checkbox" class="coba-check"> Verfügbare Plätze </label></li>
+                <li><label><input type="checkbox" class="coba-check"> Best Buddies </label></li>
+                <li><label><input type="checkbox" class="coba-check"> Favoriten </label></li>
             </ul>
-            <div class="coba-calendar-sidebar-small-header"> Sitzplätze </div>
-            <ul class="coba-list-nobul-nobor">
-                <li>Favoriten </li>
-                <li> Verfügbare Plätze </li>
-                <li> Alle Plätze </li>
-            </ul>
+
+
         </div>
     </div>
 </div>
@@ -37,9 +32,6 @@
 export default {
     name: "CalendarSidebar",
     props: ['show_sidebar'],
-
-
-
 
 }
 </script>

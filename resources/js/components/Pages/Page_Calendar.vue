@@ -130,8 +130,7 @@ export default {
     }
 
     .coba-calendar-sidebar-icon{
-        width: 20px;
-        height: 20px;
+
         position: fixed;
         top: 30px;
         right: 30px;
