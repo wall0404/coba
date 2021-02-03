@@ -14,7 +14,8 @@
             <h3 class="mb-0">{{ $store.getters.data.user.firstName +" " + $store.getters.data.user.lastName }}</h3>
             <p class="mb-1">{{$store.getters.data.user.email}}</p>
         </div>
-        <div class="coba-input-container ">
+        <spinner v-if="load" ></spinner>
+        <div v-else class="coba-input-container ">
             <div class="coba-border-rounded p-2 user-data-templ">
                      <ol>
                          <li class="listHead">Favorisierte Sitzplätze</li>
@@ -63,7 +64,8 @@ export default {
     },
     methods:{
         getUser(){
-            fetch('/api/user',{
+            this.load = true ;
+            fetch('/api/user?order_by=firstName',{
                 method: 'GET',
                     headers: {
                         'content-type': 'application/json',
@@ -73,6 +75,10 @@ export default {
                 .then(res => res.json() )
                 .then( res => {
                     this.users = res.success ;
+                    this.load = false ;
+                }).catch(error => {
+                    console.log(error) ;
+                    this.load = false ;
             })
         },
     },

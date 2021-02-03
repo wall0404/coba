@@ -2,7 +2,7 @@
     <div class="coba-page coba-homescreen ">
         <template v-for="user in users">
         <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
-            <div @click="user.isBuddy ?  removeBuddy(user.user_id) : addBuddy(user.user_id)" ><b-icon style="position: absolute ; left:72% ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
+            <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user.user_id) : addBuddy(user.user_id)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
             <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
         </div>
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
@@ -41,6 +41,7 @@ export default {
             error: false ,
             users: [],
             id: null ,
+            userId: null ,
             bookings:[],
             allBookings:[],
             today_date: new Date().toISOString().slice(0, 10),
@@ -174,6 +175,7 @@ export default {
         this.loadID() ;
         this.getTeamMemberBookings() ;
         this.getAllBookings() ;
+        this.userId = this.$store.getters.data.user.user_id ;
     }
 
 }

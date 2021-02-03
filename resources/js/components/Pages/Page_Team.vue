@@ -1,7 +1,7 @@
 <template>
 
     <div class="coba-page">
-       <div style="position: fixed ; width: 100%  " >
+       <div style="position: fixed ; width: 100% ;z-index:2 " >
           <div class="coba-header adjust-header"  >
               <div ><h2 class="coba-page-headline">Team</h2></div>
               <div class="filter-container coba-flex-space-evenly mt-3">
@@ -15,10 +15,13 @@
 
         <spinner v-if="load"></spinner>
         <div v-else class="coba-container coba-smaller" v-for="user in users" >
+            <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 25px; z-index: 1 ; margin-top: -20px ; color: #FFC931" font-scale="1.5"  ></b-icon>
             <router-link v-bind:to="'/team/' + user.user_id" >
-            <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4" :style="user.isBuddy ?  'border: 2px solid #FFC931' : 'border: 0px'"  >
-                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/></div>
-                <div class="user-data">
+            <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
+                <div class="profile-picture"  style="background-color: transparent ">
+                    <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/>
+                </div>
+                <div class="user-data" >
                     <table  class="user-table limit">
                         <tr>
                             <td  class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
@@ -100,7 +103,7 @@ export default {
                         .then(res => {
                             if( this.searchQuery){
                                 this.users = res.success.filter(user =>
-                                    (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())) ;
+                                    (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())).sort(this.compare) ;
                                     // scroll to top -> needs to be checked if it works on app too
                                     window.scrollTo(0,0);
                             }else{
