@@ -4,9 +4,9 @@
         <div class="coba-text-strong coba-text coba-text-center">{{weekStartStr}} - {{weekEndStr}}</div>
         <div class="coba-utilization-indicator-container">
             <div :class="{'coba-utilization-indicator':true, 'coba-utilization-indicator-arrow-prev':true, 'coba-utilization-indicator-big':true, 'coba-utilization-indicator-disabled':page===0}" @click="prevPage">➤</div>
-            <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected':'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
+            <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected-'+day.color:'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
                 @click="selectDate(day)">{{day.day.substring(0,1)}}</div>
-            <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" @click="nextPage">➤</div>
+            <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" :class="{'coba-utilization-indicator-disabled':page===2}" @click="nextPage">➤</div>
         </div>
     </div>
 
@@ -15,7 +15,7 @@
 <script>
 export default {
     name: "DayPicker",
-    props: ['workstation','bookings', 'preSelectedDateStr'],
+    props: ['workstation','bookings', 'preSelectedDays'],
     data() {
         return {
             todayDate: new Date(),
@@ -42,38 +42,42 @@ export default {
     },
     created() {
 
-        if(this.preSelectedDateStr) {
-            //es wurde ein Datum übergeben
-            let preSelectedDate = new Date(this.preSelectedDateStr);
-            let diffTime = preSelectedDate - this.todayDate
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        if(typeof this.preSelectedDays !== 'undefined' && this.preSelectedDays.length > 0) {
+            //es wurden Tage übergeben
 
-            if(diffDays < 0) {
-                console.error("Liegt in der Vergangenheit")
-            }
-            else {
 
-                //set start of the week of the pre selected date
-                let dayOfWeek = preSelectedDate.getUTCDay();
-                let preSelectedDateDayOfWeek = dayOfWeek;
+            //Berechne das Datum der ersten Tage jeder Page
+            let page_weeks = {};
+            for(let page = 0; page<4; page++) {
+                page_weeks[page] = new Date();
+                page_weeks[page].setHours(0,0,0,0);
+                page_weeks[page].setDate(page_weeks[page].getDate()+1);
+                let dayOfWeek = page_weeks[page].getUTCDay();
                 dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
-                preSelectedDate.setDate(preSelectedDate.getDate() - dayOfWeek + 1);
+                page_weeks[page].setDate(new Date().getDate() - dayOfWeek + 1 + (page * 7));
 
-                //set start of the week of today
-                let weekStart = new Date()
-                dayOfWeek = this.todayDate.getUTCDay();
-                dayOfWeek = dayOfWeek===6?(-1):dayOfWeek;
-                weekStart.setDate(this.todayDate.getDate() - dayOfWeek + 1);
-
-                diffTime = preSelectedDate - weekStart
-                diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-
-                this.page = Math.round(diffDays/7);
-
-                this.initiateDates();
-                this.selectDate(this.pages[this.page][preSelectedDateDayOfWeek-1])
             }
+
+            this.initiateAllDates();
+
+            //check for each preselected day on which page it is
+            for(let i = 0; i<this.preSelectedDays.length; i++) {
+
+                if(this.preSelectedDays[i].date < page_weeks[0]) {}
+                else if(this.preSelectedDays[i].date < page_weeks[1]) {
+                    this.selectDate(this.pages[0][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                    this.page = 0;
+                }
+                else if(this.preSelectedDays[i].date < page_weeks[2]) {
+                    this.selectDate(this.pages[1][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                    this.page = 1;
+                }
+                else if(this.preSelectedDays[i].date < page_weeks[3]) {
+                    this.selectDate(this.pages[2][this.preSelectedDays[i].date.getUTCDay()-1], this.preSelectedDays[i].time)
+                    this.page = 2;
+                }
+            }
+            this.initiateDates();
         }
         else {
             this.initiateDates();
@@ -81,10 +85,21 @@ export default {
 
     },
     methods: {
+        initiateAllDates() {
+            this.page = 2;
+            this.initiateDates();
+            this.page = 1;
+            this.initiateDates();
+            this.page = 0;
+            this.initiateDates();
+        },
         initiateDates() {
             //Dont allow scrolling into past
             if(this.page < 0)
                 this.page = 0;
+            //Dont allow scrolling into future
+            if(this.page > 2)
+                this.page = 2;
 
             this.weekStart = new Date();
             this.weekEnd = new Date();
@@ -177,7 +192,7 @@ export default {
             }
 
 
-            if(hours >= 5)
+            if(hours >= 8)
                 color = "red";//mark red
             else
                 color = "orange"; //mark orange
@@ -189,8 +204,11 @@ export default {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
             return days[date.getUTCDay()];
         },
-        selectDate(day) {
+        selectDate(day, time) {
             if(!day.disabled) {
+                if(typeof time !== 'undefined')
+                    day.time = time
+
                 day.selected = !day.selected;
                 day.workstation = this.workstation;
                 this.$emit('callback-picker-event', day);

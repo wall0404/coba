@@ -46,6 +46,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     public function favorites()
     {
         return $this->belongsToMany('App\Models\Workstation', 'favorites', 'user_id', 'workstation_id');
@@ -67,10 +68,16 @@ class User extends Authenticatable
 
         return $parent;
     }
-    public function isBuddy(){
+    public function isBuddy()
+    {
         foreach ($this->buddiesOfThisUser as $user) {
-            if($user->user_id == Auth::id()) return true;
+            if ($user->user_id == Auth::id()) return true;
         }
         return false;
+    }
+
+    public function ical() {
+        return $this->hasOne(iCalAssignments::class, 'user_id', 'user_id');
+
     }
 }

@@ -15,7 +15,8 @@
                         </div>
                         <div class="coba-container"> <!-- Buttons -->
                             <router-link to="/home"><button class="coba-button coba-button-white coba-button-yellow-border">Zur Startseite</button></router-link>
-                            <router-link to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
+                            <router-link v-if="calenderBool" to="/calendar"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
+                            <router-link v-else to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
                         </div>
                     </div>
                     <div v-else> <!-- Anzeige der fehlgeschlagenen Buchung -->
@@ -38,7 +39,7 @@ import Booking from "../../ListItems/Booking";
 import {router} from "../../../_helpers/router";
 export default {
     components: {Booking, Spinner},
-    props: ['bookings'],
+    props: ['bookings', 'calenderBool'],
     name: "Page_BookingCheckout",
     data() {
         return {
@@ -111,6 +112,12 @@ export default {
                     this.validation_error = res.error;
                     this.error = false;
                     this.success = res.success;
+
+                    //clear changes
+                    this.$store.commit('autoSaveInstance', {
+                        workstation_id: this.bookings[0].workstation.id,
+                        days: []
+                    })
                 })
                 .catch(error => {
                     console.log(error);

@@ -11,8 +11,13 @@
             <spinner v-else></spinner>
 
             <div class="coba-flex-space-evenly">
-                <button class="coba-button-round coba-button">Old</button>
-                <router-link :to="'/booking/new/location/favorite'"><button class="coba-button-round coba-button">Fav</button></router-link>
+
+                <button class="coba-button-round coba-button">
+                    <b-icon icon="clock-history" font-scale="2"></b-icon>
+                </button>
+                <button class="coba-button-round coba-button">
+                    <b-icon icon="star-fill" font-scale="2"></b-icon>
+                </button>
             </div>
         </div>
     </div>

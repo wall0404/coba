@@ -111,7 +111,7 @@ export default {
     methods: {
         fetchData() {
             this.load = true;
-            fetch('/api/booking?filter[date][min]='+this.today_date+'&filter[date][max]='+this.date_in_7_days+'&filter[location_id]='+this.location_id, {
+            fetch('/api/booking?filter[date][min]='+this.today_date+'&filter[location_id]='+this.location_id, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',

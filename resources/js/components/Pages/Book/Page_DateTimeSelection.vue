@@ -4,17 +4,19 @@
         <div class="coba-container coba-flex coba-header" >
             <span class="coba-page-headline">Buchung</span>
         </div>
-        <div class="coba-container" style="z-index: 2 ; background-color: white">
-            <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-date-str="preSelectedDateStr"></DayPicker>
+
+        <div v-if="!load">
+            <div class="coba-container">
+                <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-days="preSelectedDays"></DayPicker>
+            </div>
+            <div class="coba-container">
+                <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
+            </div>
+            <div class="coba-container">
+                <button class="coba-button" @click="submit" :disabled="days.length===0">Buchen</button>
+            </div>
         </div>
-        </div>
-        <div style="height: 380px ; background-color: white ; z-index: 2"></div>
-        <div class="coba-container" style="z-index: 1">
-            <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
-        </div>
-        <div class="coba-container">
-            <button class="coba-button" @click="submit" :disabled="days.length===0">Buchen</button>
-        </div>
+        <spinner v-else></spinner>
     </div>
 </template>
 
@@ -25,7 +27,7 @@ import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
-    props: ["bookings", 'preSelectedDateStr'],
+    props: ["bookings", 'preSelectedDays', 'calenderBool'],
     components: {TimePicker, DayPicker, Spinner},
     data() {
         return {
@@ -37,22 +39,30 @@ export default {
     },
     created() {
         if(typeof this.bookings === 'undefined') {
-            this.bookings = JSON.parse(localStorage.getItem("bookings_"+this.$route.params.workstation_id))
-            if(this.bookings == null){
-                console.error("Keine Buchungen wurden übergeben.")
-                this.$router.push("/home")
-            }
+            //fetch Data
+            this.fetchData();
         }
-        else
-            localStorage.setItem("bookings_" + this.$route.params.workstation_id, JSON.stringify(this.bookings));
+        if(typeof this.preSelectedDays === "undefined")
+            try {
+                this.preSelectedDays = this.$store.getters.data.autoSave[this.$route.params.workstation_id];
+            }
+            catch (e) {
+                this.preSelectedDays = []
+            }
 
         this.fetchWorkstation();
-        this.fetchData();
+    },
+    destroyed() {
+        this.$store.commit('clearChanges');
     },
     methods: {
         fetchData() {
-            /*this.load = true;
-            fetch('/api/workstation?filter[location_id]='+this.location_id, {
+            this.load = true;
+            let date = new Date();
+            let today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
+            date.setDate(new Date().getDate() + 7);
+            let date_in_7_days = date.toISOString().slice(0, 10);
+            fetch('/api/booking?filter[date][min]='+today_date+'&filter[workstation_id]='+this.$route.params.workstation_id, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',
@@ -62,7 +72,7 @@ export default {
                 .then(res => res.json())
                 .then(res => {
                     if(res.success) {
-                        this.workstations = res.success;
+                        this.formatBookings(res.success);
                         this.load = false;
                     }
                     else {
@@ -73,7 +83,21 @@ export default {
                 .catch(error => {
                     console.log(error);
                     this.load = false;
-                })*/
+                })
+        },
+        formatBookings(data) {
+            this.bookings = {};
+
+            //For every Booking
+            for (let k = 0; k<data.length; k++) {
+                try {
+                    this.bookings[data[k].date].push(data[k])
+                }
+                catch (e) {
+                    this.bookings[data[k].date] = []
+                    this.bookings[data[k].date].push(data[k])
+                }
+            }
         },
         fetchWorkstation() {
             let locations = this.$store.getters.locations;
@@ -87,6 +111,7 @@ export default {
             }
         },
         callbackPicker(day) {
+            this.$store.commit('markChanges');
             if (day.selected)
                 this.days.push(day);
             else {
@@ -97,14 +122,29 @@ export default {
                     }
                 }
             }
+
+            //save changes
+            this.$store.commit('autoSaveInstance', {
+                workstation_id: this.$route.params.workstation_id,
+                days: this.days
+            });
+
         },
         submit() {
+            //save changes
+            this.$store.commit('autoSaveInstance', {
+                workstation_id: this.$route.params.workstation_id,
+                days: this.days
+            });
+
+
             //go to confirmation
             let days = this.days;
             this.$router.push({
                 name: 'BookingConfirmation',
                 params: {
-                    bookings: this.days
+                    bookings: this.days,
+                    calenderBool: this.calenderBool
                 }
             })
         }

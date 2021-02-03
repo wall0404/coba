@@ -25,6 +25,7 @@
 
         <div id="app">
             <div id="content" v-if="$store.getters.ready">
+                <back-button></back-button>
                 <router-view></router-view>
                 <navbar></navbar>
             </div>

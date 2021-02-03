@@ -4,12 +4,9 @@
             <span class="coba-page-headline">Abmelden</span>
         </div>
         <div class="coba-container">
-            {{text}}
+            <span class="coba-text-centered mt-4" style="font-weight: bold; font-size: 18px"> {{text}} </span>
+            <router-link to="/" class="coba-text-centered coba-text-centered-button mt-4">Zurück zur Startseite</router-link>
         </div>
-        <div class="coba-container">
-            <router-link to="/">Zurück zur Startseite</router-link>
-        </div>
-
 
     </div>
 </template>

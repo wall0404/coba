@@ -25,9 +25,9 @@
 
                 <button class="coba-button coba-button-accent mt-4" type="button" @click="submit">Anmelden</button>
                 <div class="coba-container">
-                    <span class="coba-button-text mt-4"> Du hast noch kein Konto?<br> </span>
+                    <span class="coba-text-centered mt-4"> Du hast noch kein Konto?<br> </span>
 
-                    <router-link to="/signup" class="coba-button-text mt-4">Hier Registrieren</router-link>
+                    <router-link to="/signup" class="coba-text-centered coba-text-centered-button mt-4">Hier Registrieren</router-link>
                 </div>
 
             </form>

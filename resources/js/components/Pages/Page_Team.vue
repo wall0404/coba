@@ -1,6 +1,7 @@
 <template>
 
     <div class="coba-page">
+
        <div style="position: fixed ; width: 100% ;z-index:2 " >
           <div class="coba-header adjust-header"  >
               <div ><h2 class="coba-page-headline">Team</h2></div>
