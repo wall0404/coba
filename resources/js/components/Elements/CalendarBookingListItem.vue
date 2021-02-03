@@ -7,7 +7,7 @@
                 {{time}}
             </div>
             <div v-else v-for="booking in bookings_workstation">
-               {{booking.from.substring(0,5)}} - {{booking.to.substring(0,5)}}<br>
+               {{booking.from.substring(0,5)}} - {{booking.to.substring(0,5)}}
              </div>
         </div>
 
@@ -25,7 +25,6 @@
         <!-- Anzeige der Buchungsbutton wenn Buchung von einem anderem User ist-->
         <div class="table-item icon">
             <div v-for="booking in bookings_workstation">
-
                 <router-link class="coba-utilization-indicator" v-if="bookings_workstation.length==0"
                              :class="{'coba-utilization-indicator-green':color==='green', 'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
@@ -160,6 +159,8 @@ export default {
     font-weight: bold;
 }
 .table-item {
+    display: flex;
+    flex-direction: column;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -175,7 +176,7 @@ export default {
 }
 .icon {
     width: 10%;
-    display: flex;
+
     justify-content: center;
     align-items: center;
 }
