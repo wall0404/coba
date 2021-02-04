@@ -1,5 +1,6 @@
 <template>
     <div class="coba-page coba-homescreen ">
+
         <div class="user-container mb-5 mt-4">
             <div><img class="coba-border-round coba-border-yellow coba-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
         </div>
@@ -24,8 +25,14 @@
                 </li>
             </ul>
             <spinner v-else></spinner>
-        </div>
+
     </div>
+        <div class="back-button">
+            <a @click="$router.go(-1)">
+                <b-icon icon="arrow-left-short" font-scale="3"></b-icon>
+            </a>
+        </div>
+</div>
 </template>
 
 <script>
@@ -128,6 +135,11 @@ ol{
     list-style: none;
     padding: 0;
 }
-
+.back-button{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color:gray;
+}
 
 </style>

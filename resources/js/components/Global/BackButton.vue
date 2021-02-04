@@ -5,7 +5,7 @@
              @click="triggerBack(false)">
             <b-icon icon="arrow-left-short" font-scale="3"></b-icon>
         </div>
-        <modal :show-modal="modal_open" @modal-close-event="closeModal">
+        <modal id="themodal" :show-modal="modal_open" @modal-close-event="closeModal">
             <template v-slot:header>
                 <div class="coba-modal-header">Zurückkehren</div>
             </template>
@@ -22,6 +22,7 @@
                 </div>
             </template>
         </modal>
+        <div id="popLayer"></div>
     </div>
 </template>
 
@@ -33,7 +34,7 @@ export default {
     data() {
         return {
             exclude: [
-                "Home", "Login", "SignUp", "Logout"
+                "Home", "Login", "SignUp", "Logout","Calendar","Team","Profile","TeamMember",
             ],
             whiteBackground: [
                 "Profile", "TeamMember",
@@ -63,13 +64,34 @@ export default {
 </script>
 
 <style scoped>
-    #back_button {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        color: white;
-    }
-    .invert {
-        color: gray !important;
-    }
+#back_button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    z-index: 11;
+
+}
+.invert {
+    color: gray !important;
+}
+
+#themodal{
+    z-index: 9;
+}
+
+#popLayer{
+    position: absolute;
+    display:none;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    z-index:10;
+    background:#DCDBDC;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+
 </style>
