@@ -260,6 +260,20 @@
     }
 }
 
+.calender-button{
+    background-color: #e8e8e8;
+    color: #2C2C2C;
+    border-radius: 15px;
+    border: 1px solid #8C8C8C;
+    width: 185px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    font-size: medium;
+}
+
 /*In a Button container all buttons will be listed next to each other */
 
 .coba-button-container {
