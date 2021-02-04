@@ -1,7 +1,7 @@
 <template>
     <div class="coba-page page">
 
-        <CalendarSidebar :show_sidebar="open" @modal-close-event="toggleSidebar()"></CalendarSidebar>
+        <CalendarSidebar :show_sidebar="open" @modal-close-event="toggleSidebar()" @change-event="callbackChange()"></CalendarSidebar>
 
         <div class="coba-container coba-header coba-header-square mb-0">
 
@@ -41,6 +41,7 @@ export default {
             initialYear: 0,
             open:false,
             monthString: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            filter: null
 
         }
     },
@@ -87,6 +88,10 @@ export default {
 
         toggleSidebar() {
             this.open = !this.open;
+        },
+
+        callbackChange(filter){
+            this.filter= filter;
         }
 
     }

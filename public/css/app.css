@@ -14726,7 +14726,12 @@ input[type=color].form-control:disabled {
   right: 15px;
   color: #333333;
   border-color: #333333;
-  border-radius: 10px;
+  border-radius: 50px;
+}
+
+label.checked {
+  font-weight: bold;
+  color: #FFC931;
 }
 
 /* DROP DOWN Styles */

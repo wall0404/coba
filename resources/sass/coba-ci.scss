@@ -341,8 +341,14 @@
     right: 15px;
     color: $coba-calendar-sidebar;
     border-color: $coba-calendar-sidebar;
-    border-radius: 10px;
+    border-radius: 50px;
 }
+
+label.checked{
+    font-weight: bold;
+    color: $coba-yellow;
+}
+
 
 
 
