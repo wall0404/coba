@@ -26,6 +26,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('booking', 'App\Http\Controllers\BookingController@search');
     Route::get('booking/{id}', 'App\Http\Controllers\BookingController@get');
     Route::post('booking', 'App\Http\Controllers\BookingController@create');
+    Route::post('booking/suggestion', 'App\Http\Controllers\BookingController@getSuggestion');
     Route::delete('booking/{id}', 'App\Http\Controllers\BookingController@delete');
 
     /* User */

@@ -180,4 +180,7 @@ class BookingController extends ParentController
         return (int)$numberStr;
     }
 
+    public function getSuggestion(Request $request){
+
+    }
 }
