@@ -49,7 +49,7 @@ const routes = [
     { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
     { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
     { path: '/profile/settings', component: Profile_Edit, meta:{auth:true} },
-    { path: '/changebooking', name:"ChangeBooking", props: true, component: Page_ChangeBooking, meta:{auth:true} },
+    { path: '/booking/edit/:booking_id', name:"ChangeBooking", props: true, component: Page_ChangeBooking, meta:{auth:true} },
     { path: '*', component: error404},
 ]
 
