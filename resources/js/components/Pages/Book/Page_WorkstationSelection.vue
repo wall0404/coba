@@ -235,10 +235,6 @@ export default {
         },
         closeModal() {
             this.modal.open = false;
-            /*if ( this.favSeatChanged){
-                //this.$store.commit('getData') ;
-            }
-            this.favSeatChanged = false ;*/
         },
         dateToDayOfMonth(date) {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
