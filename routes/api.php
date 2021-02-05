@@ -45,12 +45,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('workstation/favorite', 'App\Http\Controllers\FavoriteSeatController@removeFavoriteSeat');
     Route::post('getInfo' , 'App\Http\Controllers\FavoriteSeatController@getInfo') ;
 
-    /* Avatar */
-    Route::prefix('/profile_picture')->group(function () {
-        Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
-        Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
-        Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
-    });
+
     /* ICAL */
     Route::prefix('ical')->group(function () {
         Route::get('/', 'App\Http\Controllers\ICALController@get');
@@ -59,6 +54,14 @@ Route::middleware('auth:api')->group(function () {
     });
 });
 
+Route::middleware('auth')->group(function () {
+    /* Avatar */
+    Route::prefix('/profile_picture')->group(function () {
+        Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
+        Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
+        Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
+    });
+});
 
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
