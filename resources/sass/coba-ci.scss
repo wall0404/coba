@@ -353,9 +353,7 @@
 .coba-check{
     position: absolute;
     right: 15px;
-    color: $coba-calendar-sidebar;
-    border-color: $coba-calendar-sidebar;
-    border-radius: 50px;
+    visibility: hidden;
 }
 
 label.checked{
