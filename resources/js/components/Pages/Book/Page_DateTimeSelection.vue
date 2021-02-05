@@ -1,9 +1,7 @@
 <template>
     <div class="coba-page">
-        <div>
         <div class="coba-container coba-flex coba-header" >
             <span class="coba-page-headline">Buchung</span>
-        </div>
         </div>
 
         <div v-if="!load">
