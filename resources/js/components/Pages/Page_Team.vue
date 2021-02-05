@@ -1,3 +1,4 @@
+
 <template>
 
     <div class="coba-page">
@@ -28,11 +29,15 @@
                             <td  class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
                         </tr>
                         <template v-for="booking in today_bookings"> <!-- inefficient -->
-                            <template v-for="works in workstations">
-                                <tr>
-                                    <td v-if="booking.date === today_date && booking.user_id === user.user_id && works.id === booking.workstation_id" class="user-data-name small text-info" > heute im {{works.location.name}}</td>
-                                </tr>
-                            </template>
+                            <tr>
+                                <td v-if="booking.user_id === user.user_id && booking.workstation_id !== null" class="user-data-name small text-info">
+                                    heute im {{booking.workstation_id}}
+                                </td>
+                                <td v-else-if="booking.user_id === user.user_id" class="user-data-name small text-info">
+                                    heute im Homeoffice
+                                </td>
+                            </tr>
+
                         </template>
                     </table>
                 </div>
@@ -65,7 +70,7 @@ export default {
         methods: {
             getTodayBookings(){
                 this.load = true ;
-                    fetch('/api/booking/?filter[date][min]=' +this.today_date +'&filter[to][min]=' + this.today_hours , {
+                    fetch('/api/booking/?filter[date][min]=' +this.today_date +'&filter[date][max]=' + this.today_date +'&filter[to][min]=' + this.today_hours , {
                         method: 'GET',
                         headers: {
                             'content-type': 'application/json',

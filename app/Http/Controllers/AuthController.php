@@ -53,7 +53,7 @@ class AuthController extends ParentController
     }
 
     public function resetPassword(Request $request){
-        if(Auth::check() && Auth::attempt(['email' => Auth::user()->email, 'password' => $request->input('password')], true)){
+        if(Auth::check() && Auth::guard('web')->attempt(['email' => Auth::user()->email, 'password' => $request->input('password')], true)){
             $input = $request->all();
             $input['new_password'] = bcrypt($input['new_password']);
             $user = Auth::user();
