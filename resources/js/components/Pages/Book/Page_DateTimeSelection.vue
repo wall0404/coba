@@ -1,9 +1,8 @@
 <template>
     <div class="coba-page">
-        <div class="coba-container coba-flex coba-header" >
+        <div class="coba-container coba-flex coba-header">
             <span class="coba-page-headline">Buchung</span>
         </div>
-
         <div v-if="!load">
             <div class="coba-container">
                 <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-days="preSelectedDays"></DayPicker>
