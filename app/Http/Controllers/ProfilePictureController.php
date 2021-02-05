@@ -23,7 +23,7 @@ class ProfilePictureController extends Controller
                 $mimetype = Storage::mimeType($path);
             }
             catch (\Exception $exception) {
-                $path = resource_path('img'.DIRECTORY_SEPARATOR."avatar.jpg");
+                $path = resource_path('img'.DIRECTORY_SEPARATOR."0.jpg");
                 $contents = file_get_contents($path);
                 $mimetype = "image/jpeg";
             }
@@ -56,11 +56,11 @@ class ProfilePictureController extends Controller
 
 
             if($mime_type == 'image/png') {
-                $path = $file->store($this->path.$this->tmp);
+                $path = $file->store($this->path);
 
 
-                $path_app = 'app'.$path;
-                $path_new = 'app'.$this->path.$id.$this->extension;
+                $path_app = 'app'.DIRECTORY_SEPARATOR.$path;
+                $path_new = 'app'.DIRECTORY_SEPARATOR.$this->path.$id.$this->extension;
 
                 $image = imagecreatefrompng(storage_path($path_app));
                 $bg = imagecreatetruecolor(imagesx($image), imagesy($image));

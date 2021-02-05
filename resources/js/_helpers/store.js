@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         data: {},
-        ready: 0,
+        ready: 1,
         changes: false,
     },
     mutations: {
