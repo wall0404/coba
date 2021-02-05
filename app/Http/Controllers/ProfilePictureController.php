@@ -20,20 +20,19 @@ class ProfilePictureController extends Controller
             try {
                 $path = $this->path.$id.$this->extension;
                 $contents = Storage::get($path);
+                $mimetype = Storage::mimeType($path);
             }
             catch (\Exception $exception) {
-                $path = $this->path.'0'.$this->extension;
-                $contents = Storage::get($path);
+                $path = resource_path('img'.DIRECTORY_SEPARATOR."avatar.jpg");
+                $contents = file_get_contents($path);
+                $mimetype = "image/jpeg";
             }
 
-            $mimetype = Storage::mimeType($path);
 
             $response = Response::make($contents, 200);
             $response->header("Content-Type", $mimetype);
 
             return $response;
-
-
     }
     public function deletePic($id) {
         if(Auth::id() == $id) {
