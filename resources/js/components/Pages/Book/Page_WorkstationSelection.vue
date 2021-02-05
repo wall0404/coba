@@ -41,7 +41,9 @@
                 <modal :show-modal="modal.open" @modal-close-event="closeModal">
                     <template v-slot:header>
                         <div class="coba-modal-header">
-                            <div class="coba-flex-space-evenly">{{modal.header.text}} <b-icon @click="deleteFavoriteSeat(modal.header.workstation)" v-if="modal.header.isFav" class="mb-1" style="color:#FFC931" font-scale="1.5" :icon="modal.header.isFav ? 'star-fill' : 'star'"></b-icon> <b-icon @click="addFavoriteSeat(modal.header.workstation)" v-else class="mb-1" style="color:#FFC931" font-scale="1.5" :icon="modal.header.isFav ? 'star-fill' : 'star'"></b-icon> </div>
+                            <div class="coba-flex-space-evenly">{{modal.header}}
+                                <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star-fill">
+                                </b-icon> <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star"></b-icon> </div>
                         </div>
                     </template>
                     <template v-slot:body>
@@ -82,14 +84,10 @@ export default {
             date_in_7_days: "",
             modal: {
                 open: false,
-                header: {
-                    text: "" ,
-                    isFav: false ,
-                    workstation:[] ,
-                },
+                header: "",
+                workstation:{},
                 body: {}
             },
-            favSeatChanged: false ,
             location_name : "",
         }
     },
@@ -211,15 +209,8 @@ export default {
         openModal(workstation) {
             //TODO
             this.modal.body = [];
-            this.modal.header.text = workstation.name + " - Übersicht"; //richtet Name des Pop-ups ein
-            if ( workstation.isFavorite){
-                this.modal.header.isFav = true ;
-                this.modal.header.workstation = workstation ;
-            }
-            else{
-                this.modal.header.isFav = false ;
-                this.modal.header.workstation = workstation ;
-            }
+            this.modal.header = workstation.name + " - Übersicht"; //richtet Name des Pop-ups ein
+            this.modal.workstation = workstation;
             let date = new Date();
             let date_as_string = "";
             for(let i = 0; i < 8; i++) {
@@ -244,20 +235,20 @@ export default {
         },
         closeModal() {
             this.modal.open = false;
-            if ( this.favSeatChanged){
-                this.$store.commit('getData') ;
+            /*if ( this.favSeatChanged){
+                //this.$store.commit('getData') ;
             }
-            this.favSeatChanged = false ;
+            this.favSeatChanged = false ;*/
         },
         dateToDayOfMonth(date) {
             let days = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
             return days[date.getUTCDay()];
         },
-        deleteFavoriteSeat( workstation){
+        deleteFavoriteSeat(){
             fetch('/api/workstation/favorite', {
                 method: 'DELETE',
                 body: JSON.stringify({
-                    id: workstation.id,
+                    id: this.modal.workstation.id,
                 }),
                 headers: {
                     'content-type': 'application/json',
@@ -266,8 +257,7 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        this.modal.header.isFav = ! this.modal.header.isFav  ;
-                        this.favSeatChanged = true ;
+                        this.modal.workstation.isFavorite = false
                     }
                 }).catch(error =>{
                 this.error = error;
@@ -275,11 +265,11 @@ export default {
             })
         },
 
-        addFavoriteSeat( workstation){
+        addFavoriteSeat(){
             fetch('/api/workstation/favorite', {
                 method: 'POST',
                 body: JSON.stringify({
-                    id: workstation.id,
+                    id: this.modal.workstation.id,
                 }),
                 headers: {
                     'content-type': 'application/json',
@@ -288,8 +278,7 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        this.modal.header.isFav = ! this.modal.header.isFav  ;
-                        this.favSeatChanged = true ;
+                        this.modal.workstation.isFavorite = true
                     }
                 }).catch(error =>{
                 this.error = error;
