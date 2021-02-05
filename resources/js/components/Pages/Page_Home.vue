@@ -33,7 +33,7 @@
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
-                    {{booking.date.slice(8,10)}}.{{booking.date.slice(5,7)}}.{{booking.date.slice(0,4)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
+                    {{makeDateToDateString(booking.date)}} <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
                     <!-- Drop Down list with pencil icon to toggle it -->
                     <div class="coba-dropdown-container m-0 p-2" @click="toggleDropDown(booking)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
                         <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
@@ -134,6 +134,9 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
+        },
+        makeDateToDateString(dateStr){
+            return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
         },
         toggleDropDown(booking){
             //this.dropDown.open = true;
