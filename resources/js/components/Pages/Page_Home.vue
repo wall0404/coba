@@ -18,7 +18,14 @@
             <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
             <div v-else  class="coba-text-big">Keine Buchungen für heute</div>
             <ul class="coba-list">
-                <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">{{ today_booking.workstation.location.name }} {{today_booking.workstation.name}}, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}</li>
+                <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">
+                    <span v-if="typeof today_booking.workstation == 'object'&& today_booking.workstation !== null">
+                        {{ today_booking.workstation.location.name }} {{today_booking.workstation.name}}, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}
+                    </span>
+                    <span v-else>
+                        Homeoffice, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}
+                    </span>
+                </li>
             </ul>
         </div>
         <spinner v-else></spinner>
@@ -33,7 +40,12 @@
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
-                    {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
+                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">
+                        {{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
+                    </span>
+                    <span v-else>
+                        {{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  -->
+                    </span>
                     <editing-tool :openDD="dropDown.open" :booking="booking" @modal-close-event="toggleDropDown(booking)"> </editing-tool>
                 </li>
             </ul>
@@ -96,6 +108,9 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
+        },
+        makeDateToDateString(dateStr){
+            return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
         },
         toggleDropDown(booking){
             //this.dropDown.open = true;
