@@ -42,10 +42,28 @@
                     <b-icon icon="plus"></b-icon>
                 </router-link>
 
-                <router-link v-else
+               <!-- <router-link v-else
                              v-bind:to="'/booking/'+booking.id">
                     <b-icon icon="pencil"></b-icon>
-                </router-link>
+                </router-link> -->
+
+                <!-- Drop Down list with pencil icon to toggle it -->
+                <div class="table-item icon coba-dropdown-container" @click="toggleDropDown(booking)" v-else>    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
+                    <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
+                    <div :class="{'grey-background':dropDown.open&&dropDown.id === booking.id}">
+                        <b-icon icon="pencil"></b-icon>
+                    </div>
+                    <!-- Drop Down start -->
+                    <div v-if="dropDown.open && dropDown.id === booking.id" class="coba-dropdown-wrapper" style="bottom: -52px; z-index: 2; right: -11px">
+                        <div class="coba-dropdown-content" style="background-color: #EBEBEB">
+                            <ul class="coba-list-nobullets" style="margin: 0px">
+                                <li style="border-bottom: 1px solid #505050"> <button style="background-color:rgba(255,255,255,0);">Bearbeiten</button> </li>
+                                <li class="last" > <button style="background-color:rgba(255,255,255,0);" @click="openModal(booking)">Löschen</button> </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- drop down end -->
+                </div>
             </div>
         </div>
 
@@ -59,25 +77,8 @@
                                 }"
                      :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
             <b-icon icon="plus"></b-icon>
-        </router-link>
-<<<<<<< HEAD
-        <!-- Drop Down list with pencil icon to toggle it -->
-        <div class="table-item icon coba-dropdown-container" @click="toggleDropDown(booking)" v-else>    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
-            <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
-            <div :class="{'grey-background':dropDown.open&&dropDown.id === booking.id}">
-                <b-icon icon="pencil"></b-icon>
-            </div>
-            <!-- Drop Down start -->
-            <div v-if="dropDown.open && dropDown.id === booking.id" class="coba-dropdown-wrapper" style="bottom: -52px; z-index: 2; right: -11px">
-                <div class="coba-dropdown-content" style="background-color: #EBEBEB">
-                    <ul class="coba-list-nobullets" style="margin: 0px">
-                        <li style="border-bottom: 1px solid #505050"> <button style="background-color:rgba(255,255,255,0);">Bearbeiten</button> </li>
-                        <li class="last" > <button style="background-color:rgba(255,255,255,0);" @click="openModal(booking)">Löschen</button> </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- drop down end -->
-        </div>
+        </router-link> -->
+
         <!-- modalDel -> A modal which asks if you really want to delete a booking -->
         <modal :show-modal="modalDel.open" @modal-close-event="closeModal" @modal-positive-event="deleteBooking">
             <template v-slot:header>
@@ -95,13 +96,6 @@
                 </div>
             </template>
         </modal>
-=======
-
-        <router-link class="table-item icon" v-else
-                     v-bind:to="'/booking/'+bookings_workstation.id">
-            <b-icon icon="pencil"></b-icon>
-        </router-link> -->
->>>>>>> bf2e6ce56bfe540e5f40b0da9ad0ca06d3e504c8
     </div>
 </template>
 
@@ -141,9 +135,7 @@ export default {
                 bookings_for_this_workstation.push(this.bookings[i]);
             }
         }
-<<<<<<< HEAD
-        this.calcInfo(bookings_for_this_workstation)
-=======
+
         //Buchungen nach aufsteigend nach der Uhrzeit sortieren
         this.bookings_workstation = bookings_for_this_workstation.sort((a,b) => (a.from > b.from) ? 1 : -1);
 
@@ -159,7 +151,6 @@ export default {
         this.user_booking_list = user_booking_workstation_list;
 
         this.calcInfo(bookings_for_this_workstation);
->>>>>>> bf2e6ce56bfe540e5f40b0da9ad0ca06d3e504c8
     },
     methods: {
         calcInfo(bookings) {
@@ -192,9 +183,9 @@ export default {
 
 
             this.color = color;
-            let user = this.users.find(x => x.user_id === bookings[0].user_id);
+            //let user = this.users.find(x => x.user_id === bookings[0].user_id);
             //this.bookings_workstation = bookings[0];
-            this.user_id = user.user_id;
+            //this.user_id = user.user_id;
             //this.name = user.firstName + " " + user.lastName;
             //this.time = (startBooking.from.substr(0,5) +" - " + endBooking.to.substr(0,5));
         },
@@ -270,7 +261,6 @@ export default {
 }
 .icon {
     width: 10%;
-
     justify-content: center;
     align-items: center;
 }
