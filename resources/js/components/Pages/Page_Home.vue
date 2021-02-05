@@ -18,7 +18,14 @@
             <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
             <div v-else  class="coba-text-big">Keine Buchungen für heute</div>
             <ul class="coba-list">
-                <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">{{ today_booking.workstation.location.name }} {{today_booking.workstation.name}}, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}</li>
+                <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">
+                    <span v-if="typeof today_booking.workstation == 'object'&& today_booking.workstation !== null">
+                        {{ today_booking.workstation.location.name }} {{today_booking.workstation.name}}, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}
+                    </span>
+                    <span v-else>
+                        Homeoffice, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}
+                    </span>
+                </li>
             </ul>
         </div>
         <spinner v-else></spinner>
@@ -33,8 +40,12 @@
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
-                    {{makeDateToDateString(booking.date)}} <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
-                    <!-- Drop Down list with pencil icon to toggle it -->
+                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">
+                        {{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
+                    </span>
+                    <span v-else>
+                        {{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  -->
+                    </span> <!-- Drop Down list with pencil icon to toggle it -->
                     <div class="coba-dropdown-container m-0 p-2" @click="toggleDropDown(booking)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
                         <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
                         <div style="position: absolute; bottom: 10px; right: 10px" :class="{'white-background':dropDown.open&&dropDown.id === booking.id}">

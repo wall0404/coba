@@ -135,6 +135,7 @@ export default {
                 days: this.days
             });
 
+            this.$store.commit('clearChanges');
 
             //go to confirmation
             let days = this.days;
