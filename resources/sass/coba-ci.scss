@@ -284,18 +284,15 @@
     display: flex;
 }
 .coba-dropdown-container {
-
-
-
     .coba-dropdown-content {
         text-align: right;
-        position: relative;
-        display: flex;
-        //bottom: -30px;
-        right: 0px;
+        position: absolute;
+        //display: flex;
+        bottom: -48px;
+        right: 10px;
         padding-right: 10px;
         //width: -webkit-fit-content;
-        width: -moz-fit-content;
+        //width: -moz-fit-content;
         width: fit-content;
         z-index: 1;
         background-color: white;

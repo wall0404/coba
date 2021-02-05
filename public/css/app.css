@@ -14680,12 +14680,12 @@ input[type=color].form-control:disabled {
 
 .coba-dropdown-container .coba-dropdown-content {
   text-align: right;
-  position: relative;
-  display: flex;
-  right: 0px;
+  position: absolute;
+  bottom: -48px;
+  right: 10px;
   padding-right: 10px;
-  width: -moz-fit-content;
   width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
   z-index: 1;
   background-color: white;
