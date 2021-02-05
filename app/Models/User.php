@@ -78,6 +78,5 @@ class User extends Authenticatable
 
     public function ical() {
         return $this->hasOne(iCalAssignments::class, 'user_id', 'user_id');
-
     }
 }

@@ -87,5 +87,4 @@ class UserController extends ParentController
 
         return response()->json(['success'=>$list], ParentController::$successCode);
     }
-
 }

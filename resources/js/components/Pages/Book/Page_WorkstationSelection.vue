@@ -3,7 +3,7 @@
         <div class="coba-container coba-flex coba-header mb-0">
             <span class="coba-page-headline">Arbeitsplatzauswahl<br><p align="center"> {{location_name}} </p></span>
         </div>
-        <div class="coba-container px-0" >
+        <div class="coba-container px-0">
             <!--<div class="coba-text-strong coba-text-big coba-flex-left pl-3">Favoriten</div>-->
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <!-- :key  wurde entfernt-->
@@ -67,7 +67,6 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import Modal from "../../Elements/Modal";
-import Vue from "vue";
 
 export default {
     name: "Page_WorkstationSelection",

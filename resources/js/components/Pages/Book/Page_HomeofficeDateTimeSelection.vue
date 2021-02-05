@@ -1,9 +1,8 @@
 <template>
     <div class="coba-page">
-        <div class="coba-container coba-flex coba-header" >
+        <div class="coba-container coba-flex coba-header">
             <span class="coba-page-headline">Buchung</span>
         </div>
-
         <div v-if="!load">
             <div class="coba-container">
                 <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-days="preSelectedDays"></DayPicker>
@@ -20,48 +19,45 @@
 </template>
 
 <script>
-import Spinner from "../../Global/Spinner";
 import DayPicker from "../../Elements/DayPicker";
 import TimePicker from "../../Elements/TimePicker";
-
+import Spinner from "../../Global/Spinner";
 export default {
-    name: "Page_DateTimeSelection",
-    props: ["bookings", 'preSelectedDays', 'calenderBool'],
+    name: "Page_HomeofficeDateTimeSelection.vue",
     components: {TimePicker, DayPicker, Spinner},
-    data() {
+    props: ['preSelectedDays'],
+    data(){
         return {
-            workstation: {},
             load: false,
             error: false,
             days: [],
+            bookings: [],
+            workstation: {
+                name: "Homeoffice",
+                id: null,
+                location: {},
+            },
         }
     },
     created() {
-        if(typeof this.bookings === 'undefined') {
-            //fetch Data
-            this.fetchData();
-        }
-        if(typeof this.preSelectedDays === "undefined")
+        if(typeof this.preSelectedDays === "undefined") //wenn ein Tag vorher schon irgendwo angegeben wurde, wurde es in dieser Variable zwischengespeichert
             try {
-                this.preSelectedDays = this.$store.getters.data.autoSave[this.$route.params.workstation_id];
+                this.preSelectedDays = this.$store.getters.data.autoSave["homeoffice"];
             }
             catch (e) {
                 this.preSelectedDays = []
             }
-
-        this.fetchWorkstation();
+        //this.fetchWorkstation();
+        this.fetchData();
     },
-    destroyed() {
-        this.$store.commit('clearChanges');
-    },
-    methods: {
+    methods:{
         fetchData() {
             this.load = true;
             let date = new Date();
             let today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
             date.setDate(new Date().getDate() + 7);
             let date_in_7_days = date.toISOString().slice(0, 10);
-            fetch('/api/booking?filter[date][min]='+today_date+'&filter[workstation_id]='+this.$route.params.workstation_id, {
+            fetch('/api/user/'+this.$store.getters.data.user.user_id+'/bookings?order_by=date&filter[date][min]='+today_date, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',
@@ -97,17 +93,7 @@ export default {
                     this.bookings[data[k].date].push(data[k])
                 }
             }
-        },
-        fetchWorkstation() {
-            let locations = this.$store.getters.locations;
-            for(let location in locations) {
-                for (let workstation in locations[location].workstations) {
-                    if(locations[location].workstations[workstation].id == this.$route.params.workstation_id) {
-                        this.workstation = locations[location].workstations[workstation];
-                        break;
-                    }
-                }
-            }
+            console.log(this.bookings);
         },
         callbackPicker(day) {
             this.$store.commit('markChanges');
@@ -121,18 +107,16 @@ export default {
                     }
                 }
             }
-
             //save changes
             this.$store.commit('autoSaveInstance', {
-                workstation_id: this.$route.params.workstation_id,
+                workstation_id: "homeoffice",
                 days: this.days
             });
-
         },
         submit() {
             //save changes
             this.$store.commit('autoSaveInstance', {
-                workstation_id: this.$route.params.workstation_id,
+                workstation_id: "homeoffice",
                 days: this.days
             });
 
@@ -143,8 +127,7 @@ export default {
             this.$router.push({
                 name: 'BookingConfirmation',
                 params: {
-                    bookings: this.days,
-                    calenderBool: this.calenderBool
+                    bookings: this.days
                 }
             })
         }

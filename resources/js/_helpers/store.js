@@ -43,7 +43,6 @@ export const store = new Vuex.Store({
 
         },
         getData (state) {
-            state.ready++;
             fetch('/api/location', {
                 method: 'GET',
                 headers: {

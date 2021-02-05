@@ -1,6 +1,6 @@
 <template>
     <div class="booking py-3" :class="{'strong':user_id === $store.getters.data.user.user_id}">
-        <div class="table-item seat">{{workstation.name}}</div>
+        <div class="table-item seat"> {{workstation.name}}</div>
         <div class="table-item time">{{ time }}</div>
         <router-link v-if="user_id!==null" class="table-item name" :to="'/team/'+user_id">{{ name }}</router-link> <!-- Anzeige der Person, die den Platz gebucht hat -->
         <div v-else class="table-item name"></div> <!-- Platzhalter, wenn der Platz frei ist und der router-link zum Profil deaktiviert ist -->

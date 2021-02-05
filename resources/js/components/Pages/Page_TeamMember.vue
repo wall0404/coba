@@ -2,7 +2,7 @@
     <div class="coba-page coba-homescreen ">
         <template v-for="user in users">
         <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
-            <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user.user_id) : addBuddy(user.user_id)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
+            <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user) : addBuddy(user)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
             <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
         </div>
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
@@ -21,7 +21,7 @@
         <div class="coba-container coba-full-width coba-footer-container pb-5" style="min-height: 300px">
             <ul class="coba-list" v-if="!load">
                 <li v-for="booking in bookings" :key="booking.id">
-                    {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}
+                    {{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}
                 </li>
             </ul>
             <spinner v-else></spinner>
@@ -78,6 +78,10 @@ export default {
 
         },
 
+        makeDateToDateString(dateStr){
+            return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
+        },
+
         getTeamMemberBookings(){
             this.load = true ;
             fetch('/api/user/' +this.id +'/bookings?order_by=date&filter[date][min]='+this.today_date ,{
@@ -126,11 +130,11 @@ export default {
                     this.load = false;
                 })
         },
-        addBuddy( id ){
+        addBuddy( user ){
           fetch('/api/buddy/', {
               method: 'POST',
               body: JSON.stringify({
-                  id: id,
+                  id: user.user_id,
               }),
               headers: {
                   'content-type': 'application/json',
@@ -139,19 +143,18 @@ export default {
           })  .then( res => res.json())
               .then( res => {
                   if ( res.success){
-                      console.log('success') ;
-                      this.$store.commit('getData') ;
+                      user.isBuddy = true;
                   }
               }).catch(error =>{
               this.error = error;
               console.log(error) ;
           })
         },
-        removeBuddy(id){
+        removeBuddy(user){
             fetch('/api/buddy/', {
                 method: 'DELETE',
                 body: JSON.stringify({
-                    id: id,
+                    id: user.user_id,
                 }),
                 headers: {
                     'content-type': 'application/json',
@@ -160,8 +163,7 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        console.log('delete');
-                        this.$store.commit('getData') ;
+                        user.isBuddy = false;
                     }
                 }).catch(error =>{
                 this.error = error;
