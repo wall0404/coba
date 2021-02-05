@@ -7,6 +7,10 @@ $coba-white: #fff;
 $coba-gray: #EBEBEB;
 $coba-dark-gray: #8C8C8C;
 $coba-disabled-gray: #757575;
+$coba-selected-green: #1b9236;
+$coba-selected-green-border: #147129;
+$coba-selected-orange: #ff9900;
+$coba-selected-orange-border: #e28600;
 
 $coba-green: #4ABE5D;
 $coba-red: #FF6666;
@@ -19,3 +23,10 @@ $small: 25px;
 $medium: 50px;
 $big: 100px;
 $very-big: 200px;
+
+/* BOOTSTRAP */
+
+$theme-colors: (
+    "primary": $coba-yellow,
+    "danger": $coba-danger-red
+);

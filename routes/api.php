@@ -19,7 +19,7 @@ Route::post('signup', 'App\Http\Controllers\AuthController@signup');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::post('resetPassword', 'App\Http\Controllers\AuthController@resetPassword');
 
     /* Booking */
@@ -41,8 +41,18 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
         Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
     });
+
+    /* ICAL */
+    Route::prefix('ical')->group(function () {
+        Route::get('/', 'App\Http\Controllers\ICALController@get');
+        Route::post('/', 'App\Http\Controllers\ICALController@create');
+        Route::delete('/', 'App\Http\Controllers\ICALController@delete');
+    });
 });
 
 
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
+
+/* iCAL Route */
+Route::get('calendar/{token}', 'App\Http\Controllers\ICALController@getICal')->name('ical');
