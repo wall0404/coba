@@ -45,4 +45,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function ical() {
+        return $this->hasOne(iCalAssignments::class, 'user_id', 'user_id');
+    }
 }

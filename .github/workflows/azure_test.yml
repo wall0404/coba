@@ -1,8 +1,9 @@
 name: Deploy Develop to Azure Testing Web App
-
+ 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
 
 # CONFIGURATION
 # For help, go to https://github.com/Azure/Actions
@@ -10,15 +11,15 @@ on:
 #
 # 2. Change these variables for your configuration:
 env:
-  AZURE_WEBAPP_NAME: tu-coba-test    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_NAME_TEST: tu-coba-test    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH_TEST: '.'      # set this to the path to your web app project, defaults to the repository root
 
 jobs:
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@develop
+    - uses: actions/checkout@v2
 
     - name: 'Deploy to Azure Test WebApp'
       uses: azure/webapps-deploy@v2

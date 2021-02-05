@@ -11,7 +11,8 @@
             </template>
             <template v-slot:body>
                 <div class="coba-modal-body coba-text">
-                    Sind sie sich sicher, dass sie zurückkehren möchten?
+                    Bist du dir sicher, dass du zurückkehren möchtest?
+                    <!-- Sind sie sich sicher, dass sie zurückkehren möchten? -->
                 </div>
             </template>
             <template v-slot:footer>

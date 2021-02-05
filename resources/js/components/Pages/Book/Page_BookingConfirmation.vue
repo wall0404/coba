@@ -24,7 +24,7 @@
 import Booking from "../../ListItems/Booking";
 export default {
     components: {Booking},
-    props: ['bookings'],
+    props: ['bookings', 'calenderBool'],
     name: "Page_BookingConfirmation",
     data() {
         return {
@@ -55,7 +55,8 @@ export default {
             this.$router.push({
                 name: 'BookingCheckout',
                 params: {
-                    bookings: this.bookings
+                    bookings: this.bookings,
+                    calenderBool: this.calenderBool
                 }
             })
         }
