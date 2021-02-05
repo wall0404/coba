@@ -18,7 +18,14 @@
             <div v-if="bookings.find( element => element.date === today_date)" class="coba-text-big">Heute bist du in</div>
             <div v-else  class="coba-text-big">Keine Buchungen für heute</div>
             <ul class="coba-list">
-                <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">{{ today_booking.workstation.location.name }} {{today_booking.workstation.name}}, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}</li>
+                <li v-for="today_booking in bookings" v-if="today_booking.date === today_date">
+                    <span v-if="typeof today_booking.workstation == 'object'&& today_booking.workstation !== null">
+                        {{ today_booking.workstation.location.name }} {{today_booking.workstation.name}}, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}
+                    </span>
+                    <span v-else>
+                        Homeoffice, {{today_booking.from.substr(0,5)}} - {{today_booking.to.substr(0,5)}}
+                    </span>
+                </li>
             </ul>
         </div>
         <spinner v-else></spinner>
@@ -96,6 +103,9 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
+        },
+        makeDateToDateString(dateStr){
+            return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
         },
         toggleDropDown(booking){
             //this.dropDown.open = true;

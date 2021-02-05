@@ -19,6 +19,7 @@ Vue.use(VueClipboard)
 Vue.prototype.$date_options_long = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 Vue.prototype.$date_options_short = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 Vue.prototype.$only_month_and_year = { year: 'numeric', month: 'long' };
+Vue.prototype.$date_options_without_year = { weekday: 'long', month: 'numeric', day: 'numeric' };
 
 
 //Load user data
