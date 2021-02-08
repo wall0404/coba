@@ -19,7 +19,7 @@ Route::post('signup', 'App\Http\Controllers\AuthController@signup');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::post('resetPassword', 'App\Http\Controllers\AuthController@resetPassword');
 
     /* Booking */
