@@ -5,7 +5,7 @@
             <div v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)"> <!-- Anzeig der Standorte und deren Buchungen -->
                 <div class="section-headline p-2 px-3">{{location.name}}</div>
                 <div class="booking-list px-3"> <!-- Anzeige der einzelnen Buchungen für jeden Sitzplatz -->
-                    <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date"></calendar-booking-list-item>
+                    <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date" :user_id="$store.getters.data.user.user_id"></calendar-booking-list-item>
                     <!--<div class="booking py-3" v-for="n in 2">
                         <div class="table-item seat">C{{n}}</div>
                         <div class="table-item time">16.00 - 18.00</div>

@@ -6,15 +6,15 @@
             <div v-if="bookings_workstation.length==0"> <!-- Keine Buchung für die Workstation -->
                 {{time}}
             </div>
-            <div v-else v-for="booking in bookings_workstation">
+            <div v-else v-for="booking in bookings_workstation" class="pb-2">
                {{booking.from.substring(0,5)}} - {{booking.to.substring(0,5)}}
              </div>
         </div>
 
         <!-- Anzeige der Person, die den Platz gebucht hat -->
         <div class="table-item name">
-            <div v-if="user_booking_list==0"></div>
-            <div v-else v-for="user in user_booking_list">
+            <div v-if="user_booking_list.length==0"></div>
+            <div v-else v-for="user in user_booking_list" class="pb-2">
                 <router-link v-if="user.user_id==$store.getters.data.user.user_id" :to="'/profile'">meins</router-link> <!-- Weiterleitung zum eigenen Profil -->
                 <router-link v-else :to="'/team/'+user.user_id">{{user.firstName}} {{user.lastName.substring(0,1)}}.</router-link> <!-- Weiterleitung zum Profil des Teammitglieds -->
             </div>
@@ -23,16 +23,39 @@
         <div class="table-item icon"><b-icon v-if="false" icon="star-fill" font-scale="0.75"></b-icon></div>
 
         <!-- Anzeige der Buchungsbutton wenn Buchung von einem anderem User ist-->
-        <div class="table-item icon">
-            <div v-for="booking in bookings_workstation">
-                <router-link class="coba-utilization-indicator" v-if="bookings_workstation.length==0"
-                             :class="{'coba-utilization-indicator-green':color==='green', 'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
+        <div v-if="bookings_workstation.length==0" class="table-item icon">
+            <router-link class="coba-utilization-indicator"
+                         :class="{'coba-utilization-indicator-red':color==='red',
+                                'coba-utilization-indicator-green':color==='green',
+                                'coba-utilization-indicator-orange':color==='orange',
+                                'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
-                             :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
-                    <b-icon icon="plus"></b-icon>
-                </router-link>
-
-                <router-link class="coba-utilization-indicator" v-else-if="booking.user_id !== $store.getters.data.user.user_id"
+                         :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
+                <b-icon icon="plus"></b-icon>
+            </router-link>
+        </div>
+        <div v-else class="table-item icon">
+            <div v-if="is_one_booking_from_user">
+                <!-- Drop Down list with pencil icon to toggle it -->
+                <div class="table-item icon coba-dropdown-container" @click="toggleDropDown(booking_from_user)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List -->
+                    <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens -->
+                    <div :class="{'grey-background':dropDown.open&&dropDown.id === booking_from_user.id}">
+                        <b-icon icon="pencil"></b-icon>
+                    </div>
+                    <!-- Drop Down start -->
+                    <div v-if="dropDown.open && dropDown.id === booking_from_user.id" class="coba-dropdown-wrapper" style="bottom: -52px; z-index: 2; right: -11px">
+                        <div class="coba-dropdown-content" style="background-color: #EBEBEB">
+                            <ul class="coba-list-nobullets" style="margin: 0px">
+                                <li style="border-bottom: 1px solid #505050"> <button style="background-color:rgba(255,255,255,0);">Bearbeiten</button> </li>
+                                <li class="last" > <button style="background-color:rgba(255,255,255,0);" @click="openModal(booking_from_user)">Löschen</button> </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- drop down end -->
+            </div>
+            <div v-else>
+                <router-link class="coba-utilization-indicator"
                              :class="{'coba-utilization-indicator-red':color==='red',
                                 'coba-utilization-indicator-green':color==='green',
                                 'coba-utilization-indicator-orange':color==='orange',
@@ -41,43 +64,8 @@
                              :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
                     <b-icon icon="plus"></b-icon>
                 </router-link>
-
-               <!-- <router-link v-else
-                             v-bind:to="'/booking/'+booking.id">
-                    <b-icon icon="pencil"></b-icon>
-                </router-link> -->
-
-                <!-- Drop Down list with pencil icon to toggle it -->
-                <div class="table-item icon coba-dropdown-container" @click="toggleDropDown(booking)" v-else>    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
-                    <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
-                    <div :class="{'grey-background':dropDown.open&&dropDown.id === booking.id}">
-                        <b-icon icon="pencil"></b-icon>
-                    </div>
-                    <!-- Drop Down start -->
-                    <div v-if="dropDown.open && dropDown.id === booking.id" class="coba-dropdown-wrapper" style="bottom: -52px; z-index: 2; right: -11px">
-                        <div class="coba-dropdown-content" style="background-color: #EBEBEB">
-                            <ul class="coba-list-nobullets" style="margin: 0px">
-                                <li style="border-bottom: 1px solid #505050"> <button style="background-color:rgba(255,255,255,0);">Bearbeiten</button> </li>
-                                <li class="last" > <button style="background-color:rgba(255,255,255,0);" @click="openModal(booking)">Löschen</button> </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- drop down end -->
-                </div>
             </div>
         </div>
-
-
-
-       <!-- <router-link class="table-item icon coba-utilization-indicator" v-if="user_id !== $store.getters.data.user.user_id"
-                     :class="{'coba-utilization-indicator-red':color==='red',
-                                'coba-utilization-indicator-green':color==='green',
-                                'coba-utilization-indicator-orange':color==='orange',
-                                'coba-utilization-indicator-disabled':this.today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
-                                }"
-                     :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
-            <b-icon icon="plus"></b-icon>
-        </router-link> -->
 
         <!-- modalDel -> A modal which asks if you really want to delete a booking -->
         <modal :show-modal="modalDel.open" @modal-close-event="closeModal" @modal-positive-event="deleteBooking">
@@ -104,14 +92,15 @@ import Modal from "./Modal";
 export default {
     name: "CalendarBookingListItem",
     components: {Modal},
-    props: ['workstation', 'bookings', 'users', 'date'],
+    props: ['workstation', 'bookings', 'users', 'date', 'user_id'],
     data() {
         return {
             time: "-",
             name: "",
-            user_id: null,
-            user_booking_list: null, //Enthält die User, die eine Buchung für die Workingstation getätigt haben
-            bookings_workstation: null, //Enthält die Buchungen für die Workingstation
+            user_booking_list: [], //Enthält die User, die eine Buchung für die Workingstation getätigt haben
+            bookings_workstation: [], //Enthält die Buchungen für die Workingstation
+            is_one_booking_from_user: false, //getätigte Buchung vom user existiert oder nicht
+            booking_from_user: null, //Buchung vom user
             color: "green",
             today: new Date(),
             dayObj: {
@@ -139,6 +128,14 @@ export default {
         //Buchungen nach aufsteigend nach der Uhrzeit sortieren
         this.bookings_workstation = bookings_for_this_workstation.sort((a,b) => (a.from > b.from) ? 1 : -1);
 
+        //Prüfen, ob eine Buchung vom user existiert und diese abspeichern
+        for(let i = 0; i < this.bookings_workstation.length; i++) {
+            if(this.bookings_workstation[i].user_id === this.user_id) {
+               this.is_one_booking_from_user = true;
+               this.booking_from_user = this.bookings_workstation[i];
+            }
+        }
+
         //Users abspeichern, die die Buchungen getätigt haben
         let user_booking_workstation_list = [];
         for(let i = 0; i < this.bookings_workstation.length; i++) {
@@ -155,7 +152,7 @@ export default {
     methods: {
         calcInfo(bookings) {
             if(bookings.length < 1)
-                return;
+               return;
 
             let color = "";
             let hours = 0;
