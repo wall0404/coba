@@ -31,7 +31,9 @@
                         <template v-for="booking in today_bookings"> <!-- inefficient -->
                             <tr>
                                 <td v-if="booking.user_id === user.user_id && booking.workstation_id !== null" class="user-data-name small text-info">
-                                    heute im {{booking.workstation_id}}
+                                    <template v-for="works in workstations">
+                                        <span v-if="booking.date === today_date && booking.user_id === user.user_id && works.id === booking.workstation_id" class="user-data-name small text-info" > heute im {{works.location.name}}</span>
+                                    </template>
                                 </td>
                                 <td v-else-if="booking.user_id === user.user_id" class="user-data-name small text-info">
                                     heute im Homeoffice
