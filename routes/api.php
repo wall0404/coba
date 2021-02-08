@@ -31,16 +31,20 @@ Route::middleware('auth:api')->group(function () {
     /* User */
     Route::get('user', 'App\Http\Controllers\UserController@getList');
     Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
+    Route::get('my_favorites', 'App\Http\Controllers\UserController@myFavorites');
+
+    /* BestBuddies */
+    Route::post( 'buddy' , 'App\Http\Controllers\BestBuddiesController@addBuddy') ;
+    Route::delete( 'buddy' , 'App\Http\Controllers\BestBuddiesController@removeBuddy') ;
 
     /* Workstation */
     Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
 
-    /* Avatar */
-    Route::prefix('/profile_picture')->group(function () {
-        Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
-        Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
-        Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
-    });
+    /* FavoriteSeats */
+    Route::post('workstation/favorite', 'App\Http\Controllers\FavoriteSeatController@addFavoriteSeat');
+    Route::delete('workstation/favorite', 'App\Http\Controllers\FavoriteSeatController@removeFavoriteSeat');
+    Route::post('getInfo' , 'App\Http\Controllers\FavoriteSeatController@getInfo') ;
+
 
     /* ICAL */
     Route::prefix('ical')->group(function () {
@@ -50,6 +54,14 @@ Route::middleware('auth:api')->group(function () {
     });
 });
 
+Route::middleware('auth')->group(function () {
+    /* Avatar */
+    Route::prefix('/profile_picture')->group(function () {
+        Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
+        Route::post('/{id}', 'App\Http\Controllers\ProfilePictureController@uploadPic');
+        Route::delete('/{id}', 'App\Http\Controllers\ProfilePictureController@deletePic');
+    });
+});
 
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
