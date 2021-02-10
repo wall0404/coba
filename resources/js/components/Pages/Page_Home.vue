@@ -46,7 +46,7 @@
                     <span v-else>
                         {{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  -->
                     </span>
-                    <editing-tool :openDD="dropDown.open" :booking="booking" @modal-close-event="toggleDropDown(booking)"> </editing-tool>
+                    <editing-tool :openDD="dropDown.open" :booking="booking" @modal-close-event="toggleDropDown(booking)" @modal-delete-event="delBookingfkn(booking.id)"> </editing-tool>
                 </li>
             </ul>
             <spinner v-else></spinner>
@@ -73,6 +73,14 @@ export default {
                 open: false
             },
             prevRoute: {path: ""},
+            available: {
+                id:"",
+                av:"",
+            },
+            delBooking: {
+                id: "",
+                del: false
+            },
         }
     },
     created() {
@@ -119,6 +127,13 @@ export default {
             }
             else this.dropDown.open = true;
             this.dropDown.id = booking.id;
+        },
+        delBookingfkn(bookingID){
+            var i =0;
+            while (this.bookings[i].id !== bookingID){
+                i++;
+            }
+            this.bookings.splice(i,1);
         },
     }
 }
