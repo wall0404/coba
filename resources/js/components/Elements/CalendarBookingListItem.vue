@@ -15,7 +15,7 @@
         <div class="table-item name">
             <div v-if="user_booking_list.length==0"></div>
             <div v-else v-for="user in user_booking_list" class="pb-2">
-                <router-link v-if="user.user_id==$store.getters.data.user.user_id" :to="'/profile'">meins</router-link> <!-- Weiterleitung zum eigenen Profil -->
+                <router-link v-if="user.user_id==$store.getters.data.user.user_id" :to="'/profile'">{{user.firstName}}</router-link> <!-- Weiterleitung zum eigenen Profil -->
                 <router-link v-else :to="'/team/'+user.user_id">{{user.firstName}} {{user.lastName.substring(0,1)}}.</router-link> <!-- Weiterleitung zum Profil des Teammitglieds -->
             </div>
         </div>
@@ -37,7 +37,7 @@
         <div v-else class="table-item icon">
             <div v-if="is_one_booking_from_user">
                 <!-- Drop Down list with pencil icon to toggle it -->
-                <div class="table-item icon coba-dropdown-container" @click="toggleDropDown(booking_from_user)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List -->
+                <div class="coba-dropdown-container" @click="toggleDropDown(booking_from_user)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List -->
                     <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens -->
                     <div :class="{'grey-background':dropDown.open&&dropDown.id === booking_from_user.id}">
                         <b-icon icon="pencil"></b-icon>
