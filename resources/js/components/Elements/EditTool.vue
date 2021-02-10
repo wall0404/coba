@@ -3,7 +3,7 @@
         <div v-if="dropDown.open" class="coba-editing-wrapper" @click.self="toggleDropDown()"></div>
         <div class="coba-dropdown-container" @click="toggleDropDown()">
             <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
-            <div style="position: absolute; bottom: -10px; right: 10px" :class="{'white-background':dropDown.open}">
+            <div style="position: absolute; bottom: -10px; right: 10px" :class="{'white-background':dropDown.open&&color==='white','gray-background':dropDown.open&&color==='gray'}">
                 <b-icon icon="pencil" class="m-2" style="margin-bottom: 30px !important" font-scale="1"></b-icon>
             </div>
             <!-- Drop Down start -->
@@ -41,7 +41,7 @@ import Modal from "./Modal";
 export default {
     name: "EditTool",
     components: {Modal},
-    props: ['openDD','booking'],
+    props: ['openDD','booking', 'color'],
     data() {
         return {
             load: false,
@@ -57,6 +57,10 @@ export default {
             delBooking: null,
         }
     },
+    created() {
+        if(typeof this.color === 'undefined')
+            this.color = "white";
+    },
     methods: {
         toggleDropDown(){
             this.dropDown.open = !this.dropDown.open;
@@ -70,7 +74,7 @@ export default {
             this.modalDel.open = false;
         },
         deleteBooking() {
-            this.showModal = false;
+            this.modalDel.open = false;
             this.load = true;
             fetch('/api/booking/'+this.booking.id, {
                 method: 'DELETE',
@@ -110,6 +114,11 @@ export default {
 }
 .white-background{
     background-color: white;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.gray-background{
+    background-color: gray;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }
