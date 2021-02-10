@@ -14882,6 +14882,7 @@ input[type=color].form-control:disabled {
 
 .coba-modal .coba-modal-body {
   padding: 20px 0;
+  text-align: center;
 }
 
 /* Little Indicator Circles */
