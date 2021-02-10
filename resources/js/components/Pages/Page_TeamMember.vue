@@ -1,6 +1,5 @@
 <template>
     <div class="coba-page coba-homescreen ">
-
         <div class="user-container mb-5 mt-4">
             <div><img class="coba-border-round coba-border-yellow coba-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
         </div>
@@ -129,5 +128,6 @@ ol{
     list-style: none;
     padding: 0;
 }
+
 
 </style>
