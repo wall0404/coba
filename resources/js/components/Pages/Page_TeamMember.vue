@@ -8,8 +8,9 @@
                 <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
                 <p   class="mb-1">{{user.email}}</p>
                 <div v-for="booking in bookings">
-                    <p v-if="booking.date === today_date && today_hours < booking.to  " class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
+                    <p v-if="booking.date === today_date && today_hours < booking.to && booking.workstation_id !== null" class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
                   <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p> -->
+                    <p v-else-if="booking.date === today_date && today_hours < booking.to " class="user-data-email text-info">heute im Remote Work</p>
                 </div>
                 <br>
                 <div class="coba-container text-left">
@@ -20,7 +21,12 @@
         <div class="coba-container coba-full-width coba-footer-container pb-5" style="min-height: 300px">
             <ul class="coba-list" v-if="!load">
                 <li v-for="booking in bookings" :key="booking.id">
-                    {{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}
+                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">
+                        {{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
+                    </span>
+                    <span v-else>
+                        {{makeDateToDateString(booking.date)}}, <br>Remote Work, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked Remote Work  -->
+                    </span>
                 </li>
             </ul>
             <spinner v-else></spinner>
