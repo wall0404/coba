@@ -9,13 +9,14 @@
                     <router-link class="coba-button coba-button-accent coba-button-big coba-button-no-border"
                                  :to="'/booking/new/workstation/'+location.id"> {{location.name}}</router-link>
                     <router-link class="coba-button coba-button-big coba-button-no-border button-on-top" :to="'/booking/new/fastbooking/'+location.id">
-                        <b-icon icon="clock-history" font-scale="2"></b-icon>
+                        <b-icon icon="skip-forward-fill" font-scale="1.5"></b-icon>
                     </router-link>
                 </li>
+                <router-link class="coba-button coba-button-accent coba-button-big coba-button-no-border mt-3" :to="'/booking/new/homeoffice/'"> Remote Work</router-link>
             </div>
             <spinner v-else></spinner>
 
-            <div class="coba-flex-space-evenly">
+            <div class="coba-flex-space-evenly mt-4">
                 <button class="coba-button-round coba-button">
                     <b-icon icon="clock-history" font-scale="2"></b-icon>
                 </button>
@@ -37,14 +38,32 @@ export default {
         return {
             load: false,
             error: false,
-            locations: this.$store.getters.locations
+            locations: this.$store.getters.locations,
+            date: new Date()
         }
     },
     created() {
 
     },
     methods: {
+        /*
+        setDate(){
+            var hour = this.date.getHours(); //TODO UTCHours or Hours?
+            if (hour >= 16){
+                this.date.setDate(new Date().getDate + 1);
+            }
+        },
 
+        submit(location_id){
+            this.$router.push({
+                to: '/booking/new/fastbooking/'+location.id,
+                //name: 'FastBookingConfirmation',
+                params:{
+                    location_id: location_id,
+                    date: this.date,
+                }
+            })
+        }*/
     }
 }
 </script>

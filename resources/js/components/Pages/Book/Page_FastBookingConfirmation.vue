@@ -9,7 +9,7 @@
                 <div style="text-align: center"> Bist du einverstanden mit dieser Buchung?</div>
             </div>
             <div class="coba-container">
-                <booking> v-for="(booking, index) in bookings" :booking="booking" :key="index"></booking>
+                <booking> booking></booking>
             </div>
             <div class="coba-container">
                 <button class="coba-button coba-button-accent" @click="submit">Bestätigen</button>
@@ -25,6 +25,7 @@
 <script>
 import Booking from "../../ListItems/Booking";
 export default {
+    props:['location_id', 'date'],
     name: "Page_FastBookingConfirmation.vue",
     components: {Booking},
     data() {
@@ -32,50 +33,52 @@ export default {
             load: false,
             error: false,
             location_id: this.$route.params.location_id,
-            today_date: "",
-            tomorrow_date:"",
-            booking: "",
-            random: "",
+            location_name: "",
+            date: new Date(),
+            booking:{
+                date: this.today_date = date.toISOString().slice(0, 10),
+                from: "09:00",
+                to: "17:00",
+                workstation: {
+                    name: "",
+                    location: {
+                        name: "",
+                    },
+
+                },
+                error: false,
+            },
         }
     },
     created() {
-        let date = new Date();
-        this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
-        date.setDate(new Date().getDate() + 1);
-        this.tomorrow_date = date.toISOString().slice(0, 10);
-        this.fetchData();
+        //sagt ob der heutige Tag oder der morgige betrachtet werden soll
+        var hour = this.date.getHours(); //TODO UTCHours or Hours?
+        if (hour >= 16){ //if its later than 16:00 the date will be tomorrows date
+            this.date.setDate(new Date().getDate + 1);
+        }
         for (var i = 0; i < this.$store.getters.locations.length; i++) {
             if(this.$store.getters.locations[i].id == this.location_id)
                 this.location_name = this.$store.getters.locations[i].name
         }
-    },
-    methods:{
-        fetchData() {
-            this.load = true;
-            fetch('/api/booking?filter[date][min]='+this.today_date+'&filter[location_id]='+this.location_id, {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization' : 'Bearer '+localStorage.token
+        if(typeof this.bookings === 'undefined') {
+            this.bookings = JSON.parse(localStorage.getItem("confirmation_bookings"))
+            if(this.bookings == null)
+                this.error = "Ein Fehler ist aufgetreten. Keine Buchungen zur Bestätigung gefunden.";
+            else {
+                for(let booking in this.bookings) {
+                    this.bookings[booking].date = new Date(this.bookings[booking].date)
                 }
-            })
-                .then(res => res.json())
-                .then(res => {
-                    if(res.success) {
-                        this.bookings = res.success;
-                        this.colorIndicators();
-                        this.load = false;
-                    }
-                    else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-        },
+            }
+        }
+        else
+            localStorage.setItem("confirmation_bookings", JSON.stringify(this.bookings));
+
+        for(let booking in this.bookings) {
+            this.bookings[booking].from = (this.bookings[booking].time[0]<10?"0":"")+Math.round(this.bookings[booking].time[0]-0.1)+":"+(this.bookings[booking].time[0]%1===0?'00':'30');
+            this.bookings[booking].to = (this.bookings[booking].time[1]<10?"0":"")+Math.round(this.bookings[booking].time[1]-0.1)+":"+(this.bookings[booking].time[1]%1===0?'00':'30');
+        }
+    },
+    methods: {
         submit() {
             this.$router.push({
                 name: 'BookingCheckout',
