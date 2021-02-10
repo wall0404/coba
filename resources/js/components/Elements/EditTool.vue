@@ -10,7 +10,8 @@
             <div v-if="dropDown.open" >
                 <div class="coba-dropdown-content">
                     <ul class="coba-list-nobullets">
-                        <li> <router-link :to="'/booking/edit/'+this.booking.id" style="background-color:rgba(255,255,255,0);">Bearbeiten</router-link> </li>
+                        <li> <router-link :to="{name: 'ChangeBooking', params: { booking_id:booking.id, booking: booking }}" style="background-color:rgba(255,255,255,0);">Bearbeiten</router-link> </li>
+                       <!-- <li> <router-link :to="'/booking/edit/'+this.booking.id" style="background-color:rgba(255,255,255,0);">Bearbeiten</router-link> </li> -->
                         <li class="last"> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal()">Löschen</button> </li>
                     </ul>
                 </div>
