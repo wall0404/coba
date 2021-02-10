@@ -12,10 +12,11 @@
                         <b-icon icon="clock-history" font-scale="2"></b-icon>
                     </router-link>
                 </li>
+                <router-link class="coba-button coba-button-accent coba-button-big coba-button-no-border mt-3" :to="'/booking/new/homeoffice/'"> Remote Work</router-link>
             </div>
             <spinner v-else></spinner>
 
-            <div class="coba-flex-space-evenly">
+            <div class="coba-flex-space-evenly mt-4">
                 <button class="coba-button-round coba-button">
                     <b-icon icon="clock-history" font-scale="2"></b-icon>
                 </button>

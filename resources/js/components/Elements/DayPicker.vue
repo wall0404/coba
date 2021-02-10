@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div v-if="workstation" class="coba-text coba-text-big coba-text-strong coba-text-center">{{workstation.location?workstation.location.name:''}} - {{workstation.name}}</div>
+        <div v-if="workstation && workstation.id !== null" class="coba-text coba-text-big coba-text-strong coba-text-center">{{workstation.location?workstation.location.name:''}} - {{workstation.name}}</div>
+        <div v-else-if="workstation && workstation.id === null" class="coba-text coba-text-big coba-text-strong coba-text-center">{{workstation.name}}</div> <!-- extra exception for Homeoffice -->
         <div class="coba-text-strong coba-text coba-text-center">{{weekStartStr}} - {{weekEndStr}}</div>
         <div class="coba-utilization-indicator-container">
             <div :class="{'coba-utilization-indicator':true, 'coba-utilization-indicator-arrow-prev':true, 'coba-utilization-indicator-big':true, 'coba-utilization-indicator-disabled':page===0}" @click="prevPage">➤</div>
