@@ -43,7 +43,6 @@
                     <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
                     <span v-else>{{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
                     <edit-tool :openDD="dropDown.open" :booking="booking" @modal-close-event="toggleDropDown(booking)" @modal-delete-event="delBookingfkn(booking.id)"> </edit-tool>
-
                 </li>
             </ul>
             <spinner v-else></spinner>
