@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         data: {},
-        ready: 0,
+        ready: 1,
         changes: false,
     },
     mutations: {
@@ -43,7 +43,6 @@ export const store = new Vuex.Store({
 
         },
         getData (state) {
-            state.ready++;
             fetch('/api/location', {
                 method: 'GET',
                 headers: {
