@@ -92,11 +92,12 @@ import Modal from "./Modal";
 export default {
     name: "CalendarBookingListItem",
     components: {Modal},
-    props: ['workstation', 'bookings', 'users', 'date', 'user_id'],
+    props: ['workstation', 'bookings', 'users', 'date'],
     data() {
         return {
             time: "-",
             name: "",
+            user_id: this.$store.getters.data.user.user_id,
             user_booking_list: [], //Enthält die User, die eine Buchung für die Workingstation getätigt haben
             bookings_workstation: [], //Enthält die Buchungen für die Workingstation
             is_one_booking_from_user: false, //getätigte Buchung vom user existiert oder nicht
