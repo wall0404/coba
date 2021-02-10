@@ -5,7 +5,7 @@
              @click="triggerBack(false)">
             <b-icon icon="arrow-left-short" font-scale="3"></b-icon>
         </div>
-        <modal id="themodal" :show-modal="modal_open" @modal-close-event="closeModal">
+        <modal :show-modal="modal_open" @modal-close-event="closeModal">
             <template v-slot:header>
                 <div class="coba-modal-header">Zurückkehren</div>
             </template>
@@ -63,16 +63,14 @@ export default {
 </script>
 
 <style scoped>
-#back_button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: white;
-    z-index: 9;
-}
-.invert {
-    color: gray !important;
-}
-
-
+    #back_button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        z-index: 9;
+    }
+    .invert {
+        color: gray !important;
+    }
 </style>
