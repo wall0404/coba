@@ -22,7 +22,6 @@
                 </div>
             </template>
         </modal>
-        <div id="popLayer"></div>
     </div>
 </template>
 
@@ -69,29 +68,11 @@ export default {
     top: 20px;
     left: 20px;
     color: white;
-    z-index: 11;
-
+    z-index: 9;
 }
 .invert {
     color: gray !important;
 }
 
-#themodal{
-    z-index: 9;
-}
-
-#popLayer{
-    position: absolute;
-    display:none;
-    width:100%;
-    height:100%;
-    left:0;
-    top:0;
-    z-index:10;
-    background:#DCDBDC;
-    -moz-opacity: 0.8;
-    opacity:.80;
-    filter: alpha(opacity=80);
-}
 
 </style>

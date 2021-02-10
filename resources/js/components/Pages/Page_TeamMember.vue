@@ -25,14 +25,8 @@
                 </li>
             </ul>
             <spinner v-else></spinner>
-
-    </div>
-        <div class="back-button">
-            <a @click="$router.go(-1)">
-                <b-icon icon="arrow-left-short" font-scale="3"></b-icon>
-            </a>
         </div>
-</div>
+    </div>
 </template>
 
 <script>
@@ -134,12 +128,6 @@ ol{
     clear: left ;
     list-style: none;
     padding: 0;
-}
-.back-button{
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color:gray;
 }
 
 </style>
