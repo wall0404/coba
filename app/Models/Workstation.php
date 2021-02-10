@@ -8,6 +8,7 @@ class Workstation extends Model
 {
 
     protected $with = ['location'];
+    protected $hidden = ['favoriteByUsers'];
 
     public function location()
     {

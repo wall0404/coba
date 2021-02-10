@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\Workstation;
 use Carbon\Carbon;
+use Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -35,6 +37,11 @@ class BookingController extends ParentController
         'user_id' => 'equals',
         'workstation' => 'equals',
         'location_id' => 'custom',
+    ];
+
+    protected $validator_suggestion = [
+        'date' => 'required',
+        'location_id' => 'required'
     ];
 
     protected function doBeforeCreated($input){
@@ -180,4 +187,71 @@ class BookingController extends ParentController
         return (int)$numberStr;
     }
 
+    public function getSuggestion(Request $request){
+        $weight_favorite = 5; //Ein Arbeitsplatz der als Favorit markiert wurde, wird x mal so stark gewertet wie ein anderer
+        $weight_same_day = 2; //Ein Arbeitsplatz der in den letzten Wochen an dem gleichen Wochentag gebucht wurde, wird x mal so stark gewertet wie ein anderer
+        $weight_past_weeks = 0.8; //Ein Arbeitsplatz der letzte Woche schon mal gebucht wurde, wird x mal so stark gewertet wie ein anderer der diese Woche gebucht wurde
+
+        $input = $request->input();
+
+        $validator = Validator::make($request->all(), $this->validator_suggestion);
+
+        $requestedDate = new Carbon($input['date']);
+        $location_id = $input['location_id'];
+
+
+        $workstations = Workstation::where('location_id', $location_id)->get();
+
+        foreach ($workstations as $workstation) {
+            $workstation->weight = 1;
+            $bookings = Booking::where('user_id', Auth::id())->where('workstation_id', $workstation->id)->get();
+
+
+
+            foreach ($bookings as $booking) {
+
+                $workstation->weight++;
+
+                $booking_date = new Carbon($booking->date);
+                if($requestedDate->dayOfWeek == $booking_date->dayOfWeek)
+                    $workstation->weight = $workstation->weight*$weight_same_day;
+
+                if($booking_date->year == $requestedDate->year)
+                    $workstation->weight = $workstation->weight*pow($weight_past_weeks, abs($requestedDate->weekOfYear-$booking_date->weekOfYear));
+                if($booking_date->year == ($requestedDate->year-1))
+                    $workstation->weight = $workstation->weight*pow($weight_past_weeks, abs($requestedDate->weekOfYear+52-$booking_date->weekOfYear));
+            }
+
+            if($workstation->isFavorite())
+                $workstation->weight = $workstation->weight*$weight_favorite;
+        }
+        $workstationsArray = $workstations->toArray();
+        usort($workstationsArray, function($a, $b)
+        {
+            return $a['weight']<$b['weight'];
+        });
+
+
+        foreach ($workstationsArray as $workstation) {
+            if(Booking::where('workstation_id', $workstation['id'])->where('date', $input['date'])->count() < 1)
+                return response()->json([
+                    'workstation_id' => $workstation['id'],
+                    'date' => $input['date'],
+                    'from' => '09:00',
+                    'to' => '17:00',
+                    'user_id' => Auth::id()
+                ], ParentController::$successCode);
+        }
+
+        //Hier landen wir wenn alle belegt sind
+        return response()->json([
+            'workstation_id' => null,
+            'date' => $input['date'],
+            'from' => '09:00',
+            'to' => '17:00',
+            'user_id' => Auth::id()
+        ], ParentController::$successCode);
+
+
+    }
 }
