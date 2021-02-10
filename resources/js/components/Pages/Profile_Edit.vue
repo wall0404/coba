@@ -14,7 +14,7 @@
                           class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img"  id="avatar"/>
                  </div>
                  <div class="ml-3">
-                     <input class="inputFile" type="file" id="file" name="file" ref="upload" @change="uploadPic"  >
+                     <input class="inputFile" type="file" id="file" name="file" ref="upload" accept="image/png, image/jpeg" @change="uploadPic"  >
                      <label class="inputFileLabel flex mb-1" for="file"><b-icon class="mr-2 mt-1" icon="image"></b-icon> Wähle ein Profilbild</label>
                      <label class="inputFileLabel mt-1"  @click="deletePic"> Profilbild löschen </label>
                  </div>

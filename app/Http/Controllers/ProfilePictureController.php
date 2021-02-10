@@ -55,18 +55,26 @@ class ProfilePictureController extends Controller
             $mime_type =  $file->getClientMimeType();
 
 
+            $path = $file->store($this->path);
+
+
+            $path_app = 'app'.DIRECTORY_SEPARATOR.$path;
+            $path_new = 'app'.DIRECTORY_SEPARATOR.$this->path.$id.$this->extension;
             if($mime_type == 'image/png') {
-                $path = $file->store($this->path);
-
-
-                $path_app = 'app'.DIRECTORY_SEPARATOR.$path;
-                $path_new = 'app'.DIRECTORY_SEPARATOR.$this->path.$id.$this->extension;
-
                 $image = imagecreatefrompng(storage_path($path_app));
-                $bg = imagecreatetruecolor(imagesx($image), imagesy($image));
+                $size = max(imagesx($image), imagesy($image));
+                $bg = imagecreatetruecolor($size, $size);
                 imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
                 imagealphablending($bg, TRUE);
-                imagecopy($bg, $image, 0, 0, 0, 0, imagesx($image), imagesy($image));
+                imagecopy(
+                    $bg,
+                    $image,
+                    ($size-imagesx($image))/2,
+                    ($size-imagesy($image))/2,
+                    0,
+                    0,
+                    imagesx($image),
+                    imagesy($image));
                 imagedestroy($image);
                 $quality = 50; // 0 = worst / smaller file, 100 = better / bigger file
                 imagejpeg($bg, storage_path($path_new), $quality);
@@ -76,9 +84,20 @@ class ProfilePictureController extends Controller
                 return response()->json(['success'=>'true'], 200);
             }
             elseif($mime_type == 'image/jpeg') {
-                $file->storeAs(
-                    $this->path, $id.$this->extension
-                );
+
+                $image = imagecreatefromjpeg(storage_path($path_app));
+                $size = max(imagesx($image), imagesy($image));
+                $bg = imagecreatetruecolor($size, $size);
+                imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
+                imagealphablending($bg, TRUE);
+                imagecopy($bg, $image,  ($size-imagesx($image))/2, ($size-imagesy($image))/2, 0, 0, imagesx($image), imagesy($image));
+
+                imagedestroy($image);
+                $quality = 50; // 0 = worst / smaller file, 100 = better / bigger file
+                imagejpeg($bg, storage_path($path_new), $quality);
+                imagedestroy($bg);
+
+                Storage::delete($path);
                 return response()->json(['success'=>'true'], 200);
             }
             else {
