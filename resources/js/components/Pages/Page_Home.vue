@@ -42,7 +42,7 @@
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
                     <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
                     <span v-else>{{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
-                    <edit-tool :openDD="dropDown.open" :booking="booking" @modal-close-event="toggleDropDown(booking)" @modal-delete-event="delBookingfkn(booking.id)"> </edit-tool>
+                    <edit-tool :openDD="dropDown.open" :booking="booking" :colorBack="colorBack" @modal-close-event="toggleDropDown(booking)" @modal-delete-event="delBookingfkn(booking.id)"> </edit-tool>
                 </li>
             </ul>
             <spinner v-else></spinner>
@@ -68,6 +68,7 @@ export default {
                 id: "",
                 open: false
             },
+            colorBack: "white",
             prevRoute: {path: ""},
         }
     },
@@ -124,9 +125,4 @@ export default {
 </script>
 
 <style scoped>
-.white-background{
-    background-color: white;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
 </style>

@@ -35,10 +35,10 @@
             </router-link>
         </div>
         <div v-else class="table-item icon">
-            <div v-if="is_one_booking_from_user">
-                <edit-tool :openDD="dropDown.open" :booking="booking_from_user" @modal-close-event="toggleDropDown(booking_from_user)" @modal-delete-event="delBookingfkn()"> </edit-tool>
+            <div v-if="is_one_booking_from_user" style="position: absolute; bottom: 5px; right: 12px">
+                <edit-tool :openDD="dropDown.open" :booking="booking_from_user" :colorBack="this.colorBack" @modal-close-event="toggleDropDown(booking_from_user)" @modal-delete-event="delBookingfkn()"> </edit-tool>
             </div>
-            <div v-else>
+            <div v-else >
                 <router-link class="coba-utilization-indicator"
                              :class="{'coba-utilization-indicator-red':color==='red',
                                 'coba-utilization-indicator-green':color==='green',
@@ -74,6 +74,7 @@ export default {
             dayObj: {
                 date: new Date(this.date)
             },
+            colorBack: "gray",
             dropDown: {
                 id: "",
                 open: false
@@ -189,14 +190,5 @@ export default {
     width: 10%;
     justify-content: center;
     align-items: center;
-}
-.grey-background{
-    background-color: #EBEBEB;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    position: absolute;
-    padding: 10px;
-    padding-top: 7px;
-    z-index: 1;
 }
 </style>

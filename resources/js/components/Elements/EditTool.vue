@@ -3,13 +3,13 @@
         <div v-if="dropDown.open" class="coba-editing-wrapper" @click.self="toggleDropDown()"></div>
         <div class="coba-dropdown-container" @click="toggleDropDown()">
             <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
-            <div style="position: absolute; bottom: -10px; right: 10px" :class="{'white-background':dropDown.open&&color==='white','gray-background':dropDown.open&&color==='gray'}">
+            <div style="position: absolute; bottom: -10px; right: 10px" :class="{'white-background':dropDown.open&&colorBack==='white','gray-background':dropDown.open&&colorBack==='gray'}">
                 <b-icon icon="pencil" class="m-2" style="margin-bottom: 30px !important" font-scale="1"></b-icon>
             </div>
             <!-- Drop Down start -->
             <div v-if="dropDown.open" >
-                <div class="coba-dropdown-content">
-                    <ul class="coba-list-nobullets">
+                <div class="coba-dropdown-content" :class="{'white-background':dropDown.open&&colorBack==='white','gray-background':dropDown.open&&colorBack==='gray'}">
+                    <ul class="coba-list-nobullets" style="margin-bottom: 0px">
                         <li> <router-link :to="'/booking/edit/'+this.booking.id" style="background-color:rgba(255,255,255,0);">Bearbeiten</router-link> </li>
                         <li class="last"> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal()">Löschen</button> </li>
                     </ul>
@@ -41,7 +41,7 @@ import Modal from "./Modal";
 export default {
     name: "EditTool",
     components: {Modal},
-    props: ['openDD','booking', 'color'],
+    props: ['openDD','booking', 'colorBack'],
     data() {
         return {
             load: false,
@@ -118,7 +118,7 @@ export default {
     border-top-left-radius: 10px;
 }
 .gray-background{
-    background-color: gray;
+    background-color: #EBEBEB;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
 }

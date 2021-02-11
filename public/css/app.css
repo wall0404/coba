@@ -14679,7 +14679,6 @@ input[type=color].form-control:disabled {
 }
 
 .coba-dropdown-container .coba-dropdown-content {
-  text-align: right;
   position: absolute;
   bottom: -48px;
   right: 10px;
@@ -14688,8 +14687,6 @@ input[type=color].form-control:disabled {
   width: -moz-fit-content;
   width: fit-content;
   z-index: 1;
-  background-color: white;
-  background-color: #fff;
   padding: 7px 10px;
   text-align: left;
   border-radius: 10px;
@@ -14851,7 +14848,7 @@ input[type=color].form-control:disabled {
 
 .coba-list-nobullets li {
   padding: 2px 0;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #8C8C8C;
 }
 
 /* MODAL Style */

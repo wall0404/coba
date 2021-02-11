@@ -287,7 +287,6 @@
 
 .coba-dropdown-container {
     .coba-dropdown-content {
-        text-align: right;
         position: absolute;
         //display: flex;
         bottom: -48px;
@@ -297,8 +296,6 @@
         //width: -moz-fit-content;
         width: fit-content;
         z-index: 1;
-        background-color: white;
-        background-color: #fff;
         padding: 7px 10px;
         text-align: left;
         border-radius: 10px;
@@ -441,7 +438,7 @@
 
 .coba-list-nobullets li {
     padding: 2px 0;
-    border-bottom: 1px solid #EBEBEB;
+    border-bottom: 1px solid $coba-dark-gray;
 }
 
 
