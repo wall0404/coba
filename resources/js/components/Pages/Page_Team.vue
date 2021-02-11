@@ -17,7 +17,8 @@
 
         <spinner v-if="load"></spinner>
         <div v-else class="coba-container coba-smaller" v-for="user in users" >
-            <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; margin-top: -20px ; color: #FFC931" font-scale="1.5"  ></b-icon>
+            <div :style="user.isBuddy ? 'marginTop: -27.6px' : ''">
+            <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; color: #FFC931" font-scale="1.5"  ></b-icon>
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
                 <div class="profile-picture"  style="background-color: transparent ">
@@ -45,6 +46,7 @@
                 </div>
             </div>
             </router-link>
+            </div>
         </div>
     </div>
 </template>

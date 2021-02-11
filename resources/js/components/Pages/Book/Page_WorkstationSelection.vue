@@ -42,8 +42,14 @@
                     <template v-slot:header>
                         <div class="coba-modal-header">
                             <div class="coba-flex-space-evenly">{{modal.header}}
-                                <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star-fill">
-                                </b-icon> <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star"></b-icon> </div>
+                                <div v-if="!loadSeat">
+                                     <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star-fill"></b-icon>
+                                     <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star"></b-icon>
+                                </div>
+                                <div v-else style="width: 36px ; height: 45px ">
+                                      <spinner style="position: relative ; top: -80px    "></spinner>
+                                </div>
+                            </div>
                         </div>
                     </template>
                     <template v-slot:body>
@@ -76,6 +82,7 @@ export default {
     data() {
         return {
             load: false,
+            loadSeat: false ,
             error: false,
             location_id: this.$route.params.location_id,
             workstations: null,
@@ -241,6 +248,7 @@ export default {
             return days[date.getUTCDay()];
         },
         deleteFavoriteSeat(){
+            this.loadSeat = true;
             fetch('/api/workstation/favorite', {
                 method: 'DELETE',
                 body: JSON.stringify({
@@ -253,7 +261,8 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        this.modal.workstation.isFavorite = false
+                        this.modal.workstation.isFavorite = false ;
+                        this.loadSeat = false  ;
                     }
                 }).catch(error =>{
                 this.error = error;
@@ -262,6 +271,7 @@ export default {
         },
 
         addFavoriteSeat(){
+            this.loadSeat = true;
             fetch('/api/workstation/favorite', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -274,7 +284,9 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        this.modal.workstation.isFavorite = true
+                        this.modal.workstation.isFavorite = true ;
+                        this.loadSeat = false  ;
+
                     }
                 }).catch(error =>{
                 this.error = error;
