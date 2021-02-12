@@ -14371,7 +14371,7 @@ input[type=color].form-control:disabled {
 }
 
 .coba-navbar .router-link-active {
-  color: yellow;
+  color: #FFC931;
   text-decoration: none;
 }
 
