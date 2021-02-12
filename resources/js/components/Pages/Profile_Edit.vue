@@ -86,8 +86,7 @@
                 <div v-for="workstation in workstations"  class="seat-container">
                     <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="workstation.isFavorite?  deleteFavoriteSeat(workstation) : addFavoriteSeat(workstation )">
                         <div>
-                            <spinner v-if="loadArray[workstation.id-1]" ></spinner>
-                            <b-icon v-else :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FFC931" ></b-icon>
+                            <b-icon :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FFC931" ></b-icon>
                         </div>
                     </div>
                     <div class="coba-flex-space-evenly m-0 p-2" >
@@ -139,7 +138,6 @@ export default {
 
             load:false,
             PictureLoad:false,
-            loadArray:[],
 
             showPasswordModal: false,
             showPassword1: false,
@@ -158,19 +156,8 @@ export default {
         }
 
     },
-    created() {
-        this.SeatLoader() ;
-    },
 
     methods:{
-        SeatLoader(){
-          let workstations = this.$store.getters.data.locations ;
-          for ( let i = 0 ; i < workstations.length ; i++){
-              for ( let k = 0 ; k < workstations[i].workstations.length ; k++ ){
-                  this.loadArray.push(false) ;
-              }
-          }
-        },
         selectLocation(location_id) {
             if ( this.selectedLocations.length === 0) {
                 this.selectedLocations.push(location_id)
@@ -307,7 +294,7 @@ export default {
         },
 
         deleteFavoriteSeat( workstation){
-            this.loadArray.splice(workstation.id-1, 1,true) ;
+            workstation.isFavorite = false;
             fetch('/api/workstation/favorite', {
                 method: 'DELETE',
                 body: JSON.stringify({
@@ -320,17 +307,17 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        workstation.isFavorite = false;
-                        this.loadArray.splice(workstation.id-1, 1,false) ;
+
                     }
                 }).catch(error =>{
+                workstation.isFavorite = true;
                 this.error = error;
                 console.log(error) ;
             })
         },
 
         addFavoriteSeat( workstation){
-            this.loadArray.splice(workstation.id-1, 1,true) ;
+            workstation.isFavorite = true;
             fetch('/api/workstation/favorite', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -343,10 +330,10 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        workstation.isFavorite = true;
-                        this.loadArray.splice(workstation.id-1, 1,false) ;
+
                     }
                 }).catch(error =>{
+                    workstation.isFavorite = false;
                     this.error = error;
                     console.log(error) ;
             })

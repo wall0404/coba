@@ -42,12 +42,9 @@
                     <template v-slot:header>
                         <div class="coba-modal-header">
                             <div class="coba-flex-space-evenly">{{modal.header}}
-                                <div v-if="!loadSeat">
+                                <div>
                                      <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star-fill"></b-icon>
                                      <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star"></b-icon>
-                                </div>
-                                <div v-else style="width: 36px ; height: 45px ">
-                                      <spinner style="position: relative ; top: -80px    "></spinner>
                                 </div>
                             </div>
                         </div>
@@ -248,7 +245,7 @@ export default {
             return days[date.getUTCDay()];
         },
         deleteFavoriteSeat(){
-            this.loadSeat = true;
+            this.modal.workstation.isFavorite = false ;
             fetch('/api/workstation/favorite', {
                 method: 'DELETE',
                 body: JSON.stringify({
@@ -261,17 +258,17 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        this.modal.workstation.isFavorite = false ;
-                        this.loadSeat = false  ;
+
                     }
                 }).catch(error =>{
+                this.modal.workstation.isFavorite = true ;
                 this.error = error;
                 console.log(error) ;
             })
         },
 
         addFavoriteSeat(){
-            this.loadSeat = true;
+            this.modal.workstation.isFavorite = true ;
             fetch('/api/workstation/favorite', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -284,11 +281,10 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        this.modal.workstation.isFavorite = true ;
-                        this.loadSeat = false  ;
 
                     }
                 }).catch(error =>{
+                this.modal.workstation.isFavorite = false ;
                 this.error = error;
                 console.log(error) ;
             })

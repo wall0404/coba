@@ -3,8 +3,7 @@
         <template v-for="user in users">
         <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
             <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user) : addBuddy(user)" >
-                <b-icon v-if="!loadStar" style="position: absolute ; right: 40px ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon>
-                <spinner v-else style="position: absolute ; right: 58px ; top: -76px ;" ></spinner>
+                <b-icon  style="position: absolute ; right: 40px ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon>
             </div>
             <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
         </div>
@@ -41,7 +40,6 @@ export default {
     data () {
         return {
             load: false ,
-            loadStar: false ,
             error: false ,
             users: [],
             id: null ,
@@ -49,7 +47,7 @@ export default {
             bookings:[],
             allBookings:[],
             today_date: new Date().toISOString().slice(0, 10),
-            today_hours: new Date().toISOString().slice(11,19),  // ! standard: UMT+0
+            today_hours: new Date().toISOString().slice(11,19),
         }
     },
     methods: {
@@ -135,7 +133,7 @@ export default {
                 })
         },
         addBuddy( user ){
-          this.loadStar = true ;
+            user.isBuddy = true;
           fetch('/api/buddy/', {
               method: 'POST',
               body: JSON.stringify({
@@ -148,16 +146,16 @@ export default {
           })  .then( res => res.json())
               .then( res => {
                   if ( res.success){
-                      user.isBuddy = true;
-                      this.loadStar = false ;
+
                   }
               }).catch(error =>{
+              user.isBuddy = false;
               this.error = error;
               console.log(error) ;
           })
         },
         removeBuddy(user){
-            this.loadStar = true ;
+            user.isBuddy = false;
             fetch('/api/buddy/', {
                 method: 'DELETE',
                 body: JSON.stringify({
@@ -170,10 +168,10 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        user.isBuddy = false;
-                        this.loadStar = false ;
+
                     }
                 }).catch(error =>{
+                user.isBuddy = true;
                 this.error = error;
                 console.log(error) ;
             })
