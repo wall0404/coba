@@ -40,60 +40,24 @@
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
                 <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
-                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}} <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information -->
-                    </span>
-                    <span v-else>{{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  -->
-                    </span> <!-- Drop Down list with pencil icon to toggle it -->
-                    <div class="coba-dropdown-container m-0 p-2" @click="toggleDropDown(booking)">    <!-- @click="openDropDown(booking)" - Triggerbox around the pencil icon, it opens a drop down List-->
-                        <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
-                        <div style="position: absolute; bottom: 10px; right: 10px" :class="{'white-background':dropDown.open&&dropDown.id === booking.id}">
-                            <b-icon icon="pencil" class="m-2" style="margin-bottom: 30px !important" font-scale="1"></b-icon>
-                        </div>
-                        <!-- Drop Down start -->
-                        <div v-if="dropDown.open && dropDown.id === booking.id" class="coba-dropdown-wrapper">
-                            <div class="coba-dropdown-content">
-                                <ul class="coba-list-nobullets">
-                                    <li> <button style="background-color:rgba(255,255,255,0);">Bearbeiten</button> </li>
-                                    <li class="last"> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal(booking)">Löschen</button> </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- drop down end -->
+                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
+                    <span v-else>{{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
+                    <edit-tool :openDD="dropDown.open" :booking="booking" @modal-close-event="toggleDropDown(booking)" @modal-delete-event="delBookingfkn(booking.id)"> </edit-tool>
                 </li>
             </ul>
             <spinner v-else></spinner>
         </div>
-
-        <!-- modalDel -> A modal which asks if you really want to delete a booking -->
-        <modal :show-modal="modalDel.open" @modal-close-event="closeModal" @modal-positive-event="deleteBooking">
-            <template v-slot:header>
-                <div class="coba-modal-header">Buchung entfernen</div>
-            </template>
-            <template v-slot:body>
-                <div class="coba-modal-body">
-                    Bist du dir sicher, dass du die Buchung entfernen möchtest?
-                    <!-- Sind sie sich sicher, dass sie diese Buchung entfernen möchten? -->
-                </div>
-            </template>
-            <template v-slot:footer>
-                <div class="coba-modal-footer coba-button-container">
-                    <button class="coba-button coba-button-danger" @click="deleteBooking(modalDel.header)">Ja</button>
-                    <button class="coba-button" @click="closeModal">Nein</button>
-                </div>
-            </template>
-        </modal>
-
     </div>
 </template>
 
 <script>
 import Spinner from "../Global/Spinner";
 import Modal from "../Elements/Modal";
+import EditTool from "../Elements/EditTool";
 
 export default {
     name: "Page_Home",
-    components: {Modal, Spinner},
+    components: {EditTool, Modal, Spinner},
     data() {
         return {
             load: false,
@@ -105,10 +69,6 @@ export default {
                 open: false
             },
             prevRoute: {path: ""},
-            modalDel: {
-                header: "",
-                open: false,
-            },
         }
     },
     created() {
@@ -149,50 +109,15 @@ export default {
             return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
         },
         toggleDropDown(booking){
-            //this.dropDown.open = true;
-            if (this.dropDown.open==true){
-                this.dropDown.open = false;
-            }
-            else this.dropDown.open = true;
+            this.dropDown.open = !this.dropDown.open;
             this.dropDown.id = booking.id;
         },
-        closeDropDown(booking){
-            this.dropDown.open = false;
-            this.dropDown.id = "";
-        },
-        //all methods for the delete-modal
-        openModal(booking) {
-            this.modalDel.header = booking.id;
-            this.modalDel.open = true;
-        },
-        closeModal() {
-            this.modalDel.open = false;
-        },
-        deleteBooking(id) {
-            this.showModal = false;
-            this.load = true;
-            fetch('/api/booking/'+id, {
-                method: 'DELETE',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization' : 'Bearer '+localStorage.token
-                }
-            })
-                .then(res => res.json())
-                .then(res => {
-                    if(res.success) {
-                        this.load = false;
-                        this.$router.go();
-                    }
-                    else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
+        delBookingfkn(bookingID){
+            var i =0;
+            while (this.bookings[i].id !== bookingID){
+                i++;
+            }
+            this.bookings.splice(i,1);
         },
     }
 }
