@@ -8,11 +8,11 @@
                 </b-form-checkbox>
             </div>
         </div>
-        <div v-if="iCalAssignment" class="ical-url my-3 p-1 coba-flex space-between rounded-sm" :class="{'green':copied}"
+        <div v-if="iCalAssignment" class="ical-url my-3 p-1 coba-flex space-between rounded-sm"
              v-clipboard:copy="iCalAssignment.url"
              v-clipboard:success="onCopy"
              v-clipboard:error="onError">
-            <span class="url ml-2">{{this.iCalAssignment.url}}</span><b-icon :icon="clipboard" font-scale="1.5"></b-icon>
+            <span>URL: </span> <span class="url ml-2">{{url}}</span><b-icon :icon="clipboard"></b-icon>
         </div>
         <spinner v-else-if="load&&checked"></spinner>
     </div>
@@ -28,8 +28,7 @@ export default {
             iCalAssignment: null,
             checked: false,
             load: false,
-            clipboard: "clipboard",
-            copied: false
+            clipboard: "clipboard"
         }
     },
     computed: {
@@ -124,7 +123,6 @@ export default {
         },
         onCopy() {
             this.clipboard = "clipboard-check";
-            this.copied = true;
         },
         onError() {
             this.clipboard = "clipboard-x";
@@ -134,27 +132,15 @@ export default {
 </script>
 
 <style scoped>
-    .custom-switch {
-        left: 5px;
-    }
     .ical-url {
         position: relative;
-        background-color: lightgray;
-        border: 1px dashed gray;
-    }
-    .green {
-        background-color: lightgreen;
-        border: 1px solid gray;
+        background-color: gray;
+        color: white;
     }
     .url {
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        hyphens: none;
-        -ms-word-break: break-all;
-        /* This is the dangerous one in WebKit, as it breaks things wherever */
-        word-break: break-all;
-        /* Instead use this non-standard one: */
-        word-break: break-word;
+        white-space: nowrap;
+        overflow: hidden;
         text-decoration: underline;
+        text-overflow: ellipsis;
     }
 </style>
