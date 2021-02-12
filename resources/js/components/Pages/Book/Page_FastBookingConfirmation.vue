@@ -83,7 +83,7 @@ export default {
                 .then(res => res.json())
                 .then(res => {
                     if(res.success) {
-                        this.formatBookings(res.success);
+                        this.booking=res.success;
                         this.load = false;
                     }
                     else {
@@ -95,14 +95,14 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
-        },
+        },/*
         formatBookings(data) {
             this.booking.user_id= data.user_id;
             this.booking.workstation_id =data.workstation_id;
             this.booking.date = data.date;
             this.booking.from = data.from;
             this.booking.to = data.from;
-        },
+        },*/
 
         submit() {
             this.$router.push({
