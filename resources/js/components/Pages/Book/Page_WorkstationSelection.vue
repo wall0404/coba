@@ -25,7 +25,7 @@
 
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-for="workstation in workstations"  >
-                    <div v-if="! workstation.isFavorite" class="seat-container">
+                    <div  class="seat-container">
                     <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
                         <b-icon icon="plus" font-scale="2"></b-icon>
                     </router-link>
