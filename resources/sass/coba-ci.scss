@@ -3,7 +3,7 @@
 
 /* NAVBAR */
 .coba-navbar {
-    background-color: #505050;
+    background-color: $coba-petrol;
     height: $navbar-height;
     position: fixed;
     bottom: 0;
@@ -15,7 +15,7 @@
 
 
     .router-link-active {
-        color: yellow;
+        color: $coba-yellow;
         text-decoration: none;
     }
 }
@@ -102,7 +102,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $coba-dark-gray;
+    background-color: $coba-petrol;
     color: white;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;

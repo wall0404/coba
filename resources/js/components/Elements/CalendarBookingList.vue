@@ -110,7 +110,7 @@ export default {
         overflow-x: scroll;
     }
     .section-headline {
-        background-color: orange;
+        background-color: #FEEF00;
         font-weight: bold;
     }
     .booking-list {
