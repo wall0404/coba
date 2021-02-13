@@ -11,7 +11,7 @@
                 <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
             </div>
             <div class="coba-container">
-                <button class="coba-button" :class="{'accent':days.length>0, '':days.length===0}" @click="submit" :disabled="days.length===0">Buchen</button>
+                <button class="coba-button" :class="{'coba-button-accent':days.length>0, '':days.length===0}" @click="submit" :disabled="days.length===0">Buchen</button>
             </div>
         </div>
         <spinner v-else></spinner>
