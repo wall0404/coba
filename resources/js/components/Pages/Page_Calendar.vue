@@ -1,7 +1,7 @@
 <template>
     <div class="coba-page page">
 
-        <CalendarSidebar :show_sidebar="open" @modal-close-event="toggleSidebar()" @change-event="callbackChange(filter)"></CalendarSidebar>
+        <CalendarSidebar :show_sidebar="open" @modal-close-event="toggleSidebar()" @change-event="callbackChange" ></CalendarSidebar>
 
         <div class="coba-container coba-header coba-header-square mb-0">
 
@@ -17,7 +17,7 @@
 
         <div class="content">
             <calendar ref="calendar" class="calendar" @dateSelected="callbackDateSelect"></calendar>
-            <calendar-booking-list ref="list" class="booking-list" :filter="filter"></calendar-booking-list>
+            <calendar-booking-list ref="list" class="booking-list" :selectFilter="passedFilter" ></calendar-booking-list>
         </div>
 
 
@@ -41,7 +41,7 @@ export default {
             initialYear: 0,
             open:false,
             monthString: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-            filter: {}
+            passedFilter: {}
 
         }
     },
@@ -91,7 +91,7 @@ export default {
         },
 
         callbackChange(filter){
-            this.filter = filter;
+            this.passedFilter = filter;
         }
 
     }
@@ -104,6 +104,7 @@ export default {
         display: flex;
         flex-direction: column;
     }
+
     .coba-header {
         flex-grow: 2;
     }
@@ -114,13 +115,16 @@ export default {
         justify-content: space-between;
         align-items: center;
     }
+
     .coba-page-headline {
         padding-left: 20px;
         flex-grow: 1;
     }
+
     .coba-tab-navigation {
         flex-grow: 1;
     }
+
     .content {
         display: flex;
         flex-direction: column;
@@ -132,16 +136,6 @@ export default {
     }
     .booking-list {
         flex-grow: 50;
-    }
-
-    .coba-calendar-sidebar-icon{
-
-        position: fixed;
-        top: 30px;
-        right: 30px;
-        color: white;
-        z-index: 0;
-
     }
 
     .transparent-icon{

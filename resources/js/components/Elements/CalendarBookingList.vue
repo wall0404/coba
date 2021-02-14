@@ -1,8 +1,10 @@
 <template>
     <div class="booking-list-container mt-1">
         <spinner v-if="loadUsers || loadBookings"></spinner>
-        <div v-else  class="coba-full-width">
-            <div v-for="location in $store.getters.locations" v-if="filter.location[location.id]">
+        <div v-else class="coba-full-width">
+
+            <div v-for="location in $store.getters.locations" v-if="selectFilter.location[location.id] || selectFilter.location['homeoffice']">
+                <div class="section-headline p-2 px-3" v-if="selectFilter.fav">Favoriten</div>
                 <div class="section-headline p-2 px-3">{{location.name}}</div>
                 <div class="booking-list px-3">
                     <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date"></calendar-booking-list-item>
@@ -29,7 +31,6 @@
                     </div>-->
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -40,7 +41,7 @@ import CalendarBookingListItem from "./CalendarBookingListItem";
 export default {
     name: "CalendarBookingList",
     components: {CalendarBookingListItem, Spinner},
-    props: ['filter'],
+    props: ['selectFilter'],
     data() {
         return {
             bookings: [],
@@ -59,7 +60,7 @@ export default {
     },
     methods: {
         fetchBookingsForDate(date) {
-            console.log(this.filter)
+
             this.date = date;
             this.loadBookings = true;
             fetch('/api/booking?order_by=date&filter[date][min]='+date+'&filter[date][max]='+date, {
@@ -86,6 +87,7 @@ export default {
                 })
 
         },
+
         fetchUsers() {
             this.loadUsers = true;
             fetch('/api/user', {
