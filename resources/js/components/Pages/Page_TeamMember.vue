@@ -135,11 +135,11 @@ ol{
     list-style: none;
     padding: 0;
 }
-.back-button{
+.back-button {
     position: absolute;
     top: 20px;
     left: 20px;
-    color:gray;
+    color: gray;
 }
 
 </style>
