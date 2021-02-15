@@ -85,6 +85,7 @@ export default {
         },
         formatBookings(data) {
             this.bookings = {};
+
             //For every Booking
             for (let k = 0; k<data.length; k++) {
                 try {
@@ -128,13 +129,14 @@ export default {
 
         },
         submit() {
-
             //save changes
             this.$store.commit('autoSaveInstance', {
                 workstation_id: this.$route.params.workstation_id,
                 days: this.days
             });
 
+            this.$store.commit('clearChanges');
+            
             //go to confirmation
             let days = this.days;
             this.$router.push({

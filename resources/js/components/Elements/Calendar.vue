@@ -11,7 +11,6 @@
                 <div class="calendar-day-of-week weekend"><span>S</span></div>
                 <div class="calendar-day-of-week weekend"><span>S</span></div>
             </div>
-
             <div class="calendar-week" v-for="week in calendar_dates"> <!-- Anzeiger der Kalenderwochen mit Tagen -->
                 <div class="calendar-day-of-week" v-for="(day, dayOfWeek) in week" :class="{'booked':my_bookings.find(x => x.date === day.date), 'weekend':(dayOfWeek===5||dayOfWeek===6) || day.date<today.toISOString().slice(0, 10),'today':day.date===today.toISOString().slice(0, 10), 'selected':selectedDate===day.date}" @click="selectDate(day.date)"> <!-- Anpassung der einzelnen Tage; Punkt, wenn Buchung für den Tag; Grau, wenn Tag in der Vergangenheit liegt oder Wochenende ist -->
                      <span>{{day.day}}</span>
