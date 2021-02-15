@@ -151,6 +151,9 @@ export default {
         }
 
     },
+    created() {
+        this.selectLocation(1) ;
+    },
 
     methods:{
         selectLocation(location_id) {
