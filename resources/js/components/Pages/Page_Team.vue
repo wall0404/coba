@@ -36,7 +36,7 @@
                                     </template>
                                 </td>
                                 <td v-else-if="booking.user_id === user.user_id" class="user-data-name small text-info">
-                                    heute im Homeoffice
+                                    heute im Remote Work
                                 </td>
                             </tr>
 
