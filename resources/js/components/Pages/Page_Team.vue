@@ -2,30 +2,41 @@
 <template>
 
     <div class="coba-page">
-        <div class="coba-header">
-            <h2 class="coba-page-headline">Team</h2>
-        </div>
-        <div class="filter-container w-100  coba-flex-space-evenly mb-5">
-            <input v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
+
+       <div style="position: fixed ; width: 100% ;z-index:2 " >
+          <div class="coba-header adjust-header"  >
+              <div ><h2 class="coba-page-headline">Team</h2></div>
+              <div class="filter-container coba-flex-space-evenly mt-3">
+                  <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-yellow p-2" type="text"  placeholder="Kontakt suchen..">
+              </div>
+          </div>
+       </div>
+        <div style="height: 250px">
+
         </div>
 
         <spinner v-if="load"></spinner>
-        <div v-else class="coba-container coba-smaller " v-for="user in users" >
+        <div v-else class="coba-container coba-smaller" v-for="user in users" >
+            <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; margin-top: -20px ; color:#FEEF00" font-scale="1.5"  ></b-icon>
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
-                <div class="profile-picture"  style="background-color: transparent "> <img class="coba-border-round coba-border-yellow p-1 w-100" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
-                <div class="user-data">
+                <div class="profile-picture"  style="background-color: transparent ">
+                    <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/>
+                </div>
+                <div class="user-data" >
                     <table  class="user-table limit">
                         <tr>
-                            <td class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
+                            <td  class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
                         </tr>
                         <template v-for="booking in today_bookings"> <!-- inefficient -->
                             <tr>
                                 <td v-if="booking.user_id === user.user_id && booking.workstation_id !== null" class="user-data-name small text-info">
-                                    heute im {{booking.workstation_id}}
+                                    <template v-for="works in workstations">
+                                        <span v-if="booking.date === today_date && booking.user_id === user.user_id && works.id === booking.workstation_id" class="user-data-name small text-info" > heute im {{works.location.name}}</span>
+                                    </template>
                                 </td>
                                 <td v-else-if="booking.user_id === user.user_id" class="user-data-name small text-info">
-                                    heute im Homeoffice
+                                    heute im Remote Work
                                 </td>
                             </tr>
 
@@ -100,12 +111,24 @@ export default {
                         .then(res => {
                             if( this.searchQuery){
                                 this.users = res.success.filter(user =>
-                                    (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())) ;
+                                    (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())).sort(this.compare) ;
+                                    // scroll to top -> needs to be checked if it works on app too
+                                    window.scrollTo(0,0);
                             }else{
-                                this.users = res.success ;
+                                this.users = res.success.sort( this.compare) ;
+                                window.scrollTo(0,0);
                             }
                         })
                 },300) ;
+            },
+            compare(a,b){
+                if( a.isBuddy === true && b.isBuddy === false ){
+                    return -1 ;
+                }
+                if ( a.isBuddy === false && b.isBuddy === false ){
+                    return 0 ;
+                }
+                else return 1 ;
             },
             getWorkstation(){
                 fetch('/api/workstation',{
@@ -133,6 +156,7 @@ export default {
         },
 
 
+
 }
 </script>
 
@@ -143,8 +167,18 @@ export default {
 .filter-container{
     bottom: 10px
 }
+.adjust-header{
+    display: block;
+    text-align: center;
+    padding-top: 50px;
+}
 .profile-picture {
     width: 25%;
+}
+.profile-img {
+    width: 4.5rem ;
+    height: 4.5rem;
+    object-fit: cover;
 }
 .user-table {
     border-collapse: collapse;
