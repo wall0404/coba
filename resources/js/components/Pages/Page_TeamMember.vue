@@ -1,5 +1,12 @@
 <template>
     <div class="coba-page coba-homescreen ">
+<<<<<<< Updated upstream
+=======
+
+        <div class="user-container mb-5 mt-4">
+            <div>< img class="coba-border-round coba-border-yellow coba-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
+        </div>
+>>>>>>> Stashed changes
         <template v-for="user in users">
         <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
             <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user) : addBuddy(user)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
@@ -7,10 +14,10 @@
         </div>
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
                 <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
-                <p   class="mb-1">{{user.email}}</p>
+                <p   class="mb-1">{{user.email}}</p >
                 <div v-for="booking in bookings">
-                    <p v-if="booking.date === today_date && today_hours < booking.to  " class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
-                  <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p> -->
+                    <p v-if="booking.date === today_date && today_hours < booking.to  " class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p >
+                    <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p > -->
                 </div>
                 <br>
                 <div class="coba-container text-left">
@@ -25,6 +32,12 @@
                 </li>
             </ul>
             <spinner v-else></spinner>
+
+        </div>
+        <div class="back-button">
+            <a @click="$router.go(-1)">
+                <b-icon icon="arrow-left-short" font-scale="3"></b-icon>
+            </a>
         </div>
     </div>
 </template>
@@ -204,9 +217,18 @@ ol{
     list-style: none;
     padding: 0;
 }
+<<<<<<< Updated upstream
 .user-avatar-shadow{
     box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
 }
 
+=======
+.back-button{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color:gray;
+}
+>>>>>>> Stashed changes
 
 </style>
