@@ -3,14 +3,13 @@
         <spinner v-if="loadUsers || loadBookings"></spinner> <!-- Ladesymbol während Seite Daten aufruft -->
         <div v-else  class="coba-full-width">
             <div>
-                <div class="section-headline p-2 px-3">Favoriten</div>
+                <div class="section-headline p-2 px-3" v-if="selectFilter.fav">Favoriten</div>
                 <div class="booking-list px-3">
-                    <span v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)">
+                    <div v-if="selectFilter.fav && selectFilter.location[location.id] || selectFilter.location['homeoffice']" v-for="location in $store.getters.locations">
                         <calendar-booking-list-item v-if="workstation.isFavorite" v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date" v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item>
-                    </span>
+                    </div>
                 </div>
-            </div>
-            <div v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)">
+            <div v-for="location in $store.getters.locations" v-if="selectFilter.location[location.id] || selectFilter.location['homeoffice']">
                 <div class="section-headline p-2 px-3">{{location.name}}</div>
                 <div class="booking-list px-3">
                     <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users"
@@ -20,6 +19,7 @@
             </div>
         </div>
     </div>
+    </div>
 </template>
 
 <script>
@@ -28,7 +28,7 @@ import CalendarBookingListItem from "./CalendarBookingListItem";
 export default {
     name: "CalendarBookingList",
     components: {CalendarBookingListItem, Spinner},
-    props: ['selectedLocations'],
+    props: ['selectFilter'],
     data() {
         return {
             bookings: [],
