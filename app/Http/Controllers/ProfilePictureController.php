@@ -63,16 +63,18 @@ class ProfilePictureController extends Controller
             if($mime_type == 'image/png') {
                 $image = imagecreatefrompng(storage_path($path_app));
                 $size = max(imagesx($image), imagesy($image));
-                $bg = imagecreatetruecolor($size, $size);
+                $bg = imagecreatetruecolor(300, 300);
                 imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
                 imagealphablending($bg, TRUE);
-                imagecopy(
+                imagecopyresized (
                     $bg,
                     $image,
                     ($size-imagesx($image))/2,
                     ($size-imagesy($image))/2,
                     0,
                     0,
+                    300,
+                    300,
                     imagesx($image),
                     imagesy($image));
                 imagedestroy($image);
