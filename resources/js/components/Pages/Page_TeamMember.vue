@@ -134,7 +134,7 @@ export default {
         },
         addBuddy( user ){
             user.isBuddy = true;
-          fetch('/api/buddy/', {
+          fetch('/api/buddy', {
               method: 'POST',
               body: JSON.stringify({
                   id: user.user_id,
@@ -156,7 +156,7 @@ export default {
         },
         removeBuddy(user){
             user.isBuddy = false;
-            fetch('/api/buddy/', {
+            fetch('/api/buddy', {
                 method: 'DELETE',
                 body: JSON.stringify({
                     id: user.user_id,
