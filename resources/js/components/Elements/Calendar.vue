@@ -163,10 +163,10 @@ export default {
         font-weight: 400;
     }
     .calendar-day-of-week.selected {
-        background-color: orange;
+        background-color:#FEEF00;
     }
     .calendar-day-of-week.today {
-        border-color: orange;
+        border-color: #FEEF00;
     }
 
     .header .calendar-day-of-week {

@@ -2,7 +2,7 @@
     <div class="coba-page coba-homescreen ">
         <template v-for="user in users">
         <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
-            <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user) : addBuddy(user)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FFC931" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
+            <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user) : addBuddy(user)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FEEF00" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
             <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
         </div>
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">

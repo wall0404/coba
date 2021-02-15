@@ -42,8 +42,8 @@
                     <template v-slot:header>
                         <div class="coba-modal-header">
                             <div class="coba-flex-space-evenly">{{modal.header}}
-                                <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star-fill">
-                                </b-icon> <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FFC931" font-scale="1.5" icon="star"></b-icon> </div>
+                                <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FEEF00" font-scale="1.5" icon="star-fill">
+                                </b-icon> <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FEEF00" font-scale="1.5" icon="star"></b-icon> </div>
                         </div>
                     </template>
                     <template v-slot:body>
