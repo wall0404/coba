@@ -9,9 +9,9 @@
             <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected-'+day.color:'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
                 @click="selectDate(day)">{{day.day.substring(0,1)}}
                 <!-- a check-sign if the user has already booked a seat for this date -->
-                <div v-for="booking in ownBookings">
-                    <b-icon v-if="booking.date===day.date.toISOString().slice(0,10)" icon="check-circle"></b-icon> <!-- class="coba-check-circle coba-button-very-small coba-button-round" -->
-                </div>
+
+                <b-icon v-if="amountOfBookings(day)>0" icon="check-circle"></b-icon> <!-- class="coba-check-circle coba-button-very-small coba-button-round" -->
+
             </div>
             <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" :class="{'coba-utilization-indicator-disabled':page===2}" @click="nextPage">➤</div>
         </div>
@@ -121,6 +121,16 @@ export default {
                     this.load = false;
                 })
         },
+        //tells how many bookings a user already has for a day
+        amountOfBookings(dayNow){
+            let i = 0;
+            for (var k = 0;k<this.ownBookings.length;k++){
+                if(this.ownBookings[k].date===dayNow.date.toISOString().slice(0,10)) {
+                    i++;
+                }
+            } return i;
+        },
+
         initiateAllDates() {
             this.page = 2;
             this.initiateDates();
