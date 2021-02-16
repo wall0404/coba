@@ -35,14 +35,12 @@ export default {
     },
     methods: {
         setDoubleBooking(){
-            console.log(this.ownBookings.length);
             let i = 0;
             for (let k = 0; k<this.ownBookings.length; k++){
                 if(this.ownBookings[k].date===this.day.date.toISOString().slice(0,10)){
                     this.doubleBooking.push(this.ownBookings[k]);
                 }
             }
-            console.log(this.doubleBooking.length);
         },
         fetchData() {
             this.load = true;
@@ -59,7 +57,6 @@ export default {
                 .then(res => {
                     if(res.success) {
                         this.ownBookings = res.success;
-                        console.log(this.ownBookings);
                         this.setDoubleBooking();
                         this.load = false;
                     }
