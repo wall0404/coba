@@ -10,7 +10,7 @@
                 @click="selectDate(day)">{{day.day.substring(0,1)}}
                 <!-- a check-sign if the user has already booked a seat for this date -->
                 <div v-for="booking in ownBookings">
-                    <b-icon v-if="booking.date===day" class="coba-check-circle coba-button-very-small coba-button-round">check-circle</b-icon>
+                    <b-icon v-if="booking.date===day.date.toISOString().slice(0,10)" icon="check-circle"></b-icon> <!-- class="coba-check-circle coba-button-very-small coba-button-round" -->
                 </div>
             </div>
             <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" :class="{'coba-utilization-indicator-disabled':page===2}" @click="nextPage">➤</div>
@@ -97,7 +97,7 @@ export default {
         fetchData() {
             this.load = true;
             let date = new Date();
-            let today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
+            this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
             fetch('/api/user/'+this.$store.getters.data.user.user_id+'/bookings?order_by=date&filter[date][min]='+this.today_date, {
                 method: 'GET',
                 headers: {
