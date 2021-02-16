@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="coba-container coba-flex coba-header mb-4">
+            <img src="/img/Coba_Logo.jpg">
             <span class="coba-page-headline">Willkommen zurück</span>
         </div>
         <div class="coba-container">
