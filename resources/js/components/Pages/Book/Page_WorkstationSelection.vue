@@ -70,10 +70,12 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import Modal from "../../Elements/Modal";
+import VueCharts from 'vue-chartjs';
 
 export default {
     name: "Page_WorkstationSelection",
     components: {Modal, Spinner},
+    extends: Doughnut,
     data() {
         return {
             load: false,
