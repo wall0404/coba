@@ -7,12 +7,9 @@
             <div :class="{'coba-utilization-indicator':true, 'coba-utilization-indicator-arrow-prev':true, 'coba-utilization-indicator-big':true, 'coba-utilization-indicator-disabled':page===0}" @click="prevPage">➤</div>
             <!-- the days as coloured circles -->
             <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected-'+day.color:'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
-                @click="selectDate(day)">
-                <!-- position of the weekday in reference to the check-sign -->
-                <span v-if="amountOfBookings(day)>0" style="position: relative; left: 30%;">{{day.day.substring(0,1)}}</span>
-                <span v-else>{{day.day.substring(0,1)}}</span>
+                @click="selectDate(day)"> {{day.day.substring(0,1)}}
                 <!-- a check-sign if the user has already booked a seat for this date -->
-                <b-iconstack v-if="amountOfBookings(day)>0" font-scale="1.5" shift-h="4" shift-v="-10">
+                <b-iconstack class="check-icon" v-if="amountOfBookings(day)>0" font-scale="1.5">
                     <b-icon stacked icon="circle-fill" style="color:#EBEBEB"></b-icon>
                     <b-icon stacked icon="check" style="color:#2C2C2C"></b-icon>
                     <b-icon stacked icon="circle" style="color:#2C2C2C"></b-icon>
@@ -263,6 +260,13 @@ export default {
 
                 day.selected = !day.selected;
                 day.workstation = this.workstation;
+                let myBookings = [];
+                for (var k = 0;k<this.ownBookings.length;k++){
+                    if(this.ownBookings[k].date===day.date.toISOString().slice(0,10)) {
+                        myBookings.push(this.ownBookings[k]);
+                    }
+                }
+                day.myBookings = myBookings;
                 this.$emit('callback-picker-event', day);
             }
         },
