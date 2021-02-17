@@ -1,12 +1,12 @@
 <template>
-    <div class="booking py-3" > <!-- :class="{'strong':user_id === $store.getters.data.user.user_id}" -->
+    <div class="booking py-3" v-if="!selectedFilter.available || bookings_workstation.length==0" > <!-- :class="{'strong':user_id === $store.getters.data.user.user_id}" -->
         <div class="table-item seat">{{workstation.name}}</div>
         <!-- Anzeige der Buchungszeiten -->
         <div class="table-item time">
             <div v-if="bookings_workstation.length==0"> <!-- Keine Buchung für die Workstation -->
                 {{time}}
             </div>
-            <div v-else v-for="booking in bookings_workstation" class="pb-2">
+            <div v-else v-for="(booking,index) in bookings_workstation" v-if="!selectedFilter.mybook || user_booking_list[index].user_id==$store.getters.data.user.user_id" class="pb-2">
                {{booking.from.substring(0,5)}} - {{booking.to.substring(0,5)}}
              </div>
         </div>
@@ -14,7 +14,7 @@
         <!-- Anzeige der Person, die den Platz gebucht hat -->
         <div class="table-item name">
             <div v-if="user_booking_list.length==0"></div>
-            <div v-else v-for="user in user_booking_list" class="pb-2">
+            <div v-else v-for="user in user_booking_list" v-if="!selectedFilter.mybook || user.user_id==$store.getters.data.user.user_id" class="pb-2">
                 <router-link v-if="user.user_id==$store.getters.data.user.user_id" :to="'/profile'">{{user.firstName}}</router-link> <!-- Weiterleitung zum eigenen Profil -->
                 <router-link v-else :to="'/team/'+user.user_id">{{user.firstName}} {{user.lastName.substring(0,1)}}.</router-link> <!-- Weiterleitung zum Profil des Teammitglieds -->
             </div>
@@ -59,7 +59,7 @@ import EditTool from "./EditTool";
 export default {
     name: "CalendarBookingListItem",
     components: {EditTool, Modal},
-    props: ['workstation', 'bookings', 'users', 'date'],
+    props: ['workstation', 'bookings', 'users', 'date', 'selectedFilter'],
     data() {
         return {
             time: "-",

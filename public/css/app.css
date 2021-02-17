@@ -14684,6 +14684,12 @@ input[type=color].form-control:disabled {
   font-size: medium;
 }
 
+.no-location-message {
+  font-weight: bolder;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
 .coba-calendar-sidebar-icon {
   position: fixed;
   top: 30px;
