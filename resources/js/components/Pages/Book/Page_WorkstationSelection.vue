@@ -27,6 +27,7 @@
                 <template v-for="workstation in workstations"  >
                     <div v-if="! workstation.isFavorite" class="seat-container">
                     <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                        <doughnut 
                         <b-icon icon="plus" font-scale="2"></b-icon>
                     </router-link>
                     <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
