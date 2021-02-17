@@ -34,11 +34,10 @@
                 <b-icon icon="plus"></b-icon>
             </router-link>
         </div>
+        <div v-else-if="is_one_booking_from_user" class="table-item icon" style="overflow: inherit">
+            <edit-tool :openDD="dropDown.open" :booking="booking_from_user" :colorBack="this.colorBack" @modal-close-event="toggleDropDown(booking_from_user)" @modal-delete-event="delBookingfkn()"> </edit-tool>
+        </div>
         <div v-else class="table-item icon">
-            <div v-if="is_one_booking_from_user" style="position: absolute; bottom: 5px; right: 12px">
-                <edit-tool :openDD="dropDown.open" :booking="booking_from_user" :colorBack="this.colorBack" @modal-close-event="toggleDropDown(booking_from_user)" @modal-delete-event="delBookingfkn()"> </edit-tool>
-            </div>
-            <div v-else >
                 <router-link class="coba-utilization-indicator"
                              :class="{'coba-utilization-indicator-red':color==='red',
                                 'coba-utilization-indicator-green':color==='green',
@@ -48,7 +47,6 @@
                              :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
                     <b-icon icon="plus"></b-icon>
                 </router-link>
-            </div>
         </div>
     </div>
 </template>
