@@ -7,10 +7,16 @@
             <div :class="{'coba-utilization-indicator':true, 'coba-utilization-indicator-arrow-prev':true, 'coba-utilization-indicator-big':true, 'coba-utilization-indicator-disabled':page===0}" @click="prevPage">➤</div>
             <!-- the days as coloured circles -->
             <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected-'+day.color:'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
-                @click="selectDate(day)">{{day.day.substring(0,1)}}
+                @click="selectDate(day)">
+                <span v-if="amountOfBookings(day)>0" style="position: relative; left: 30%;">{{day.day.substring(0,1)}}</span>
+                <span v-else>{{day.day.substring(0,1)}}</span>
                 <!-- a check-sign if the user has already booked a seat for this date -->
 
-                <b-icon v-if="amountOfBookings(day)>0" icon="check-circle"></b-icon> <!-- class="coba-check-circle coba-button-very-small coba-button-round" -->
+                <b-iconstack v-if="amountOfBookings(day)>0" font-scale="1.5" shift-h="4" shift-v="-10">
+                    <b-icon stacked icon="circle-fill" style="color:#EBEBEB"></b-icon>
+                    <b-icon stacked icon="check" style="color:#2C2C2C"></b-icon>
+                    <b-icon stacked icon="circle" style="color:#2C2C2C"></b-icon>
+                </b-iconstack>
 
             </div>
             <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" :class="{'coba-utilization-indicator-disabled':page===2}" @click="nextPage">➤</div>
