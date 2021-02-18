@@ -3,12 +3,12 @@
         <div v-if="dropDown.open" class="coba-editing-wrapper" @click.self="toggleDropDown()"></div>
         <div class="coba-dropdown-container" @click="toggleDropDown()">
             <!-- Pencil Icon inside the trigger box -> will have a white background when drop down opens-->
-            <div :class="{'position-home': colorBack==='white','white-background':dropDown.open&&colorBack==='white','gray-background':dropDown.open&&colorBack==='gray'}">
+            <div :class="{'white-background':dropDown.open&&colorBack==='white','gray-background':dropDown.open&&colorBack==='gray'}">
                 <b-icon icon="pencil" class="m-2" :class="{'margin-bottom-30': colorBack==='white'}" font-scale="1"></b-icon>
             </div>
             <!-- Drop Down start -->
             <div v-if="dropDown.open" >
-                <div class="coba-dropdown-content" :class="{'white-background':dropDown.open&&colorBack==='white','gray-background dropdown-calender':dropDown.open&&colorBack==='gray'}">
+                <div class="coba-dropdown-content" :class="{'white-background':dropDown.open&&colorBack==='white','gray-background':dropDown.open&&colorBack==='gray'}">
                     <ul class="coba-list-nobullets" style="margin-bottom: 0px">
                         <li> <router-link :to="'/booking/edit/'+this.booking.id" style="background-color:rgba(255,255,255,0);">Bearbeiten</router-link> </li>
                         <li class="last"> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal()">Löschen</button> </li>
@@ -112,6 +112,32 @@ export default {
     position: fixed;
     display: flex;
 }
+.coba-dropdown-wrapper{
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display: flex;
+}
+.coba-dropdown-container {
+    position: relative;
+}
+.coba-dropdown-content {
+    position: absolute;
+    //display: flex;
+    bottom: -60px;
+    right: 0px;
+    //padding-right: 10px;
+    //width: -webkit-fit-content;
+    //width: -moz-fit-content;
+    width: fit-content;
+    z-index: 1;
+    padding: 7px 10px;
+    text-align: left;
+    border-radius: 10px;
+}
+
 .white-background{
     background-color: white;
     border-top-right-radius: 10px;
@@ -121,17 +147,5 @@ export default {
     background-color: #EBEBEB;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-}
-.position-home{
-    position: absolute;
-    bottom: -10px;
-    right: 10px;
-}
-.margin-bottom-30{
-    margin-bottom: 30px !important;
-}
-.dropdown-calender{
-    bottom: -60px;
-    right: 0px;
 }
 </style>
