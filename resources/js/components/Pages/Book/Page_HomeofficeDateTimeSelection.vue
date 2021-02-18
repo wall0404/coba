@@ -33,7 +33,7 @@ export default {
             days: [],
             bookings: [],
             workstation: {
-                name: "Homeoffice",
+                name: "Remote Work",
                 id: null,
                 location: {},
             },

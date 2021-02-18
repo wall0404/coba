@@ -13,7 +13,7 @@
                     </router-link>
                 </li>
                 <div style="position: relative;">
-                    <router-link class="coba-button coba-button-accent coba-button-big coba-button-no-border mt-3" :to="'/booking/new/homeoffice/'"> Remote Work</router-link>
+                    <router-link class="coba-button coba-button-accent coba-button-big coba-button-no-border mt-3" :to="'/booking/new/remotework/'"> Remote Work</router-link>
                     <router-link class="coba-button coba-button-big coba-button-no-border button-on-top mt-3" :to="'/booking/new/fastbooking/'+null">
                         <b-icon icon="skip-forward-fill" font-scale="1.5"></b-icon>
                     </router-link>
