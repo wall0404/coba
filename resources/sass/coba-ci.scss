@@ -1,9 +1,11 @@
-
+html, body, #app, #content {
+    height: 100%;
+}
 
 
 /* NAVBAR */
 .coba-navbar {
-    background-color: #505050;
+    background-color: $coba-petrol;
     height: $navbar-height;
     position: fixed;
     bottom: 0;
@@ -15,14 +17,16 @@
 
 
     .router-link-active {
-        color: yellow;
+        color: $coba-yellow;
         text-decoration: none;
     }
 }
 
 .coba-page {
     padding-bottom: $navbar-height;
-    height: 100%;
+    min-height: calc( 100% + #{$navbar-height} );
+
+
 /*    display: flex;
     flex-direction: row;*/
     &.coba-page-no-header {
@@ -108,7 +112,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: $coba-dark-gray;
+    background-color: $coba-petrol;
     color: white;
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
@@ -124,7 +128,7 @@
     &.coba-header-square {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        height: 166px;
+        height: 130px;
         justify-content: flex-start;
         align-items: flex-end;
 
@@ -137,7 +141,8 @@
 .coba-homescreen {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
+    min-height: 100%;
 
     .coba-header {
         height: 100px;
@@ -281,26 +286,35 @@
 
 /* DROP DOWN Styles */
 
+
+.coba-dropdown-wrapper{
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    //z-index: 2;
+    position: fixed;
+    display: flex;
+}
+
 .coba-dropdown-container {
-    text-align: right;
-}
-
-.coba-dropdown-container .coba-dropdown-wrapper {
-    position: absolute;
-    bottom: -30px;
-    right: 0px;
-    padding-right: 10px;
-    //width: -webkit-fit-content;
-    //width: -moz-fit-content;
-    width: fit-content;
-    z-index: 1;
-}
-
-.coba-dropdown-container .coba-dropdown-wrapper .coba-dropdown-content {
-    background-color: #fff;
-    padding: 7px 10px;
-    text-align: left;
-    border-radius: 10px;
+    .coba-dropdown-content {
+        text-align: right;
+        position: absolute;
+        //display: flex;
+        bottom: -48px;
+        right: 10px;
+        padding-right: 10px;
+        //width: -webkit-fit-content;
+        //width: -moz-fit-content;
+        width: fit-content;
+        z-index: 1;
+        background-color: white;
+        background-color: #fff;
+        padding: 7px 10px;
+        text-align: left;
+        border-radius: 10px;
+    }
 }
 
 
@@ -448,7 +462,7 @@
 .coba-modal-mask {
     background-color: rgba(0,0,0,0.5);
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     display: flex;
     top: 0;
     left: 0;

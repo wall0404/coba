@@ -21,7 +21,7 @@ class ICALController extends Controller
         if(!isset($iCalAssignment))
             return response()->json(['error'=>ParentController::$notFoundText], ParentController::$notFoundCode);
 
-        $bookings = Booking::where('user_id', $iCalAssignment->user_id)->where('date', '>', Carbon::today())->orderBy('date')->get();
+        $bookings = Booking::where('user_id', $iCalAssignment->user_id)->orderBy('date')->get();
 
 
 

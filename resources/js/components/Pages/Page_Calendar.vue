@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
     .page {
-        height: 100vh;
+        min-height: 100%;
         display: flex;
         flex-direction: column;
     }

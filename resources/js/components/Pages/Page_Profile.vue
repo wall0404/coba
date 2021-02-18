@@ -109,7 +109,7 @@ export default {
     opacity: 0.8;
 }
 .user-data-templ {
-    box-shadow: inset 5px 25px 70px -15px #FFC931;
+    box-shadow: inset 5px 25px 70px -15px #FEEF00;
     display: flex;
     margin-bottom: 20px;
     text-align: center;

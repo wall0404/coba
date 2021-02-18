@@ -33,7 +33,7 @@ export default {
     data() {
         return {
             exclude: [
-                "Home", "Login", "SignUp", "Logout"
+                "Home", "Login", "SignUp", "Logout","Calendar","Team","Profile",
             ],
             whiteBackground: [
                 "Profile", "TeamMember",
@@ -68,6 +68,7 @@ export default {
         top: 20px;
         left: 20px;
         color: white;
+        z-index: 9;
     }
     .invert {
         color: gray !important;
