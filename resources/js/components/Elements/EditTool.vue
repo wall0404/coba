@@ -131,7 +131,7 @@ export default {
     margin-bottom: 30px !important;
 }
 .dropdown-calender{
-    bottom: -44px;
-    right: 35px;
+    bottom: -60px;
+    right: 0px;
 }
 </style>

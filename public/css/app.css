@@ -14678,6 +14678,10 @@ input[type=color].form-control:disabled {
   display: flex;
 }
 
+.coba-dropdown-container {
+  position: relative;
+}
+
 .coba-dropdown-container .coba-dropdown-content {
   position: absolute;
   bottom: -48px;
