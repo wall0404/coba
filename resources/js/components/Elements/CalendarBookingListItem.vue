@@ -6,7 +6,7 @@
             <div v-if="bookings_workstation.length==0"> <!-- Keine Buchung für die Workstation -->
                 {{time}}
             </div>
-            <div v-else v-for="booking in bookings_workstation" class="pb-2">
+            <div v-else v-for="booking in bookings_workstation" >
                {{booking.from.substring(0,5)}} - {{booking.to.substring(0,5)}}
              </div>
         </div>
@@ -14,7 +14,7 @@
         <!-- Anzeige der Person, die den Platz gebucht hat -->
         <div class="table-item name">
             <div v-if="user_booking_list.length==0"></div>
-            <div v-else v-for="user in user_booking_list" class="pb-2">
+            <div v-else v-for="user in user_booking_list" >
                 <router-link v-if="user.user_id==$store.getters.data.user.user_id" :to="'/profile'">{{user.firstName}}</router-link> <!-- Weiterleitung zum eigenen Profil -->
                 <router-link v-else :to="'/team/'+user.user_id">{{user.firstName}} {{user.lastName.substring(0,1)}}.</router-link> <!-- Weiterleitung zum Profil des Teammitglieds -->
             </div>
@@ -174,6 +174,7 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    justify-content: center;
 }
 .seat {
     width: 13%;
@@ -182,10 +183,10 @@ export default {
     width: 35%;
 }
 .name {
-    width: 25%;
+    width: 26%;
 }
 .icon {
-    width: 10%;
+    width: 13%;
     justify-content: center;
     align-items: center;
 }
