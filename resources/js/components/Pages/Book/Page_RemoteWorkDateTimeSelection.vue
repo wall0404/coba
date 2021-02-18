@@ -23,7 +23,7 @@ import DayPicker from "../../Elements/DayPicker";
 import TimePicker from "../../Elements/TimePicker";
 import Spinner from "../../Global/Spinner";
 export default {
-    name: "Page_HomeofficeDateTimeSelection.vue",
+    name: "Page_RemoteWorkDateTimeSelection.vue",
     components: {TimePicker, DayPicker, Spinner},
     props: ['preSelectedDays'],
     data(){
@@ -42,7 +42,7 @@ export default {
     created() {
         if(typeof this.preSelectedDays === "undefined") //wenn ein Tag vorher schon irgendwo angegeben wurde, wurde es in dieser Variable zwischengespeichert
             try {
-                this.preSelectedDays = this.$store.getters.data.autoSave["homeoffice"];
+                this.preSelectedDays = this.$store.getters.data.autoSave["remotework"];
             }
             catch (e) {
                 this.preSelectedDays = []
@@ -109,14 +109,14 @@ export default {
             }
             //save changes
             this.$store.commit('autoSaveInstance', {
-                workstation_id: "homeoffice",
+                workstation_id: "remotework",
                 days: this.days
             });
         },
         submit() {
             //save changes
             this.$store.commit('autoSaveInstance', {
-                workstation_id: "homeoffice",
+                workstation_id: "remotework",
                 days: this.days
             });
 
