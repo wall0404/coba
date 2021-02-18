@@ -14588,6 +14588,10 @@ input[type=color].form-control:disabled {
   height: 75px;
 }
 
+.coba-button.coba-button-bigger {
+  height: 85px;
+}
+
 .coba-button.coba-button-very-big {
   height: 100px;
 }
