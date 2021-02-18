@@ -134,7 +134,7 @@ export default {
                 workstation_id: this.$route.params.workstation_id,
                 days: this.days
             });
-
+            console.log(this.days);
             this.$store.commit('clearChanges');
 
             //go to confirmation

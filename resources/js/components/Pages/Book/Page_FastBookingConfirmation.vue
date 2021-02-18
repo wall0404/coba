@@ -3,44 +3,37 @@
         <div class="coba-container coba-flex coba-header">
             <span class="coba-page-headline">Bestätigung</span>
         </div>
-        <div v-if="!error">
+        <div v-if="!load">
             <div class="coba-container">
                 <div class="coba-headline">Buchungsübersicht</div>
                 <div style="text-align: center"> Bist du einverstanden mit dieser Buchung?</div>
             </div>
             <div class="coba-container">
-                <booking :booking="booking" ></booking>
+                <booking :booking="booking" :color="booking.error"></booking>
             </div>
             <div class="coba-container">
                 <button class="coba-button coba-button-accent" @click="submit">Bestätigen</button>
                 <router-link class="coba-button" to="/"> Abbrechen</router-link>
             </div>
         </div>
-        <div v-else class="coba-container">
-            <div class="coba-text-danger">{{error}}</div>
-        </div>
+        <spinner v-else></spinner>
     </div>
 </template>
 
 <script>
 import Booking from "../../ListItems/Booking";
+import Spinner from "../../Global/Spinner";
 export default {
     props:[],
     name: "Page_FastBookingConfirmation.vue",
-    components: {Booking},
+    components: {Spinner, Booking},
     data() {
         return {
             load: false,
             error: false,
             chosenDate: "",
             location_id: this.$route.params.location_id,
-            location_name: "",
             booking: {
-                date: "",
-                from: "09:00",
-                to: "17:00",
-                user_id:"",
-                workstation_id: "",
             },
         }
     },
@@ -58,8 +51,9 @@ export default {
             if(this.$store.getters.locations[i].id == this.location_id)
                 this.location_name = this.$store.getters.locations[i].name
         }*/
+
         if(typeof this.bookings === 'undefined') {
-            //fetch Data
+            console.log(new Date());
             this.fetchData();
         }
         else
@@ -72,18 +66,35 @@ export default {
     },
     methods: {
         fetchData(){
+            this.load = true;
             fetch( '/api/booking/suggestion?date='+this.chosenDate+'&location_id='+this.location_id, {
-            method: 'GET',
-            headers: {
-                //'Accept: application/json',
-                'content-type': 'application/json',
-                'Authorization' : 'Bearer '+localStorage.token
-            }
-        })
+                    method: 'GET',
+                    headers: {
+                        //'Accept: application/json',
+                        'content-type': 'application/json',
+                        'Authorization' : 'Bearer '+localStorage.token
+                    }
+                })
                 .then(res => res.json())
                 .then(res => {
-                    if(res.success) {
-                        this.booking=res.success;
+                    if(res != null) {
+                        //this.formatBookings(res);
+                        this.booking=res;
+                        /*this.day=res;
+                        this.booking.date.toISOString();
+                        this.booking.date = new Date(this.booking.date);
+                        this.booking.workstation.id = this.booking.workstation_id;
+                        console.log(this.booking.date);
+                        console.log(this.day);*/
+                        if(this.booking.workstation_id==null){
+                            this.booking.workstation = {
+                                name: "Remote Work",
+                                location:{
+
+                                }
+                            }
+                            this.booking.error=true;
+                        }
                         this.load = false;
                     }
                     else {
@@ -95,20 +106,13 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
-        },/*
-        formatBookings(data) {
-            this.booking.user_id= data.user_id;
-            this.booking.workstation_id =data.workstation_id;
-            this.booking.date = data.date;
-            this.booking.from = data.from;
-            this.booking.to = data.from;
-        },*/
+        },
 
         submit() {
             this.$router.push({
                 name: 'BookingCheckout',
                 params: {
-                    bookings: this.bookings,
+                    bookings: [this.booking],
                     calenderBool: this.calenderBool
                 }
             })

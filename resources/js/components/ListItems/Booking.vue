@@ -4,7 +4,8 @@
             <div>{{booking.date.toLocaleDateString('de-DE', $date_options_short)}}</div>
             <div>{{booking.from}} - {{booking.to}}</div>
         </div>
-        <div v-if="booking.workstation">{{booking.workstation.location.name}} - {{booking.workstation.name}}</div>
+        <div v-if="booking.workstation">
+            <span >{{booking.workstation.location.name}} - </span>{{booking.workstation.name}}</div>
         <div v-if="color">
             <div v-if="typeof booking.error === 'undefined'">
                 Buchung war erfolgreich

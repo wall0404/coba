@@ -228,7 +228,7 @@ class BookingController extends ParentController
         $workstationsArray = $workstations->toArray();
         usort($workstationsArray, function($a, $b)
         {
-            return $a['weight']<$b['weight'];
+            return $a['weight']<$b['weight']?1:-1;
         });
 
 
@@ -236,6 +236,7 @@ class BookingController extends ParentController
             if(Booking::where('workstation_id', $workstation['id'])->where('date', $input['date'])->count() < 1)
                 return response()->json([
                     'workstation_id' => $workstation['id'],
+                    'workstation' => Workstation::find($workstation['id']),
                     'date' => $input['date'],
                     'from' => '09:00',
                     'to' => '17:00',
