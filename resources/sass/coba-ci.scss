@@ -93,7 +93,13 @@
     }
 }
 
-
+/* Verfügbarkeit helpers */
+.coba-button-chart{
+    height: 65px !important;
+    width: 65px !important;
+    position: absolute;
+    margin-top: 22.5px !important;
+}
 
 /* HEADER */
 .coba-header {
@@ -284,8 +290,8 @@
     bottom: -30px;
     right: 0px;
     padding-right: 10px;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
+    //width: -webkit-fit-content;
+    //width: -moz-fit-content;
     width: fit-content;
     z-index: 1;
 }
