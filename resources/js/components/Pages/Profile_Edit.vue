@@ -92,6 +92,8 @@
             </div>
         </div>
 
+        <div v-for="user in this.testArray">{{ user.firstName }}</div>
+
 
         <!-- password confirmation modal -->
         <modal :show-modal="showConfirmationModal" @modal-close-event="closeConfModal">
@@ -148,11 +150,34 @@ export default {
             selectedLocations: [],
             workLocations: [] = this.$store.getters.data.locations ,
             workstations: [] ,
+
+            testArray:[] ,
         }
 
     },
+    created() {
+        this.test() ;
+    },
 
     methods:{
+        test(){
+            fetch('/api/user_bookings' ,{
+                method: 'GET' ,
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            }).then(response => response.json())
+                .then(response => {
+                    if (response.success) {
+                        this.testArray = response.success;
+                        console.log(this.testArray) ;
+                    }
+                }).catch(error => {
+                console.log(error);
+                this.load = false;
+            })
+        },
         selectLocation(location_id) {
             if ( this.selectedLocations.length === 0) {
                 this.selectedLocations.push(location_id)

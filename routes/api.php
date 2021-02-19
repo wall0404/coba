@@ -32,6 +32,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('user', 'App\Http\Controllers\UserController@getList');
     Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
     Route::get('my_favorites', 'App\Http\Controllers\UserController@myFavorites');
+    Route::get('user_bookings', 'App\Http\Controllers\UserController@UsersAndBookings');
 
     /* BestBuddies */
     Route::post( 'buddy' , 'App\Http\Controllers\BestBuddiesController@addBuddy') ;
