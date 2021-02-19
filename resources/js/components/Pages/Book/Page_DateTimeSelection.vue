@@ -11,7 +11,7 @@
                 <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
             </div>
             <div class="coba-container">
-                <button class="coba-button" @click="submit" :disabled="days.length===0">Buchen</button>
+                <button class="coba-button" :class="{'coba-button-accent':days.length>0, '':days.length===0}" @click="submit" :disabled="days.length===0">Buchen</button>
             </div>
         </div>
         <spinner v-else></spinner>
@@ -25,7 +25,7 @@ import TimePicker from "../../Elements/TimePicker";
 
 export default {
     name: "Page_DateTimeSelection",
-    props: ["bookings", 'preSelectedDays'],
+    props: ["bookings", 'preSelectedDays', 'calenderBool'],
     components: {TimePicker, DayPicker, Spinner},
     data() {
         return {
@@ -89,7 +89,7 @@ export default {
             //For every Booking
             for (let k = 0; k<data.length; k++) {
                 try {
-                    this.bookings[data[k].date].push(data[k])
+                    this.bookings[data[k].date].push(data[k]) //sortiert die Ergebnisse aus dem res.success in bookings, abhängig vom Datum
                 }
                 catch (e) {
                     this.bookings[data[k].date] = []
@@ -135,13 +135,15 @@ export default {
                 days: this.days
             });
 
+            this.$store.commit('clearChanges');
 
             //go to confirmation
             let days = this.days;
             this.$router.push({
                 name: 'BookingConfirmation',
                 params: {
-                    bookings: this.days
+                    bookings: this.days,
+                    calenderBool: this.calenderBool
                 }
             })
         }

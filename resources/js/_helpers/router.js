@@ -28,6 +28,8 @@ import Page_SignUp from "../components/Pages/Auth/Page_SignUp";
 import Page_TeamMember from "../components/Pages/Page_TeamMember";
 import Page_Inbox from "../components/Pages/Page_Inbox";
 import Page_Settings from "../components/Pages/Book/Page_Settings";
+import Page_ChangeBooking from "../components/Pages/Book/Page_ChangeBooking";
+import Page_HomeofficeDateTimeSelection from "../components/Pages/Book/Page_HomeofficeDateTimeSelection";
 
 const routes = [
     { path: '/login', name: "Login", component: Page_Login },
@@ -35,19 +37,21 @@ const routes = [
     { path: '/signup', name: "SignUp", component: Page_SignUp },
     { path: '/', name: "Home", component: Page_Home, meta:{auth:true} },
     { path: '/home', name: "Home", component: Page_Home, meta:{auth:true} },
-    { path:'/settings', name: "Settings", component: Page_Settings, meta:{auth:true} },
-    { path:'/inbox', name: "Inbox", component: Page_Inbox, meta:{auth:true} },
+    { path: '/settings', name: "Settings", component: Page_Settings, meta:{auth:true} },
+    { path: '/inbox', name: "Inbox", component: Page_Inbox, meta:{auth:true} },
     { path: '/team', name: "Team", component: Page_Team, meta:{auth:true} },
     { path: '/team/:TeamMember_ID', name: "TeamMember", component: Page_TeamMember, meta:{auth:true} },
     { path: '/calendar', name: "Calendar", component: Page_Calendar, meta:{auth:true} },
     { path: '/profile', name: "Profile", component: Page_Profile, meta:{auth:true} },
     { path: '/booking/:id', component: Page_Booking, meta:{auth:true} },
     { path: '/booking/new/location', component: Page_LocationSelection, meta:{auth:true} },
+    { path: '/booking/new/homeoffice', component: Page_HomeofficeDateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/workstation/:location_id', component: Page_WorkstationSelection, meta:{auth:true} },
     { path: '/booking/new/date/:workstation_id', name: "DateTimeSelection", props: true, component: Page_DateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
     { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
     { path: '/profile/settings', component: Profile_Edit, meta:{auth:true} },
+    { path: '/booking/edit/:booking_id', name:"ChangeBooking", props: true, component: Page_ChangeBooking, meta:{auth:true} },
     { path: '*', component: error404},
 ]
 

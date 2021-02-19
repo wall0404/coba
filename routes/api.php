@@ -19,7 +19,7 @@ Route::post('signup', 'App\Http\Controllers\AuthController@signup');
 Route::get('logout', 'App\Http\Controllers\AuthController@logout');
 Route::get('whoami', 'App\Http\Controllers\UserController@getInfo');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::post('resetPassword', 'App\Http\Controllers\AuthController@resetPassword');
 
     /* Booking */
@@ -31,10 +31,30 @@ Route::middleware('auth')->group(function () {
     /* User */
     Route::get('user', 'App\Http\Controllers\UserController@getList');
     Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
+    Route::get('my_favorites', 'App\Http\Controllers\UserController@myFavorites');
+
+    /* BestBuddies */
+    Route::post( 'buddy' , 'App\Http\Controllers\BestBuddiesController@addBuddy') ;
+    Route::delete( 'buddy' , 'App\Http\Controllers\BestBuddiesController@removeBuddy') ;
 
     /* Workstation */
     Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');
 
+    /* FavoriteSeats */
+    Route::post('workstation/favorite', 'App\Http\Controllers\FavoriteSeatController@addFavoriteSeat');
+    Route::delete('workstation/favorite', 'App\Http\Controllers\FavoriteSeatController@removeFavoriteSeat');
+    Route::post('getInfo' , 'App\Http\Controllers\FavoriteSeatController@getInfo') ;
+
+
+    /* ICAL */
+    Route::prefix('ical')->group(function () {
+        Route::get('/', 'App\Http\Controllers\ICALController@get');
+        Route::post('/', 'App\Http\Controllers\ICALController@create');
+        Route::delete('/', 'App\Http\Controllers\ICALController@delete');
+    });
+});
+
+Route::middleware('auth')->group(function () {
     /* Avatar */
     Route::prefix('/profile_picture')->group(function () {
         Route::get('/{id}', 'App\Http\Controllers\ProfilePictureController@getPic');
@@ -43,6 +63,8 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-
 /* Location */
 Route::get('location', 'App\Http\Controllers\LocationController@getList');
+
+/* iCAL Route */
+Route::get('calendar/{token}', 'App\Http\Controllers\ICALController@getICal')->name('ical');

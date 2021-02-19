@@ -24,7 +24,7 @@
 import Booking from "../../ListItems/Booking";
 export default {
     components: {Booking},
-    props: ['bookings'],
+    props: ['bookings', 'calenderBool'],
     name: "Page_BookingConfirmation",
     data() {
         return {
@@ -49,13 +49,15 @@ export default {
             this.bookings[booking].from = (this.bookings[booking].time[0]<10?"0":"")+Math.round(this.bookings[booking].time[0]-0.1)+":"+(this.bookings[booking].time[0]%1===0?'00':'30');
             this.bookings[booking].to = (this.bookings[booking].time[1]<10?"0":"")+Math.round(this.bookings[booking].time[1]-0.1)+":"+(this.bookings[booking].time[1]%1===0?'00':'30');
         }
+        this.bookings.sort((a, b) => (a.date > b.date) ? 1 : -1);
     },
     methods: {
         submit() {
             this.$router.push({
                 name: 'BookingCheckout',
                 params: {
-                    bookings: this.bookings
+                    bookings: this.bookings,
+                    calenderBool: this.calenderBool
                 }
             })
         }

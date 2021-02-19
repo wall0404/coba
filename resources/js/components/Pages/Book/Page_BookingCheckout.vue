@@ -11,11 +11,12 @@
                     <div class="coba-container coba-no-top-padding" v-if="validation_error.length === 0"> <!-- Anzeige der erfolgreichen Buchung -->
                         <div class="coba-container coba-no-top-padding coba-flex-column"> <!-- Text -->
                             <span class="coba-text-strong coba-text-very-bigger coba-text-center">Deine Buchung war erfolgreich</span>
-                            <b-icon class="mt-3 mb-4" icon="hand-thumbs-up" font-scale="3" style="color:#FFC931"></b-icon>
+                            <b-icon class="mt-3 mb-4" icon="hand-thumbs-up" font-scale="3" style="color:#FEEF00"></b-icon>
                         </div>
                         <div class="coba-container"> <!-- Buttons -->
                             <router-link to="/home"><button class="coba-button coba-button-white coba-button-yellow-border">Zur Startseite</button></router-link>
-                            <router-link to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
+                            <router-link v-if="calenderBool" to="/calendar"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
+                            <router-link v-else to="/booking/new/location"><button class="coba-button coba-button-no-border coba-button-accent mt-4">Weitere Buchung</button></router-link>
                         </div>
                     </div>
                     <div v-else> <!-- Anzeige der fehlgeschlagenen Buchung -->
@@ -38,7 +39,7 @@ import Booking from "../../ListItems/Booking";
 import {router} from "../../../_helpers/router";
 export default {
     components: {Booking, Spinner},
-    props: ['bookings'],
+    props: ['bookings', 'calenderBool'],
     name: "Page_BookingCheckout",
     data() {
         return {
@@ -114,7 +115,7 @@ export default {
 
                     //clear changes
                     this.$store.commit('autoSaveInstance', {
-                        workstation_id: this.bookings[0].workstation.id,
+                        workstation_id: this.bookings[0].workstation_id === null? "homeoffice":this.bookings[0].workstation.id,
                         days: []
                     })
                 })

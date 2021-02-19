@@ -11,7 +11,8 @@
             </template>
             <template v-slot:body>
                 <div class="coba-modal-body coba-text">
-                    Sind sie sich sicher, dass sie zurückkehren möchten?
+                    Bist du dir sicher, dass du zurückkehren möchtest?
+                    <!-- Sind sie sich sicher, dass sie zurückkehren möchten? -->
                 </div>
             </template>
             <template v-slot:footer>
@@ -32,12 +33,12 @@ export default {
     data() {
         return {
             exclude: [
-                "Home", "Login", "SignUp", "Logout"
+                "Home", "Login", "SignUp", "Logout","Calendar","Team","Profile",
             ],
             whiteBackground: [
                 "Profile", "TeamMember",
             ],
-            checkTwice: [
+            doNotCheckTwice: [
 
             ],
             modal_open: false,
@@ -45,7 +46,7 @@ export default {
     },
     methods: {
         triggerBack(force) {
-            if (!force && (this.checkTwice.find(name => name === this.$route.name) || this.$store.getters.changes)) {
+            if (!force && (this.doNotCheckTwice.find(name => name === this.$route.name) || this.$store.getters.changes)) {
                 this.modal_open = true;
                 this.$store.commit('clearChanges');
             }
@@ -67,6 +68,7 @@ export default {
         top: 20px;
         left: 20px;
         color: white;
+        z-index: 9;
     }
     .invert {
         color: gray !important;

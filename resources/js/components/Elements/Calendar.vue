@@ -2,7 +2,7 @@
     <div class="calendar-container">
         <!--<div @click="nextMonth()">Add</div>-->
         <div class="week-container">
-            <div class="calendar-week header">
+            <div class="calendar-week header"> <!-- Anzeige der Wochentage -->
                 <div class="calendar-day-of-week"><span>M</span></div>
                 <div class="calendar-day-of-week"><span>D</span></div>
                 <div class="calendar-day-of-week"><span>M</span></div>
@@ -11,8 +11,8 @@
                 <div class="calendar-day-of-week weekend"><span>S</span></div>
                 <div class="calendar-day-of-week weekend"><span>S</span></div>
             </div>
-            <div class="calendar-week" v-for="week in calendar_dates">
-                <div class="calendar-day-of-week" v-for="(day, dayOfWeek) in week" :class="{'booked':my_bookings.find(x => x.date === day.date), 'weekend':(dayOfWeek===5||dayOfWeek===6), 'today':day.date===today.toISOString().slice(0, 10), 'selected':selectedDate===day.date}" @click="selectDate(day.date)">
+            <div class="calendar-week" v-for="week in calendar_dates"> <!-- Anzeiger der Kalenderwochen mit Tagen -->
+                <div class="calendar-day-of-week" v-for="(day, dayOfWeek) in week" :class="{'booked':my_bookings.find(x => x.date === day.date), 'weekend':(dayOfWeek===5||dayOfWeek===6) || day.date<today.toISOString().slice(0, 10),'today':day.date===today.toISOString().slice(0, 10), 'selected':selectedDate===day.date}" @click="selectDate(day.date)"> <!-- Anpassung der einzelnen Tage; Punkt, wenn Buchung für den Tag; Grau, wenn Tag in der Vergangenheit liegt oder Wochenende ist -->
                      <span>{{day.day}}</span>
                 </div>
             </div>
@@ -140,6 +140,7 @@ export default {
         flex-grow: 1;
         display: flex;
         justify-content: space-evenly;
+        font-weight: 650;
     }
     .calendar-day-of-week {
         text-align: center;
@@ -159,12 +160,13 @@ export default {
     }
     .calendar-day-of-week.weekend {
         color: gray;
+        font-weight: 400;
     }
     .calendar-day-of-week.selected {
-        background-color: orange;
+        background-color:#FEEF00;
     }
     .calendar-day-of-week.today {
-        border-color: orange;
+        border-color: #FEEF00;
     }
 
     .header .calendar-day-of-week {

@@ -1,7 +1,8 @@
 <template>
     <div>
-        <div class="coba-container coba-flex coba-header mb-4">
-            <span class="coba-page-headline">Willkommen zurück</span>
+        <div class="coba-container coba-flex coba-header mb-4" style="flex-direction: column">
+            <img src="/img/Coba_Logo.png" style="text-align: center; margin-bottom: 20px" height="70px">
+            <span class="coba-page-headline">Willkommen</span>
         </div>
         <div class="coba-container">
             <form class="coba-form">
@@ -66,6 +67,7 @@ export default {
                     if(res.success) {
                         localStorage.token = res.success.token;
                         this.$store.commit('refreshUser');
+                        this.$store.commit('getData'); //to get favorite seat info
                         this.$router.push('/home')
                     }
                     else {

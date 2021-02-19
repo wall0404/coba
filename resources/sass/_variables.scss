@@ -1,4 +1,5 @@
-$coba-yellow: #FFC931;
+$coba-yellow: #FEEF00;
+$coba-petrol: #00434D;
 $coba-danger-red: #861F08;
 $coba-success-green: #09431e;
 $coba-text-color: #2C2C2C;
@@ -23,3 +24,10 @@ $small: 25px;
 $medium: 50px;
 $big: 100px;
 $very-big: 200px;
+
+/* BOOTSTRAP */
+
+$theme-colors: (
+    "primary": $coba-yellow,
+    "danger": $coba-danger-red
+);

@@ -1,14 +1,16 @@
 <template>
     <div class="coba-page coba-homescreen ">
-        <div class="user-container mb-5 mt-4">
-            <div><img class="coba-border-round coba-border-yellow coba-shadow p-1" src="https://icons-for-free.com/iconfiles/png/512/business+costume+male+man+office+user+icon-1320196264882354682.png" alt="user"/> </div>
-        </div>
         <template v-for="user in users">
+        <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
+            <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user) : addBuddy(user)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FEEF00" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
+            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
+        </div>
             <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
                 <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
                 <p   class="mb-1">{{user.email}}</p>
-                <div v-for="booking in bookings">
-                    <p v-if="booking.date === today_date && today_hours < booking.to  " class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
+                <div v-for="booking in bookings"> <!--todays bookings -->
+                    <p v-if="booking.date === today_date && today_hours < booking.to  && booking.workstation !== null" class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
+                    <p v-else-if="booking.date === today_date && today_hours < booking.to" class="user-data-email text-info">heute im Remote Work</p>
                   <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p> -->
                 </div>
                 <br>
@@ -20,7 +22,8 @@
         <div class="coba-container coba-full-width coba-footer-container pb-5" style="min-height: 300px">
             <ul class="coba-list" v-if="!load">
                 <li v-for="booking in bookings" :key="booking.id">
-                    {{booking.date}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from}} - {{booking.to}}
+                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
+                    <span v-else>{{makeDateToDateString(booking.date)}}, <br>Remote Work, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
                 </li>
             </ul>
             <spinner v-else></spinner>
@@ -40,7 +43,9 @@ export default {
             error: false ,
             users: [],
             id: null ,
+            userId: null ,
             bookings:[],
+            allBookings:[],
             today_date: new Date().toISOString().slice(0, 10),
             today_hours: new Date().toISOString().slice(11,19),  // ! standard: UMT+0
         }
@@ -75,6 +80,10 @@ export default {
 
         },
 
+        makeDateToDateString(dateStr){
+            return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
+        },
+
         getTeamMemberBookings(){
             this.load = true ;
             fetch('/api/user/' +this.id +'/bookings?order_by=date&filter[date][min]='+this.today_date ,{
@@ -98,6 +107,70 @@ export default {
                     console.log(error);
                     this.load = false;
                 })
+        },
+        // will be used for checking seats
+        getAllBookings(){
+            this.load = true ;
+            fetch('/api/booking/?filter[date][min]=' +this.today_date  , {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            }).then(response => response.json())
+                .then(response => {
+                    if (response.success) {
+                        this.allBookings = response.success;
+                        this.load = false;
+                    } else {
+                        this.error = true;
+                        this.load = false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.load = false;
+                })
+        },
+        addBuddy( user ){
+          fetch('/api/buddy/', {
+              method: 'POST',
+              body: JSON.stringify({
+                  id: user.user_id,
+              }),
+              headers: {
+                  'content-type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.token
+              }
+          })  .then( res => res.json())
+              .then( res => {
+                  if ( res.success){
+                      user.isBuddy = true;
+                  }
+              }).catch(error =>{
+              this.error = error;
+              console.log(error) ;
+          })
+        },
+        removeBuddy(user){
+            fetch('/api/buddy/', {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    id: user.user_id,
+                }),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            })  .then( res => res.json())
+                .then( res => {
+                    if ( res.success){
+                        user.isBuddy = false;
+                    }
+                }).catch(error =>{
+                this.error = error;
+                console.log(error) ;
+            })
         }
 
     },
@@ -105,6 +178,8 @@ export default {
         this.loadUsers();
         this.loadID() ;
         this.getTeamMemberBookings() ;
+        this.getAllBookings() ;
+        this.userId = this.$store.getters.data.user.user_id ;
     }
 
 }
@@ -117,9 +192,12 @@ export default {
     max-width: 100%;
     text-align: center;
 }
-.user-container img {
-    max-width: 50%;
-    max-height: 50%;
+
+/* funktioniert erstaunlich gut */
+.profile-img {
+    width: 12rem ;
+    height: 12rem;
+    object-fit: cover;
 }
 ol{
     display: table;
@@ -127,6 +205,9 @@ ol{
     clear: left ;
     list-style: none;
     padding: 0;
+}
+.user-avatar-shadow{
+    box-shadow: 10px 20px 30px 0 rgba(0, 0, 0, 0.5);
 }
 
 
