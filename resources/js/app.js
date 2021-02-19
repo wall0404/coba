@@ -14,7 +14,7 @@ import VueClipboard from 'vue-clipboard2'
 Vue.use(BootstrapVueIcons);
 Vue.use(BootstrapVue);
 Vue.use(VueRangeSlider);
-Vue.use(VueClipboard)
+Vue.use(VueClipboard);
 
 Vue.prototype.$date_options_long = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 Vue.prototype.$date_options_short = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
