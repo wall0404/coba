@@ -14922,6 +14922,7 @@ body,
   align-items: center;
   border: 1px solid transparent;
   background-color: #EBEBEB;
+  position: relative;
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-selected {
@@ -14985,6 +14986,12 @@ body,
 .coba-utilization-indicator[class*=coba-utilization-indicator-arrow].coba-utilization-indicator-arrow-prev {
   transform: rotate(180deg);
   margin-left: -30px;
+}
+
+.coba-utilization-indicator .check-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 /* TABLE Styles */

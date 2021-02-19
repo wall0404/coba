@@ -507,6 +507,7 @@ html, body, #app, #content {
     align-items: center;
     border: 1px solid transparent;
     background-color: $coba-gray;
+    position: relative;
 
     &.coba-utilization-indicator-selected {
         border: 2px solid $coba-dark-gray;
@@ -560,6 +561,11 @@ html, body, #app, #content {
             transform: rotate(180deg);
             margin-left: -30px;
         }
+    }
+    .check-icon{
+        position: absolute;
+        top: 20px;
+        left: 20px;
     }
 }
 
