@@ -27,16 +27,10 @@ export default {
         }
     },
     created() {
-        this.fetchData();
         this.booked_start = (Number(this.day.booked_start.substr(0,2))+(this.day.booked_start.substr(3,2)==="00"?0:0.5));
         this.booked_end = (Number(this.day.booked_end.substr(0,2))+(this.day.booked_end.substr(3,2)==="00"?0:0.5));
     },
     methods: {
-        fetchData() {
-            this.load = true;
-            let date = new Date();
-            this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
-        },
         slideEnd(value) {
             if(value[0] < this.booked_start && value[1] >= this.booked_start ) {
                 //Buchung beginnt vor anderer Buchung und ragt rein
