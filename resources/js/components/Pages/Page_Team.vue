@@ -7,7 +7,7 @@
           <div class="coba-header adjust-header"  >
               <div ><h2 class="coba-page-headline">Team</h2></div>
               <div class="filter-container coba-flex-space-evenly mt-3">
-                  <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-orange p-2" type="text"  placeholder="Kontakt suchen..">
+                  <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-yellow p-2" type="text"  placeholder="Kontakt suchen..">
               </div>
           </div>
        </div>
@@ -18,7 +18,7 @@
         <spinner v-if="load"></spinner>
         <div v-else class="coba-container coba-smaller" v-for="user in users" >
             <div :style="user.isBuddy ? 'marginTop: -27.6px' : ''">
-            <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; color: #FFC931" font-scale="1.5"  ></b-icon>
+            <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; color: #FEEF00" font-scale="1.5"  ></b-icon>
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
                 <div class="profile-picture"  style="background-color: transparent ">
@@ -37,7 +37,7 @@
                                     </template>
                                 </td>
                                 <td v-else-if="booking.user_id === user.user_id" class="user-data-name small text-info">
-                                    heute im Homeoffice
+                                    heute im Remote Work
                                 </td>
                             </tr>
 

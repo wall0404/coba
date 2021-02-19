@@ -1,22 +1,23 @@
 <template>
     <div class="booking-list-container mt-1">
-        <spinner v-if="loadUsers || loadBookings"></spinner>
+        <spinner v-if="loadUsers || loadBookings"></spinner> <!-- Ladesymbol während Seite Daten aufruft -->
         <div v-else  class="coba-full-width">
             <div>
                 <div class="section-headline p-2 px-3">Favoriten</div>
                 <div class="booking-list px-3">
                     <span v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)">
-                        <calendar-booking-list-item v-if="workstation.isFavorite" v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date"></calendar-booking-list-item>
+                        <calendar-booking-list-item v-if="workstation.isFavorite" v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date" v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item>
                     </span>
                 </div>
             </div>
             <div v-for="location in $store.getters.locations" v-if="selectedLocations.find(id => id === location.id)">
                 <div class="section-headline p-2 px-3">{{location.name}}</div>
                 <div class="booking-list px-3">
-                    <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date"></calendar-booking-list-item>
+                    <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users"
+                                                :workstation="workstation" :bookings="bookings" :date="date"
+                                                v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item>
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -45,7 +46,8 @@ export default {
     },
     methods: {
         fetchBookingsForDate(date) {
-            this.date = date;
+            if(typeof date !== 'undefined')
+                this.date = date;
             this.loadBookings = true;
             fetch('/api/booking?order_by=date&filter[date][min]='+date+'&filter[date][max]='+date, {
                 method: 'GET',
@@ -108,7 +110,7 @@ export default {
         overflow-x: scroll;
     }
     .section-headline {
-        background-color: orange;
+        background-color: #FEEF00;
         font-weight: bold;
     }
     .booking-list {

@@ -86,7 +86,7 @@
                 <div v-for="workstation in workstations"  class="seat-container">
                     <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="workstation.isFavorite?  deleteFavoriteSeat(workstation) : addFavoriteSeat(workstation )">
                         <div>
-                            <b-icon :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FFC931" ></b-icon>
+                            <b-icon :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FEEF00" ></b-icon>
                         </div>
                     </div>
                     <div class="coba-flex-space-evenly m-0 p-2" >
@@ -102,7 +102,7 @@
         <modal :show-modal="showConfirmationModal" @modal-close-event="closeConfModal">
             <template v-slot:header>
                 <div class="coba-container coba-no-top-padding coba-flex-column">
-                    <b-icon class="mt-3 mb-4" icon="hand-thumbs-up" font-scale="3" style="color:#FFC931"></b-icon>
+                    <b-icon class="mt-3 mb-4" icon="hand-thumbs-up" font-scale="3" style="color:#FEEF00"></b-icon>
                 </div>
             </template>
 
