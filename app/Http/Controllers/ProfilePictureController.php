@@ -54,7 +54,6 @@ class ProfilePictureController extends Controller
             $file = $request->file('profile_pic');
             $mime_type =  $file->getClientMimeType();
 
-
             if($mime_type == 'image/png') {
                 $path = $file->store($this->path);
 
@@ -67,8 +66,9 @@ class ProfilePictureController extends Controller
                 imagefill($bg, 0, 0, imagecolorallocate($bg, 255, 255, 255));
                 imagealphablending($bg, TRUE);
                 imagecopy($bg, $image, 0, 0, 0, 0, imagesx($image), imagesy($image));
+                $bg = imagescale($bg, 500 , -1 , IMG_BILINEAR_FIXED) ;
                 imagedestroy($image);
-                $quality = 50; // 0 = worst / smaller file, 100 = better / bigger file
+                $quality = 75; // 0 = worst / smaller file, 100 = better / bigger file
                 imagejpeg($bg, storage_path($path_new), $quality);
                 imagedestroy($bg);
 
@@ -76,9 +76,15 @@ class ProfilePictureController extends Controller
                 return response()->json(['success'=>'true'], 200);
             }
             elseif($mime_type == 'image/jpeg') {
-                $file->storeAs(
-                    $this->path, $id.$this->extension
-                );
+                $path = $file->store($this->path);
+                $path_new = 'app'.DIRECTORY_SEPARATOR.$this->path.$id.$this->extension;
+
+                $image = imagecreatefromjpeg(storage_path('app'.DIRECTORY_SEPARATOR.$path));
+                $bg = imagescale($image, 500 , -1 , IMG_BILINEAR_FIXED) ;
+                Storage::delete($path);
+                $quality = 75;
+                imagejpeg($bg, storage_path($path_new),$quality);
+
                 return response()->json(['success'=>'true'], 200);
             }
             else {
