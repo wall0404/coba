@@ -14397,7 +14397,7 @@ input[type=color].form-control:disabled {
 .coba-home-icons-container {
   height: 85px;
   width: 40px;
-  position: fixed;
+  position: absolute;
   top: 20px;
   right: 20px;
   padding: 10px;
@@ -14461,7 +14461,7 @@ input[type=color].form-control:disabled {
 /* HEADER */
 
 .coba-header {
-  height: 219px;
+  height: 190px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -14475,6 +14475,7 @@ input[type=color].form-control:disabled {
 
 .coba-header .coba-page-headline {
   font-size: 35px;
+    height: 55px;
 }
 
 .coba-header.coba-header-accent {
