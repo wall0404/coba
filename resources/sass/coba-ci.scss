@@ -97,7 +97,13 @@ html, body, #app, #content {
     }
 }
 
-
+/* Verfügbarkeit helpers */
+.coba-button-chart{
+    height: 65px !important;
+    width: 65px !important;
+    position: absolute;
+    margin-top: 22.5px !important;
+}
 
 /* HEADER */
 .coba-header {
@@ -279,6 +285,7 @@ html, body, #app, #content {
 }
 
 /* DROP DOWN Styles */
+
 
 .coba-dropdown-wrapper{
     top:0;
