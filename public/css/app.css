@@ -14465,6 +14465,15 @@ body,
   justify-content: flex-end;
 }
 
+/* Verfügbarkeit helpers */
+
+.coba-button-chart {
+  height: 65px !important;
+  width: 65px !important;
+  position: absolute;
+  margin-top: 22.5px !important;
+}
+
 /* HEADER */
 
 .coba-header {
