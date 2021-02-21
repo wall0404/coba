@@ -3,18 +3,17 @@
         <spinner v-if="loadUsers || loadBookings"></spinner> <!-- Ladesymbol während Seite Daten aufruft -->
         <div v-else  class="coba-full-width">
             <div>
-                <!-- Zeigt die Favoriten der ausgewählten Standorten, aber nur wenn mindestens ein Standort ausgewählt ist-->
+                <!-- shows the favorite workstations, but only when at least one location is selected-->
                 <div class="section-headline p-2 px-3" v-if="selectFilter.fav">Favoriten</div>
                 <div class="booking-list px-3">
                     <div v-if="selectFilter.fav && selectFilter.location[location.id]" v-for="location in $store.getters.locations">
-                        <calendar-booking-list-item v-if="workstation.isFavorite" v-for="(workstation, index) in location.workstations" :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date" :selected-filter="selectFilter" v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item>
+                        <calendar-booking-list-item v-if="workstation.isFavorite" v-for="(workstation, index) in location.workstations"
+                                                    :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date" :selected-filter="selectFilter"
+                                                    v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item>
                     </div>
                 </div>
-
-                <!-- Überprüft welche Standorte ausgewählt sind -->
+                <!-- shows a list of workstations for the selected location(s) -->
                 <div v-for="location in $store.getters.locations" v-if="selectFilter.location[location.id]">
-
-                    <!-- Auflistung der Arbeitszplätze der ausgewählten Standorte -->
                     <div class="section-headline p-2 px-3">{{location.name}}</div>
                     <div class="booking-list px-3">
                         <calendar-booking-list-item v-for="(workstation, index) in location.workstations" :key="index" :users="users"
@@ -22,16 +21,16 @@
                                                     v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item>
                     </div>
                 </div>
+                <!--homeoffice -->
                 <div v-if="selectFilter.location['homeoffice']">
-
-                    <!-- Auflistung der Arbeitszplätze der ausgewählten Standorte -->
                     <div class="section-headline p-2 px-3">Remote Work</div>
-                    <div class="booking-list px-3">
-                       <router-link to="/booking/new/homeoffice">Buchen</router-link>
-                    </div>
+                    <div class="calendar-text calendar-text-remote-work">Remote Work buchen</div>
+                    <button class="coba-remote-work-button">
+                        <router-link to="/booking/new/homeoffice"><b-icon icon="arrow-90deg-right" font-scale="0.75"></b-icon></router-link>
+                    </button>
                 </div>
-                <!-- Nachricht, die dem Nutzer kenntlich machen soll, dass kein Standort ausgewählt ist -->
-                <div v-if="false" class="no-location-message" > Du hast noch keinen Standort ausgewählt</div>
+                <!-- warning message for the user if no loction is selected -->
+                <div v-if="selectFilter.nolo" class="calendar-text" > Du hast noch keinen Standort ausgewählt</div>
           </div>
         </div>
     </div>
@@ -52,13 +51,9 @@ export default {
             loadUsers: false,
             error: null,
             date: null,
-            nolo: true,
-        }
-    },
-    computed: {
-        // a computed getter
-        noFilter: function () {
-            return this.selectFilter.location.every(v => v === false)
+            dayObj: {
+                date: new Date(this.date)
+            }
         }
     },
     created() {
@@ -120,8 +115,8 @@ export default {
                     console.log(error);
                     this.loadUsers = false;
                 })
+        },
 
-        }
     }
 }
 </script>

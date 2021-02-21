@@ -1,10 +1,12 @@
 <template>
     <div class="coba-page page">
+        <!-- opens the sidebar if the icon on the page is clicked and receives the filter values from CalendarSidebar -->
+        <b-icon v-if="!open" icon="list" class="coba-calendar-sidebar-icon" font-scale="2" @click="toggleSidebar()">
+        </b-icon>
+        <CalendarSidebar :show_sidebar="open" @modal-close-event="toggleSidebar()" @change-event="callbackChange"></CalendarSidebar>
 
-        <CalendarSidebar :show_sidebar="open" @modal-close-event="toggleSidebar()" @change-event="callbackChange" ></CalendarSidebar>
-
+        <!--calendar-->
         <div class="coba-container coba-header coba-header-square mb-0">
-
             <div class="headline-button-container">
                 <span @click="prevMonth"><b-icon icon="caret-left-fill" font-scale="1.25"></b-icon></span>
                 <span class="coba-page-headline">{{ monthString[initialMonth] +" "+initialYear}}</span>
@@ -12,16 +14,11 @@
             </div>
         </div>
 
-        <b-icon v-if="!open" icon="list" class="coba-calendar-sidebar-icon" font-scale="2" @click="toggleSidebar()">
-        </b-icon>
-
+        <!-- sends the received filter to calendar-booking-list, so a booking list according to the selected options can be generated-->
         <div class="content">
             <calendar ref="calendar" class="calendar" @dateSelected="callbackDateSelect"></calendar>
             <calendar-booking-list ref="list" class="booking-list" :selectFilter="passedFilter" ></calendar-booking-list>
         </div>
-
-
-
     </div>
 </template>
 
@@ -41,7 +38,7 @@ export default {
             initialYear: 0,
             open:false,
             monthString: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-            passedFilter: {}
+            passedFilter: {},
 
         }
     },

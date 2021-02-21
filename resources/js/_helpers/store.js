@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
         data: {},
         ready: 0,
         changes: false,
+        filter: {},
     },
     mutations: {
         refreshUser (state) {
@@ -77,6 +78,11 @@ export const store = new Vuex.Store({
 
             state.data.autoSave[data.workstation_id] = data.days;
         },
+
+        autoSaveFilter(state, data){
+            this.state.filter.autoSave = data.filter;
+        },
+
         markChanges(state) {
             state.changes = true;
         },
