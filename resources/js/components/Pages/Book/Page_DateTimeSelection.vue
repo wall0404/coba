@@ -89,7 +89,7 @@ export default {
             //For every Booking
             for (let k = 0; k<data.length; k++) {
                 try {
-                    this.bookings[data[k].date].push(data[k])
+                    this.bookings[data[k].date].push(data[k]) //sortiert die Ergebnisse aus dem res.success in bookings, abhängig vom Datum
                 }
                 catch (e) {
                     this.bookings[data[k].date] = []
@@ -136,7 +136,7 @@ export default {
             });
 
             this.$store.commit('clearChanges');
-            
+
             //go to confirmation
             let days = this.days;
             this.$router.push({
