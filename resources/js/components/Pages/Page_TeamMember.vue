@@ -133,11 +133,9 @@ export default {
                 })
         },
         addBuddy( user ){
-          fetch('/api/buddy/', {
+          fetch('/api/buddy/'+user.user_id, {
               method: 'POST',
-              body: JSON.stringify({
-                  id: user.user_id,
-              }),
+              body: JSON.stringify({}),
               headers: {
                   'content-type': 'application/json',
                   'Authorization': 'Bearer ' + localStorage.token
@@ -153,11 +151,9 @@ export default {
           })
         },
         removeBuddy(user){
-            fetch('/api/buddy/', {
+            fetch('/api/buddy/'+user.user_id, {
                 method: 'DELETE',
-                body: JSON.stringify({
-                    id: user.user_id,
-                }),
+                body: JSON.stringify({}),
                 headers: {
                     'content-type': 'application/json',
                     'Authorization': 'Bearer ' + localStorage.token
