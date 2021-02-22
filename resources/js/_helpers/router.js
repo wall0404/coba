@@ -29,7 +29,8 @@ import Page_TeamMember from "../components/Pages/Page_TeamMember";
 import Page_Inbox from "../components/Pages/Page_Inbox";
 import Page_Settings from "../components/Pages/Book/Page_Settings";
 import Page_ChangeBooking from "../components/Pages/Book/Page_ChangeBooking";
-import Page_HomeofficeDateTimeSelection from "../components/Pages/Book/Page_HomeofficeDateTimeSelection";
+import Page_FastBookingConfirmation from "../components/Pages/Book/Page_FastBookingConfirmation";
+import Page_RemoteWorkDateTimeSelection from "../components/Pages/Book/Page_RemoteWorkDateTimeSelection";
 
 const routes = [
     { path: '/login', name: "Login", component: Page_Login },
@@ -45,11 +46,12 @@ const routes = [
     { path: '/profile', name: "Profile", component: Page_Profile, meta:{auth:true} },
     { path: '/booking/:id', component: Page_Booking, meta:{auth:true} },
     { path: '/booking/new/location', component: Page_LocationSelection, meta:{auth:true} },
-    { path: '/booking/new/homeoffice', component: Page_HomeofficeDateTimeSelection, meta:{auth:true} },
+    { path: '/booking/new/remotework', component: Page_RemoteWorkDateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/workstation/:location_id', component: Page_WorkstationSelection, meta:{auth:true} },
     { path: '/booking/new/date/:workstation_id', name: "DateTimeSelection", props: true, component: Page_DateTimeSelection, meta:{auth:true} },
     { path: '/booking/new/confirmation', name: "BookingConfirmation", props: true, component: Page_BookingConfirmation, meta:{auth:true} },
     { path: '/booking/new/checkout', name: "BookingCheckout", props: true, component: Page_BookingCheckout, meta:{auth:true} },
+    { path: '/booking/new/fastbooking/:location_id', name: "FastBookingConfirmation", props: true, component: Page_FastBookingConfirmation, meta:{auth:true}},
     { path: '/profile/settings', component: Profile_Edit, meta:{auth:true} },
     { path: '/booking/edit/:booking_id', name:"ChangeBooking", props: true, component: Page_ChangeBooking, meta:{auth:true} },
     { path: '*', component: error404},
