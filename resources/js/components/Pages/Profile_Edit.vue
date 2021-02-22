@@ -133,7 +133,6 @@ export default {
             showPasswordModal: false,
             location:[],
             load:false,
-
             showPassword1: false,
             showPassword2: false,
             showPassword3: false,
@@ -143,20 +142,12 @@ export default {
 
             componentKey: 0 ,
             showConfirmationModal: false ,
-
             selectedLocations: [],
             workLocations: [] = this.$store.getters.data.locations ,
             workstations: [] ,
-
         }
-
     },
-    created() {
-        this.test() ;
-    },
-
     methods:{
-
         selectLocation(location_id) {
             if ( this.selectedLocations.length === 0) {
                 this.selectedLocations.push(location_id)
