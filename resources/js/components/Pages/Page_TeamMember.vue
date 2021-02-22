@@ -47,31 +47,6 @@ export default {
         }
     },
     methods: {
-        loadUsers(){
-            this.load = true ;
-            fetch('/api/user/'  ,{
-                method: 'GET' ,
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization' : 'Bearer '+localStorage.token
-                }
-            } ) .then(response => response.json())
-                .then(response => {
-                    if(response.success) {
-                        this.users = response.success;
-                        this.load = false;
-                    }
-                    else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-
-        },
 
         makeDateToDateString(dateStr){
             return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
