@@ -89,9 +89,6 @@ export default {
             }
         }
     },
-    mounted() {
-        //this.calcHours(this.workstationID);
-    },
     created() {
         this.fetchWorkstations();
         this.fetchBookingsForDate(this.date);
@@ -99,7 +96,7 @@ export default {
     methods: {
         fetchBookingsForDate(date) {
             this.loadBookings = true;
-            fetch('/api/booking?filter[date][min]='+date+'&filter[date][max]='+date+'&filter[location_id]='+this.booking.workstation.location_id, {
+            fetch('/api/booking?filter[date][min]='+date+'&filter[date][max]='+date, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',
@@ -216,7 +213,7 @@ export default {
                 workstation_id: this.workstationID,
             }
 
-            fetch('api/booking/'+this.booking.id, {
+            fetch('/api/booking/'+this.booking.id, {
                 method: 'PUT',
                 body: JSON.stringify(changedBooking),
                 headers: {
