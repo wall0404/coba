@@ -9,10 +9,11 @@
                 <!-- :key  wurde entfernt-->
                 <template v-for="workstation in workstations"  >
                     <div v-if="workstation.isFavorite" class="seat-container">
-                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
-                       <b-icon style="position: absolute" icon="star-fill" font-scale="1.5" ></b-icon>
-                    <!--    <b-icon class="icon-class" icon="star-fill" ></b-icon> -->
-                    </router-link>
+                        <div class="chart-overlay"> </div>
+                        <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                        <b-icon style="position: absolute" icon="star-fill" font-scale="1.5" ></b-icon>
+                        <!--    <b-icon class="icon-class" icon="star-fill" ></b-icon> -->
+                        </router-link>
                         <doughnut :chart-data="{
                             datasets: [
                                 {
@@ -35,7 +36,8 @@
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-for="workstation in workstations"  >
                     <div v-if="! workstation.isFavorite" class="seat-container">
-                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                        <div class="chart-overlay"> </div>
+                        <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
                         <b-icon style="position: absolute" icon="plus" font-scale="2"></b-icon>
                     </router-link>
                         <doughnut :chart-data="{
@@ -312,6 +314,12 @@ export default {
 </script>
 
 <style scoped>
+.chart-overlay {
+    background-color: transparent;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
 .seat-container {
     display: flex;
     flex-direction: column;
