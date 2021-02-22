@@ -16,7 +16,7 @@
         </div>
 
         <spinner v-if="load"></spinner>
-        <div v-else class="coba-container coba-smaller" v-for="user in users" >
+        <div v-else v-for="user in users" class="coba-container coba-smaller"  >
             <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; margin-top: -20px ; color:#FEEF00" font-scale="1.5"  ></b-icon>
             <router-link v-bind:to="'/team/' + user.user_id" >
             <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
@@ -28,19 +28,15 @@
                         <tr>
                             <td  class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
                         </tr>
-                        <template v-for="booking in today_bookings"> <!-- inefficient -->
                             <tr>
-                                <td v-if="booking.user_id === user.user_id && booking.workstation_id !== null" class="user-data-name small text-info">
-                                    <template v-for="works in workstations">
-                                        <span v-if="booking.date === today_date && booking.user_id === user.user_id && works.id === booking.workstation_id" class="user-data-name small text-info" > heute im {{works.location.name}}</span>
+                                <td v-if="user.todayBookings.length != 0" class="user-data-name small text-info">
+                                    <template v-for="works in user.todayBookings">
+                                        <span v-if="works.workstation_id === null" class="user-data-name small text-info"> heute im Remote Work</span>
+                                        <span v-else class="user-data-name small text-info" > heute im {{workstations[works.workstation_id-1].location.name}}</span>
+                                        <br>
                                     </template>
                                 </td>
-                                <td v-else-if="booking.user_id === user.user_id" class="user-data-name small text-info">
-                                    heute im Remote Work
-                                </td>
                             </tr>
-
-                        </template>
                     </table>
                 </div>
             </div>
@@ -62,8 +58,8 @@ export default {
                 error: false ,
                 users: [],
                 today_bookings: [],
-                today_date: new Date().toISOString().slice(0, 10),  // ! UTC+0
-                today_hours: new Date().toISOString().slice(11,19),  // !!!  UTC+0
+                today_date: new Date().toISOString().slice(0, 10),
+                today_hours: new Date().toISOString().slice(11,19),
                 searchQuery: '',
                 workstations:[],
                 timeout:null ,
@@ -100,7 +96,7 @@ export default {
                 }
                 // timeout for reducing query-requests => avoiding crash
                 this.timeout = setTimeout ( () => {
-                    fetch('/api/user/?order_by=firstName' , {
+                    fetch('/api/user_bookings' , {
                         method: 'GET',
                         headers: {
                             'content-type': 'application/json',
@@ -112,10 +108,9 @@ export default {
                             if( this.searchQuery){
                                 this.users = res.success.filter(user =>
                                     (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())).sort(this.compare) ;
-                                    // scroll to top -> needs to be checked if it works on app too
                                     window.scrollTo(0,0);
                             }else{
-                                this.users = res.success.sort( this.compare) ;
+                                 this.users = res.success.sort( this.compare) ;
                                 window.scrollTo(0,0);
                             }
                         })
@@ -142,6 +137,7 @@ export default {
                 .then(response => {
                     if(response.success){
                         this.workstations = response.success ;
+                        console.log(this.workstations) ;
                     }
                 }).catch(error => {
                     console.log(error) ;

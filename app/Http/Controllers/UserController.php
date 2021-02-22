@@ -89,8 +89,12 @@ class UserController extends ParentController
     }
 
     public function UsersAndBookings(){
-        $date = date("Y-m-d") ;
-        $users = User::join('bookings' , 'users.user_id' , '=' , 'bookings.user_id')->where('bookings.date' , '=' ,$date )->get(['users.user_id' , 'users.firstName' , 'users.lastName'  , 'bookings.workstation_id' , 'bookings.to']);
+
+        $users = User::all() ;
+        foreach ($users as $user){
+            $user['todayBookings'] = $user->todayBookings() ;
+        }
+    //    $users->orderBy('firstName') ;
 
         return response()->json(['success'=>$users], ParentController::$successCode);
     }
