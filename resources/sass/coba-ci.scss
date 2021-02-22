@@ -1,4 +1,6 @@
-
+html, body, #app, #content {
+    height: 100%;
+}
 
 
 /* NAVBAR */
@@ -22,7 +24,9 @@
 
 .coba-page {
     padding-bottom: $navbar-height;
-    height: 100%;
+    min-height: calc( 100% + #{$navbar-height} );
+
+
 /*    display: flex;
     flex-direction: row;*/
     &.coba-page-no-header {
@@ -93,7 +97,13 @@
     }
 }
 
-
+/* Verfügbarkeit helpers */
+.coba-button-chart{
+    height: 65px !important;
+    width: 65px !important;
+    position: absolute;
+    margin-top: 22.5px !important;
+}
 
 /* HEADER */
 .coba-header {
@@ -118,7 +128,7 @@
     &.coba-header-square {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        height: 166px;
+        height: 130px;
         justify-content: flex-start;
         align-items: flex-end;
 
@@ -131,7 +141,8 @@
 .coba-homescreen {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
+    min-height: 100%;
 
     .coba-header {
         height: 100px;
@@ -259,7 +270,23 @@
         margin-left: 10px;
     }
 }
-.coba-button-container { /*In a Button container all buttons will be listed next to each other */
+
+.coba-remote-work-button {
+    border-radius: 60px;
+    margin-left: 315px;
+    background-color: $coba-yellow;
+
+    &.big {
+        height: 50px;
+        width: 50px;
+        margin-left: 0;
+    }
+}
+
+
+/*In a Button container all buttons will be listed next to each other */
+
+.coba-button-container {
     display: flex;
 
     .coba-button {
@@ -273,7 +300,120 @@
     }
 }
 
+/* CALENDAR SIDEBAR */
+
+.calendar-button{
+    background-color: #e8e8e8;
+    color: #2C2C2C;
+    border-radius: 15px;
+    border: 1px solid #8C8C8C;
+    width: 185px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    font-size: medium;
+}
+
+.calendar-text{
+    font-weight: bolder;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.coba-calendar-sidebar-icon{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    color: $coba-white;
+    z-index: 0;
+
+}
+
+.calendar-check{
+    color: $coba-yellow;
+    position: fixed;
+    right: 8%;
+}
+
+.coba-calendar-wrapper{
+    background-color: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.coba-calendar-container {
+
+        .coba-calendar-sidebar-content{
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #333333;
+            width: 60%;
+            height: 93%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: revert;
+
+            .coba-calendar-sidebar-header{
+                border-bottom: 2.5px solid #fff;
+                color: #fff;
+                padding: 2px;
+                margin-bottom: 15px;
+                margin-top: 15px;
+                width: 97%;
+                display: flex;
+                justify-content: flex-start;
+                font-size: larger;
+            }
+
+            .coba-calendar-sidebar-small-header{
+                margin-top: 0;
+                margin-bottom: 12px;
+                padding-bottom: 3px;
+                color: white;
+                border-bottom: 2px solid #fff;
+
+            }
+
+            }
+            ul{
+                align-self: flex-start;
+                color: $coba-white;
+            }
+
+        }
+
+
+
+.coba-check{
+    position: absolute;
+    right: 15px;
+    visibility: hidden;
+}
+
+label.checked{
+    font-weight: bold;
+    color: $coba-yellow;
+}
+
+
+
+
+
+
+
 /* DROP DOWN Styles */
+
 
 .coba-dropdown-wrapper{
     top:0;
@@ -408,7 +548,7 @@
 
     li::before {
         content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-        color: $coba-yellow; /* Change the color */
+        color: $coba-petrol; /* Change the color */
         font-weight: bold; /* If you want it to be bold */
         display: inline-block; /* Needed to add space between the bullet and the text */
         width: 1em; /* Also needed for space (tweak if needed) */
@@ -423,6 +563,7 @@
 
     }
 }
+
 .coba-list-nobullets {
     font-size: 14px;
     color: #2C2C2C;
@@ -441,8 +582,30 @@
 
 .coba-list-nobullets li {
     padding: 2px 0;
-    border-bottom: 1px solid #EBEBEB;
+    border-bottom: 1px solid $coba-dark-gray;
 }
+
+.coba-list-nobul-nobor {
+    font-size: 14px;
+    color: #2C2C2C;
+    padding-left: 0px;
+    list-style: none;
+}
+
+    .coba-list-nobul-nobor li::before {
+        content: none;
+    }
+
+    .coba-list-nobul-nobor li.last {
+        border-bottom: none;
+    }
+
+    .coba-list-nobul-nobor li {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 3px;
+    }
+
 
 
 
@@ -495,6 +658,7 @@
     align-items: center;
     border: 1px solid transparent;
     background-color: $coba-gray;
+    position: relative;
 
     &.coba-utilization-indicator-selected {
         border: 2px solid $coba-dark-gray;
@@ -548,6 +712,11 @@
             transform: rotate(180deg);
             margin-left: -30px;
         }
+    }
+    .check-icon{
+        position: absolute;
+        top: 20px;
+        left: 20px;
     }
 }
 

@@ -9,10 +9,20 @@
                 <!-- :key  wurde entfernt-->
                 <template v-for="workstation in workstations"  >
                     <div v-if="workstation.isFavorite" class="seat-container">
-                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
-                       <b-icon style="position: absolute " icon="star-fill" font-scale="1.5" ></b-icon>
-                    <!--    <b-icon class="icon-class" icon="star-fill" ></b-icon> -->
-                    </router-link>
+                        <div class="chart-overlay"> </div>
+                        <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                        <b-icon style="position: absolute" icon="star-fill" font-scale="1.5" ></b-icon>
+                        <!--    <b-icon class="icon-class" icon="star-fill" ></b-icon> -->
+                        </router-link>
+                        <doughnut :chart-data="{
+                            datasets: [
+                                {
+                                    label: 'Sitzplatzverfügbarkeit',
+                                    backgroundColor: ['#FF6666','#FFAD33','#4ABE5D'],
+                                    data: [workstation.full,workstation.half,workstation.empty],
+                                }
+                                ]
+                        }" style="height: 100px; width: 100px"></doughnut>
                     <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
                         <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
                         <button class="coba-button-very-small coba-button-round coba-button">i</button>
@@ -26,9 +36,19 @@
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-for="workstation in workstations"  >
                     <div v-if="! workstation.isFavorite" class="seat-container">
-                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
-                        <b-icon icon="plus" font-scale="2"></b-icon>
+                        <div class="chart-overlay"> </div>
+                        <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                        <b-icon style="position: absolute" icon="plus" font-scale="2"></b-icon>
                     </router-link>
+                        <doughnut :chart-data="{
+                            datasets: [
+                                {
+                                    label: 'Sitzplatzverfügbarkeit',
+                                    backgroundColor: ['#FF6666','#FFAD33','#4ABE5D'],
+                                    data: [workstation.full,workstation.half,workstation.empty],
+                                }
+                                ]
+                        }" style="height: 100px; width: 100px"></doughnut>
                     <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
                         <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
                         <button class="coba-button-very-small coba-button-round coba-button">i</button>
@@ -42,8 +62,12 @@
                     <template v-slot:header>
                         <div class="coba-modal-header">
                             <div class="coba-flex-space-evenly">{{modal.header}}
-                                <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FEEF00" font-scale="1.5" icon="star-fill">
-                                </b-icon> <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FEEF00" font-scale="1.5" icon="star"></b-icon> </div>
+                                <b-iconstack @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" font-scale="1.5">
+                                    <b-icon stacked icon="star-fill" style="color:#FEEF00"></b-icon>
+                                    <b-icon stacked icon="star" style="color:#8C8C8C"></b-icon>
+                                </b-iconstack>
+                                <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#8C8C8C" font-scale="1.5" icon="star"></b-icon>
+                            </div>
                         </div>
                     </template>
                     <template v-slot:body>
@@ -69,10 +93,11 @@
 <script>
 import Spinner from "../../Global/Spinner";
 import Modal from "../../Elements/Modal";
+import Doughnut from "../../Elements/Doughnut.vue";
 
 export default {
     name: "Page_WorkstationSelection",
-    components: {Modal, Spinner},
+    components: {Modal, Spinner, Doughnut},
     data() {
         return {
             load: false,
@@ -93,6 +118,7 @@ export default {
     },
     mounted() {
         this.workstations = this.$store.getters.data.locations[this.location_id-1].workstations;
+
     },
     created() {
         let date = new Date();
@@ -119,7 +145,7 @@ export default {
                 .then(res => {
                     if(res.success) {
                         this.bookings = res.success;
-                        this.colorIndicators();
+                        this.calcChartData();
                         this.load = false;
                     }
                     else {
@@ -132,7 +158,7 @@ export default {
                     this.load = false;
                 })
         },
-        colorIndicators() {
+        calcChartData() {
             //For every Workstation
             for (let i = 0; i<this.workstations.length; i++) {
                 this.workstations[i].workstation_bookings = {};
@@ -149,54 +175,31 @@ export default {
                         }
                     }
                 }
-
                 let full_days = 0;
+                let half_days = 0;
                 for(let date in this.workstations[i].workstation_bookings) {
                     if(new Date(date).getUTCDay() !== 0 && new Date(date).getUTCDay() !== 6){
                         let bookedHours = this.calcHours(this.workstations[i].workstation_bookings[date])
+
                         if(bookedHours >= 8) {
                             full_days++;
                         }
+                        else if(bookedHours > 1) {
+                                half_days++;
+                        }
                     }
+                }
+                //bestimmt freie Tage abhängig vom aktuellen Wochentag
+                let empty_days = 0;
 
-                }
-                //calculate the color to show the availability of the workstation
-                let today = new Date().getUTCDay();
-                if(today===1){
-                    if(full_days >= 15)
-                        this.workstations[i].color = 'red'; //mark red
-                    else if(full_days >= 11)
-                        this.workstations[i].color = 'orange'; //mark orange
-                    else this.workstations[i].color = 'green'; //mark green
-                }
-                if(today===2){
-                    if(full_days >= 14)
-                        this.workstations[i].color = 'red'; //mark red
-                    else if(full_days >= 10)
-                        this.workstations[i].color = 'orange'; //mark orange
-                    else this.workstations[i].color = 'green'; //mark green
-                }
-                if(today===3){
-                    if(full_days >= 13)
-                        this.workstations[i].color = 'red'; //mark red
-                    else if(full_days >= 9)
-                        this.workstations[i].color = 'orange'; //mark orange
-                    else this.workstations[i].color = 'green'; //mark green
-                }
-                if(today===4){
-                    if(full_days >= 12)
-                        this.workstations[i].color = 'red'; //mark red
-                    else if(full_days >= 8)
-                        this.workstations[i].color = 'orange'; //mark orange
-                    else this.workstations[i].color = 'green'; //mark green
-                }
-                if(today===5){
-                    if(full_days >= 11)
-                        this.workstations[i].color = 'red'; //mark red
-                    else if(full_days >= 7)
-                        this.workstations[i].color = 'orange'; //mark orange
-                    else this.workstations[i].color = 'green'; //mark green
-                }
+                let full_weekdays = 10;
+                let tag = new Date().getUTCDay();
+                let sum_booked = half_days + full_days;
+                empty_days = full_weekdays + (6 - tag) - sum_booked;
+
+                this.workstations[i].full = full_days;
+                this.workstations[i].half = half_days;
+                this.workstations[i].empty = empty_days;
             }
         },
         //calculate and sum all hours in the given array of bookings
@@ -254,7 +257,7 @@ export default {
                     } else {
                         dayInfo = {color: 'green', start: "Verfügbar", end: ""}
                     }
-                    dayInfo.date = this.dateToDayOfMonth(date);
+                    dayInfo.date = this.dateToDayOfMonth(date); //Anzeige des ausgeschriebenen Wochentages
                     this.modal.body.push(dayInfo);
                     //Add one day to date
                 }
@@ -315,6 +318,12 @@ export default {
 </script>
 
 <style scoped>
+.chart-overlay {
+    background-color: transparent;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
 .seat-container {
     display: flex;
     flex-direction: column;

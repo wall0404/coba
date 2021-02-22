@@ -1,10 +1,12 @@
 <template>
     <div>
-        <div class="coba-container coba-flex coba-header mb-4">
-            <span class="coba-page-headline">Erstelle ein Konto</span>
+        <div class="coba-container coba-flex coba-header mb-4" style="flex-direction: column">
+            <img src="/img/Coba_Logo-removebg-preview.png" style="text-align: center; margin-bottom: 20px" height="70px">
+            <span class="coba-page-headline coba-text-center">TAS <br> Take A Seat</span>
         </div>
         <div class="coba-container" >
             <form class="coba-form">
+                <span class="coba-text-medium"> Erstelle ein Konto</span>
                 <div class="coba-input-container"> <!-- all inputfields are in this container -->
                     <element-input
                         v-bind:error="error"
@@ -41,7 +43,7 @@
                 <button class="coba-button coba-button-accent mt-4" type="button" @click="submit">Registrieren</button>
 
                 <div class="coba-container">
-                    <span class="coba-text-centered mt-4"> Du hast schon ein Konto?</span>
+                    <span class="coba-text-centered mt-2"> Du hast schon ein Konto?</span>
                     <router-link to="/login" class="coba-text-centered coba-text-centered-button mt-4">Hier Anmelden</router-link>
                 </div>
             </form>

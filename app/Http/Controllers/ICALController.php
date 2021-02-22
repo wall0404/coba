@@ -41,7 +41,7 @@ class ICALController extends Controller
                 $workstation = $booking->workstation->name . " - " . $booking->workstation->location->name;
             }
             else {
-                $workstation = "Homeoffice";
+                $workstation = "Remote Work";
             }
             $ical->addEvent($booking->id, $start->format('Ymd\THis\Z'), $end->format('Ymd\THis\Z'), $workstation, "Sitzplatzbuchung", $updated_at->format('Ymd\THis\Z'));
         }
