@@ -95,6 +95,7 @@ export default {
                     })
             }
             else {
+                this.copied = false;
                 this.load = true;
                 fetch('/api/ical', {
                     method: 'DELETE',
