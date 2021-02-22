@@ -57,7 +57,6 @@ export default {
                 load: false ,
                 error: false ,
                 users: [],
-                today_bookings: [],
                 today_date: new Date().toISOString().slice(0, 10),
                 today_hours: new Date().toISOString().slice(11,19),
                 searchQuery: '',
@@ -66,29 +65,7 @@ export default {
             }
         },
         methods: {
-            getTodayBookings(){
-                this.load = true ;
-                    fetch('/api/booking/?filter[date][min]=' +this.today_date +'&filter[date][max]=' + this.today_date +'&filter[to][min]=' + this.today_hours , {
-                        method: 'GET',
-                        headers: {
-                            'content-type': 'application/json',
-                            'Authorization': 'Bearer ' + localStorage.token
-                        }
-                    }).then(response => response.json())
-                        .then(response => {
-                            if (response.success) {
-                                this.today_bookings = response.success;
-                                this.load = false;
-                            } else {
-                                this.error = true;
-                                this.load = false;
-                            }
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            this.load = false;
-                        })
-            },
+
             filterUsers(){
                 if ( this.timeout){
                     clearTimeout( this.timeout) ;
@@ -146,7 +123,6 @@ export default {
 
         },
         created(){
-            this.getTodayBookings() ;
             this.filterUsers() ;
             this.getWorkstation() ;
         },

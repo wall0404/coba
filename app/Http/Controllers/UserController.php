@@ -89,12 +89,10 @@ class UserController extends ParentController
     }
 
     public function UsersAndBookings(){
-
-        $users = User::all() ;
+        $users = User::orderBy('firstName','asc')->get();
         foreach ($users as $user){
             $user['todayBookings'] = $user->todayBookings() ;
         }
-    //    $users->orderBy('firstName') ;
 
         return response()->json(['success'=>$users], ParentController::$successCode);
     }
