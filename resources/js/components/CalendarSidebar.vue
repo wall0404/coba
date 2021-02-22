@@ -22,14 +22,14 @@
                 <!-- filter section-->
                 <div class="coba-calendar-sidebar-small-header"> Filter nach </div>
                 <ul class="coba-list-nobul-nobor">
-                    <li><label :class="{'checked': filter.mybook}"><input type="checkbox" class="coba-check" name="cb" @change="change()" v-model="filter.mybook"> Meine Buchungen
-                        <b-icon class="calendar-check" v-if="filter.mybook" icon="check2" font-scale="1.5" ></b-icon></label></li>
-                    <li><label :class="{'checked': filter.available}"><input type="checkbox" class="coba-check" name="cb"@change="change()" v-model="filter.available"> Verfügbare Plätze
-                        <b-icon class="calendar-check" v-if="filter.available" icon="check2" font-scale="1.5" ></b-icon></label></li>
-                    <li><label :class="{'checked': filter.bestbud}"><input type="checkbox" class="coba-check" name="cb" @change="change()" v-model="filter.bestbud"> Best Buddies
-                        <b-icon class="calendar-check" v-if="filter.bestbud" icon="check2" font-scale="1.5" ></b-icon></label></li>
-                    <li><label :class="{'checked': filter.fav}"><input type="checkbox" class="coba-check" name="cb" @change="change()" v-model="filter.fav"> Favoriten
-                        <b-icon class="calendar-check" v-if="filter.fav" icon="check2" font-scale="1.5" ></b-icon></label></li>
+                    <li><label :class="{'checked': filter.onlyMyBookings}"><input type="checkbox" class="coba-check" name="cb" @change="change()" v-model="filter.onlyMyBookings"> Meine Buchungen
+                        <b-icon class="calendar-check" v-if="filter.onlyMyBookings" icon="check2" font-scale="1.5" ></b-icon></label></li>
+                    <li><label :class="{'checked': filter.onlyAvailableWorkstations}"><input type="checkbox" class="coba-check" name="cb"@change="change()" v-model="filter.onlyAvailableWorkstations"> Verfügbare Plätze
+                        <b-icon class="calendar-check" v-if="filter.onlyAvailableWorkstations" icon="check2" font-scale="1.5" ></b-icon></label></li>
+                    <li><label :class="{'checked': filter.onlyBestBuddyBookings}"><input type="checkbox" class="coba-check" name="cb" @change="change()" v-model="filter.onlyBestBuddyBookings"> Best Buddies
+                        <b-icon class="calendar-check" v-if="filter.onlyBestBuddyBookings" icon="check2" font-scale="1.5" ></b-icon></label></li>
+                    <li><label :class="{'checked': filter.onlyFavoriteWorkstations}"><input type="checkbox" class="coba-check" name="cb" @change="change()" v-model="filter.onlyFavoriteWorkstations"> Favoriten
+                        <b-icon class="calendar-check" v-if="filter.onlyFavoriteWorkstations" icon="check2" font-scale="1.5" ></b-icon></label></li>
                 </ul>
                 <!-- button to reset selected filter options-->
                 <button class="calendar-button" @click="reset()"> Filter zurücksetzen</button>
@@ -54,10 +54,10 @@ export default {
                     1: true,
                     2: true,
                 },
-                mybook:false,
-                available:false,
-                bestbud: false,
-                fav: false,
+                onlyMyBookings:false,
+                onlyAvailableWorkstations:false,
+                onlyBestBuddyBookings: false,
+                onlyFavoriteWorkstations: false,
             }
         }
     },
@@ -78,10 +78,10 @@ export default {
 
         //resets the selected filter options
         reset(){
-            this.filter.mybook = false;
-            this.filter.available = false;
-            this.filter.bestbud = false;
-            this.filter.fav = false;
+            this.filter.onlyMyBookings = false;
+            this.filter.onlyAvailableWorkstations = false;
+            this.filter.onlyBestBuddy = false;
+            this.filter.onlyFavoriteWorkstations = false;
         }
     }
 }
