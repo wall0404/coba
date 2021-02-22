@@ -69,7 +69,6 @@ export default {
     },
 
     methods: {
-
         //load from storage
         loadStorage() {
             let filter = localStorage.getItem("calendar_filter");

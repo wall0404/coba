@@ -30,7 +30,7 @@
                     </div>
                     <div class="booking-list px-3">
                         <!-- Liste mit Teammitgliedern die im Remote Work sind-->
-                        <div v-for="user in users">
+                        <div v-for="user in users" v-if="(!selectFilter.onlyMyBookings && !selectFilter.onlyBestBuddyBookings) || (selectFilter.onlyMyBookings&&user.user_id === $store.getters.data.user.user_id) || (selectFilter.onlyBestBuddyBookings&&user.isBuddy)">
                             <div v-for="booking in bookings" v-if="booking.user_id == user.user_id && booking.workstation_id == null">
                                 <calendar-booking-list-item-remote-work :user="user" :booking="booking"></calendar-booking-list-item-remote-work>
                             </div>
