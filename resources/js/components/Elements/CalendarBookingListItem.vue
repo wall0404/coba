@@ -7,7 +7,7 @@
 
             </div>
             <div v-else>
-                <div v-for="(booking) in bookings_workstation" class="pb-2" v-if="(!selectedFilter.onlyMyBookings && !selectedFilter.onlyBestBuddyBookings) || (selectedFilter.onlyMyBookings&&booking.user_id === $store.getters.data.user.user_id) || (selectedFilter.onlyBestBuddyBookings&&user_booking_list.find(user => user.user_id = booking.user_id).isBuddy)">
+                <div v-for="(booking) in bookings_workstation" v-if="(!selectedFilter.onlyMyBookings && !selectedFilter.onlyBestBuddyBookings) || (selectedFilter.onlyMyBookings&&booking.user_id === $store.getters.data.user.user_id) || (selectedFilter.onlyBestBuddyBookings&&user_booking_list.find(user => user.user_id = booking.user_id).isBuddy)">
                     {{booking.from.substring(0,5)}} - {{booking.to.substring(0,5)}}
                 </div>
              </div>
@@ -19,7 +19,7 @@
 
             </div>
             <div v-else>
-                <div v-for="user in user_booking_list"  class="pb-2" v-if="(!selectedFilter.onlyMyBookings && !selectedFilter.onlyBestBuddyBookings) || (selectedFilter.onlyMyBookings&&user.user_id === $store.getters.data.user.user_id) || (selectedFilter.onlyBestBuddyBookings&&user.isBuddy)">
+                <div v-for="user in user_booking_list" v-if="(!selectedFilter.onlyMyBookings && !selectedFilter.onlyBestBuddyBookings) || (selectedFilter.onlyMyBookings&&user.user_id === $store.getters.data.user.user_id) || (selectedFilter.onlyBestBuddyBookings&&user.isBuddy)">
                     <router-link v-if="user.user_id===$store.getters.data.user.user_id" :to="'/profile'">{{user.firstName}}</router-link> <!-- Weiterleitung zum eigenen Profil -->
                     <router-link v-else :to="'/team/'+user.user_id">{{user.firstName}} {{user.lastName.substring(0,1)}}.</router-link> <!-- Weiterleitung zum Profil des Teammitglieds -->
                 </div>
@@ -40,21 +40,19 @@
                 <b-icon icon="plus"></b-icon>
             </router-link>
         </div>
+        <div v-else-if="is_one_booking_from_user" class="table-item icon" style="overflow: inherit">
+            <edit-tool :openDD="dropDown.open" :booking="booking_from_user" :colorBack="this.colorBack" @modal-close-event="toggleDropDown(booking_from_user)" @modal-delete-event="delBookingfkn()"> </edit-tool>
+        </div>
         <div v-else class="table-item icon">
-            <div v-if="is_one_booking_from_user">
-                <edit-tool :openDD="dropDown.open" :booking="booking_from_user" @modal-close-event="toggleDropDown(booking_from_user)" @modal-delete-event="delBookingfkn()"> </edit-tool>
-            </div>
-            <div v-else>
-                <router-link class="coba-utilization-indicator"
-                             :class="{'coba-utilization-indicator-red':color==='red',
+            <router-link class="coba-utilization-indicator"
+                         :class="{'coba-utilization-indicator-red':color==='red',
                                 'coba-utilization-indicator-green':color==='green',
                                 'coba-utilization-indicator-orange':color==='orange',
                                 'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
-                             :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
-                    <b-icon icon="plus"></b-icon>
-                </router-link>
-            </div>
+                         :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
+                <b-icon icon="plus"></b-icon>
+            </router-link>
         </div>
     </div>
 </template>
@@ -80,6 +78,7 @@ export default {
             dayObj: {
                 date: new Date(this.date)
             },
+            colorBack: "gray",
             dropDown: {
                 id: "",
                 open: false
@@ -181,6 +180,7 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    justify-content: center;
 }
 .seat {
     width: 13%;
@@ -189,20 +189,11 @@ export default {
     width: 35%;
 }
 .name {
-    width: 25%;
+    width: 26%;
 }
 .icon {
-    width: 10%;
+    width: 13%;
     justify-content: center;
     align-items: center;
-}
-.grey-background{
-    background-color: #EBEBEB;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    position: absolute;
-    padding: 10px;
-    padding-top: 7px;
-    z-index: 1;
 }
 </style>

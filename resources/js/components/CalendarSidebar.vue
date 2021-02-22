@@ -72,7 +72,6 @@ export default {
         //load from storage
         loadStorage() {
             let filter = localStorage.getItem("calendar_filter");
-            console.log(filter);
             if (filter != null) {
                 this.filter = JSON.parse(filter);
             }
@@ -87,9 +86,6 @@ export default {
             }
 
             this.$emit('change-event', this.filter);
-            this.$store.commit('autoSaveFilter', {
-                filter: this.filter
-            });
 
             //save to storage
             localStorage.setItem("calendar_filter", JSON.stringify(this.filter));
