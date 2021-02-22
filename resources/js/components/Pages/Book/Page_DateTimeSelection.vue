@@ -6,7 +6,7 @@
         <div v-if="!load">
             <div class="coba-container">
                 <DayPicker :workstation="workstation" :bookings="bookings" @callback-picker-event="callbackPicker" :pre-selected-days="preSelectedDays"></DayPicker>
-            </div>
+            </div
             <div class="coba-container">
                 <TimePicker v-for="(day,index) in days" :key="index" :day="day"></TimePicker>
             </div>
