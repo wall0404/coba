@@ -4,6 +4,10 @@
                           :tooltip-style="{backgroundColor: 'transparent', border: 'none', color: 'black'}">
         </vue-range-slider>
         <div class="coba-text">{{ day.date.toLocaleDateString('de-DE', this.$date_options_long) }}</div>
+        <div v-for="(booking,index) in day.myBookings">
+            <span v-if="index===0" class="coba-text coba-text-danger" >Du hast an diesem Tag schon eine Buchung von {{booking.from.substr(0,5)}} bis {{booking.to.substr(0,5)}}</span>
+            <span v-else class="coba-text coba-text-danger">und von {{booking.from.substr(0,5)}} bis {{booking.to.substr(0,5)}}</span>
+        </div>
     </div>
 </template>
 

@@ -84,7 +84,7 @@
             <div class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-if="selectedLocations.length > 0">
                 <div v-for="workstation in workstations"  class="seat-container">
-                    <div  class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0" @click="workstation.isFavorite?  deleteFavoriteSeat(workstation) : addFavoriteSeat(workstation )">
+                    <div class="coba-button coba-button-big coba-button-round coba-button-no-border petrol-background mb-0" @click="workstation.isFavorite?  deleteFavoriteSeat(workstation) : addFavoriteSeat(workstation )">
                         <div>
                             <b-icon :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FEEF00" ></b-icon>
                         </div>
@@ -96,7 +96,6 @@
                 </template>
             </div>
         </div>
-
 
         <!-- password confirmation modal -->
         <modal :show-modal="showConfirmationModal" @modal-close-event="closeConfModal">
@@ -135,10 +134,8 @@ export default {
     data(){
         return{
             location:[],
-
             load:false,
             PictureLoad:false,
-
             showPasswordModal: false,
             showPassword1: false,
             showPassword2: false,
@@ -146,17 +143,13 @@ export default {
             wrongPassword: false ,
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
-
             componentKey: 0 ,
             showConfirmationModal: false ,
-
             selectedLocations: [],
             workLocations: [] = this.$store.getters.data.locations ,
             workstations: [] ,
         }
-
     },
-
     methods:{
         selectLocation(location_id) {
             if ( this.selectedLocations.length === 0) {
@@ -347,6 +340,9 @@ export default {
 /* is beeing used! */
 .red {
     border: 1px solid red;
+}
+.petrol-background{
+    background-color: #0c5460 !important;
 }
 .picture-container{
     max-width: 40%;

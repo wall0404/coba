@@ -13,9 +13,8 @@ class BestBuddiesController extends Controller
      * @param  Request $request
      *
      */
-    public function addBuddy(Request $request)
+    public function addBuddy(Request $request, $id)
     {
-        $id = $request->input() ;
         Auth::user()->UserIsBuddyOf()->attach($id);
 
         return response()->json(['success' => true], ParentController::$successCode);
@@ -27,9 +26,8 @@ class BestBuddiesController extends Controller
      * @param  Request $request
      * @return Response
      */
-    public function removeBuddy(Request $request)
+    public function removeBuddy(Request $request, $id)
     {
-        $id = $request->input() ;
         Auth::user()->UserIsBuddyOf()->detach($id);
 
         return response()->json(['success' => true], ParentController::$successCode);

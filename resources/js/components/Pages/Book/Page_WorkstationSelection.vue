@@ -9,10 +9,11 @@
                 <!-- :key  wurde entfernt-->
                 <template v-for="workstation in workstations"  >
                     <div v-if="workstation.isFavorite" class="seat-container">
-                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
-                       <b-icon style="position: absolute" icon="star-fill" font-scale="1.5" ></b-icon>
-                    <!--    <b-icon class="icon-class" icon="star-fill" ></b-icon> -->
-                    </router-link>
+                        <div class="chart-overlay"> </div>
+                        <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                        <b-icon style="position: absolute" icon="star-fill" font-scale="1.5" ></b-icon>
+                        <!--    <b-icon class="icon-class" icon="star-fill" ></b-icon> -->
+                        </router-link>
                         <doughnut :chart-data="{
                             datasets: [
                                 {
@@ -33,11 +34,12 @@
             <div v-if="!load" class="coba-container mt-0 pt-0 mb-2 "><hr class="m-0 p-0"></div>
 
             <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
-                <template v-for="workstation in workstations"  >
-                    <div  class="seat-container">
-                    <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
-                        <b-icon style="position: absolute"  icon="plus" font-scale="2"></b-icon>
-                    </router-link>
+                <template v-for="workstation in workstations">
+                    <div class="seat-container">
+                        <div class="chart-overlay"> </div>
+                        <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
+                            <b-icon style="position: absolute" icon="plus" font-scale="2"></b-icon>
+                        </router-link>
                         <doughnut :chart-data="{
                             datasets: [
                                 {
@@ -47,10 +49,10 @@
                                 }
                                 ]
                         }" style="height: 100px; width: 100px"></doughnut>
-                    <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
-                        <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
-                        <button class="coba-button-very-small coba-button-round coba-button">i</button>
-                    </div>
+                        <div class="coba-flex-space-evenly m-0 p-2" @click="openModal(workstation)">
+                            <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
+                            <button class="coba-button-very-small coba-button-round coba-button">i</button>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -60,10 +62,11 @@
                     <template v-slot:header>
                         <div class="coba-modal-header">
                             <div class="coba-flex-space-evenly">{{modal.header}}
-                                <div>
-                                     <b-icon @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" style="color:#FEEF00" font-scale="1.5" icon="star-fill"></b-icon>
-                                     <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#FEEF00" font-scale="1.5" icon="star"></b-icon>
-                                </div>
+                                <b-iconstack @click="deleteFavoriteSeat()" v-if="modal.workstation.isFavorite" class="mb-1" font-scale="1.5">
+                                    <b-icon stacked icon="star-fill" style="color:#FEEF00"></b-icon>
+                                    <b-icon stacked icon="star" style="color:#8C8C8C"></b-icon>
+                                </b-iconstack>
+                                <b-icon @click="addFavoriteSeat()" v-else class="mb-1" style="color:#8C8C8C" font-scale="1.5" icon="star"></b-icon>
                             </div>
                         </div>
                     </template>
@@ -320,6 +323,12 @@ export default {
 </script>
 
 <style scoped>
+.chart-overlay {
+    background-color: transparent;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+}
 .seat-container {
     display: flex;
     flex-direction: column;

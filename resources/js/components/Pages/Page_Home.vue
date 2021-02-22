@@ -1,7 +1,7 @@
 <template>
     <div class="coba-page coba-homescreen">
         <div class="coba-container coba-header">
-            <h1 v-if="this.prevRoute.path.includes('/signup')" class="coba-page-headline">Willkommen,<br>{{$store.getters.data.user.firstName}}</h1>
+            <h1 v-if="this.prevRoute.path.includes('/signup')" class="coba-page-headline">Willkommen bei TAS,<br>{{$store.getters.data.user.firstName}}</h1>
             <h1 v-else class="coba-page-headline">Willkommen zurück,<br>{{$store.getters.data.user.firstName}}</h1>
         </div>
         <div class="coba-home-icons-container">
@@ -39,10 +39,10 @@
         </div>
         <div class="coba-container coba-full-width coba-footer-container"> <!-- Auflistung der kommenden Buchungen -->
             <ul class="coba-list" v-if="!load">
-                <li class="coba-container position-relative" v-for="booking in bookings" :key="booking.id">
-                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
-                    <span v-else>{{makeDateToDateString(booking.date)}}, <br>Remote Work, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
-                    <edit-tool :openDD="dropDown.open" :booking="booking" @modal-close-event="toggleDropDown(booking)" @modal-delete-event="delBookingfkn(booking.id)"> </edit-tool>
+                <li class="coba-container position-relative" style="display: flex;" v-for="booking in bookings" :key="booking.id">
+                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null" style="width: 83%">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
+                    <span v-else style="width: 83%">{{makeDateToDateString(booking.date)}}, <br>Homeoffice, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
+                    <edit-tool class="table-item" :openDD="dropDown.open" :booking="booking" :colorBack="colorBack" @modal-close-event="toggleDropDown(booking)" @modal-delete-event="delBookingfkn(booking.id)"> </edit-tool>
                 </li>
             </ul>
             <spinner v-else></spinner>
@@ -68,16 +68,12 @@ export default {
                 id: "",
                 open: false
             },
+            colorBack: "white",
             prevRoute: {path: ""},
         }
     },
     created() {
         this.fetchData();
-    },
-    beforeRouteEnter(to, from, next){
-        next(vm => {
-            vm.prevRoute = from;
-        })
     },
     methods: {
         fetchData() {
@@ -126,5 +122,16 @@ export default {
 <style scoped>
 .coba-book-button {
     padding: 0 20px;
+}
+.table-item{
+    display: flex;
+    flex-direction: column;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    width: 13%;
+    overflow: inherit;
 }
 </style>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
         <link rel="stylesheet" href="{!! asset('css/app.css') !!}" />
 
-        <title>Coba</title>
+        <title>TAS - Take A Seat</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">

@@ -14667,8 +14667,21 @@ body,
   margin-left: 10px;
 }
 
+.coba-remote-work-button {
+  border-radius: 60px;
+  margin-left: 315px;
+  background-color: #FEEF00;
+}
+
+.coba-remote-work-button.big {
+  height: 50px;
+  width: 50px;
+  margin-left: 0;
+}
+
+/*In a Button container all buttons will be listed next to each other */
+
 .coba-button-container {
-  /*In a Button container all buttons will be listed next to each other */
   display: flex;
 }
 
@@ -14682,6 +14695,104 @@ body,
 
 .coba-button-container .coba-button:last-child {
   margin-right: 0;
+}
+
+/* CALENDAR SIDEBAR */
+
+.calendar-button {
+  background-color: #e8e8e8;
+  color: #2C2C2C;
+  border-radius: 15px;
+  border: 1px solid #8C8C8C;
+  width: 185px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  font-size: medium;
+}
+
+.calendar-text {
+  font-weight: bolder;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.coba-calendar-sidebar-icon {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  color: #fff;
+  z-index: 0;
+}
+
+.calendar-check {
+  color: #FEEF00;
+  position: fixed;
+  right: 8%;
+}
+
+.coba-calendar-wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.coba-calendar-container .coba-calendar-sidebar-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #333333;
+  width: 60%;
+  height: 93%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: revert;
+}
+
+.coba-calendar-container .coba-calendar-sidebar-content .coba-calendar-sidebar-header {
+  border-bottom: 2.5px solid #fff;
+  color: #fff;
+  padding: 2px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  width: 97%;
+  display: flex;
+  justify-content: flex-start;
+  font-size: larger;
+}
+
+.coba-calendar-container .coba-calendar-sidebar-content .coba-calendar-sidebar-small-header {
+  margin-top: 0;
+  margin-bottom: 12px;
+  padding-bottom: 3px;
+  color: white;
+  border-bottom: 2px solid #fff;
+}
+
+.coba-calendar-container ul {
+  align-self: flex-start;
+  color: #fff;
+}
+
+.coba-check {
+  position: absolute;
+  right: 15px;
+  visibility: hidden;
+}
+
+label.checked {
+  font-weight: bold;
+  color: #FEEF00;
 }
 
 /* DROP DOWN Styles */
@@ -14834,7 +14945,7 @@ body,
 .coba-list li::before {
   content: "\2022";
   /* Add content: \2022 is the CSS Code/unicode for a bullet */
-  color: #FEEF00;
+  color: #00434D;
   /* Change the color */
   font-weight: bold;
   /* If you want it to be bold */
@@ -14868,7 +14979,28 @@ body,
 
 .coba-list-nobullets li {
   padding: 2px 0;
-  border-bottom: 1px solid #EBEBEB;
+  border-bottom: 1px solid #8C8C8C;
+}
+
+.coba-list-nobul-nobor {
+  font-size: 14px;
+  color: #2C2C2C;
+  padding-left: 0px;
+  list-style: none;
+}
+
+.coba-list-nobul-nobor li::before {
+  content: none;
+}
+
+.coba-list-nobul-nobor li.last {
+  border-bottom: none;
+}
+
+.coba-list-nobul-nobor li {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 3px;
 }
 
 /* MODAL Style */
@@ -14922,6 +15054,7 @@ body,
   align-items: center;
   border: 1px solid transparent;
   background-color: #EBEBEB;
+  position: relative;
 }
 
 .coba-utilization-indicator.coba-utilization-indicator-selected {
@@ -14985,6 +15118,12 @@ body,
 .coba-utilization-indicator[class*=coba-utilization-indicator-arrow].coba-utilization-indicator-arrow-prev {
   transform: rotate(180deg);
   margin-left: -30px;
+}
+
+.coba-utilization-indicator .check-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 /* TABLE Styles */

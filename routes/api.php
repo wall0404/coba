@@ -24,18 +24,21 @@ Route::middleware('auth:api')->group(function () {
 
     /* Booking */
     Route::get('booking', 'App\Http\Controllers\BookingController@search');
+    Route::get('booking/suggestion', 'App\Http\Controllers\BookingController@getSuggestion');
     Route::get('booking/{id}', 'App\Http\Controllers\BookingController@get');
     Route::post('booking', 'App\Http\Controllers\BookingController@create');
     Route::delete('booking/{id}', 'App\Http\Controllers\BookingController@delete');
 
     /* User */
     Route::get('user', 'App\Http\Controllers\UserController@getList');
+    Route::get('user/{id}', 'App\Http\Controllers\UserController@getUserWithUpcomingBookings');
     Route::get('user/{id}/bookings', 'App\Http\Controllers\UserController@getBookingList');
     Route::get('my_favorites', 'App\Http\Controllers\UserController@myFavorites');
+    Route::get('user_bookings', 'App\Http\Controllers\UserController@UsersAndBookings');
 
     /* BestBuddies */
-    Route::post( 'buddy' , 'App\Http\Controllers\BestBuddiesController@addBuddy') ;
-    Route::delete( 'buddy' , 'App\Http\Controllers\BestBuddiesController@removeBuddy') ;
+    Route::post( 'buddy/{id}' , 'App\Http\Controllers\BestBuddiesController@addBuddy') ;
+    Route::delete( 'buddy/{id}' , 'App\Http\Controllers\BestBuddiesController@removeBuddy') ;
 
     /* Workstation */
     Route::get('workstation', 'App\Http\Controllers\WorkstationController@getList');

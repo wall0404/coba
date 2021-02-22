@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="coba-container coba-flex coba-header mb-4" style="flex-direction: column">
-            <img src="/img/Coba_Logo.png" style="text-align: center; margin-bottom: 20px" height="70px">
-            <span class="coba-page-headline">Willkommen</span>
+            <img src="/img/Coba_Logo-removebg-preview.png" style="text-align: center; margin-bottom: 20px " height="70px">
+            <span class="coba-page-headline coba-text-center">TAS <br> Take A Seat</span>
         </div>
         <div class="coba-container">
             <form class="coba-form">

@@ -5,8 +5,17 @@
         <div class="coba-text-strong coba-text coba-text-center">{{weekStartStr}} - {{weekEndStr}}</div>
         <div class="coba-utilization-indicator-container">
             <div :class="{'coba-utilization-indicator':true, 'coba-utilization-indicator-arrow-prev':true, 'coba-utilization-indicator-big':true, 'coba-utilization-indicator-disabled':page===0}" @click="prevPage">➤</div>
+            <!-- the days as coloured circles -->
             <div v-for="day in days" :class="'coba-utilization-indicator coba-utilization-indicator-big coba-utilization-indicator-'+day.color+' '+(day.selected?'coba-utilization-indicator-selected-'+day.color:'')+(day.disabled?'coba-utilization-indicator-disabled':'')"
-                @click="selectDate(day)">{{day.day.substring(0,1)}}</div>
+                @click="selectDate(day)"> {{day.day.substring(0,1)}}
+                <!-- a check-sign if the user has already booked a seat for this date -->
+                <b-iconstack class="check-icon" v-if="amountOfBookings(day)>0" font-scale="1.5">
+                    <b-icon stacked icon="circle-fill" style="color:#EBEBEB"></b-icon>
+                    <b-icon stacked icon="check" style="color:#2C2C2C"></b-icon>
+                    <b-icon stacked icon="circle" style="color:#2C2C2C"></b-icon>
+                </b-iconstack>
+
+            </div>
             <div class="coba-utilization-indicator coba-utilization-indicator-arrow-next coba-utilization-indicator-big" :class="{'coba-utilization-indicator-disabled':page===2}" @click="nextPage">➤</div>
         </div>
     </div>
@@ -24,7 +33,8 @@ export default {
             weekEnd: null,
             page: 0,
             days: [],
-            pages: []
+            pages: [],
+            ownBookings: []
         }
     },
     computed: {
@@ -43,6 +53,7 @@ export default {
     },
     created() {
 
+        this.fetchData();
         if(typeof this.preSelectedDays !== 'undefined' && this.preSelectedDays.length > 0) {
             //es wurden Tage übergeben
 
@@ -86,6 +97,43 @@ export default {
 
     },
     methods: {
+        fetchData() {
+            this.load = true;
+            let date = new Date();
+            this.today_date = date.toISOString().slice(0, 10); //cuts off the time: only date
+            fetch('/api/user/'+this.$store.getters.data.user.user_id+'/bookings?order_by=date&filter[date][min]='+this.today_date, {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization' : 'Bearer '+localStorage.token
+                }
+            })
+                .then(res => res.json())
+                .then(res => {
+                    if(res.success) {
+                        this.ownBookings = res.success;
+                        this.load = false;
+                    }
+                    else {
+                        this.error = true;
+                        this.load = false;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.load = false;
+                })
+        },
+        //tells how many bookings a user already has for a day
+        amountOfBookings(dayNow){
+            let i = 0;
+            for (var k = 0;k<this.ownBookings.length;k++){
+                if(this.ownBookings[k].date===dayNow.date.toISOString().slice(0,10)) {
+                    i++;
+                }
+            } return i;
+        },
+
         initiateAllDates() {
             this.page = 2;
             this.initiateDates();
@@ -212,6 +260,13 @@ export default {
 
                 day.selected = !day.selected;
                 day.workstation = this.workstation;
+                let myBookings = [];
+                for (var k = 0;k<this.ownBookings.length;k++){
+                    if(this.ownBookings[k].date===day.date.toISOString().slice(0,10)) {
+                        myBookings.push(this.ownBookings[k]);
+                    }
+                }
+                day.myBookings = myBookings;
                 this.$emit('callback-picker-event', day);
             }
         },
@@ -228,5 +283,7 @@ export default {
 </script>
 
 <style scoped>
-
+.coba-check-circle{
+    ;
+}
 </style>
