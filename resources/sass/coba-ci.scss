@@ -272,11 +272,15 @@ html, body, #app, #content {
 }
 
 .coba-remote-work-button {
-    height: 35px;
-    width: 35px;
     border-radius: 60px;
     margin-left: 315px;
     background-color: $coba-yellow;
+
+    &.big {
+        height: 50px;
+        width: 50px;
+        margin-left: 0;
+    }
 }
 
 
@@ -316,10 +320,6 @@ html, body, #app, #content {
     font-weight: bolder;
     margin-top: 15px;
     margin-left: 10px;
-    &.calendar-text-remote-work{
-        margin-right: 200px;
-    }
-
 }
 
 .coba-calendar-sidebar-icon{

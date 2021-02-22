@@ -14668,11 +14668,15 @@ body,
 }
 
 .coba-remote-work-button {
-  height: 35px;
-  width: 35px;
   border-radius: 60px;
   margin-left: 315px;
   background-color: #FEEF00;
+}
+
+.coba-remote-work-button.big {
+  height: 50px;
+  width: 50px;
+  margin-left: 0;
 }
 
 /*In a Button container all buttons will be listed next to each other */
@@ -14713,10 +14717,6 @@ body,
   font-weight: bolder;
   margin-top: 15px;
   margin-left: 10px;
-}
-
-.calendar-text.calendar-text-remote-work {
-  margin-right: 200px;
 }
 
 .coba-calendar-sidebar-icon {

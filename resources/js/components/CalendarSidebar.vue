@@ -12,10 +12,10 @@
 
                 <ul class="coba-list-nobul-nobor">
                     <div v-for="location in locations" :key="location.id">
-                        <li><label :class="{'checked': filter.location[location.id]}"><input type="checkbox" name="cb" @change="change(); noLocation()" v-model="filter.location[location.id]" class="coba-check">{{location.name}}
+                        <li><label :class="{'checked': filter.location[location.id]}"><input type="checkbox" name="cb" @change="change()" v-model="filter.location[location.id]" class="coba-check">{{location.name}}
                             <b-icon class="calendar-check" v-if="filter.location[location.id]" icon="check2" font-scale="1.5" ></b-icon></label></li>
                     </div>
-                    <li><label :class="{'checked': filter.location['homeoffice']}"><input type="checkbox" name="cb" @change="change(); noLocation()" class="coba-check" v-model="filter.location['homeoffice']"> Remote Work
+                    <li><label :class="{'checked': filter.location['homeoffice']}"><input type="checkbox" name="cb" @change="change()" class="coba-check" v-model="filter.location['homeoffice']"> Remote Work
                         <b-icon class="calendar-check" v-if="filter.location['homeoffice']" icon="check2" font-scale="1.5" ></b-icon></label></li>
                 </ul>
 
@@ -58,7 +58,6 @@ export default {
                 available:false,
                 bestbud: false,
                 fav: false,
-                nolo: null,
             }
         }
     },
@@ -68,12 +67,6 @@ export default {
     },
 
     methods: {
-        //nolo is a boolean, that indicates if a location option is selected or not
-        noLocation(){
-          if (this.filter.location[1] == true || this.filter.location[2] == true|| this.filter.location['homeoffice'] == true)
-              this.filter.nolo = false;
-          else this.filter.nolo = true;
-        },
 
         //everytime a filter is selected this method sends the filter values to page calender and stores the changes in case the user switches between pages
         change(){

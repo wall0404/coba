@@ -24,13 +24,21 @@
                 <!--homeoffice -->
                 <div v-if="selectFilter.location['homeoffice']">
                     <div class="section-headline p-2 px-3">Remote Work</div>
-                    <div class="calendar-text calendar-text-remote-work">Remote Work buchen</div>
-                    <button class="coba-remote-work-button">
-                        <router-link to="/booking/new/homeoffice"><b-icon icon="arrow-90deg-right" font-scale="0.75"></b-icon></router-link>
-                    </button>
+                    <div class="coba-flex space-between m-3">
+                        <div class="calendar-text-remote-work">Remote Work buchen</div>
+                        <router-link class="coba-remote-work-button big coba-flex" to="/booking/new/remotework"><b-icon icon="arrow-90deg-right" font-scale="1.5"></b-icon></router-link>
+                    </div>
+                    <div class="booking-list px-3">
+                        <!-- Liste mit Teammitgliedern die im Remote Work sind-->
+                        <div v-for="user in users">
+                            <div v-for="booking in bookings" v-if="booking.user_id == user.user_id && booking.workstation_id == null">
+                                <calendar-booking-list-item-remote-work :user="user" :booking="booking"></calendar-booking-list-item-remote-work>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- warning message for the user if no loction is selected -->
-                <div v-if="selectFilter.nolo" class="calendar-text" > Du hast noch keinen Standort ausgewählt</div>
+                <div v-if="noLocationSelected()" class="calendar-text" > Du hast noch keinen Standort ausgewählt</div>
           </div>
         </div>
     </div>
@@ -39,9 +47,10 @@
 <script>
 import Spinner from "../Global/Spinner";
 import CalendarBookingListItem from "./CalendarBookingListItem";
+import CalendarBookingListItemRemoteWork from "./CalendarBookingListItemRemoteWork";
 export default {
     name: "CalendarBookingList",
-    components: {CalendarBookingListItem, Spinner},
+    components: {CalendarBookingListItemRemoteWork, CalendarBookingListItem, Spinner},
     props: ['selectFilter'],
     data() {
         return {
@@ -56,12 +65,22 @@ export default {
             }
         }
     },
+
     created() {
         this.date = new Date().toISOString().slice(0, 10)
         this.fetchBookingsForDate(this.date)
         this.fetchUsers();
     },
     methods: {
+        noLocationSelected() {
+            for (let location in this.selectFilter.location) {
+                if (this.selectFilter.location.hasOwnProperty(location)) {
+                    if (this.selectFilter.location[location])
+                        return false;
+                }
+            }
+            return true;
+        },
         fetchBookingsForDate(date) {
             if(typeof date !== 'undefined')
                 this.date = date;
