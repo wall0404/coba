@@ -7,7 +7,7 @@
           <div class="coba-header adjust-header"  >
               <div ><h2 class="coba-page-headline">Team</h2></div>
               <div class="filter-container coba-flex-space-evenly mt-3">
-                  <input  v-model="searchQuery" @keyup="filterUsers" class="coba-border-rounded coba-border-yellow p-2" type="text"  placeholder="Kontakt suchen..">
+                  <input  v-model="searchQuery" @keyup="fetchUsers" class="coba-border-rounded coba-border-yellow p-2" type="text"  placeholder="Kontakt suchen..">
               </div>
           </div>
        </div>
@@ -19,27 +19,27 @@
         <div v-else v-for="user in users" class="coba-container coba-smaller"  >
             <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; margin-top: -20px ; color:#FEEF00" font-scale="1.5"  ></b-icon>
             <router-link v-bind:to="'/team/' + user.user_id" >
-            <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
-                <div class="profile-picture"  style="background-color: transparent ">
-                    <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/>
-                </div>
-                <div class="user-data" >
-                    <table  class="user-table limit">
-                        <tr>
-                            <td  class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
-                        </tr>
+                <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
+                    <div class="profile-picture"  style="background-color: transparent ">
+                        <img class="coba-border-round coba-border-yellow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/>
+                    </div>
+                    <div class="user-data" >
+                        <table  class="user-table limit">
                             <tr>
-                                <td v-if="user.todayBookings.length != 0" class="user-data-name small text-info">
-                                    <template v-for="works in user.todayBookings">
-                                        <span v-if="works.workstation_id === null" class="user-data-name small text-info"> heute im Remote Work</span>
-                                        <span v-else class="user-data-name small text-info" > heute im {{workstations[works.workstation_id-1].location.name}}</span>
-                                        <br>
-                                    </template>
-                                </td>
+                                <td  class="user-data-name" >{{user.firstName + " " + user.lastName }}</td>
                             </tr>
-                    </table>
+                                <tr>
+                                    <td v-if="user.todayBookings.length != 0" class="user-data-name small text-info">
+                                        <template v-for="booking in user.todayBookings">
+                                            <span v-if="booking.workstation_id === null" class="user-data-name small text-info"> heute im Remote Work</span>
+                                            <span v-else class="user-data-name small text-info" > heute im {{getWorkstation(booking.workstation_id)}}</span>
+                                            <br>
+                                        </template>
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
             </router-link>
         </div>
     </div>
@@ -51,14 +51,10 @@ import {pad} from "lodash";
 export default {
     name: "Teampage",
     components: {Spinner} ,
-
         data () {
             return {
                 load: false ,
-                error: false ,
                 users: [],
-                today_date: new Date().toISOString().slice(0, 10),
-                today_hours: new Date().toISOString().slice(11,19),
                 searchQuery: '',
                 workstations:[],
                 timeout:null ,
@@ -66,8 +62,9 @@ export default {
         },
         methods: {
 
-            filterUsers(){
-                if ( this.timeout){
+            fetchUsers(){
+                this.load = true;
+                if (this.timeout){
                     clearTimeout( this.timeout) ;
                     this.timeout = null ;
                 }
@@ -86,9 +83,13 @@ export default {
                                 this.users = res.success.filter(user =>
                                     (user.firstName + user.lastName).toLowerCase().includes(this.searchQuery.toLowerCase())).sort(this.compare) ;
                                     window.scrollTo(0,0);
+
+                                this.load = false;
                             }else{
                                  this.users = res.success.sort( this.compare) ;
                                 window.scrollTo(0,0);
+
+                                this.load = false;
                             }
                         })
                 },300) ;
@@ -102,32 +103,20 @@ export default {
                 }
                 else return 1 ;
             },
-            getWorkstation(){
-                fetch('/api/workstation',{
-                    method: 'GET',
-                    headers: {
-                        'content-type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.token
+            getWorkstation(id){
+                let locations = this.$store.getters.locations;
+                for(let i = 0; i<locations.length; i++) {
+                    for (let k = 0; k < locations[i].workstations.length; k++) {
+                        if(locations[i].workstations[k].id === id) {
+                            return locations[i].name;
+                        }
                     }
-                })
-                .then( response => response.json())
-                .then(response => {
-                    if(response.success){
-                        this.workstations = response.success ;
-                    }
-                }).catch(error => {
-                    console.log(error) ;
-                })
+                }
             }
-
         },
         created(){
-            this.filterUsers() ;
-            this.getWorkstation() ;
+            this.fetchUsers() ;
         },
-
-
-
 }
 </script>
 
