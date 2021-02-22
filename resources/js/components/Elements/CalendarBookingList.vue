@@ -4,9 +4,9 @@
         <div v-else  class="coba-full-width">
             <div>
                 <!-- shows the favorite workstations, but only when at least one location is selected-->
-                <div class="section-headline p-2 px-3" v-if="selectFilter.fav">Favoriten</div>
+                <div class="section-headline p-2 px-3" v-if="selectFilter.onlyFavoriteWorkstations">Favoriten</div>
                 <div class="booking-list px-3">
-                    <div v-if="selectFilter.fav && selectFilter.location[location.id]" v-for="location in $store.getters.locations">
+                    <div v-if="selectFilter.onlyFavoriteWorkstations && selectFilter.location[location.id]" v-for="location in $store.getters.locations">
                         <calendar-booking-list-item v-if="workstation.isFavorite" v-for="(workstation, index) in location.workstations"
                                                     :key="index" :users="users" :workstation="workstation" :bookings="bookings" :date="date" :selected-filter="selectFilter"
                                                     v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item>
