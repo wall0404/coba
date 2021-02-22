@@ -171,7 +171,7 @@ export default {
     display: flex;
     position: relative;
 }
-.booking.strong {
+.strong {
     font-weight: bold;
 }
 .table-item {

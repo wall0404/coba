@@ -10,7 +10,7 @@
             <div v-if="dropDown.open" >
                 <div class="coba-dropdown-content" :class="{'white-background':dropDown.open&&colorBack==='white','gray-background':dropDown.open&&colorBack==='gray'}">
                     <ul class="coba-list-nobullets" style="margin-bottom: 0px">
-                        <li> <router-link :to="'/booking/edit/'+this.booking.id" style="background-color:rgba(255,255,255,0);">Bearbeiten</router-link> </li>
+                        <li> <router-link :to="{name: 'ChangeBooking', params: { booking_id:booking.id, booking: booking }}" style="background-color:rgba(255,255,255,0);">Bearbeiten</router-link> </li>
                         <li class="last"> <button v-if="!load" style="background-color:rgba(255,255,255,0);" @click="openModal()">Löschen</button> </li>
                     </ul>
                 </div>
@@ -125,12 +125,8 @@ export default {
 }
 .coba-dropdown-content {
     position: absolute;
-//display: flex;
     bottom: -60px;
     right: 0px;
-//padding-right: 10px;
-//width: -webkit-fit-content;
-//width: -moz-fit-content;
     width: fit-content;
     z-index: 1;
     padding: 7px 10px;
