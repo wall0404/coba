@@ -114,7 +114,6 @@ export default {
                 .then(response => {
                     if(response.success){
                         this.workstations = response.success ;
-                        console.log(this.workstations) ;
                     }
                 }).catch(error => {
                     console.log(error) ;
