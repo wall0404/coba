@@ -63,10 +63,21 @@ export default {
     },
 
     created() {
-        this.change()
+        this.loadStorage();
+
+        this.change();
     },
 
     methods: {
+
+        //load from storage
+        loadStorage() {
+            let filter = localStorage.getItem("calendar_filter");
+            console.log(filter);
+            if (filter != null) {
+                this.filter = JSON.parse(filter);
+            }
+        },
 
         //everytime a filter is selected this method sends the filter values to page calender and stores the changes in case the user switches between pages
         change(){
@@ -80,6 +91,9 @@ export default {
             this.$store.commit('autoSaveFilter', {
                 filter: this.filter
             });
+
+            //save to storage
+            localStorage.setItem("calendar_filter", JSON.stringify(this.filter));
         },
 
         //resets the selected filter options

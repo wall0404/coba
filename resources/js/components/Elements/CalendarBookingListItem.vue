@@ -18,9 +18,11 @@
             <div v-if="user_booking_list.length==0">
 
             </div>
-            <div v-else v-for="user in user_booking_list"  class="pb-2" v-if="(!selectedFilter.onlyMyBookings && !selectedFilter.onlyBestBuddyBookings) || (selectedFilter.onlyMyBookings&&user.user_id === $store.getters.data.user.user_id) || (selectedFilter.onlyBestBuddyBookings&&user.isBuddy)">
-                <router-link v-if="user.user_id===$store.getters.data.user.user_id" :to="'/profile'">{{user.firstName}}</router-link> <!-- Weiterleitung zum eigenen Profil -->
-                <router-link v-else :to="'/team/'+user.user_id">{{user.firstName}} {{user.lastName.substring(0,1)}}.</router-link> <!-- Weiterleitung zum Profil des Teammitglieds -->
+            <div v-else>
+                <div v-for="user in user_booking_list"  class="pb-2" v-if="(!selectedFilter.onlyMyBookings && !selectedFilter.onlyBestBuddyBookings) || (selectedFilter.onlyMyBookings&&user.user_id === $store.getters.data.user.user_id) || (selectedFilter.onlyBestBuddyBookings&&user.isBuddy)">
+                    <router-link v-if="user.user_id===$store.getters.data.user.user_id" :to="'/profile'">{{user.firstName}}</router-link> <!-- Weiterleitung zum eigenen Profil -->
+                    <router-link v-else :to="'/team/'+user.user_id">{{user.firstName}} {{user.lastName.substring(0,1)}}.</router-link> <!-- Weiterleitung zum Profil des Teammitglieds -->
+                </div>
             </div>
         </div>
 
