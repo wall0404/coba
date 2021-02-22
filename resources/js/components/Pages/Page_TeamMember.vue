@@ -1,33 +1,34 @@
 <template>
-    <div class="coba-page coba-homescreen ">
-        <template v-for="user in users">
-        <div v-if="user.user_id === id" class="user-container mb-5 mt-4">
-            <div v-if="user.user_id !== userId" @click="user.isBuddy ?  removeBuddy(user) : addBuddy(user)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FEEF00" :icon="user.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
-            <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +user.user_id" alt="user"/> </div>
-        </div>
-            <div v-if="user.user_id === id " class="coba-container text-center pb-0 ">
-                <h3  class="mb-0"> {{user.firstName + " " + user.lastName}}</h3>
-                <p   class="mb-1">{{user.email}}</p>
-                <div v-for="booking in bookings"> <!--todays bookings -->
-                    <p v-if="booking.date === today_date && today_hours < booking.to  && booking.workstation !== null" class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
-                    <p v-else-if="booking.date === today_date && today_hours < booking.to" class="user-data-email text-info">heute im Remote Work</p>
-                  <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p> -->
+    <div class="coba-page coba-homescreen">
+        <div  v-if="!load">
+            <div class="user-container mb-5 mt-4">
+                <div v-if="teamMember.user_id !== this.$store.getters.data.user.user_id" @click="teamMember.isBuddy ?  removeBuddy(teamMember) : addBuddy(teamMember)" ><b-icon style="position: absolute ; right: 40px ; top:2% ; color: #FEEF00" :icon="teamMember.isBuddy ? 'star-fill' : 'star'" font-scale="2.5"></b-icon></div>
+                <div><img class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img" :src="'/api/profile_picture/' +teamMember.user_id" alt="user"/> </div>
+            </div>
+            <div class="coba-container text-center pb-0 " >
+                <h3  class="mb-0"> {{teamMember.firstName + " " + teamMember.lastName}}</h3>
+                <p   class="mb-1">{{teamMember.email}}</p>
+                <div v-for="booking in teamMember.upcomingBookings"> <!--todays bookings -->
+                    <p v-if="booking.date === today_date && booking.workstation !== null" class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
+                    <p v-else-if="booking.date === today_date" class="user-data-email text-info">heute im Remote Work</p>
+                    <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p> -->
                 </div>
                 <br>
                 <div class="coba-container text-left">
-                    <span class="coba-text-big " >{{user.firstName}}'s Buchungen:</span>
+                    <span class="coba-text-big " >{{teamMember.firstName}}'s Buchungen:</span>
                 </div>
             </div>
-        </template>
-        <div class="coba-container coba-full-width coba-footer-container pb-5" style="min-height: 300px">
-            <ul class="coba-list" v-if="!load">
-                <li v-for="booking in bookings" :key="booking.id">
-                    <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
-                    <span v-else>{{makeDateToDateString(booking.date)}}, <br>Remote Work, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
-                </li>
-            </ul>
-            <spinner v-else></spinner>
+            <div class="coba-container coba-full-width coba-footer-container pb-5" style="min-height: 300px">
+                <ul class="coba-list">
+                    <li v-for="booking in teamMember.upcomingBookings" :key="booking.id">
+                        <span v-if="typeof booking.workstation == 'object'&& booking.workstation !== null">{{makeDateToDateString(booking.date)}}, <br>{{ booking.workstation.location.name }}, {{booking.workstation.name}}, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information --></span>
+                        <span v-else>{{makeDateToDateString(booking.date)}}, <br>Remote Work, {{booking.from.substr(0,5)}} - {{booking.to.substr(0,5)}} <!-- the booking information when you have booked a homeoffice  --></span>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <spinner v-else></spinner>
+
     </div>
 </template>
 
@@ -41,52 +42,19 @@ export default {
         return {
             load: false ,
             error: false ,
-            users: [],
-            id: null ,
-            userId: null ,
-            bookings:[],
-            allBookings:[],
             today_date: new Date().toISOString().slice(0, 10),
-            today_hours: new Date().toISOString().slice(11,19),  // ! standard: UMT+0
+            teamMember: {},
         }
     },
     methods: {
-        loadID(){
-            this.id = Number.parseInt(this.$route.params.TeamMember_ID )  ;
-        },
-        loadUsers(){
-            this.load = true ;
-            fetch('/api/user/'  ,{
-                method: 'GET' ,
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization' : 'Bearer '+localStorage.token
-                }
-            } ) .then(response => response.json())
-                .then(response => {
-                    if(response.success) {
-                        this.users = response.success;
-                        this.load = false;
-                    }
-                    else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-
-        },
 
         makeDateToDateString(dateStr){
             return  new Date(dateStr).toLocaleDateString('de-DE', this.$date_options_without_year);
         },
 
-        getTeamMemberBookings(){
+        getTeamMember(){
             this.load = true ;
-            fetch('/api/user/' +this.id +'/bookings?order_by=date&filter[date][min]='+this.today_date ,{
+            fetch('/api/user/' +this.$route.params.TeamMember_ID,{
                 method: 'GET' ,
                 headers: {
                     'content-type': 'application/json',
@@ -95,34 +63,10 @@ export default {
             } ) .then(response => response.json())
                 .then(response => {
                     if(response.success) {
-                        this.bookings = response.success;
+                        this.teamMember = response.success;
                         this.load = false;
                     }
                     else {
-                        this.error = true;
-                        this.load = false;
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.load = false;
-                })
-        },
-        // will be used for checking seats
-        getAllBookings(){
-            this.load = true ;
-            fetch('/api/booking/?filter[date][min]=' +this.today_date  , {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.token
-                }
-            }).then(response => response.json())
-                .then(response => {
-                    if (response.success) {
-                        this.allBookings = response.success;
-                        this.load = false;
-                    } else {
                         this.error = true;
                         this.load = false;
                     }
@@ -171,11 +115,7 @@ export default {
 
     },
     created() {
-        this.loadUsers();
-        this.loadID() ;
-        this.getTeamMemberBookings() ;
-        this.getAllBookings() ;
-        this.userId = this.$store.getters.data.user.user_id ;
+        this.getTeamMember();
     }
 
 }
