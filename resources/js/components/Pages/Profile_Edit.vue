@@ -92,7 +92,6 @@
             </div>
         </div>
 
-
         <!-- password confirmation modal -->
         <modal :show-modal="showConfirmationModal" @modal-close-event="closeConfModal">
             <template v-slot:header>
@@ -134,7 +133,6 @@ export default {
             showPasswordModal: false,
             location:[],
             load:false,
-
             showPassword1: false,
             showPassword2: false,
             showPassword3: false,
@@ -144,14 +142,11 @@ export default {
 
             componentKey: 0 ,
             showConfirmationModal: false ,
-
             selectedLocations: [],
             workLocations: [] = this.$store.getters.data.locations ,
             workstations: [] ,
         }
-
     },
-
     methods:{
         selectLocation(location_id) {
             if ( this.selectedLocations.length === 0) {
