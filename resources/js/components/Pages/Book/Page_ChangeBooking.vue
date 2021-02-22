@@ -207,8 +207,8 @@ export default {
 
             let changedBooking = {
                 date: this.date,
-                from: this.day.time[0],
-                to: this.day.time[1],
+                from: (this.day.time[0]<10?"0":"")+Math.round(this.day.time[0]-0.1)+":"+(this.day.time[0]%1===0?'00':'30'),
+                to: (this.day.time[1]<10?"0":"")+Math.round(this.day.time[1]-0.1)+":"+(this.day.time[1]%1===0?'00':'30'),
                 user_id: this.$store.getters.data.user.user_id,
                 workstation_id: this.workstationID,
             }

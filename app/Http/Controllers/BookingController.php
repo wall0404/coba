@@ -88,14 +88,14 @@ class BookingController extends ParentController
         return $input;
     }
 
-    protected function doBeforeUpdated($booking){
+    protected function doBeforeUpdated($input){
 
-        if($booking->from >= $booking->to)
+        if($input->from >= $input->to)
             throw new \Exception('Startzeit darf nicht nach der Endzeit liegen');
 
         //Check if workplace is already taken by someone else
         if(isset($input['workstation_id'])) {
-            $bookings = Booking::where('date', $booking->date)->where('workstation_id', $booking->workstation_id)->whereNot('id', $booking->id)->get();
+            $bookings = Booking::where('date', $input->date)->where('workstation_id', $input->workstation_id)->where('id', '!=', $input->id)->get();
             foreach ($bookings as $booking) {
                 $booking_start = new Carbon($booking->from);
                 $booking_end = new Carbon($booking->to);
@@ -105,11 +105,11 @@ class BookingController extends ParentController
         }
 
         //Check if user already booked a workplace at this time
-        $bookings = Booking::where('date', $input['date'])->whereNot('id', $input['id'])->where('user_id', Auth::id())->get();
+        $bookings = Booking::where('date', $input['date'])->where('id', '!=', $input['id'])->where('user_id', Auth::id())->get();
         foreach ($bookings as $booking) {
             $booking_start = new Carbon($booking->from);
             $booking_end = new Carbon($booking->to);
-            if($booking_start->lt(new Carbon($input['to']))  && $booking_end->gt(new Carbon($input['from']))) {
+            if($booking_start->lt(new Carbon($input['to']))  && $booking_end->gt(new $input($booking['from']))) {
                 if($booking->workstation_id == $input['workstation_id'])
                     throw new \Exception('Sie haben diesen Arbeitsplatz zu dieser Uhrzeit schon gebucht');
                 else
@@ -269,19 +269,18 @@ class BookingController extends ParentController
                         $model->$prop = $value;
                     }
 
-                    $booking = $this->doBeforeUpdated($booking);
+                    $model = $this->doBeforeUpdated($model);
 
                     if ($model->checkUpdateRight()) {
                         $model->save();
                         $returnObj['success'][] = $model;
                     }
                     else {
-                        $booking['error'][] = "Keine Berechtigung";
-                        $returnObj['error'][$key] = $booking;
+                        $model['error'][] = "Keine Berechtigung";
+                        $returnObj['error'][$key] = $model;
                     }
                 } catch (\Exception $e) {
-                    $booking['error'][] = $e->getMessage();
-                    $returnObj['error'][$key] = $booking;
+                    $returnObj['error'] = $e->getMessage();
                     continue;
                     //return response()->json(['error'=>$e->getMessage()], ParentController::$badRequestCode);
                 }
