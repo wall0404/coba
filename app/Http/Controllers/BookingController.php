@@ -211,6 +211,7 @@ class BookingController extends ParentController
 
     /**
      * @param Request $request
+     * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     protected function update(Request $request, $id) {
