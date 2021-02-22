@@ -30,6 +30,14 @@ class UserController extends ParentController
         return response()->json(['success'=>$data], ParentController::$successCode);
     }
 
+    public function getUserWithUpcomingBookings(Request $request, $id) {
+
+        $user = User::findOrFail($id);
+        $user->upcomingBookings = Booking::where('user_id', $id)->where('date', '>=', date('Y-m-d'))->with('workstation')->get();
+
+        return response()->json(['success'=>$user], ParentController::$successCode);
+    }
+
     public function getList(Request $request) {
         //Get input
         $input = $request->input();
