@@ -93,7 +93,6 @@ export default {
                     this.bookings[data[k].date].push(data[k])
                 }
             }
-            console.log(this.bookings);
         },
         callbackPicker(day) {
             this.$store.commit('markChanges');

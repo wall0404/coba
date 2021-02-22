@@ -26,13 +26,13 @@
                     <div class="section-headline p-2 px-3">Remote Work</div>
                     <div class="coba-flex space-between m-3">
                         <div class="calendar-text-remote-work">Remote Work buchen</div>
-                        <router-link class="coba-remote-work-button big coba-flex" to="/booking/new/remotework"><b-icon icon="arrow-90deg-right" font-scale="1.5"></b-icon></router-link>
+                        <router-link class="coba-remote-work-button big coba-flex" :to="{ name: 'RemoteWorkDateTimeSelection', params: { preSelectedDays: [dayObj] }}"><b-icon icon="arrow-90deg-right" font-scale="1.5"></b-icon></router-link>
                     </div>
                     <div class="booking-list px-3">
                         <!-- Liste mit Teammitgliedern die im Remote Work sind-->
                         <div v-for="user in users" v-if="(!selectFilter.onlyMyBookings && !selectFilter.onlyBestBuddyBookings) || (selectFilter.onlyMyBookings&&user.user_id === $store.getters.data.user.user_id) || (selectFilter.onlyBestBuddyBookings&&user.isBuddy)">
                             <div v-for="booking in bookings" v-if="booking.user_id == user.user_id && booking.workstation_id == null">
-                                <calendar-booking-list-item-remote-work :user="user" :booking="booking"></calendar-booking-list-item-remote-work>
+                                <calendar-booking-list-item-remote-work :user="user" :booking="booking" v-on:refresh-list="fetchBookingsForDate"></calendar-booking-list-item-remote-work>
                             </div>
                         </div>
                     </div>
@@ -61,13 +61,17 @@ export default {
             error: null,
             date: null,
             dayObj: {
-                date: new Date(this.date)
+                date: null
             }
         }
     },
 
     created() {
         this.date = new Date().toISOString().slice(0, 10)
+
+        //create dayObj for preSelectedDays
+        this.dayObj.date = new Date(this.date);
+
         this.fetchBookingsForDate(this.date)
         this.fetchUsers();
     },
