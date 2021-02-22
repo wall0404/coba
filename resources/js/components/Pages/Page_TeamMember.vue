@@ -11,7 +11,6 @@
                 <div v-for="booking in teamMember.upcomingBookings"> <!--todays bookings -->
                     <p v-if="booking.date === today_date && booking.workstation !== null" class="user-data-email text-info">heute im {{booking.workstation.location.name}}</p>
                     <p v-else-if="booking.date === today_date" class="user-data-email text-info">heute im Remote Work</p>
-                    <!--  <p v-if="booking.date === today_date && today_hours > booking.to" class="text-warning user-data-email" >war heute im {{booking.workstation.location.name}}</p> -->
                 </div>
                 <br>
                 <div class="coba-container text-left">
@@ -77,24 +76,28 @@ export default {
                 })
         },
         addBuddy( user ){
-          fetch('/api/buddy/'+user.user_id, {
-              method: 'POST',
-              body: JSON.stringify({}),
-              headers: {
-                  'content-type': 'application/json',
-                  'Authorization': 'Bearer ' + localStorage.token
-              }
-          })  .then( res => res.json())
-              .then( res => {
-                  if ( res.success){
-                      user.isBuddy = true;
-                  }
-              }).catch(error =>{
-              this.error = error;
-              console.log(error) ;
-          })
+            user.isBuddy = true;
+
+            fetch('/api/buddy/'+user.user_id,{
+                method: 'POST',
+                body: JSON.stringify({}),
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.token
+                }
+            })  .then( res => res.json())
+                .then( res => {
+                    if ( res.success){
+
+                    }
+                }).catch(error =>{
+                user.isBuddy = false;
+                this.error = error;
+                console.log(error) ;
+            })
         },
         removeBuddy(user){
+            user.isBuddy = false;
             fetch('/api/buddy/'+user.user_id, {
                 method: 'DELETE',
                 body: JSON.stringify({}),
@@ -105,9 +108,10 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        user.isBuddy = false;
+
                     }
                 }).catch(error =>{
+                user.isBuddy = true;
                 this.error = error;
                 console.log(error) ;
             })
