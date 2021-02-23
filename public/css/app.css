@@ -14390,15 +14390,11 @@ body,
 }
 
 .coba-page.coba-page-no-header {
-  padding-top: 300px;
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-}
-
-.coba-page.coba-page-lower-padding {
-  padding-top: 50%;
+  align-items: center;
+  min-height: 100%;
 }
 
 .coba-home-icons-container {
