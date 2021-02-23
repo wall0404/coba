@@ -16,7 +16,7 @@
         </div>
 
         <spinner v-if="load"></spinner>
-        <div v-else v-for="user in users" class="coba-container coba-smaller">
+        <div v-else v-for="user in users" class="coba-container coba-smaller" :style="user.isBuddy ? 'marginTop: -24px' : ''">
             <b-icon v-if="user.isBuddy" icon="star-fill" style="position: relative ; top: 95px; left:70px; z-index: 1 ; margin-top: -20px ; color:#FEEF00" font-scale="1.5"  ></b-icon>
             <router-link v-bind:to="'/team/' + user.user_id" >
                 <div class="coba-shadow coba-border-rounded coba-flex-space-between p-3 pl-3 pr-1 mb-4"   >
