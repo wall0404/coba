@@ -4,21 +4,24 @@
             <span class="coba-page-headline" align="center">Was möchtest du ändern?</span>
         </div>
         <spinner v-if="loadBookings || loadWorkstations"></spinner>
-        <div v-else>
+        <div v-else class="scroll">
             <!-- Tag der Buchung -->
             <div class="coba-container coba-text-center coba-text-big coba-text-strong">
                 {{makeDateToDateString(booking.date)}}
             </div>
             <!-- Zeit der Buchung -->
-            <div class="coba-container" >
-                <span class="coba-text-strong coba-text-big">Zeitraum ändern</span>
+            <div class="coba-container coba-text-center" >
+                <span class="coba-text-strong coba-text-big">Zeitraum ändern: </span>
+                <span class="coba-text-medium">{{this.booking.from.substring(0,5)}} - {{this.booking.to.substring(0,5)}}</span>
                 <TimePicker :day="this.day"></TimePicker>
             </div>
             <!-- Sitzplatz -->
+            <div class="coba-text-center">
+                <span class="coba-text-strong coba-text-big">Sitzplatz ändern: </span>
+                <span class="coba-text-medium">{{this.booking.workstation.name}}</span>
+            </div>
             <div class="coba-container coba-flex-column">
-                <span class="coba-text-strong coba-text-big">Sitzplatz ändern</span>
                 <div v-if="dropDownOpen" class="coba-dropdown-wrapper" @click.self="toggleDropDown()"></div>
-
                 <div class="dropdown" @click="toggleDropDown">
                     <div>{{this.text}}<i class="dropdown-arrow"><b-icon icon="arrow-down-circle"></b-icon></i></div>
                     <div class="dropdown-align" v-if="dropDownOpen">
@@ -40,13 +43,22 @@
                 <div class="coba-modal-header">Buchung ändern</div>
             </template>
             <template v-slot:body>
-                <div class="coba-modal-body">
+                <div v-if="changeSuccessful && !changeFailure" class="cobal-modal-body mt-4 mb-4">
+                    Die Änderung war erfolgreich!
+                </div>
+                <div v-if="changeFailure" class="cobal-modal-body mt-4 mb-4">
+                    Änderung war fehlerhaft!
+                </div>
+                <div v-if="!changeSuccessful && !changeFailure" class="coba-modal-body">
                     Bist du dir sicher, dass du die Buchung ändern möchtest?
                 </div>
             </template>
             <template v-slot:footer>
-                <div class="coba-modal-footer coba-button-container">
-                    <router-link to="/home" class="coba-button coba-button-danger"><button @click="changeBooking()" @click.self="$emit('modal-delete-event')">Ja</button></router-link>
+                <div v-if="changeSuccessful || changeFailure" class="coba-modal-footer coba-button-container">
+                    <router-link to="/home" class="coba-button"><button @click.self="$emit('modal-delete-event')">Zur Startseite</button></router-link>
+                </div>
+                <div v-if="!changeSuccessful && !changeFailure" class="coba-modal-footer coba-button-container">
+                    <button class="coba-button coba-button-danger" @click="changeBooking">Ja</button>
                     <button class="coba-button" @click="closeModal">Nein</button>
                 </div>
             </template>
@@ -70,6 +82,8 @@ export default {
             loadChange: false,
             error: false,
             dropDownOpen: false,
+            changeSuccessful: false,
+            changeFailure: false,
             modalDel: {
                 header: "",
                 open: false,
@@ -107,7 +121,6 @@ export default {
                 .then(res => {
                     if(res.success) {
                         this.bookings = res.success;
-                        console.log(this.bookings);
                         this.loadBookings = false;
                     }
                     else {
@@ -131,7 +144,6 @@ export default {
                     this.loadWorkstations = false;
                 }
             }
-            console.log(this.workstations);
         },
         calcHours(workstationsID) {
             let workstationIDBookings = [];
@@ -141,21 +153,21 @@ export default {
             let endHour = 0;
             let endBooking = null;
             let time = [9,17];
-            console.log(this.booking.id);
+
             //Booking nach workstationID filtern
             for(let i = 0; i < this.bookings.length; i++) {
                 if(this.bookings[i].workstation_id === workstationsID && this.bookings[i].id !== this.booking.id) {
                     workstationIDBookings.push(this.bookings[i]);
                 }
             }
-            console.log(workstationIDBookings);
+
             //wenn es keine weiteren Bookings gibt
             if(workstationIDBookings.length === 0) {
                 this.day.time = time;
-                console.log(this.day);
                 return;
             }
 
+            //Belegte Zeiten berechnen
             for(let i = 0; i < workstationIDBookings.length; i++) {
                 hours += Number(workstationIDBookings[i].from.substring(0,2)) - Number(workstationIDBookings[i].to.substring(0,2));
                 if(Number(workstationIDBookings[i].to.substring(0,2)) > endHour) {
@@ -179,17 +191,11 @@ export default {
                     Number(startBooking.from.substr(0,2))+(startBooking.from.substr(3,2)==="00"?0:0.5)
                 ]
             }
-            console.log(time);
-            /**if(hours >=8)
-                availability = "red";
-            else
-                availability = "orange";
-            */
-            //Testdaten
+
             this.day.booked_start = startBooking.from;
             this.day.booked_end = endBooking.to;
             this.day.time = time;
-            console.log(this.day);
+
         },
         changeWorkstation(workstation){
             this.workstationID = workstation.id;
@@ -202,9 +208,9 @@ export default {
             this.calcHours(this.workstationID);
         },
         changeBooking(){
-            this.modalDel.open = false;
+            //this.modalDel.open = false;
             this.loadChange = true;
-
+            //Neue Buchungsdaten setzen
             let changedBooking = {
                 date: this.date,
                 from: (this.day.time[0]<10?"0":"")+Math.round(this.day.time[0]-0.1)+":"+(this.day.time[0]%1===0?'00':'30'),
@@ -225,10 +231,12 @@ export default {
                 .then(res => {
                     if(res.success) {
                         console.log("Buchung geändert");
+                        this.changeSuccessful = true;
                         this.loadChange = false;
                     }
                     else {
                         this.error = true;
+                        this.changeFailure = true;
                         this.loadChange = false;
                     }
                 })
@@ -256,6 +264,12 @@ export default {
 </script>
 
 <style scoped>
+.no-scroll {
+    overflow: hidden;
+}
+.scroll{
+    overflow: scroll;
+}
 .dropdown {
     width: 10em;
     height: 1.8em;
