@@ -1,19 +1,23 @@
 <template xmlns="http://www.w3.org/1999/html">
     <div class="coba-page" >
-        <div class="coba-container coba-flex coba-header">
+        <div class="coba-container coba-flex coba-header" >
             <span class="coba-page-headline">Profileinstellungen</span>
         </div>
-
         <!-- User profile pic -->
         <div class="coba-container">
             <hr>
             <p class="coba-text-big">Profilbild ändern:</p>
             <div class="coba-flex ">
                  <div class="picture-container">
-                     <img :key="componentKey" :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic"
+                     <div>
+                         <img v-if="!PictureLoad" :key="componentKey" :src="'/api/profile_picture/' +$store.getters.data.user.user_id" alt="user_pic"
                           class="coba-border-round coba-border-yellow user-avatar-shadow p-1 profile-img"  id="avatar"/>
+                         <div style="width: 6rem ; align-content: center ; padding-left: 45px" v-else>
+                              <spinner style="position: absolute ; margin-top: 0 "></spinner>
+                         </div>
+                     </div>
                  </div>
-                 <div class="ml-3">
+                 <div class="ml-3" >
                      <input class="inputFile" type="file" id="file" name="file" ref="upload" @change="uploadPic"  >
                      <label class="inputFileLabel flex mb-1" for="file"><b-icon class="mr-2 mt-1" icon="image"></b-icon> Wähle ein Profilbild</label>
                      <label class="inputFileLabel mt-1"  @click="deletePic"> Profilbild löschen </label>
@@ -77,12 +81,13 @@
         </div>
         <!-- Seats -->
         <div class="coba-container px-0">
-            <div v-if="!load" class="coba-flex coba-flex-wrap coba-flex-space-evenly">
+            <div class="coba-flex coba-flex-wrap coba-flex-space-evenly">
                 <template v-if="selectedLocations.length > 0">
                 <div v-for="workstation in workstations"  class="seat-container">
-                    <!-- funktioniert nicht  toDO -->
                     <div class="coba-button coba-button-big coba-button-round coba-button-no-border petrol-background mb-0" @click="workstation.isFavorite?  deleteFavoriteSeat(workstation) : addFavoriteSeat(workstation )">
-                        <b-icon  :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FEEF00" ></b-icon>
+                        <div>
+                            <b-icon :icon="workstation.isFavorite? 'star-fill' : 'star'" font-scale="1.5" style="color:#FEEF00" ></b-icon>
+                        </div>
                     </div>
                     <div class="coba-flex-space-evenly m-0 p-2" >
                         <div class="coba-text-strong coba-text-medium coba-text">{{workstation.name}}</div>
@@ -112,10 +117,7 @@
                 </div>
             </template>
         </modal>
-
-
     </div>
-
 </template>
 
 
@@ -124,22 +126,23 @@ import {store} from "../../_helpers/store";
 import Modal from "../Elements/Modal";
 import Spinner from "../Global/Spinner";
 import Vue from 'vue';
+import Integer from "lodash/string";
 
 export default {
     name: "Profile_Edit",
     components: {Modal, Spinner},
     data(){
         return{
-            showPasswordModal: false,
             location:[],
             load:false,
+            PictureLoad:false,
+            showPasswordModal: false,
             showPassword1: false,
             showPassword2: false,
             showPassword3: false,
             wrongPassword: false ,
             wrongPasswordConfirmation: false ,
             passwordToShort: false ,
-
             componentKey: 0 ,
             showConfirmationModal: false ,
             selectedLocations: [],
@@ -161,7 +164,7 @@ export default {
         },
 
         uploadPic() {
-            this.load = true;
+            this.PictureLoad = true;
             let input = this.$refs.upload;
             let file = input.files[0];
             let data = new FormData();
@@ -174,12 +177,13 @@ export default {
                 res => res.json() // if the response is a JSON object
             ).then(
                 res => {
-                    this.load = false;
                     if(res.success) {
                         // refresh
                         this.componentKey += 1;
                         // reset value of input-file => otherwise could not upload the same image twice
                         document.querySelector('#file').value = '' ;
+                        this.PictureLoad = false;
+
                     }
                 }
             ).catch(
@@ -187,20 +191,20 @@ export default {
             );
         },
         deletePic() {
-            this.load = true;
+            this.PictureLoad = true;
             fetch('/api/profile_picture/'+store.getters.data.user.user_id, {
                 method: 'delete'
             })
                 .then(res => res.json())
                 .then(res => {
-                    this.load = false;
                     if(res.success) {
                         this.componentKey += 1;
+                        this.PictureLoad = false;
                     }
                 })
                 .catch(error => {
                     console.log(error);
-                    this.load = false;
+                    this.PictureLoad = false;
                 })
         },
         clickEvent(){
@@ -283,6 +287,7 @@ export default {
         },
 
         deleteFavoriteSeat( workstation){
+            workstation.isFavorite = false;
             fetch('/api/workstation/favorite', {
                 method: 'DELETE',
                 body: JSON.stringify({
@@ -295,15 +300,17 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        workstation.isFavorite = false;
+
                     }
                 }).catch(error =>{
+                workstation.isFavorite = true;
                 this.error = error;
                 console.log(error) ;
             })
         },
 
         addFavoriteSeat( workstation){
+            workstation.isFavorite = true;
             fetch('/api/workstation/favorite', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -316,9 +323,10 @@ export default {
             })  .then( res => res.json())
                 .then( res => {
                     if ( res.success){
-                        workstation.isFavorite = true;
+
                     }
                 }).catch(error =>{
+                    workstation.isFavorite = false;
                     this.error = error;
                     console.log(error) ;
             })

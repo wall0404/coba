@@ -26,7 +26,17 @@
             </div>
         </div>
 
-        <div class="table-item icon"><b-icon v-if="false" icon="star-fill" font-scale="0.75"></b-icon></div>
+        <div class="table-item icon">
+            <div v-if="user_booking_list.length==0">
+
+            </div>
+            <div v-else>
+                <div v-for="user in user_booking_list" v-if="(!selectedFilter.onlyMyBookings && !selectedFilter.onlyBestBuddyBookings) || (selectedFilter.onlyMyBookings&&user.user_id === $store.getters.data.user.user_id) || (selectedFilter.onlyBestBuddyBookings&&user.isBuddy)">
+                    <b-icon v-if="user.isBuddy" icon="star-fill" font-scale="0.95"></b-icon>
+                    <div v-else>&nbsp;</div>
+                </div>
+            </div>
+        </div>
 
         <!-- Anzeige der Buchungsbutton wenn Buchung von einem anderem User ist-->
         <div v-if="bookings_workstation.length==0" class="table-item icon">

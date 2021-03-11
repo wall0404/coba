@@ -95,7 +95,7 @@ export default {
         reset(){
             this.filter.onlyMyBookings = false;
             this.filter.onlyAvailableWorkstations = false;
-            this.filter.onlyBestBuddy = false;
+            this.filter.onlyBestBuddyBookings = false;
             this.filter.onlyFavoriteWorkstations = false;
         }
     }

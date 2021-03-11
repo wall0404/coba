@@ -33,7 +33,7 @@ export default {
     data() {
         return {
             exclude: [
-                "Home", "Login", "SignUp", "Logout","Calendar","Team","Profile",
+                "Home", "Login", "SignUp", "Logout","Calendar","Team","Profile","BookingCheckout",
             ],
             whiteBackground: [
                 "Profile", "TeamMember",
