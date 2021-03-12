@@ -24,4 +24,9 @@ class Booking extends ParentModel
         return "all";
     }
 
+    public function checkUpdateRight()
+    {
+        return $this->user_id == Auth::id();
+    }
+
 }
