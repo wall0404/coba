@@ -111,14 +111,7 @@ export default {
     height: 100%;
     position: fixed;
     display: flex;
-}
-.coba-dropdown-wrapper{
-    top:0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    display: flex;
+    z-index: 2;
 }
 .coba-dropdown-container {
     position: relative;
