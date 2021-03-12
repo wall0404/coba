@@ -15031,6 +15031,7 @@ label.checked {
 
 .coba-modal .coba-modal-body {
   padding: 20px 0;
+  white-space: normal;
 }
 
 /* Little Indicator Circles */

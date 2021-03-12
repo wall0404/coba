@@ -67,6 +67,7 @@ export default {
         },
         //all methods for the delete-modal
         openModal() {
+            console.log("test");
             this.modalDel.header = this.booking.id;
             this.modalDel.open = true;
         },
@@ -121,7 +122,7 @@ export default {
     bottom: -60px;
     right: 0px;
     width: fit-content;
-    z-index: 1;
+    z-index: 3;
     padding: 7px 10px;
     text-align: left;
     border-radius: 10px;

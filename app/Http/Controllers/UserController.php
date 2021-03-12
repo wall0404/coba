@@ -33,7 +33,7 @@ class UserController extends ParentController
     public function getUserWithUpcomingBookings(Request $request, $id) {
 
         $user = User::findOrFail($id);
-        $user->upcomingBookings = Booking::where('user_id', $id)->where('date', '>=', date('Y-m-d'))->with('workstation')->get();
+        $user->upcomingBookings = Booking::where('user_id', $id)->where('date', '>=', date('Y-m-d'))->orderBy('date')->with('workstation')->get();
 
         return response()->json(['success'=>$user], ParentController::$successCode);
     }
