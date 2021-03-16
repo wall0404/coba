@@ -14400,7 +14400,7 @@ body,
 .coba-home-icons-container {
   height: 85px;
   width: 40px;
-  position: fixed;
+  position: absolute;
   top: 20px;
   right: 20px;
   padding: 10px;
@@ -14473,7 +14473,7 @@ body,
 /* HEADER */
 
 .coba-header {
-  height: 219px;
+  height: 190px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -14487,6 +14487,7 @@ body,
 
 .coba-header .coba-page-headline {
   font-size: 35px;
+    height: 55px;
 }
 
 .coba-header.coba-header-accent {
