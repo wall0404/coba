@@ -38,7 +38,7 @@
                     <div class="seat-container">
                         <div class="chart-overlay"> </div>
                         <router-link class="coba-button coba-button-big coba-button-round coba-button-no-border mb-0 coba-button-chart" :class="'coba-button-'+workstation.color" :to="{name:'DateTimeSelection', params: {workstation_id: workstation.id, bookings: workstation.workstation_bookings }}">
-                            <b-icon style="position: absolute" icon="plus" font-scale="2"></b-icon>
+                            <b-icon style="position: absolute" icon="laptop" font-scale="1.5"></b-icon>
                         </router-link>
                         <doughnut :chart-data="{
                             datasets: [

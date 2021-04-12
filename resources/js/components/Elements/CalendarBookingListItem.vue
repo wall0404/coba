@@ -47,7 +47,7 @@
                                 'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
                          :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
-                <b-icon icon="plus"></b-icon>
+                <b-icon icon="laptop" font-scale="1"></b-icon>
             </router-link>
         </div>
         <div v-else-if="is_one_booking_from_user" class="table-item icon" style="overflow: inherit">
@@ -61,7 +61,7 @@
                                 'coba-utilization-indicator-disabled':today.setHours(0,0,0,0) > new Date(date).setHours(0,0,0,0)
                                 }"
                          :to="{ name: 'DateTimeSelection', params: { workstation_id:workstation.id, preSelectedDays: [dayObj], calenderBool: true }}">
-                <b-icon icon="plus"></b-icon>
+                <b-icon icon="laptop" font-scale="1"></b-icon>
             </router-link>
         </div>
     </div>
